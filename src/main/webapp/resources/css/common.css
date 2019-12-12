@@ -1,0 +1,2026 @@
+﻿@charset "utf-8";
+
+@import url(font.css);
+@import url(reset.css);
+
+/*
+	기본 컬러
+	짙은 남색: #2E323C
+	남색: #32539D
+	개나리색: #FFC267
+	연한 회색: #DFE1E4 (테두리, input박스)
+	연하늘: #eef3fa
+*/
+
+/*
+//----------------------------------------------------------------------------------
+//
+// 공통 요소
+//
+//----------------------------------------------------------------------------------
+*/
+.body-bgcolor-set {
+    background-color: #DFE1E4;
+}
+
+.body-bgcolor-set .inner-box {
+    max-width: 684px;
+}
+
+.body-bgcolor-set > div {
+    max-width: 1140px;
+    width: 100%;
+    margin: 0 auto;
+    background-color: #FFFFFF;
+}
+
+.inner-box {
+    max-width: 1140px;
+	margin: 0 auto;
+}
+
+.contents-box {
+	padding: 0 20px;
+}
+
+.contents-box.board {
+	max-width: 684px;
+	margin: 0 auto;
+}
+
+.contents-box .line-bottom {
+	padding-bottom: 30px;
+	margin-bottom: 30px;
+	border-bottom: 3px solid #DFE1E4;
+}
+
+.section-title {
+	font-size: 2.5rem;
+	font-family: 'Black Han Sans', sans-serif;
+	
+	padding-bottom: 15px;
+}
+
+.section-title.blue{
+	color: #32539D;
+}
+
+.section-discription {
+	line-height: 1.5rem;
+	text-align: center;
+	font-weight: bold;
+}
+
+.sub-section-title {
+	font-size: 2rem;
+	font-family: 'Black Han Sans', sans-serif;
+	color: #3B5BA2;
+	padding-bottom: 15px;
+}
+
+.sub-section-title.black {
+	color: #2E323C;
+}	
+
+.flex-box {
+	display: flex;
+}
+
+.tac {
+    text-align: center;
+}
+
+.tar {
+    text-align: right;
+}
+
+.tal {
+    text-align: left;
+}
+
+.table-indent {
+    padding: 0 40px;
+}
+
+.paging-box a {
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: all 0.25s;
+    font-family: 'Do Hyeon', sans-serif;
+}
+
+.paging-box a:hover {
+    color: #FFC267;
+}
+
+.paging-box a:first-child::before {
+    content: '<';
+}
+
+.paging-box a:last-child::before {
+    content: '>';
+}
+
+.paging-box a:not(:last-child) {
+    margin-right: 10px;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// swiper 스타일
+//
+//----------------------------------------------------------------------------------
+*/
+.show-study-box .swiper-container {
+	width: 100%;
+	height: 100%;
+	padding-bottom: 40px;
+}
+
+.show-study-box .swiper-slide {
+	width: 260px;
+}
+
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
+	background-color: #32539D;
+}
+
+.banner-box .swiper-container {
+	width: 100%;
+	height: 100%;
+}
+
+.banner-box .swiper-slide {
+	width: 340px;
+}
+
+.swiper-button-prev:after {
+	margin-left: 15px;
+	content: url(../images/icon/swiper_left.png);
+}
+
+.swiper-button-next:after {
+	margin-right: 15px;
+	content: url(../images/icon/swiper_right.png);
+}
+
+.swiper-pagination-fraction {
+	background: rgba(238, 243, 250, 0.8);
+	width: 50px;
+	padding: 2px 0;
+	border-radius: 10px;
+	text-align: center;
+
+	left: 50%;
+	transform: translate(-50%, 0); 
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// summernote 스타일
+//
+//----------------------------------------------------------------------------------
+*/
+.note-toolbar .note-btn-group button{
+	font-size: 0.8rem;
+}
+
+.note-editor.note-frame .note-placeholder {
+	padding: 15px 20px;
+	line-height: 1.5rem;
+	color: gray;
+}
+
+.note-editor.note-frame .note-editing-area .note-editable {
+	padding: 20px;
+	background-color: #eef3fa;
+}
+
+.note-editor.note-frame {
+	border: 3px solid #DFE1E4;
+	background-color: #eef3fa;
+}
+
+.panel-default > .panel-heading {
+	border: none;
+	background-color: #DFE1E4;
+}
+
+.note-editor.note-frame .note-statusbar {
+	background-color: #DFE1E4;
+}
+
+.note-my-custom .note-editor * {
+	color: inherit;
+	font-weight: inherit;
+	font-style: inherit;
+	text-decoration: inherit;
+}
+
+.note-my-custom .note-editor b {
+	font-weight: bold;
+}
+
+.note-my-custom .note-editor i {
+	font-style: italic;
+}
+
+.note-my-custom .note-editor u {
+	text-decoration: underline;
+}
+
+.note-my-custom .note-editor strike {
+	text-decoration: line-through;
+}
+/*
+//----------------------------------------------------------------------------------
+//
+// 토글 버튼 스타일
+//
+//----------------------------------------------------------------------------------
+*/
+
+.tgl-skewed {
+    display: none;
+}
+
+:after, :before, *, *:after, *:before, .tgl-btn {
+    box-sizing: border-box;
+}
+
+::selection, :after::selection, :before::selection, *::selection, 
+*:after::selection, *:before::selection, .tgl-btn::selection {
+    background: none;
+}
+
+.tgl-btn {
+    outline: 0;
+    display: block;
+    width: 4em;
+    height: 2em;
+    position: relative;
+    cursor: pointer;
+    user-select: none;
+    margin: 20px;
+}
+.tgl-btn:after, .tgl-btn:before {
+    position: relative;
+    display: block;
+    content: "";
+    width: 50%;
+    height: 100%;
+}
+.tgl-btn:after {
+    left: 0;
+}
+.tgl-btn:before {
+    display: none;
+}
+:checked + .tgl-btn:after {
+    left: 50%;
+}
+
+.tgl-skewed + .tgl-btn {
+	/* transform: skew(-10deg); */
+	border-radius: 10px;
+	
+	overflow: hidden;
+    backface-visibility: hidden;
+    transition: all 0.15s ease;
+    font-family: 'Do Hyeon', sans-serif;
+    font-size: 1.5rem;
+    background: #DFE1E4;
+}
+.tgl-skewed + .tgl-btn:after, .tgl-skewed + .tgl-btn:before {
+	/* transform: skew(10deg); */
+	border-radius: 10px;
+
+    display: inline-block;
+    transition: all 0.15s ease;
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    line-height: 2em;
+    font-weight: bold;
+    color: #2E323C;
+}
+.tgl-skewed + .tgl-btn:after {
+    left: 100%;
+    content: attr(data-tg-on);
+}
+.tgl-skewed + .tgl-btn:before {
+    left: 0;
+    content: attr(data-tg-off);
+}
+.tgl-skewed + .tgl-btn:active {
+    background: #DFE1E4;
+}
+.tgl-skewed + .tgl-btn:active:before {
+    left: -10%;
+}
+.tgl-skewed:checked + .tgl-btn {
+    background: #FFC267;
+}
+.tgl-skewed:checked + .tgl-btn:before {
+    left: -100%;
+}
+.tgl-skewed:checked + .tgl-btn:after {
+    left: 0;
+}
+.tgl-skewed:checked + .tgl-btn:active:after {
+    left: 10%;
+}
+	
+/*
+//----------------------------------------------------------------------------------
+//
+// select 박스, input 박스, textarea 스타일
+//
+//----------------------------------------------------------------------------------
+*/
+select {
+	background-color: #DFE1E4;
+	border: none;
+	border-radius: 10px;
+	padding: 10px 0;
+	padding-left: 10px;
+}
+
+input[type="text"]
+, input[type="password"] {
+	background-color: #DFE1E4;
+	border: none;
+	border-radius: 10px;
+	padding: 10px 20px;
+}
+
+textarea {
+    border: 3px solid #DFE1E4;
+	width: 100%;
+	height: 200px;
+	background-color: #eef3fa;
+	padding: 20px;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// 버튼 스타일
+//
+//----------------------------------------------------------------------------------
+*/
+.my-btn {
+    display: inline-block;
+    padding: 6px 20px;
+    
+	font-family: 'S-CoreDream-8Heavy', sans-serif;
+	font-size: 1.2rem;
+	text-align: center;
+	line-height: normal;
+    
+    border: none;
+   	border-radius: 10px;
+}
+
+.my-btn.select {
+	display: inline-block;
+	width: 110px;
+	height: 45px;
+    padding: 10px 0;
+}
+
+.my-btn.black-white {
+	background-color: #2E323C;
+	color: #DFE1E4;
+	transition: all 0.25s;
+}
+
+.my-btn.my-btn.black-white:hover {
+	background-color: #3B5BA2;
+	color: #EFF4FA;
+}
+
+.my-btn.yellow-black {
+	background-color: #FEC46E;
+	color: #383B46;
+	transition: all 0.25s;
+}
+
+.my-btn.yellow-black:hover {
+	background-color: #3B5BA2;
+	color: #EFF4FA;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// 아이콘 스타일
+//
+//----------------------------------------------------------------------------------
+*/
+/* 기본 스타일 */
+.icon {
+    display: inline-block;
+    vertical-align: middle;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    opacity: 1;
+}
+
+/* 개별 스타일 */
+.icon-logo {
+    background-image: url(../images/icon/logo.png);
+    width: 140px;
+    height: 50px;
+    margin: -40px 20px 0 20px;
+}
+
+.icon-logo-bw {
+    background-image: url(../images/icon/logo_bw.png);
+    width: 160px;
+    height: 70px;
+}
+
+.icon-pre01 {
+    background-image: url(../images/icon/preview01.jpg);
+    width: 214px;
+	height: 150px;
+	margin-bottom: 10px;
+}
+
+.icon-pre02 {
+    background-image: url(../images/icon/preview02.jpg);
+    width: 214px;
+	height: 150px;
+	margin-bottom: 10px;
+}
+
+.icon-chat {
+    background-image: url(../images/icon/icon_chat.png);
+    width: 100px;
+	height: 100px;
+}
+
+.icon-event01 {
+	background-image: url(../images/icon/event01.png);
+    width: 400px;
+	height: 180px;
+}
+
+.icon-event02 {
+	background-image: url(../images/icon/event02.png);
+    width: 400px;
+	height: 180px;
+}
+
+.icon-create-study {
+    background-image: url(../images/icon/edit.png);
+    width: 50px;
+    height: 50px;
+}
+
+.icon-join-study {
+    background-image: url(../images/icon/id-card-3.png);
+    width: 50px;
+    height: 50px;
+}
+
+.icon-login-study {
+    background-image: url(../images/icon/edit.png);
+    width: 40px;
+	height: 40px;
+	margin-bottom: 30px;
+}
+
+.icon-login-kakao {
+	background-image: url(../images/icon/kakao_login.png);
+    width: 300px;
+	height: 39.4px;
+	margin: 10px 0;
+}
+
+.icon-caution {
+	background-image: url(../images/icon/caution.png);
+    width: 60px;
+	height: 60px;
+	margin-right: 20px;
+}
+
+.icon-my-page {
+	background-image: url(../images/icon/locked.png);
+    width: 40px;
+	height: 40px;
+	margin-right: 10px;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// 헤더 메뉴
+//
+//----------------------------------------------------------------------------------
+*/
+.fixed-full {
+	position: fixed;
+	width: 100%;
+    top: 0;
+	left: 0;
+
+	z-index: 10;
+}
+
+.header-box .user-menu {
+	padding: 8px 0 5px;
+    background: rgba(46, 50, 60, 0.95);
+}
+
+.header-box .user-menu ul {
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.header-box .user-menu ul li {
+	margin-right: 20px;
+}
+
+.header-box .user-menu ul li span {
+	color: #EEF3FA;
+	font-size: 1.4rem;
+	font-family: 'Do Hyeon', sans-serif;
+
+	transition: all 0.25s;
+}
+
+.header-box .user-menu ul li span:hover {
+	color: #3B5BA1;
+}
+
+.header-box .main-menu {
+	height: 100px;
+	padding-top: 60px;
+	background: rgba(238, 243, 250, 0.8);
+	
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+ 
+.header-box .main-menu > div {
+	justify-content: space-between;
+}
+
+.header-box .main-menu ul li {
+	margin-right: 20px;
+}
+
+.header-box .main-menu ul li span {
+	font-size: 2.0rem;
+	font-family: 'Black Han Sans', sans-serif;
+
+	transition: all 0.25s;
+}
+
+.header-box .main-menu ul li span:hover {
+	color: #3B5BA1;
+}
+
+/* .header-box .mobile-main-menu {
+	display: none;
+	
+	height: 100px;
+	padding-top: 60px;
+	background: rgba(238, 243, 250, 0.8);
+
+	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.header-box .mobile-main-menu-dropbox {
+	display: none;
+	padding: 6px 20px;
+	background: #FFC267;
+	background: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.header-box .mobile-main-menu-dropbox ul {
+	justify-content: center;
+}
+
+.header-box .mobile-main-menu-dropbox ul li:not(:last-child) {
+	margin-right: 20px;
+}
+
+.header-box .mobile-main-menu-dropbox ul li span {
+	font-size: 1.5rem;
+	font-family: 'Black Han Sans', sans-serif;
+}
+
+@media(max-width:700px){
+    .header-box .main-menu {
+    	display: none;
+    }
+    .header-box .mobile-main-menu {
+		display: block;
+	}
+	.header-box .mobile-main-menu-dropbox {
+		display: block;
+	}
+} */
+
+/*
+//----------------------------------------------------------------------------------
+//
+// 실시간 채팅
+//
+//----------------------------------------------------------------------------------
+*/
+.chat-box {
+	position: fixed;
+    width: 100%;
+    bottom: 0;
+	left: 0;
+	
+	z-index: 5;
+}
+
+.chat-box > div {
+	justify-content: flex-end;
+}
+
+.chat-box > div > a {
+	display: inline-block;
+	margin-bottom: 20px;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// 상단 타이틀 
+//
+//----------------------------------------------------------------------------------
+*/
+.title-box {
+    height: 500px;
+}
+
+.title-box .inner-box {
+	width: 100%;
+	height: 500px;
+	background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-image: url("../images/icon/main_bg.jpg");
+}
+
+.title-box .search-box {
+	flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 220px;
+}
+
+.title-box .search-box h2 {
+	color: #FFFFFF;
+}
+
+.title-box .search-box span {
+	display: inline-block;
+	color: #FFFFFF;
+	font-size: 3.2rem;
+
+	position: relative;
+
+	animation-name: shake;
+	animation-duration: 0.5s;
+	animation-direction: alternate;
+	animation-timing-function: ease-in;
+	animation-iteration-count: infinite;
+}
+
+@keyframes shake {
+	from {
+		transform: rotate(-5deg);
+	}
+
+	to {
+		transform: rotate(5deg);
+	}
+}
+
+.title-box .search-box div {
+	padding: 0;
+	margin-bottom: 15px;
+}
+
+.title-box .search-box select {
+	width: 80px;
+	height: 50px;
+}
+
+.title-box .search-box input[type="text"] {
+	width: 300px;
+	height: 50px;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// 모집 중인 스터디 
+//
+//----------------------------------------------------------------------------------
+*/
+.show-study-box .inner-box ul li h3 span { 
+	display: block;
+	width: 200px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+
+	font-weight: bold;
+	padding-bottom: 10px;
+	text-align: left;
+}
+
+.show-study-box .inner-box ul li p { 
+	justify-content: space-between;
+	font-size: 0.8rem;
+}
+
+.show-study-box ul li {
+	border: 3px solid #DFE1E4;
+	border-radius: 10px;
+	
+	padding: 20px;
+	text-align: center;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// 커뮤니티 신규 글
+//
+//----------------------------------------------------------------------------------
+*/
+.new-article-box > div > div {
+	justify-content: space-between;
+	align-items: center;
+}
+
+.new-article-box > div > div a span {
+	color: #3B5BA1;
+	font-size: 1.2rem;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.new-article-box table {
+	width: 100%;
+}
+
+.new-article-box table tr td {
+	border-top: 3px solid #DFE1E4;
+	border-bottom: 3px solid #DFE1E4;
+
+	padding: 13px 20px;
+}
+
+.new-article-box table tr td:nth-child(1) {
+	width: 70%;
+	max-width: 100px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+
+	text-align: left;
+}
+
+.new-article-box table tr td:nth-child(2) {
+	min-width: 100px;
+	padding: 0;
+}
+
+.new-article-box table tr td:nth-child(2)::before {
+	content: "|";
+	color: #DFE1E4;
+	padding-right: 20px;
+}
+
+.new-article-box table tr td:nth-child(2)::after {
+	content: "|";
+	color: #DFE1E4;
+	padding-left: 20px;
+}
+
+.new-article-box table tr td:nth-child(3) {
+	width: 20%;
+	max-width: 200px;
+	
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// 광고 배너
+//
+//----------------------------------------------------------------------------------
+*/
+.banner-box > div > div {
+	height: 200px;
+	border: 3px solid #DFE1E4;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [ 커뮤니티 ] 커뮤니티 게시판 리스트
+//
+//----------------------------------------------------------------------------------
+*/
+.community-list-board h2
+, .community-list-board .community-board-info
+, .community-list-board table th
+, .community-list-board table td {
+    padding-right: 10px;
+    padding-left: 10px;
+}
+.community-list-board h2
+, .community-list-board h2 span {
+    font-size: 2rem;
+}
+
+.community-list-board .community-board-info {
+    align-items: center;
+}
+
+.community-list-board .community-board-info p {
+    line-height: 1.4rem;
+    max-width: 300px;
+}
+
+.community-list-board .search-result span {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.community-list-board table {
+    width: 100%;
+}
+
+.community-list-board table th
+, .community-list-board table td {
+    vertical-align: middle;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.community-list-board table th {
+    background-color: #DFE1E4;
+}
+
+.community-list-board table tr:not(:first-child) {
+    border-bottom: 3px solid #DFE1E4;
+}
+
+.community-list-board table td:nth-child(1) {
+    width: 70%;
+	max-width: 100px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+
+	text-align: left;
+}
+
+.community-list-board table td:nth-child(2) {
+    width: 30%;
+	max-width: 100px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.community-list-board table td:nth-child(3) {
+    min-width: 100px;
+}
+
+.community-list-board table td:nth-child(4)
+, .community-list-board table td:nth-child(5) {
+    min-width: 70px;
+}
+
+.community-list-board .btn-box {
+    justify-content: space-between;
+}
+
+.community-list-board .btn-box .flex-box select
+, .community-list-board .btn-box .flex-box input {
+    margin-right: 5px;
+}
+
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [ 커뮤니티 ] 글 작성 페이지
+//
+//----------------------------------------------------------------------------------
+*/
+.community-writing .board .section-title
+, .community-writing .board .section-discription {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.community-writing .flex-box {
+    align-items: center;
+}
+
+.community-writing label {
+    min-width: 50px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.community-writing #board-title {
+    width: 100%;
+}
+
+.community-writing .btn-box .my-btn {
+    margin: 5px;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [ 커뮤니티 ] 게시판 공통
+//
+//----------------------------------------------------------------------------------
+*/
+.community-list-detail .inner-box .board > div:not(:first-child)
+, .community-list-detail .inner-box .comment-box > div:not(:first-child) {
+    border-top: 3px solid #DFE1E4;
+}
+
+.community-list-detail .board-info
+, .community-list-detail .board-contents
+, .community-list-detail .comment-info
+, .community-list-detail .comment-box .comment-origin
+, .community-list-detail .comment-box .comment-reply {
+    padding: 15px;
+}
+
+.community-list-detail .write-comment-box {
+    padding: 20px 0;
+}
+
+.community-list-detail .board .bg-blue {
+    background-color: #eef3fa;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [ 커뮤니티 ] 게시글 제목, 작성자 정보, 게시글 내용, 버튼
+//
+//----------------------------------------------------------------------------------
+*/
+.community-list-detail h2 {
+    font-size: 1.6rem;
+    padding: 0 15px;
+    font-weight: bold;
+}
+
+.community-list-detail .board-info {
+    justify-content: space-between;
+}
+
+.community-list-detail .board-info h3 {
+    font-weight: bold;
+}
+
+.community-list-detail .board-info span:nth-child(2n):not(:last-child) {
+    margin-right: 10px;
+}
+
+.community-list-detail .board-contents p {
+    padding-top: 20px;
+}
+
+.community-list-detail .board-contents .btn-box-rec {
+    margin-top: 40px;
+    margin-bottom: 10px;
+}
+.community-list-detail .board-contents .btn-box-rec a{
+    margin-right: 10px;
+}
+
+.btn-box-mod {
+    text-align: right;
+}
+
+.community-list-detail .board-contents .btn-box-mod a {
+    padding: 2px 6px;
+    background: #DFE1E4;
+    border-radius: 5px;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [ 커뮤니티 ] 코멘트
+//
+//----------------------------------------------------------------------------------
+*/
+.community-list-detail .comment-origin div
+, .community-list-detail .comment-reply-content div  {
+    margin-bottom: 15px;
+}
+
+.community-list-detail .comment-box h3 {
+    display: inline-block;
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.community-list-detail .comment-box span
+, .community-list-detail .comment-box a {
+    display: inline-block;
+    font-size: 0.7rem;
+    margin: 0 1px;
+}
+
+.community-list-detail .comment-box span {
+    margin-right: 20px;
+}
+
+.community-list-detail .comment-box a {
+    background-color: #32539D;
+    color: #FFFFFF;
+    padding: 2px;
+}
+
+.community-list-detail .comment-box p {
+    line-height: 1.3rem;
+}
+
+.community-list-detail .write-comment-box textarea {
+    height: 100px;
+    flex-shrink: 1;
+    margin-right: 20px;
+}
+
+.community-list-detail .write-comment-box a {
+    flex-shrink: 0;
+    height: fit-content;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [study] 원하는 스터디 검색하기
+//
+//----------------------------------------------------------------------------------
+*/
+.study-search-page .search-box {
+    width: 100%;
+    background-color: #FFC267;
+    padding: 0 20px;
+}
+
+.study-search-page .search-box > div {
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.study-search-page .search-box .section-title {
+    color: #FFFFFF;
+    text-decoration: underline;
+}
+
+.study-search-page .search-box input[type="button"]:not(:last-child)
+, .study-search-page .search-box input[type="text"]
+, .study-search-page .search-box select {
+    margin-right: 5px;
+}
+
+.study-search-page .search-box .flex-box > p {
+    margin-top: 5px;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [study] 검색 결과
+//
+//----------------------------------------------------------------------------------
+*/
+.study-search-page .search-result-box {
+    max-width: 684px;
+    margin: 0 auto;
+}
+
+.study-search-page .search-result-box > div > p {
+    padding-left: 5px;
+}
+
+.study-search-page .search-result-box ul li {
+	border: 3px solid #DFE1E4;
+	border-radius: 10px;
+   
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.study-search-page .search-result-box ul li > span {
+    flex-shrink: 0;
+}
+
+.study-search-page .search-result-box ul li > div {
+    padding: 5px 20px 0 10px;
+}
+
+.study-search-page .search-result-box ul li h3 {     
+	font-weight: bold;
+	padding-bottom: 10px;
+    text-align: left;
+    line-height: 1.2rem;
+}
+
+.study-search-page .search-result-box ul li h3 span {     
+	font-weight: bold;
+	padding-bottom: 10px;
+    text-align: left;
+    line-height: 1.2rem;
+}
+
+.study-search-page .search-result-box ul li p { 
+    font-size: 0.8rem;
+    line-height: 1.2rem;
+}
+
+.study-search-page .search-result-box > div > span {
+    line-height: 2rem;
+}
+
+.study-search-page .search-result-box > div:last-child > a {
+    font-size: 1.2rem;
+    text-decoration: underline;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [study] 스터디 모집 상세 보기
+//
+//----------------------------------------------------------------------------------
+*/
+.study-list-detail .inner-box .board > h2
+, .study-list-detail .inner-box .board > div:not(:last-child) {
+    border-bottom: 3px solid #DFE1E4;
+    padding: 25px 5px;
+}
+
+.study-list-detail .inner-box .board > h2 {
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+
+.study-list-detail .inner-box .board > .flex-box.bg-blue {
+    background-color: #eef3fa;
+    padding: 15px 5px;
+}
+
+.study-list-detail .board .flex-box {
+    justify-content: space-between;
+}
+
+.study-list-detail .board .flex-box h3 {
+    display: inline-block;
+    font-weight: bold;
+}
+
+.study-list-detail .recruit-info span {
+    line-height: 1.6rem;
+}
+
+.study-list-detail .recruit-info > span:first-child {
+    display: inline-block;
+    width: 100%;
+    background-color: rgb(87, 86, 86);
+}
+
+.study-list-detail .recruit-info > div > span:first-child::after {
+    content: '|';
+    margin: 0 5px;
+    font-size: 0.9rem;
+    vertical-align: top;
+}
+
+.study-list-detail .board > div > h2 {
+    font-weight: bold;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+}
+
+.study-list-detail p {
+    line-height: 1.3rem;
+}
+
+.study-list-detail .inner-box .contents-box div.recruit-detail-info {
+    padding-bottom: 40px;
+}
+
+.study-list-detail input[value="신청하기"] {
+    margin-right: 5px;
+}
+
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [study] 스터디 참가 신청하기 
+//
+//----------------------------------------------------------------------------------
+*/
+.study-apply .study-apply-box .line-bottom {
+    margin-bottom: 10px;
+}
+
+.study-apply .study-apply-box a {
+    font-size: 1.3rem;
+    padding: 0 20px;
+    text-decoration: underline;
+    display: inline-block;
+}
+
+.study-apply .study-apply-box p {
+    padding: 0 20px;
+}
+
+.study-apply .study-apply-box a:hover {
+    color: #FFC267;
+}
+
+.study-apply .study-explanation-box > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.study-apply .study-explanation-box > div p {
+    font-size: 1.1rem;
+    line-height: 1.5rem;
+    text-align: left;
+    margin-right: 10px;
+    padding-left: 20px;
+    font-weight: bold;
+}
+
+.study-apply .btn-box {
+    padding-bottom: 40px;
+}
+
+.study-apply .btn-box input:not(:last-child) {
+    margin-right: 5px;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [study] 스터디 룸 만들기
+//
+//----------------------------------------------------------------------------------
+*/
+.study-create-box .flex-box {
+    justify-content: center;
+    align-items: baseline;
+    padding-top: 30px;
+}
+
+.study-create-box h2 {
+    margin-right: 10px;
+}
+
+.study-create-box span {
+    color: #3B5BA2;
+    font-weight: bold;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [study] 스터디 기본 정보 
+//
+//----------------------------------------------------------------------------------
+*/
+.study-info-box table {
+    table-layout: fixed;
+}
+.study-info-box table tr th {
+    font-weight: bold;
+    text-align: left;
+    min-width: 80px;
+}
+
+.study-info-box table tr td{
+    width: 100%;
+}
+
+.study-info-box table tr td{
+    padding-bottom: 10px;
+}
+
+.study-info-box table tr:nth-child(2) td{
+    padding: 15px 0 10px 0;
+
+    font-size: 1rem;
+    color: #3B5BA2;
+}
+
+.study-info-box input[type='text'] {
+    width: 100%;
+    max-width: 940px;
+}
+
+.study-info-box input[type='text'].number{
+    width: 20%;
+    max-width: 400px;
+}
+
+.study-info-box select {
+    width: 50px;
+    margin-bottom: 5px;
+}
+
+.study-info-box .select-date div {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.study-info-box .select-date select {
+    margin-right: 2px;
+}
+
+.study-info-box .select-date select:not(:last-child) {
+    margin-right: 2px;
+}
+
+.study-info-box .select-date select:first-child {
+    width: 80px;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [study] 스터디 방식 선택
+//
+//----------------------------------------------------------------------------------
+*/
+.study-method-box .sub-section-title {
+    margin-right: 20px;
+}
+.study-method-box .study-method-title {
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.study-method-box .study-method-title > div {
+    padding-right: 40px;
+    margin-bottom: 10px;
+}
+
+.study-method-box .study-method-title > div div:not(:last-child) {
+    padding-right: 40px;
+}
+
+.study-method-box ul {
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.study-method-box ul li {
+    margin-bottom: 10px;
+}
+
+.study-method-box ul li span {
+    transition: all 0.25s;
+}
+
+.study-method-box ul li span:hover {
+    background-color: #3B5BA2;
+	color: #EFF4FA;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [study] 스터디 추가 정보
+//
+//----------------------------------------------------------------------------------
+*/
+.study-option-box table {
+    table-layout: fixed;
+}
+.study-option-box table tr th {
+    font-weight: bold;
+    text-align: left;
+    min-width: 80px;
+}
+
+.study-option-box table tr td{
+    width: 100%;
+}
+
+.study-option-box table td{
+    padding-bottom: 10px;
+}
+
+.study-option-box input[type='text'] {
+    width: 100%;
+    max-width: 940px;
+}
+
+.study-option-box .select-date select{
+    margin-right: 5px;
+}
+
+.study-option-box .select-date select:first-child {
+    width: 80px;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [study] 스터디 신청 페이지 버튼 
+//
+//----------------------------------------------------------------------------------
+*/
+.study-create-btn-box .flex-box {
+    justify-content: center;
+    padding-bottom: 40px;
+}
+
+.study-create-btn-box .flex-box input:not(:last-child) {
+    margin-right: 10px;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [study] 스터디 룸 생성 동의 안내
+//
+//----------------------------------------------------------------------------------
+*/
+.study-guide-box .flex-box {
+    justify-content: space-between;
+    align-items: center;
+}
+
+.study-guide-box .section-discription {
+    font-size: 1.1rem;
+    line-height: 1.5rem;
+    text-align: left;
+    margin-right: 10px;
+    padding-left: 20px;
+}
+
+.study-guide-box .btn-box {
+    padding-bottom: 40px;
+}
+
+.study-guide-box .btn-box input:not(:last-child) {
+    margin-right: 5px;
+}
+
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [user] 약관 동의 페이지
+//
+//----------------------------------------------------------------------------------
+*/
+
+.study-useRule {
+    padding: 20 40px;
+}
+
+.study-useRule .inner-box {
+    max-width: 684px;
+}
+
+.study-useRule-box .flex-box {
+    justify-content: center;
+    align-items: baseline;
+}
+
+.study-rules-box {
+    padding-top: 30px;
+    margin-top: 20px;
+    background: #EFF4FA;
+}
+
+.study-useRule-box h2 {
+    margin-right: 10px;
+    color: #3B5BA2;
+}
+
+.study-useRule-box span {
+    color: #3B5BA2;
+    font-weight: bold;
+}
+
+.study-rules-box .checkbox_right{
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 5px;
+    
+}
+
+.study-useRule-btn { 
+    padding-top: 50px;
+    padding-bottom: 50px;
+    clear: right;
+    display: flex;
+    background: #EFF4FA;
+}
+
+.study-rules-box textarea {
+        border: 3px solid #DFE1E4;
+        width: 100%;
+        height: 200px;
+        background-color: #ffffff;
+        padding: 20px;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [user] 스터디넷 회원가입
+//
+//----------------------------------------------------------------------------------
+*/
+.study-join .contents-box .join-description {
+    align-items: baseline;
+    justify-content: center;
+}
+
+.study-join .contents-box .join-description h2 {
+    margin-right: 10px;
+    color: #3B5BA2;
+}
+
+.study-join .line-bottom {
+    padding: 0px;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [user] 회원 가입 폼 테이블
+//
+//----------------------------------------------------------------------------------
+*/
+.study-join .study-join-form {
+    margin: 0 auto;
+}
+.study-join .study-join-form table tr th {
+    font-weight: bold;
+    text-align: right;
+    min-width: 120px;
+    padding-right: 10px;
+    vertical-align: middle;
+}
+
+.study-join .study-join-form tr td{
+    width: 100%;
+    margin-left: 20px;
+    padding: 10px;
+    vertical-align: middle;
+}
+
+.study-join .study-join-form input[type='text']
+, .study-join .study-join-form input[type='password'] {
+    width: 100%;
+}
+
+.study-join .study-join-form .join-radio-box > div {
+   margin-right: 5px;
+   display: inline-block;
+}
+
+.study-join .study-join-form .select-region div {
+    display: inline-block;
+    margin-right: 30px;
+}
+
+
+.study-join .study-join-form .select-region select {
+    width: 100px;
+}
+
+.study-join .study-join-form input[value="가입하기"] {
+    margin-right: 5px;
+}
+
+.study-join .study-join-form tr:last-child {
+    height: 150px;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [user] 스터디넷 회원가입 완료페이지
+//
+//----------------------------------------------------------------------------------
+*/
+.user-join-complete .board > div {
+    padding-bottom: 50px;
+}
+
+.user-join-complete input {
+    display: block;
+    margin: 10px auto;
+}
+
+.user-join-complete .section-discription {
+    margin-top: 30px;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [user] 로그인 페이지
+//
+//----------------------------------------------------------------------------------
+*/
+.study-login { 
+    padding: 60px 40px;
+}
+
+.study-login .inner-box {
+    max-width: 684px;
+}
+
+.study-login .study-login-box .flex-box{
+    justify-content: center;
+}
+
+.study-login .study-login-box .black-bottom-line{
+    border-bottom: solid 3px #2E323C;
+    padding-top: 0px;
+    margin-bottom: 20px;
+}
+
+.study-login .study-login-box h2.section-title {
+    display: inline-block;
+    padding-bottom: 0px;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [user] 로그인 input
+//
+//----------------------------------------------------------------------------------
+*/
+.study-login .study-log-box .log-input a{
+    text-decoration: underline;
+}
+
+.study-login .study-log-box .link_find{
+    margin-top: 20px;
+}
+
+.study-log-box .log-input input[type="text"]
+, .study-log-box .log-input input[type="password"] {
+    width: 300px;
+    display: block;
+    margin: 10px auto;
+}
+
+.study-log-box .log-input input[value="로그인"] {
+    margin-right: 5px;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [user] 아이디/비번찾기 페이지
+//
+//----------------------------------------------------------------------------------
+*/
+.user-find { 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 60px 40px;
+}
+
+.user-find .inner-box {
+    max-width: 684px;
+    
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [user] 아이디비번찾기 input
+//
+//----------------------------------------------------------------------------------
+*/
+.user-find .find-input{
+    display: flex;
+    flex-direction: row;
+}
+
+.user-find label{
+    font-weight: bold;
+    font-size: 1.5rem;
+    display: inline-block;
+    width: 350px;
+    margin: 10px;
+    text-align: right;
+}
+
+.user-find input[type="text"]{
+    float: right;
+    margin-right: 20px;
+}
+
+.user-find input[type="button"]{
+    width: 120px;
+    height: 50px;
+    align-self: center;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [user] 페이지 이동 버튼
+//
+//----------------------------------------------------------------------------------
+*/
+
+.innerbox .page-button{
+    display: flex;
+    justify-content: space-around;
+
+}
+
+.user-find .page-button input{
+    display: inline-block;
+    width: 170px;
+    margin: 10px;
+    
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [user] 마이페이지 메뉴 : 회원정보 수정
+//
+//----------------------------------------------------------------------------------
+*/
+
+.mypage-userinfo .line-bottom {
+    padding: 5px;
+    margin-bottom: 20px;
+}
+
+.mypage-userinfo .section-title {
+    padding-top: 5px;
+}
+
+.mypage-userinfo .mypage-menu-box .menu{
+    padding-top: 10px;
+}
+.mypage-userinfo .mypage-menu-box .menu:first-child{
+    margin-right: 50px;
+}
+
+.menu-bar-box {
+    width: 360px; margin: 0 auto;
+}
+
+#bar {
+    height: 10px;
+    background: #FFC267;
+
+    position: relative;
+  
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-out;
+}
+
+.left {
+    margin-left: 10px;
+    margin-right: 230px;
+}
+
+.right {
+    margin-left: 210px;
+    margin-right: 60px;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [user] 정보 수정 폼
+//
+//----------------------------------------------------------------------------------
+*/
+
+.mypage-userinfo .mypage-userinfo-form table tr th {
+    font-weight: bold;
+    text-align: right;
+    min-width: 120px;
+    padding-right: 10px;
+    vertical-align: middle;
+}
+
+.mypage-userinfo .mypage-userinfo-form tr td{
+    width: 100%;
+    margin-left: 20px;
+    padding: 10px;
+
+}
+
+.mypage-userinfo .mypage-userinfo-form input[type='text'], 
+.mypage-userinfo .mypage-userinfo-form input[type='password'] {
+    width: 100%;
+}
+
+.mypage-userinfo .section-discription {
+    padding-bottom: 0px;
+}
+
+.mypage-userinfo .mypage-userinfo-form #email {
+    width: 70%;
+    margin-right: 15px;
+}
+
+
+.mypage-userinfo .mypage-userinfo-form .join-radio-box > div {
+   margin-right: 5px;
+   display: inline-block;
+}
+
+
+.mypage-userinfo .mypage-userinfo-form .select-region select {
+    width: 100px;
+}
+
+.mypage-userinfo .mypage-userinfo-form tr:last-child input{
+    margin-right: 15px;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [user] 회원 탈퇴 부분
+//
+//----------------------------------------------------------------------------------
+*/
+.get-out-form .section-discription {
+    padding-bottom: 20px;
+}
+
+.get-out-form input[type="text"]{
+    margin-right: 20px;
+    width: 40%;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [user] 마이페이지 메뉴 : 내 스터디룸
+//
+//----------------------------------------------------------------------------------
+*/
+
+.mypage-studyroom .line-bottom {
+    padding: 5px;
+    margin-bottom: 20px;
+}
+
+.mypage-studyroom .section-title {
+    padding-top: 5px;
+}
+
+.mypage-studyroom .mypage-menu-box .menu{
+    padding-top: 10px;
+}
+
+.menu-bar-box {
+    width: 360px; margin: 0 auto;
+}
+
+.mypage-studyroom .menu-bar-box .mypage-menu-box .menu:first-child{
+    margin-right: 50px;
+}
+
+#bar {
+    height: 10px;
+    background: #FFC267;
+
+    position: relative;
+  
+    transition-duration: 0.5s;
+    transition-timing-function: ease-in-out;
+}
+
+.left {
+    margin-left: 10px;
+    margin-right: 230px;
+}
+
+.right {
+    margin-left: 210px;
+    margin-right: 60px;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [user] 내 스터디
+//
+//----------------------------------------------------------------------------------
+*/
+.study-room-box .flex-box{
+    justify-content: center;
+    flex-direction: column;
+}
+
+.study-room-box .study-room {
+    padding-left: 10px;
+    min-width: 500px;
+    margin: 20px auto;
+}
+
+.study-room-box .study-room .study-name{
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+.study-room-box .study-room .study-name .status{
+    margin-right: 10px;
+}
+
+.study-room-box .study-room .accordion{
+    padding-top: 10px;    
+
+}
+
+.study-room-box .study-room .accordion .study-info th{
+    padding: 6px;
+    text-align: right;
+}
+
+
+
+
+
+/*
+//----------------------------------------------------------------------------------
+//
+// 푸터
+//
+//----------------------------------------------------------------------------------
+*/
+.footer-box {
+	background-color: #3B5BA1;
+	height: 100%;
+	padding: 30px 0;
+}
+
+.footer-box span
+, .footer-box p {
+	color: #FFFFFF;
+	line-height: 1.5rem;
+}
+
+.footer-box ul
+, .footer-box .flex-box {
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+
+	margin-bottom: 20px;
+}
+
+.footer-box ul li:not(:last-child)::after {
+	content: "|";
+	color: #FFFFFF;
+	padding: 0 10px;
+}
+
+.footer-box .icon-logo-bw
+, .footer-box p {
+	margin: 10px;
+}

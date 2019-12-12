@@ -28,11 +28,21 @@ public class StudyController {
 		this.boardService = boardService;
 	}
 	
-	@RequestMapping(value = {"/", "/community_list.do"})
-	public String sample(Model model) {
+	@RequestMapping("/")
+	public String index() {
+		return "/WEB-INF/views/index.jsp";
+	}
+	
+	@RequestMapping("/community_list.do")
+	public String community_list(Model model) {
 		List<BoardVO> list = boardService.showCommunityList();
 		model.addAttribute("list", list);
-		return Common.Default.VIEW_PATH + "community_list.jsp";
+		return Common.Board.VIEW_PATH + "community_list.jsp";
+	}
+	
+	@RequestMapping("/community_write.do")
+	public String community_write() {
+		return Common.Board.VIEW_PATH + "community_write.jsp";
 	}
 	
 	
