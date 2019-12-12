@@ -45,5 +45,10 @@ public class StudyController {
 		return Common.Board.VIEW_PATH + "community_write.jsp";
 	}
 	
+	@RequestMapping("/community_list_detail.do")
+	public String community_list_detail() {
+		return Common.Board.VIEW_PATH + "community_list_detail.jsp";
+	}
+	
 	
 }

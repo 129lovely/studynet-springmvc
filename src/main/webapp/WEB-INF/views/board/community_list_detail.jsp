@@ -10,7 +10,7 @@
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
 	<div class="community-list-detail">
-		<div class="inner-box">
+		<div class="inner-box pt190">
 			<div class="contents-box board">
 				<!-- 게시글 제목 -->
 				<h2 class="mb20">커뮤니티 글 제목은 몇 글자까지?</h2>
@@ -81,7 +81,7 @@
 						<div>
 							<h3>김꽁치</h3>
 							<span>2018.12.15</span>
-							<a href="#">대댓글 달기</a>
+							<a href="javascript:void(0);" onclick="openReComment(this);">대댓글 달기</a>
 							<a href="#">수정</a>
 							<a href="#">삭제</a>
 						</div>
@@ -96,7 +96,7 @@
 							<div>
 								<h3>김꽁치</h3>
 								<span>2018.12.15</span>
-								<a href="#">대댓글 달기</a>
+								<a href="javascript:void(0);" onclick="openReComment(this);">대댓글 달기</a>
 								<a href="#">수정</a>
 								<a href="#">삭제</a>
 							</div>
@@ -109,7 +109,7 @@
 						<div>
 							<h3>김꽁치</h3>
 							<span>2018.12.15</span>
-							<a href="#">대댓글 달기</a>
+							<a href="javascript:void(0);" onclick="openReComment(this);">대댓글 달기</a>
 							<a href="#">수정</a>
 							<a href="#">삭제</a>
 						</div>
@@ -119,7 +119,7 @@
 						</p>
 					</div>
 				</div>
-				<form class="write-comment-box mb40 flex-box">
+				<form class="write-comment-box flex-box">
 					<textarea></textarea>
 					<a class="my-btn black-white" href="#">댓글 달기</a>
 				</form>				

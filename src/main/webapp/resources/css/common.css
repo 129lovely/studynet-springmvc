@@ -961,7 +961,8 @@ textarea {
 //----------------------------------------------------------------------------------
 */
 .community-list-detail .inner-box .board > div:not(:first-child)
-, .community-list-detail .inner-box .comment-box > div:not(:first-child) {
+, .community-list-detail .inner-box .comment-box > div:not(:first-child)
+, .community-list-detail .write-comment-box {
     border-top: 3px solid #DFE1E4;
 }
 
@@ -969,7 +970,8 @@ textarea {
 , .community-list-detail .board-contents
 , .community-list-detail .comment-info
 , .community-list-detail .comment-box .comment-origin
-, .community-list-detail .comment-box .comment-reply {
+, .community-list-detail .comment-box .comment-reply
+, .community-list-detail .comment-box .write-comment-reply {
     padding: 15px;
 }
 
@@ -984,7 +986,7 @@ textarea {
 /*
 //----------------------------------------------------------------------------------
 //
-// [ 커뮤니티 ] 게시글 제목, 작성자 정보, 게시글 내용, 버튼
+// [ 커뮤니티 ] 게시글 제목, 작성자 정보, 게시글 내용, 추천버튼, 목록으로 돌아가기 버튼, 수정/삭제 버튼
 //
 //----------------------------------------------------------------------------------
 */
@@ -1067,17 +1069,50 @@ textarea {
     line-height: 1.3rem;
 }
 
-.community-list-detail .write-comment-box textarea {
+.community-list-detail .write-comment-box textarea
+, .community-list-detail .comment-box .write-comment-reply textarea {
     height: 100px;
     flex-shrink: 1;
     margin-right: 20px;
 }
 
-.community-list-detail .write-comment-box a {
+.community-list-detail .write-comment-box a
+, .community-list-detail .comment-box .write-comment-reply > a {
     flex-shrink: 0;
     height: fit-content;
 }
 
+
+.community-list-detail .comment-box .comment-reply > span
+, .community-list-detail .comment-box .write-comment-reply span {
+    font-weight: bold;
+    font-size: 1.5rem;
+    color: #DFE1E4;
+}
+
+.community-list-detail .comment-box .write-comment-reply {
+    display: flex;
+}
+
+.community-list-detail .comment-box .write-comment-reply a {
+    display: inline-block;
+    padding: 6px 20px;
+    font-family: 'S-CoreDream-8Heavy', sans-serif;
+    font-size: 1.2rem;
+    text-align: center;
+    line-height: normal;
+    border: none;
+    border-radius: 10px;
+
+    background-color: #2E323C;
+    color: #DFE1E4;
+    transition: all 0.25s;
+}
+
+.community-list-detail .comment-box .write-comment-reply a:hover {
+    background-color: #3B5BA2;
+    color: #EFF4FA;
+}
 /*
 //----------------------------------------------------------------------------------
 //
