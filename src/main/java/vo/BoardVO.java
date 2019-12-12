@@ -1,10 +1,10 @@
 package vo;
 
-public class SampleVO {
+public class BoardVO {
 	
 	private int idx, study_idx, user_idx, is_notice, hit, recommend;
 	private String title, content, created_at, updated_at, deleted_at;
-	
+
 	public int getIdx() {
 		return idx;
 	}

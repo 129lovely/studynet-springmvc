@@ -4,7 +4,23 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd">
 	
 	<!-- service에 dao객체 주입 -->
-	<bean class="service.SampleServiceImpl" id="sampleService">
-		<property ref="sampleDAO" name="sampleDAO"/>
+	<bean class="service.BoardService" id="boardService">
+		<property ref="boardDAO" name="boardDAO"/>
+		<property ref="studyDAO" name="studyDAO"/>
+		<property ref="userDAO" name="userDAO"/>
 	</bean>
+	
+	<bean class="service.StudyService" id="studyService">
+		<property ref="boardDAO" name="boardDAO"/>
+		<property ref="studyDAO" name="studyDAO"/>
+		<property ref="userDAO" name="userDAO"/>
+	</bean>
+	
+	<bean class="service.UserService" id="userService">
+		<property ref="boardDAO" name="boardDAO"/>
+		<property ref="studyDAO" name="studyDAO"/>
+		<property ref="userDAO" name="userDAO"/>
+	</bean>
+	
+	
 </beans>

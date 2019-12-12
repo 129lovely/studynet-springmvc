@@ -9,11 +9,11 @@
 	</settings>
 	
 	<typeAliases>
-		<typeAlias type="vo.SampleVO" alias="sample"/>
+		<typeAlias type="vo.BoardVO" alias="board"/>
 	</typeAliases>
 	
 	<mappers>
-		<mapper resource="config/mybatis/mapper/sample.xml" />
+		<mapper resource="config/mybatis/mapper/board.xml" />
 	</mappers>
 </configuration>
 

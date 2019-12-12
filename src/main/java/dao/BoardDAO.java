@@ -5,22 +5,26 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
-import vo.SampleVO;
+import vo.BoardVO;
 
-public class SampleDAOImpl implements SampleDAO {
+public class BoardDAO implements DAO {
 
-	// 셋터인젝션으로 sqlSession 받기
 	SqlSession sqlSession;
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
 
 	@Override
-	public List selectList() {
-		List<SampleVO> list = new ArrayList<SampleVO>();
-		list = sqlSession.selectList("sample.selectList");
-		
+	public List<BoardVO> selectList() {
+		List<BoardVO> list = new ArrayList<BoardVO>();
+		list = sqlSession.selectList("board.selectList");
 		return list;
+	}
+
+	@Override
+	public Object selectOne() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override

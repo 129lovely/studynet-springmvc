@@ -28,8 +28,10 @@
 	수동생성시 따로 autowired를 위한 속성을 추가해줘야 한다. -->
 	<context:annotation-config/><!-- 수동생성시 autowired를 가능하게 하는 속성 -->
 	
-	<beans:bean class="controller.SampleController">
-		<beans:property name="sampleService" ref="sampleService"/>
+	<beans:bean class="controller.StudyController">
+		<beans:property name="boardService" ref="boardService"/>
+		<beans:property name="userService" ref="userService"/>
+		<beans:property name="studyService" ref="studyService"/>
 	</beans:bean>
 	
 </beans:beans>
