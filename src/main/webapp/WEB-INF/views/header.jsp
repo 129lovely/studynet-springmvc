@@ -35,7 +35,7 @@
 		<!-- 일반 브라우저 메뉴 -->
         <div class="main-menu">
             <div class="inner-box flex-box">
-            	<h1><span class="icon icon-logo"></span></h1>
+            	<h1><a href="index.do"><span class="icon icon-logo"></a></span></h1>
 	        	<nav>
 	        		<ul class="flex-box">
 	        			<li><a href="community_list.do"><span>커뮤니티</span></a></li>

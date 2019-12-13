@@ -28,6 +28,11 @@ public class BoardService {
 		return boardDAO.selectList();
 	}
 	
+	// 커뮤니티 index페이지 최근 게시물 출력하기
+	public List<BoardVO> showCommunityList_index() {
+		return boardDAO.selectList_index();
+	}
+	
 	// 커뮤니티 상세페이지 / 수정페이지 출력하기
 	public Map<String, Object> showCommunityListDetail(int idx) {
 		Map<String, Object> map = new HashMap<String, Object>();

@@ -96,27 +96,19 @@
 		<div class="inner-box contents-box">
 			<div class="flex-box">
 				<h2 class="section-title">커뮤니티 신규 글</h2>
-				<a href="javascript:void(0);"><span>더보기</span></a>
+				<a href="community_list.do"><span>더보기</span></a>
 			</div>
 			<div>
 				<table class="tac">
 					<caption class="txt-only">커뮤니티 신규 글</caption>
 					<tbody>
+						<c:forEach var="vo" items="${ board }">
 						<tr>
-							<td>커뮤니티 글 제목입니다</td>
-							<td>2019.12.04</td>
-							<td>작성자명</td>
+							<td><a href="community_list_detail.do?idx=${ vo.idx }">${ vo.title }</a></td>
+							<td>${ vo.created_at }</td>
+							<td>${ vo.user_idx }</td>
 						</tr>
-						<tr>
-							<td>글 제목이 너무너무너무너무 길다면 자동으로 말줄임표를 붙입니다 글 제목이 너무 길다면 자동으로 말줄임표를 붙입니다</td>
-							<td>2019.12.04</td>
-							<td>작성자명도너무너무너무길다면</td>
-						</tr>
-						<tr>
-							<td>커뮤니티 글 제목입니다</td>
-							<td>2019.12.04</td>
-							<td>얄라리얄라셩</td>
-						</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 			</div>

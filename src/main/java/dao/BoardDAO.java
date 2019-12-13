@@ -53,5 +53,11 @@ public class BoardDAO implements DAO {
 		list = sqlSession.selectList("comment.selectList", board_idx);
 		return list;
 	}
+	
+	public List<BoardVO> selectList_index() {
+		List<BoardVO> list = new ArrayList<BoardVO>();
+		list = sqlSession.selectList("board.selectList_index");
+		return list;
+	}
 
 }

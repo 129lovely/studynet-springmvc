@@ -32,8 +32,10 @@ public class StudyController {
 		this.boardService = boardService;
 	}
 	
-	@RequestMapping("/")
-	public String index() {
+	@RequestMapping(value = {"/", "/index.do"})
+	public String index(Model model) {
+		List<BoardVO> board = boardService.showCommunityList_index();
+		model.addAttribute("board", board);
 		return "/WEB-INF/views/index.jsp";
 	}
 	
