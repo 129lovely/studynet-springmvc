@@ -48,7 +48,8 @@
 				<div class="comment-info bg-blue">
 					댓글 ${ fn:length(comment) }개
 				</div>
-
+				
+				<c:if test="${ fn:length(comment) != 0 }">
 				<!-- 코멘트 -->		
 				<div class="comment-box">
 					<!-- db 가져온 것 -->
@@ -86,6 +87,8 @@
 						</c:if>
 					</c:forEach>
 				</div>
+				</c:if>
+				
 				<form class="write-comment-box flex-box">
 					<textarea></textarea>
 					<a class="my-btn black-white" href="#">댓글 달기</a>
