@@ -42,6 +42,18 @@ public class StudyController {
 		return "/WEB-INF/views/index.jsp";
 	}
 
+	// 회원 가입 - 1 ( 약관 동의 페이지 )
+	@RequestMapping("/user_join_caution.do")
+	public String user_join_caution( ) {
+		return Common.User.VIEW_PATH + "user_join_caution.jsp";
+	}
+	
+	// 회원 가입 - 2 ( 정보 입력 페이지 )
+	@RequestMapping("/user_join_form.do")
+	public String user_join( ) {
+		return Common.User.VIEW_PATH + "user_join.jsp";
+	}
+	
 	@RequestMapping("/community_list.do")
 	public String community_list(Model model) {
 		List<BoardVO> list = boardService.showCommunityList();
