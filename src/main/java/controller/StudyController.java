@@ -72,7 +72,6 @@ public class StudyController {
 		return Common.Board.VIEW_PATH + "community_list_detail.jsp";
 	}
 
-	// 댓글 수정
 	@RequestMapping("/community_list_detail_modify.do")
 	public String community_list_detail_modify(Model model, int idx) {
 		BoardVO vo = (BoardVO) boardService.showCommunityListDetail(idx).get("board");
