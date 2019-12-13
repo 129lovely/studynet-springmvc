@@ -11,6 +11,7 @@ import vo.BoardVO;
 public class BoardDAO implements DAO {
 
 	SqlSession sqlSession;
+
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
@@ -47,17 +48,22 @@ public class BoardDAO implements DAO {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
+
 	public List<BoardCommentVO> selectCommentList(int board_idx) {
 		List<BoardCommentVO> list = new ArrayList<BoardCommentVO>();
 		list = sqlSession.selectList("comment.selectList", board_idx);
 		return list;
 	}
-	
+
 	public List<BoardVO> selectList_index() {
 		List<BoardVO> list = new ArrayList<BoardVO>();
 		list = sqlSession.selectList("board.selectList_index");
 		return list;
+	}
+
+	public int update(BoardCommentVO vo) {
+		int result = sqlSession.update("comment.update", vo);
+		return result;
 	}
 
 }
