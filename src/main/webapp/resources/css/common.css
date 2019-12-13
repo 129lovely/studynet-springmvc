@@ -1869,6 +1869,60 @@ textarea {
     margin-right: 60px;
 }
 
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [user] 페이지 설명
+//
+//----------------------------------------------------------------------------------
+*/
+.section-discription.my-study-room-info{
+    cursor: help;
+    margin-bottom: 155px;
+
+}
+
+.section-discription.my-study-room-info:hover{
+    color: #FFC267;
+}
+.info_content {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.8);
+    opacity:0;
+    -webkit-transition: opacity 400ms ease-in;
+    -moz-transition: opacity 400ms ease-in;
+    transition: opacity 400ms ease-in;
+    pointer-events: none;
+}
+.info_content:target {
+    opacity:1;
+    pointer-events: auto;
+}
+.info_content > div {
+	position: absolute;
+	top: 25%;
+	left: 15%;
+	width: 70%;
+	height: 50%;
+	padding: 16px;
+    border: 16px solid #FFC267;
+    border-radius: 5px;
+	background-color: #eef3fa;
+    overflow: auto;	
+    text-align: center;
+}
+
+.info_content > div > p {
+    text-align: center;
+    padding-bottom: 30px;
+}
+
+
 /*
 //----------------------------------------------------------------------------------
 //
@@ -1947,7 +2001,7 @@ textarea {
 
 .mypage-studyroom .line-bottom {
     padding: 5px;
-    margin-bottom: 20px;
+    padding-bottom: 10px;
 }
 
 .mypage-studyroom .section-title {
@@ -1986,6 +2040,15 @@ textarea {
     margin-right: 60px;
 }
 
+
+/*
+//----------------------------------------------------------------------------------
+//
+// [user] 내 스터디 아코디언 적용
+//
+//----------------------------------------------------------------------------------
+*/
+
 /*
 //----------------------------------------------------------------------------------
 //
@@ -1993,20 +2056,35 @@ textarea {
 //
 //----------------------------------------------------------------------------------
 */
-.study-room-box .flex-box{
-    justify-content: center;
-    flex-direction: column;
-}
+
 
 .study-room-box .study-room {
-    padding-left: 10px;
-    min-width: 500px;
-    margin: 20px auto;
+    min-width: 100px;
+    margin: 10px auto;
+    padding: 10px;
+    border: 3px solid #DFE1E4;
+    border-radius: 10px;
 }
 
 .study-room-box .study-room .study-name{
-    font-size: 1.3rem;
+    display: block;
+    min-width: 100px;
+    max-width: 100%;
+    font-size: 1.2rem;
     font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.study-room-box .study-room .study-name:hover{
+    color: #DFE1E4;
+}
+
+.study-room-box .study-room .study-name span:hover{
+    background: #2E323C;
+    cursor: help;
+    
 }
 .study-room-box .study-room .study-name .status{
     margin-right: 10px;
@@ -2014,17 +2092,44 @@ textarea {
 
 .study-room-box .study-room .accordion{
     padding-top: 10px;    
+    justify-content: center;
 
+}
+
+.study-room-box .study-room .accordion a:hover{
+    color: #DFE1E4;
+}
+
+.study-room-box .study-room .accordion .study-info {
+    margin-bottom: 10px;
 }
 
 .study-room-box .study-room .accordion .study-info th{
     padding: 6px;
+    padding-left: 25px;
     text-align: right;
+    font-weight: bold;
 }
 
+.room-btn-box {
+    padding-top: 10px;
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+    border-top: 2px solid #DFE1E4;
+}
 
+.room-btn-box .my-btn {
+    margin-right: 10px;
+}
 
+.study-room.none .room-btn-box{
+    justify-content: center;
+}
 
+.study-room.none p{
+    text-align: center;
+}
 
 /*
 //----------------------------------------------------------------------------------
