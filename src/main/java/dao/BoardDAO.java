@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 
+import vo.BoardCommentVO;
 import vo.BoardVO;
 
 public class BoardDAO implements DAO {
@@ -47,8 +48,10 @@ public class BoardDAO implements DAO {
 		return 0;
 	}
 	
-	public void sample() {
-		
+	public List<BoardCommentVO> selectCommentList(int board_idx) {
+		List<BoardCommentVO> list = new ArrayList<BoardCommentVO>();
+		list = sqlSession.selectList("comment.selectList", board_idx);
+		return list;
 	}
 
 }

@@ -1,6 +1,8 @@
 package service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import dao.BoardDAO;
 import dao.StudyDAO;
@@ -27,8 +29,12 @@ public class BoardService {
 	}
 	
 	// 커뮤니티 상세페이지 / 수정페이지 출력하기
-	public BoardVO showCommunityListDetail(int idx) {
-		return boardDAO.selectOne(idx);
+	public Map<String, Object> showCommunityListDetail(int idx) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("board", boardDAO.selectOne(idx));
+		map.put("comment", boardDAO.selectCommentList(idx));
+		
+		return map;
 	}
 	
 	// 커뮤니티 글작성 / 글수정하기

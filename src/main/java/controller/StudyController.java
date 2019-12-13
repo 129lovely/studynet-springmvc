@@ -1,7 +1,9 @@
 package controller;
 
 import java.lang.ProcessBuilder.Redirect;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +13,7 @@ import common.Common;
 import service.BoardService;
 import service.StudyService;
 import service.UserService;
+import vo.BoardCommentVO;
 import vo.BoardVO;
 
 @Controller
@@ -48,14 +51,16 @@ public class StudyController {
 	
 	@RequestMapping("/community_list_detail.do")
 	public String community_list_detail(Model model, int idx) {
-		BoardVO vo = boardService.showCommunityListDetail(idx);
-		model.addAttribute("vo", vo);
+		BoardVO board = (BoardVO) boardService.showCommunityListDetail(idx).get("board");
+		List<BoardCommentVO> comment = (ArrayList<BoardCommentVO>) boardService.showCommunityListDetail(idx).get("comment");
+		model.addAttribute("board", board);
+		model.addAttribute("comment", comment);
 		return Common.Board.VIEW_PATH + "community_list_detail.jsp";
 	}
 	
 	@RequestMapping("/community_write_modify_form.do")
 	public String community_write_modify_form(Model model, int idx) {
-		BoardVO vo = boardService.showCommunityListDetail(idx);
+		BoardVO vo = (BoardVO) boardService.showCommunityListDetail(idx).get("board");
 		model.addAttribute("vo", vo);
 		return Common.Board.VIEW_PATH + "community_write_modify.jsp";
 	}
