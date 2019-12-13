@@ -1,5 +1,6 @@
 package controller;
 
+import java.lang.ProcessBuilder.Redirect;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -40,15 +41,29 @@ public class StudyController {
 		return Common.Board.VIEW_PATH + "community_list.jsp";
 	}
 	
-	@RequestMapping("/community_write.do")
-	public String community_write() {
+	@RequestMapping("/community_write_form.do")
+	public String community_write_form() {
 		return Common.Board.VIEW_PATH + "community_write.jsp";
 	}
 	
 	@RequestMapping("/community_list_detail.do")
-	public String community_list_detail() {
+	public String community_list_detail(Model model, int idx) {
+		BoardVO vo = boardService.showCommunityListDetail(idx);
+		model.addAttribute("vo", vo);
 		return Common.Board.VIEW_PATH + "community_list_detail.jsp";
 	}
 	
+	@RequestMapping("/community_write_modify_form.do")
+	public String community_write_modify_form(Model model, int idx) {
+		BoardVO vo = boardService.showCommunityListDetail(idx);
+		model.addAttribute("vo", vo);
+		return Common.Board.VIEW_PATH + "community_write_modify.jsp";
+	}
+	
+	@RequestMapping("/community_write.do")
+	public String community_write(BoardVO vo) {
+		boardService.writeCommunity(vo);
+		return "redirect:community_list.do";
+	}
 	
 }

@@ -212,26 +212,31 @@
 	background-color: #DFE1E4;
 }
 
-.note-my-custom .note-editor * {
+.summernote-board-contents-load *
+, .note-my-custom .note-editor * {
 	color: inherit;
 	font-weight: inherit;
 	font-style: inherit;
 	text-decoration: inherit;
 }
 
-.note-my-custom .note-editor b {
+.summernote-board-contents-load b
+, .note-my-custom .note-editor b {
 	font-weight: bold;
 }
 
-.note-my-custom .note-editor i {
-	font-style: italic;
+.summernote-board-contents-load i
+, .note-my-custom .note-editor i {
+	font-style: italic !important;
 }
 
-.note-my-custom .note-editor u {
+.summernote-board-contents-load u
+, .note-my-custom .note-editor u {
 	text-decoration: underline;
 }
 
-.note-my-custom .note-editor strike {
+.summernote-board-contents-load strike
+, .note-my-custom .note-editor strike {
 	text-decoration: line-through;
 }
 /*
@@ -1013,7 +1018,7 @@ textarea {
 }
 
 .community-list-detail .board-contents .btn-box-rec {
-    margin-top: 40px;
+    margin-top: 80px;
     margin-bottom: 10px;
 }
 .community-list-detail .board-contents .btn-box-rec a{
@@ -1104,8 +1109,8 @@ textarea {
     border: none;
     border-radius: 10px;
 
-    background-color: #2E323C;
-    color: #DFE1E4;
+    background-color: #FEC46E;
+	color: #383B46;
     transition: all 0.25s;
 }
 

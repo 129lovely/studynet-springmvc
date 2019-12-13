@@ -14,6 +14,7 @@ public class BoardDAO implements DAO {
 		this.sqlSession = sqlSession;
 	}
 
+	// 게시판 리스트 가져오기
 	@Override
 	public List<BoardVO> selectList() {
 		List<BoardVO> list = new ArrayList<BoardVO>();
@@ -21,16 +22,17 @@ public class BoardDAO implements DAO {
 		return list;
 	}
 
+	// 게시판 게시물 1개 가져오기
 	@Override
-	public Object selectOne() {
-		// TODO Auto-generated method stub
-		return null;
+	public BoardVO selectOne(int idx) {
+		BoardVO vo = sqlSession.selectOne("board.selectOne", idx);
+		return vo;
 	}
 
 	@Override
 	public int insert(Object vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result = sqlSession.insert("board.insert", vo);
+		return result;
 	}
 
 	@Override

@@ -64,6 +64,7 @@ function initSummernote(){
 			['height', ['height']],
 			['table', ['table']],
 			['insert', ['link', 'picture']],
+			['view', ['fullscreen', 'codeview', 'help']],
 			]
 	});
 
@@ -83,7 +84,8 @@ function initSummernote(){
 			['para', ['paragraph']],
 			['height', ['height']],
 			['table', ['table']],
-			['insert', ['link', 'picture']]
+			['insert', ['link', 'picture']],
+			['view', ['fullscreen', 'codeview', 'help']],
 			]
 	});
 
@@ -103,7 +105,8 @@ function initSummernote(){
 			['para', ['paragraph']],
 			['height', ['height']],
 			['table', ['table']],
-			['insert', ['link', 'picture']]
+			['insert', ['link', 'picture']],
+			['view', ['fullscreen', 'codeview', 'help']],
 			]
 	});
 }

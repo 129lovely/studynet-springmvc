@@ -42,7 +42,7 @@
                             
                             <c:forEach var="vo" items="${ list }">
                             	<tr>
-	                                <td>${ vo.title }</td>
+	                                <td><a href="community_list_detail.do?idx=${ vo.idx }">${ vo.title }</a></td>
 	                                <td>${ vo.user_idx }</td>
 	                                <td>${ vo.created_at }</td>
 	                                <td>${ vo.hit }</td>
@@ -64,7 +64,7 @@
                             <a href="#" class="my-btn black-white">검색</a>
                         </div>
                         <div>
-                            <a href="community_write.do" class="my-btn black-white">글 작성</a>
+                            <a href="community_write_form.do" class="my-btn black-white">글 작성</a>
                         </div>
                     </div>
     

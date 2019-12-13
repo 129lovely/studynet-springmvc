@@ -18,7 +18,7 @@ public class StudyDAO implements DAO {
 	}
 
 	@Override
-	public Object selectOne() {
+	public Object selectOne(int idx) {
 		// TODO Auto-generated method stub
 		return null;
 	}

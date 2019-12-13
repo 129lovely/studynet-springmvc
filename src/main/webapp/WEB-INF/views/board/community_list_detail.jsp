@@ -13,57 +13,30 @@
 		<div class="inner-box pt190">
 			<div class="contents-box board">
 				<!-- 게시글 제목 -->
-				<h2 class="mb20">커뮤니티 글 제목은 몇 글자까지?</h2>
+				<h2 class="mb20">${ vo.title }</h2>
 				<!-- 작성자 정보 -->
 				<div class="board-info bg-blue flex-box">
 					<div>
 						<span class="txt-only">작성자:</span>
-						<h3>박도치</h3>
+						<h3>${ vo.user_idx }</h3>
 					</div>
 					<div>
 						<span class="txt-only">작성일:</span>
-						<span>2019.12.18</span>
+						<span>${ vo.created_at }</span>
 						<span>조회수:</span>
-						<span>23</span>
+						<span>${ vo.hit }</span>
 						<span>추천수:</span>
-						<span>3</span>
+						<span>${ vo.recommend }</span>
 					</div>
 				</div>
 				<!-- 게시글 내용 -->
-				<div class="board-contents">
+				<div class="board-contents summernote-board-contents-load">
 					
 					<div class="btn-box-mod">
-						<a class="edit" href="#">수정</a>
+						<a class="edit" href="community_write_modify_form.do?idx=${ vo.idx }">수정</a>
 						<a class="del" href="#">삭제</a>
 					</div>
-					<p>
-						모십니다 모십니다 어쩌고 저쩌고</br>
-						아에 에헤 에헤야
-						모십니다 모십니다 어쩌고 저쩌고</br>
-						아에 에헤 에헤야
-						모십니다 모십니다 어쩌고 저쩌고</br>
-						아에 에헤 에헤야
-						모십니다 모십니다 어쩌고 저쩌고</br>
-						아에 에헤 에헤야
-						모십니다 모십니다 어쩌고 저쩌고</br>
-						아에 에헤 에헤야
-						모십니다 모십니다 어쩌고 저쩌고</br>
-						아에 에헤 에헤야
-						모십니다 모십니다 어쩌고 저쩌고</br>
-						아에 에헤 에헤야
-						모십니다 모십니다 어쩌고 저쩌고</br>
-						아에 에헤 에헤야
-						모십니다 모십니다 어쩌고 저쩌고</br>
-						아에 에헤 에헤야
-						모십니다 모십니다 어쩌고 저쩌고</br>
-						아에 에헤 에헤야
-						모십니다 모십니다 어쩌고 저쩌고</br>
-						아에 에헤 에헤야
-						모십니다 모십니다 어쩌고 저쩌고</br>
-						아에 에헤 에헤야
-						모십니다 모십니다 어쩌고 저쩌고</br>
-						아에 에헤 에헤야asdfasdfㄱ닉마넝리ㅓㄱ암ㄴㄹ
-					</p>
+					${ vo.content }
 					<div class="btn-box-rec tac">
 						<a href="#" class="my-btn yellow-black">추천</a>
 						<a class="my-btn black-white list" href="community_list.html">목록으로</a>

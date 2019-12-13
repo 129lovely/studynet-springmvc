@@ -26,5 +26,14 @@ public class BoardService {
 		return boardDAO.selectList();
 	}
 	
+	// 커뮤니티 상세페이지 / 수정페이지 출력하기
+	public BoardVO showCommunityListDetail(int idx) {
+		return boardDAO.selectOne(idx);
+	}
+	
+	// 커뮤니티 글작성 / 글수정하기
+	public void writeCommunity(BoardVO vo) {
+		boardDAO.insert(vo);
+	}
 
 }
