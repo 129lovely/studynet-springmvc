@@ -6,6 +6,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectList" resultType="user">
 		select * from user
 	</select>
+	
+	<!-- 아이디 중복 확인 -->
+	<select id="emailCheck" resultType="java.lang.String" parameterType="java.lang.String">
+	 SELECT email FROM user WHERE email = #{email}
+	</select>
 </mapper>
 
 

@@ -1,13 +1,15 @@
 package controller;
 
-import java.lang.ProcessBuilder.Redirect;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import common.Common;
 import service.BoardService;
@@ -104,4 +106,11 @@ public class StudyController {
 		return "redirect:community_list.do";
 	}
 
+	@RequestMapping("/email_check.do")
+	@ResponseBody
+	public String email_check( String input_email, HttpServletRequest request ){
+		String res = userService.emailCheck(input_email);
+		request.setAttribute("res", res);
+		return res;
+	}
 }

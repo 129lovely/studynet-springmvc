@@ -41,4 +41,8 @@ public class UserDAO implements DAO {
 		return 0;
 	}
 
+	public String emailCheck(String input_email) {
+		String email = sqlSession.selectOne("user.emailCheck", input_email);
+		return email;
+	}
 }

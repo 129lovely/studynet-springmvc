@@ -44,7 +44,7 @@
 								</textarea>
 								
 								<div class= "checkbox_right">
-								<input type="checkbox" name="accept" value="동의">
+								<input type="checkbox" id="join-check-1" name="accept" value="동의">
 								<label for="join-check-1">약관에 동의합니다</label>
 								</div>
 							</div>
@@ -64,7 +64,7 @@
 								</textarea>
 								
 								<div class= "checkbox_right">
-								<input type="checkbox" name="accept" value="동의">
+								<input type="checkbox" id="join-check-2" name="accept" value="동의">
 								<label for="join-check-2">약관에 동의합니다</label>
 								</div>	
 							</div>
@@ -83,7 +83,7 @@
 							</textarea>
 							
 							<div class= "checkbox_right">
-							<input type="checkbox" name="accept" value="동의">
+							<input type="checkbox" id="join-check-3" name="accept" value="동의">
 							<label for="join-check-3">약관에 동의합니다</label>
 							</div>	
 						</div>
