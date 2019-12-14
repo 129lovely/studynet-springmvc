@@ -6,6 +6,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectList" resultType="boardComment" parameterType="int">
 		select * from board_comment where board_idx=#{board_idx} order by seq asc
 	</select>
+	
+	<update id="update" parameterType="int">
+		update board_comment set content=#{content}, updated_at=sysdate where idx=#{idx}
+	</update>
 </mapper>
 
 

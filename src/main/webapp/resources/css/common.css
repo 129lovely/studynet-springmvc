@@ -1627,14 +1627,15 @@ textarea {
 //
 //----------------------------------------------------------------------------------
 */
+
 .study-join .study-join-form {
     margin: 0 auto;
 }
 .study-join .study-join-form table tr th {
     font-weight: bold;
     text-align: right;
-    min-width: 120px;
-    padding-right: 10px;
+    min-width: 110px;
+    padding-right: 5px;
     vertical-align: middle;
 }
 
@@ -1671,6 +1672,27 @@ textarea {
 
 .study-join .study-join-form tr:last-child {
     height: 150px;
+}
+
+
+/* 이메일 입력 모달 */
+
+.info_content.input > div {
+	position: absolute;
+	top: 37.5%;
+	left: 15%;
+	width: 70%;
+	height: 25%;
+	padding: 16px;
+    border: 16px solid #FFC267;
+    border-radius: 5px;
+	background-color: #eef3fa;
+    overflow: auto;	
+    text-align: center;
+}
+
+.info_content.input > div > p input[type="text"]{
+	width: 70%;
 }
 
 /*

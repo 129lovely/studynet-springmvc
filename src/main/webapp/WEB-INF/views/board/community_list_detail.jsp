@@ -60,12 +60,18 @@
 									<h3>${ vo.user_idx }</h3>
 									<span>${ vo.created_at }</span>
 									<a href="javascript:void(0);" onclick="openReComment(this);">대댓글 달기</a>
-									<a href="#">수정</a>
+									<a href="community_list_detail_modify_form.do?idx=${ vo.idx }" onclick="openReComment(this);">수정</a>
 									<a href="#">삭제</a>
-								</div>
-								<p>
-									${ vo.content }
-								</p>
+									</div>
+									<c:if test="${show ne 'yes'}">
+										<p>
+											${ vo.content }
+										</p>
+									</c:if>
+									<c:if test="${show eq 'yes' }">
+										<textarea class="comment-hidden">${ vo.content }</textarea>
+										<a class="my-btn black-white" href="community_list_detail_modify.do?idx=${ vo.idx }">댓글 달기</a>								
+									</c:if>
 							</div>
 						</c:if>
 						<c:if test="${ vo.parent != '' }">
@@ -76,12 +82,18 @@
 										<h3>${ vo.user_idx }</h3>
 										<span>${ vo.created_at }</span>
 										<a href="javascript:void(0);" onclick="openReComment(this);">대댓글 달기</a>
-										<a href="#">수정</a>
+										<a href="community_list_detail_modify_form.do?idx=${ vo.idx }" onclick="openReComment(this);">수정</a>
 										<a href="#">삭제</a>
 									</div>
-									<p>
-										${ vo.content }
-									</p>
+									<c:if test="${show ne 'yes'}">
+										<p>
+											${ vo.content }
+										</p>
+									</c:if>
+									<c:if test="${show eq 'yes' }">
+										<textarea class="comment-hidden">${ vo.content }</textarea>
+										<a class="my-btn black-white" href="community_list_detail_modify.do?idx=${ vo.idx }">댓글 달기</a>								
+									</c:if>
 								</div>
 							</div>
 						</c:if>
