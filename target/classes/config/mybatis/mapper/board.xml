@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board">
+
+	<select id="selectList" resultType="board">
+		select * from board
+	</select>
+	
+	<select id="selectList_index" resultType="board">
+		select * from board order by idx desc limit 3
+	</select>
+	
+	<select id="selectOne" resultType="board" parameterType="int">
+		select * from board where idx=#{idx}
+	</select>
+	
+	<insert id="insert" parameterType="board">
+		insert into board (user_idx, title, content) values (#{user_idx}, #{title}, #{content})
+	</insert>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
