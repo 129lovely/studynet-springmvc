@@ -23,7 +23,8 @@
 						<span class="icon icon-join-study"></span>
 					</div>
 					<p class="section-discription">
-						회원 정보를 입력해 스터디넷에 가입하시면<br> 페이지의 모든 서비스를 이용하실 수 있습니다.
+						회원 정보를 입력해 스터디넷에 가입하시면<br> 페이지의 모든 서비스를 이용하실 수 있습니다.<br>
+						로그인 페이지에서 sns 로그인이 가능합니다.
 						
 					</p>
 				</div>

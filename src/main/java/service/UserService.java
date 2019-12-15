@@ -3,6 +3,7 @@ package service;
 import dao.BoardDAO;
 import dao.StudyDAO;
 import dao.UserDAO;
+import vo.UserVO;
 
 public class UserService {
 	BoardDAO boardDAO;
@@ -31,5 +32,17 @@ public class UserService {
 		}
 		
 		return res;
+	}
+	
+	// 회원 가입 
+	public String user_insert( UserVO vo ) {
+		int res = userDAO.insert(vo);
+		String result = "fail";
+		
+		if ( res != 0 ) {
+			result = vo.getName();
+		}
+		
+		return result;
 	}
 }
