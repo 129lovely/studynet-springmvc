@@ -152,7 +152,7 @@
 			<artifactId>commons-dbcp2</artifactId>
 			<version>2.2.0</version>
 		</dependency>
-	
+
 		<!-- mariadb관련 -->
 		<dependency>
 			<groupId>org.mariadb.jdbc</groupId>
@@ -173,6 +173,16 @@
 			<artifactId>commons-io</artifactId>
 			<version>2.4</version>
 		</dependency>
+
+		<!-- 웹소켓 관련 -->
+		<!-- https://mvnrepository.com/artifact/org.java-websocket/Java-WebSocket -->
+		<dependency>
+			<groupId>org.java-websocket</groupId>
+			<artifactId>Java-WebSocket</artifactId>
+			<version>1.4.0</version>
+		</dependency>
+
+
 
 	</dependencies>
 
