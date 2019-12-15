@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -17,6 +16,7 @@ import service.StudyService;
 import service.UserService;
 import vo.BoardCommentVO;
 import vo.BoardVO;
+import vo.UserVO;
 
 @Controller
 public class StudyController {
@@ -52,9 +52,19 @@ public class StudyController {
 	
 	// 회원 가입 - 2 ( 정보 입력 페이지 )
 	@RequestMapping("/user_join_form.do")
-	public String user_join( ) {
+	public String user_join_form( ) {
 		return Common.User.VIEW_PATH + "user_join.jsp";
 	}
+	
+	// 회원가입 - 3 ( 회원 가입 처리 후 완료 페이지로 포워딩)
+	@RequestMapping("/user_insert.do")
+	public String user_insert( UserVO vo, Model model ) {
+		String res = userService.user_insert( vo );
+		System.out.println(vo.getPassword() + ":컨트롤러");
+		model.addAttribute("res", res);
+		return Common.User.VIEW_PATH + "user_join_complete.jsp";
+	}
+	
 	
 	@RequestMapping("/community_list.do")
 	public String community_list(Model model) {
@@ -106,6 +116,7 @@ public class StudyController {
 		return "redirect:community_list.do";
 	}
 
+	// 이메일 중복 확인
 	@RequestMapping("/email_check.do")
 	@ResponseBody
 	public String email_check( String input_email, HttpServletRequest request ){

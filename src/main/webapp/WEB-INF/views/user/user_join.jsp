@@ -37,6 +37,7 @@
 			sendRequest( url, param, verify_result, "GET");
 		}
 		
+		// resultFn()
 		function verify_result() {
 		if( xhr.readyState == 4 && xhr.status == 200 ){
 				
@@ -59,9 +60,72 @@
 		}
 		
 		// 폼 전체 유효성 검사
-		function send() {
+		function send( f ) {
+			var email = f.email;
+			var name = f.name;
+			var password = f.pwd;
+			var pwd_check = document.getElementById("pwd_check")
+			var phone = f.tel.value;
+
+			// 혹시라도 이메일이 비어있는지 확인
+			if ( !email.value ) {
+				alert("이메일을 확인해주세요.");
+				email.focus();
+			}
+			
+			// 이름 입력했는지 확인
+			if ( ! name.value ) {
+				alert("이름을 입력해주세요.")
+				name.focus();
+				return;
+			}
+			
+			// 비밀번호
+			var pwd_patt = /^(?=.*[a-zA-Z0-9])(?=.*[^a-zA-Z0-9가-힣]).{8,}$/;
+			
+			if( ! pwd_patt.test(password.value) ) {
+				alert("비밀번호 형식이 올바르지 않습니다. ");
+				password.focus();
+				return;
+			}
+			
+			// 비밀번호 확인
+			if ( ! pwd_check.value ) {
+				alert("비밀번호를 확인해주세요.");
+				pwd_check.focus();
+				return;
+			} else if ( password.value != pwd_check.value ) {
+				alert("비밀번호가 일치하지 않습니다.")
+				pwd_check.focus();
+				return;
+			}
+			
+			// 전화번호 인증 여부
 			
 			
+			// 직업
+			var job_type = document.all("job-type");
+			
+			var student = job_type[0];
+			var job_seeker = job_type[1];
+			var office_worker = job_type[2];
+			var job_etc = job_type[3];
+			
+			if ( !student.checked && !job_seeker.checked && !office_worker.checked && !job_etc.checked ) {
+				alert("직업군을 선택해주세요.");
+				return;
+			}
+			
+			// 지역 
+			if( f.region.selectedIndex == 0 ){
+			    alert('지역을 선택해주세요.');
+			    f.region.options[0].focus();
+				return;
+			}
+			
+			f.action = "user_insert.do";
+			//f.method = "post";
+			f.submit();
 			
 		}
 	
@@ -127,7 +191,7 @@
 								<tr>
 									<th>비밀번호 확인</th>
 									<td>
-										<input name="pwd_check" placeholder="비밀번호를 다시 한번 입력해주세요." type="password">
+										<input id="pwd_check" placeholder="비밀번호를 다시 한번 입력해주세요." type="password" >
 									</td>
 								</tr>
 								
@@ -137,7 +201,8 @@
 										<input type="text" name="tel" placeholder="'-'을 제외하고 입력해주세요.">
 									</td>
 									<td>
-										<input class="my-btn black-white" name="" type="button" value="번호인증">
+										<input class="my-btn black-white" name="" type="button" value="본인 인증">							
+										<input type="hidden" value="1" name="is_phone_auth">
 									</td>
 								</tr>
 								
@@ -146,23 +211,23 @@
 									<td>
 										<div class="join-radio-box">
 											<div>
-												<input type="radio" name="job-type" id="job-type-student">
-												<label for="job-type-student">학생</label>
+												<input type="radio" name="job-type" value="학생" id="student">
+												<label for="student">학생</label>
 											</div>
 											
 											<div>
-												<input type="radio" name="job-type" id="job-type-job_seeker">
-												<label for="job-type-job_seeker">취준생</label>
+												<input type="radio" name="job-type" value="취준생" id="job_seeker">
+												<label for="job_seeker">취준생</label>
 											</div>
 											
 											<div>
-												<input type="radio" name="job-type" id="job-type-office_worker">
-												<label for="job-type-office_worker">직장인</label>
+												<input type="radio" name="job-type" value="직장인" id="office_worker">
+												<label for="office_worker">직장인</label>
 											</div>
 											
 											<div>
-												<input type="radio" name="job-type" id="job-type-etc">
-												<label for="job-type-etc">기타</label>
+												<input type="radio" name="job-type" value="기타" id="job_etc">
+												<label for="job_etc">기타</label>
 											</div>
 											
 										</div>
@@ -173,8 +238,23 @@
 									<th>지역</th>
 									<td class="select-region">
 										<div>
-											<select>
-												<option>지역</option>
+											<select name="region">
+												<option value="" >지역 선택</option>
+												<option value="서울" >서울</option>
+												<option value="경기도" >경기도</option>
+												<option value="대전" >대전</option>
+												<option value="인천" >인천</option>
+												<option value="부산" >부산</option>
+												<option value="대구" >대구</option>
+												<option value="광주" >광주</option>
+												<option value="울산" >울산</option>
+												<option value="세종" >세종</option>
+												<option value="강원도" >강원도</option>
+												<option value="충청도" >충청도</option>
+												<option value="경상도" >경상도</option>
+												<option value="전라도" >전라도</option>
+												<option value="제주도" >제주도</option>
+												<option value="해외" >해외 거주</option>
 											</select>
 										</div>	
 									</td>
@@ -182,8 +262,8 @@
 								
 								<tr>
 									<td colspan="3" class="tac">
-										<input class="my-btn yellow-black mb20" type="button" value="가입하기" onClick="">												
-										<input class="my-btn yellow-black mb20" type="button" value="돌아가기" onClick="">										
+										<input class="my-btn yellow-black mb20" type="button" value="가입하기" onClick="send(this.form);">												
+										<input class="my-btn yellow-black mb20" type="button" value="돌아가기" onClick="location.href='index.do'">										
 									</td>
 								</tr>
 							</table>	

@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>회원 가입 완료</title>
 </head>
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
@@ -16,7 +16,8 @@
 				<div class="contents-box board">
 					<div class="line-bottom">
 						<p class="section-title tac">귀중한 시간 내어주셔서 감사합니다.</br>
-							<span class="section-title blue tac">김꽁치</span> 님의 회원가입이 완료되었습니다.
+							<span class="section-title blue tac">${res}</span> 님의 회원가입이 완료되었습니다.
+							<p class="section-dispcription">가입하신 아이디로 로그인해주시길 바랍니다.</p>
 						</p>
 						<div class="section-discription">
 							<span class="sub-section-title">[ sns 로그인의 경우 ]</span><br><br>
