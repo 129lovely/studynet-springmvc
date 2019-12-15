@@ -72,7 +72,7 @@ public final class SMSFactory {
 	// public static String SECURE =
 	// base64Encode("7c65c2cbaa92e7467c4bfb94a98eb70d");
 	/**
-	 * 널체크한다고한다.
+	 * 널체크, null일 경우 파라미터로 들어온 디폴트값으로 대체.
 	 * 
 	 * @param str
 	 * @param Defaultvalue

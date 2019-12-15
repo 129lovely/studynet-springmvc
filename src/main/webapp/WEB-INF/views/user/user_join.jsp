@@ -63,9 +63,9 @@
 		function send( f ) {
 			var email = f.email;
 			var name = f.name;
-			var password = f.pwd;
+			var password = f.password;
 			var pwd_check = document.getElementById("pwd_check")
-			var phone = f.tel.value;
+			var phone = f.phone.value;
 
 			// 혹시라도 이메일이 비어있는지 확인
 			if ( !email.value ) {
@@ -104,7 +104,7 @@
 			
 			
 			// 직업
-			var job_type = document.all("job-type");
+			var job_type = document.all("job");
 			
 			var student = job_type[0];
 			var job_seeker = job_type[1];
@@ -184,7 +184,7 @@
 								<tr>	
 									<th>비밀번호</th>
 									<td>
-										<input type="password" name="pwd" placeholder="비밀번호는 8자 이상 특수 기호 포함" >
+										<input type="password" name="password" placeholder="비밀번호는 8자 이상 특수 기호 포함" >
 									</td>
 								</tr>
 								
@@ -198,7 +198,7 @@
 								<tr>	
 									<th>전화번호</th>
 									<td>
-										<input type="text" name="tel" placeholder="'-'을 제외하고 입력해주세요.">
+										<input type="text" name="phone" placeholder="'-'을 제외하고 입력해주세요.">
 									</td>
 									<td>
 										<input class="my-btn black-white" name="" type="button" value="본인 인증">							
@@ -211,22 +211,22 @@
 									<td>
 										<div class="join-radio-box">
 											<div>
-												<input type="radio" name="job-type" value="학생" id="student">
+												<input type="radio" name="job" value="학생" id="student">
 												<label for="student">학생</label>
 											</div>
 											
 											<div>
-												<input type="radio" name="job-type" value="취준생" id="job_seeker">
+												<input type="radio" name="job" value="취준생" id="job_seeker">
 												<label for="job_seeker">취준생</label>
 											</div>
 											
 											<div>
-												<input type="radio" name="job-type" value="직장인" id="office_worker">
+												<input type="radio" name="job" value="직장인" id="office_worker">
 												<label for="office_worker">직장인</label>
 											</div>
 											
 											<div>
-												<input type="radio" name="job-type" value="기타" id="job_etc">
+												<input type="radio" name="job" value="기타" id="job_etc">
 												<label for="job_etc">기타</label>
 											</div>
 											

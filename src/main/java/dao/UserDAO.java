@@ -27,7 +27,6 @@ public class UserDAO implements DAO {
 
 	// 회원 가입
 	public int insert(UserVO vo) {
-		System.out.println(vo.getPassword() + ":dao");
 		int res = sqlSession.insert( "user.insert", vo );
 		return res;
 	}

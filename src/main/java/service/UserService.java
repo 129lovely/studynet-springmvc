@@ -36,7 +36,6 @@ public class UserService {
 	
 	// 회원 가입 
 	public String user_insert( UserVO vo ) {
-		System.out.println(vo.getPassword() + ":서비스");
 		int res = userDAO.insert(vo);
 		String result = "fail";
 		

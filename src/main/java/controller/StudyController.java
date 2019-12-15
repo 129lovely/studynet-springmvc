@@ -60,7 +60,6 @@ public class StudyController {
 	@RequestMapping("/user_insert.do")
 	public String user_insert( UserVO vo, Model model ) {
 		String res = userService.user_insert( vo );
-		System.out.println(vo.getPassword() + ":컨트롤러");
 		model.addAttribute("res", res);
 		return Common.User.VIEW_PATH + "user_join_complete.jsp";
 	}

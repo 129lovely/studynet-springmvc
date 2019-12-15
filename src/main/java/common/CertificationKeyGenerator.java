@@ -7,6 +7,7 @@ import java.util.HashMap;
  * @author lejewk
  * sms인증시 전화번호에대한 키 제네레이터
  */
+
 public class CertificationKeyGenerator {
 	public static CertificationKeyGenerator newInstance(){
 		return new CertificationKeyGenerator();
@@ -33,18 +34,15 @@ public class CertificationKeyGenerator {
 	}
 	
 	/**
-	 * 인증키를 디비에서 지우고 새로운 인증키를 생성하여 디비에 삽입한다.
+	 * 새로운 인증키를 생성하고 SMS를 보낸다.
 	 * @param thamesMemberDAO
 	 * @param phone
 	 */
-	public void tempKeyGenerator(CertifiDAO certifiDAO ,String phone) throws Exception{
+	public void tempKeyGenerator( String phone ) throws Exception{
 		//인증키 생성
 		String tempKey = tempKeyGenarator(phone);
 		System.out.println("암호화키 : "+tempKey);
 
-		//이전 인증키 삭제
-		certifiDAO.deleteTempKey(phone);
-		
 		//인증키및 전화번호 파라미터화
 		HashMap<Object, Object> param = new HashMap<Object, Object> ();
 		param.put("tempKey", tempKey);
@@ -53,9 +51,8 @@ public class CertificationKeyGenerator {
 		//SMS를 보내기위해 작업
 		SMSFactory smsFactory = new SMSFactory(tempKey, phone);
 		if(smsFactory.Send()){
-			//sms로 발송한 신규 인증키를 db에 삽입
-			System.out.println("sms 전송 완료");
-			certifiDAO.insertCertificationKey(param);			
+			// 발송 완료 확인
+			System.out.println("sms 전송 완료");	
 		}
 	}
 	
@@ -66,16 +63,16 @@ public class CertificationKeyGenerator {
 	 * @param input
 	 * @return
 	 */
-	public boolean isCorrectCertifiKey(CertifiDAO certifiDAO, String phone , String inputKey){
+	public boolean isCorrectCertifiKey( String key, String phone , String inputKey){
 		//db에서 dbKey를 가져와 저장할 임시변수
-		String dbKey = "";
+		String dbKey = key;
 		//암호화된 전화번호로 임시키 가져옴
-		dbKey = certifiDAO.getTempKey(phone);
+		//dbKey = certifiDAO.getTempKey(phone);
 		//임시키와 인풋키 공백제거
 		dbKey = dbKey.trim();
 		inputKey = inputKey.trim();
 		//디비에 누적된 임시키 삭제
-		certifiDAO.deleteTempKey(phone);
+		//certifiDAO.deleteTempKey(phone);
 		
 		//인풋키와 임시키 비교
 		if(inputKey.equals(dbKey)){
