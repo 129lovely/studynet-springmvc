@@ -27,7 +27,7 @@
 	            <nav>
 					<ul class="flex-box">
 						<li><a href="user_login.html"><span>로그인</span></a></li>
-						<li><a href="user_join.html"><span>회원가입</span></a></li>
+						<li><a href="user_join_caution.do"><span>회원가입</span></a></li>
 					</ul>	
 	            </nav>
         	</div>

@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>커뮤니티 글 작성</title>
 	<script type="text/javascript">
 		function send(form) {
 			var title = form.title.value.trim();
