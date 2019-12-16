@@ -8,7 +8,7 @@
 	<meta charset="UTF-8">
 	<title>${ board.title }</title>
 	
-		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/httpRequest.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/httpRequest.js"></script>
 	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 	
 	<script type="text/javascript">

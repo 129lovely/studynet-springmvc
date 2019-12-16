@@ -52,7 +52,13 @@ public class StudyController {
 	public String user_login_form(  ) {
 		return Common.User.VIEW_PATH + "user_login.jsp";
 	}
-	
+
+	// 로그인 - 1 ( 페이지 이동 )
+	@RequestMapping("/user_login.do")
+	public String user_login(  ) {
+		return Common.User.VIEW_PATH + "user_login.jsp";
+	}
+
 	// 회원 가입 - 1 ( 약관 동의 페이지 )
 	@RequestMapping("/user_join_caution.do")
 	public String user_join_caution( ) {
