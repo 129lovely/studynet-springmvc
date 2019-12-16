@@ -21,7 +21,7 @@ public class CertificationKeyGenerator {
 	 * @param Number
 	 * @return
 	 */
-	public String tempKeyGenarator(String Number){
+	public String keyGenarator(String Number){
 		String lastNumberString = null;
 		String numberArray[] = Number.split("-");
 		if(numberArray[2].charAt(0) == '0'){
@@ -40,7 +40,7 @@ public class CertificationKeyGenerator {
 	 */
 	public void tempKeyGenerator( String phone ) throws Exception{
 		//인증키 생성
-		String tempKey = tempKeyGenarator(phone);
+		String tempKey = keyGenarator(phone);
 		System.out.println("암호화키 : "+tempKey);
 
 		//인증키및 전화번호 파라미터화
