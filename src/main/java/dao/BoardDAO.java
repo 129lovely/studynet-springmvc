@@ -2,6 +2,7 @@ package dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -22,6 +23,26 @@ public class BoardDAO implements DAO {
 		List<BoardVO> list = new ArrayList<BoardVO>();
 		list = sqlSession.selectList("board.selectList");
 		return list;
+	}
+
+	//전체 게시물 페이지 조회
+	public List<BoardVO> selectList( Map map ){
+
+		List<BoardVO> list = null;
+
+		list = sqlSession.selectList("b.board_list_page", map);
+
+		return list;
+
+	}
+	
+	//게시글 갯수
+	public int getRowTotal() {
+
+		int count = sqlSession.selectOne("board_count");
+
+		return count;
+
 	}
 
 	// 게시판 게시물 1개 가져오기

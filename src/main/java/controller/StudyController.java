@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -122,5 +123,26 @@ public class StudyController {
 		String res = userService.emailCheck(input_email);
 		request.setAttribute("res", res);
 		return res;
+	}
+	
+	// 페이징
+	@RequestMapping( "/page.do" )
+	public String list( Model model, int page ) {
+
+		int nowPage = 1;
+
+		if( page != 0 ) {
+			nowPage = page;
+		}
+		
+		
+		Map pageMap = boardService.showCommunityListPage(nowPage);
+		
+		model.addAttribute("list", pageMap.get("list") );
+		model.addAttribute("page", pageMap.get("page"));
+
+		
+		return Common.Board.VIEW_PATH + "board_list.jsp";
+
 	}
 }

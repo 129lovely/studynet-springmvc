@@ -54,8 +54,8 @@ public final class SMSFactory {
 		receive_phone_number = base64Encode(nullcheck(phone, ""));
 
 		first_phone_number = base64Encode(nullcheck("010", ""));
-		second_phone_number = base64Encode(nullcheck("2284", ""));
-		third_phone_number = base64Encode(nullcheck("7142", ""));
+		second_phone_number = base64Encode(nullcheck("4404", ""));
+		third_phone_number = base64Encode(nullcheck(third_phone_number, ""));
 		rDate = base64Encode(nullcheck(rDate, ""));
 		rTime = base64Encode(nullcheck(rTime, ""));
 		mode = base64Encode("1");
