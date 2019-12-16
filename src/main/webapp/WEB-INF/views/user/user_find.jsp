@@ -51,8 +51,8 @@
 		</form>
 		<div class="inner-box">
 			<div class="page-button">
-				<input type="button" class="my-btn black-white" value="메인으로">
-				<input type="button" class="my-btn black-white" value="로그인하기">
+				<input type="button" class="my-btn black-white" value="메인으로" onClick="index.do">
+				<input type="button" class="my-btn black-white" value="로그인하기" onClick="user_login_form.do"> 
 			</div>
 		</div>
 	 </div>
