@@ -20,6 +20,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into board (user_idx, title, content) values (#{user_idx}, #{title}, #{content})
 	</insert>
 	
+		<!-- 조회수 증가 -->
+	<update id="update_hit" parameterType="int">
+		update board set hit = hit + 1
+		where idx=#{idx}
+	</update>
+	
+	<!-- 커뮤니티 목록보기 -->
+	<select id="select_community_list" parameterType="board" resultType="board">
+		select * from board
+		
+	</select>
+	
+	<!--  작성자 idx이용해서 idx값이아닌 이름나오게하기 -->
+	<select id="select_community_list_name" parameterType="int" resultType="string">
+		select user.name
+		from board left outer join user
+		on user.idx=#{board.idx} 
+	</select>
+	
 </mapper>
 
 

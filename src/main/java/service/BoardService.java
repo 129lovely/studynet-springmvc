@@ -15,6 +15,7 @@ public class BoardService {
 	BoardDAO boardDAO;
 	StudyDAO studyDAO;
 	UserDAO userDAO;
+	
 	public void setBoardDAO(BoardDAO boardDAO) {
 		this.boardDAO = boardDAO;
 	}
@@ -39,14 +40,25 @@ public class BoardService {
 	public Map<String, Object> showCommunityListDetail(int idx) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("board", boardDAO.selectOne(idx));
+		
+		BoardVO vo = (BoardVO)map.get("board");
+		System.out.println( vo.getContent() );
+		
 		map.put("comment", boardDAO.selectCommentList(idx));
 		
 		return map;
 	}
+
 	
 	// 커뮤니티 글작성 / 글수정하기
 	public void writeCommunity(BoardVO vo) {
 		boardDAO.insert(vo);
+	}
+	
+	//상세페이지 들어갈때 조회수 증가시키기
+	public int hit_increase(int idx){
+		int re = boardDAO.update_hit(idx);
+		return re;
 	}
 	
 	// 커뮤니티 리스트 페이징 포함 출력하기
@@ -56,14 +68,22 @@ public class BoardService {
 		BoardDAO board_dao = null;
 		int row_total = board_dao.getRowTotal();
 		String pageMenu = Paging.getPaging("page.do", nowPage, row_total, Common.BoardPaging.BLOCKLIST, Common.BoardPaging.BLOCKPAGE);
+		
+		
 		// 페이지별 리스트 가져오기
 		
-		
-		
+
 		pageMap.put("pageMenu", pageMenu);
 		
 		
 		return pageMap;
+	}
+
+	
+	//작성자 idx이용해서 이름나오게하기
+	public int listview(int idx) {
+		int res=boardDAO.list_name(idx);
+		return res;
 	}
 
 

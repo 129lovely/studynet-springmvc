@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,6 +39,7 @@ public class StudyController {
 		this.boardService = boardService;
 	}
 
+	// index 
 	@RequestMapping(value = { "/", "/index.do" })
 	public String index(Model model) {
 		List<BoardVO> board = boardService.showCommunityList_index();
@@ -67,9 +69,12 @@ public class StudyController {
 	
 	
 	@RequestMapping("/community_list.do")
-	public String community_list(Model model) {
+	public String community_list(Model model, HttpServletRequest request) {
 		List<BoardVO> list = boardService.showCommunityList();
 		model.addAttribute("list", list);
+		//세션에 등록되어 있던 show정보를 없앤다
+		request.getSession().removeAttribute("show");
+				
 		return Common.Board.VIEW_PATH + "community_list.jsp";
 	}
 
@@ -79,10 +84,20 @@ public class StudyController {
 	}
 
 	@RequestMapping("/community_list_detail.do")
-	public String community_list_detail(Model model, int idx) {
+	public String community_list_detail(Model model, int idx , HttpServletRequest request) {
 		BoardVO board = (BoardVO) boardService.showCommunityListDetail(idx).get("board");
 		List<BoardCommentVO> comment = (ArrayList<BoardCommentVO>) boardService.showCommunityListDetail(idx)
 				.get("comment");
+		
+		//조회수 증가
+		HttpSession session = request.getSession();
+				String show = (String)session.getAttribute("show");
+				if( show == null ) {
+					//읽지 않은 게시물일때만 조회수를 증가
+					int res = boardService.hit_increase(idx);
+					session.setAttribute("show", "yes");
+				}
+		
 		model.addAttribute("board", board);
 		model.addAttribute("comment", comment);
 		return Common.Board.VIEW_PATH + "community_list_detail.jsp";

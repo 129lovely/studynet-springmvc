@@ -86,5 +86,25 @@ public class BoardDAO implements DAO {
 		int result = sqlSession.update("comment.update", vo);
 		return result;
 	}
+	
+	//조회수 증가시키기
+	public int update_hit(int idx){
+		int result1=sqlSession.update("board.update_hit",idx);
+		return result1;
+	}
+	
+	//작성자 idx이용해서 이름나오게하기
+	public int list_name(int idx) {
+		int result=sqlSession.selectOne("board.select_community_list_name",idx);
+		return result;
+	}
+	
+	// 커뮤니티 리스트가져오기
+	public List<BoardVO> select_community_list() {
+		List<BoardVO> list = new ArrayList<BoardVO>();
+		list = sqlSession.selectList("board.select_community_list");
+		return list;
+	}
+
 
 }
