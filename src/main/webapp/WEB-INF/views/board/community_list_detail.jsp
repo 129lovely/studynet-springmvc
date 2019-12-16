@@ -7,6 +7,62 @@
 <head>
 	<meta charset="UTF-8">
 	<title>${ board.title }</title>
+	
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/httpRequest.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	
+	<script type="text/javascript">
+		
+		// 댓글 수정 AJAX
+		function modify_comment(){
+			
+			var t=document.comment_modify;
+			var content=t.content.value;
+			
+			alert(content);
+			
+			var url="comment_update.do";
+			var param="idx="+${vo.idx}+"&content"+content;
+			
+			sendRequest(url, param, resultFn, "post");
+				
+		}
+		
+		function resultFn(){
+			
+			if(xhr.readyState==4 && xhr.status==200){
+				
+				if(result=='no'){
+					alert("댓글이 등록실패.");
+				}
+				
+				alert("댓글이 등록되었습니다.");
+				
+			}
+			
+		}
+	
+		function reply(){
+			
+			var f=document.comment;
+			var content=f.content.value;
+			
+			alert(content);
+			
+			if(content==''){
+				alert("내용을 입력하세요");
+				f.focus();
+				return ;
+			}
+			
+			f.method="post";
+			
+			f.submit();
+			
+		}
+
+	</script>
+	
 </head>
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
@@ -40,7 +96,7 @@
 					</div>
 					${ board.content }
 					<div class="btn-box-rec tac">
-						<a href="#" class="my-btn yellow-black">추천</a>
+						<a href="community_recommend.do?idx=${board.idx}" class="my-btn yellow-black">추천</a>
 						<a class="my-btn black-white list" href="community_list.do">목록으로</a>
 					</div>
 				</div>

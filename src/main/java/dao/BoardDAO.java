@@ -70,20 +70,42 @@ public class BoardDAO implements DAO {
 		return 0;
 	}
 
+	// 댓글 전체 가져오기
 	public List<BoardCommentVO> selectCommentList(int board_idx) {
 		List<BoardCommentVO> list = new ArrayList<BoardCommentVO>();
 		list = sqlSession.selectList("comment.selectList", board_idx);
 		return list;
 	}
 
+	// 글 리스트 가져오기
 	public List<BoardVO> selectList_index() {
 		List<BoardVO> list = new ArrayList<BoardVO>();
 		list = sqlSession.selectList("board.selectList_index");
 		return list;
 	}
 
-	public int update(BoardCommentVO vo) {
+	// 댓글 수정
+	public int update_comment(BoardCommentVO vo) {
 		int result = sqlSession.update("comment.update", vo);
+		return result;
+	}
+	
+	// 커뮤니티 원글 수정
+	public int update_community(BoardVO vo) {
+		int result=sqlSession.update("board.update_modify",vo);
+		return result;
+	}
+	
+	// 커뮤니티 추천수 올리기
+	public int update_recommend(int idx) {
+		int result=sqlSession.update("board.update_recommend", idx);
+		return result;
+	}
+	
+	// 커뮤니티 원글에 댓글달기
+	public int insert_comment(BoardCommentVO vo) {
+		int result=sqlSession.insert("comment.insert", vo);
+		System.out.println("DAO ");
 		return result;
 	}
 	
@@ -93,7 +115,7 @@ public class BoardDAO implements DAO {
 		return result1;
 	}
 	
-	//작성자 idx이용해서 이름나오게하기
+	//작성자 idx이용해서 이름 나오게 하기
 	public int list_name(int idx) {
 		int result=sqlSession.selectOne("board.select_community_list_name",idx);
 		return result;
@@ -113,5 +135,7 @@ public class BoardDAO implements DAO {
 		
 		return res;
 	}
+	
+	
 
 }

@@ -9,6 +9,7 @@ import common.Paging;
 import dao.BoardDAO;
 import dao.StudyDAO;
 import dao.UserDAO;
+import vo.BoardCommentVO;
 import vo.BoardVO;
 
 public class BoardService {
@@ -53,6 +54,12 @@ public class BoardService {
 	// 커뮤니티 글작성 / 글수정하기
 	public void writeCommunity(BoardVO vo) {
 		boardDAO.insert(vo);
+	}
+	
+	// 게시글 댓글 수정하기
+	public int updateComment(BoardCommentVO vo) {
+		int res=boardDAO.update_comment(vo);
+		return res;
 	}
 	
 	//상세페이지 들어갈때 조회수 증가시키기
@@ -105,4 +112,23 @@ public class BoardService {
 
 		return result;
 	}
+	
+	// 커뮤니티 원글 수정하기
+	public int updateCommunity(BoardVO vo) {
+		int res=boardDAO.update_community(vo);
+		return res;
+	}
+	
+	// 추천수 올리기
+	public int updateRecommend(int idx) {
+		int res=boardDAO.update_recommend(idx);
+		return res;
+	}
+	
+	// 원글에 댓글달기
+	public int writeComment(BoardCommentVO vo) {
+		int res=boardDAO.insert_comment(vo);
+		return res;
+	}
+
 }

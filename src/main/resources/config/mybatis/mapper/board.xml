@@ -27,7 +27,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where idx=#{idx}
 	</update>
 	
-	
 		<!-- 조회수 증가 -->
 	<update id="update_hit" parameterType="int">
 		update board set hit = hit + 1
@@ -47,6 +46,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		on user.idx=#{board.idx} 
 	</select>
 	
+	<!-- 커뮤니티 원글 수정 -->
+	<update id="update_modify" parameterType="board">
+		update board set title=#{title}, content=#{content}, updated_at=current_timestamp() 
+		where idx=#{idx} 
+	</update>
+
+	<!-- 추천수 올리기 -->
+	<update id="update_recommend" parameterType="int">
+		update board set recommend=recommend+1 where idx=#{idx} 
+	</update>
+
 </mapper>
 
 

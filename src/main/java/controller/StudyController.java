@@ -83,11 +83,19 @@ public class StudyController {
 		return Common.Board.VIEW_PATH + "community_write.jsp";
 	}
 
+	// 원글 수정하기
+	@RequestMapping("/community_write_update.do")
+	public String community_write_update(BoardVO vo) {
+		
+		int res=boardService.updateCommunity(vo);
+		return "community_list_detail.do?idx="+vo.getIdx();
+		
+	}
+	
 	@RequestMapping("/community_list_detail.do")
 	public String community_list_detail(Model model, int idx , HttpServletRequest request) {
 		BoardVO board = (BoardVO) boardService.showCommunityListDetail(idx).get("board");
-		List<BoardCommentVO> comment = (ArrayList<BoardCommentVO>) boardService.showCommunityListDetail(idx)
-				.get("comment");
+		List<BoardCommentVO> comment = (ArrayList<BoardCommentVO>) boardService.showCommunityListDetail(idx).get("comment");
 		
 		//조회수 증가
 		HttpSession session = request.getSession();
@@ -169,5 +177,36 @@ public class StudyController {
 		return "redirect:community_list.do";
 
 	}
+	
+	// 추천버튼 클릭시 추천 수 올리기
+	@RequestMapping("/community_recommend.do")
+	public String community_recommend(int idx) {
+		
+		int res=boardService.updateRecommend(idx);
+		return "community_list_detail.do?idx="+idx;
+		
+	}
+	
+	// 댓글달기
+	@RequestMapping("/comment_origin_reply.do")
+	public String comment_origin_reply(BoardCommentVO vo) {
+		boardService.writeComment(vo);
+		return "community_list_detail.do?idx="+vo.getBoard_idx();		
+	}
+
+	// 댓글 수정
+	@RequestMapping("/comment_update.do")
+	@ResponseBody
+	public String comment_update(BoardCommentVO vo) {
+		
+		int res= boardService.updateComment(vo);
+		
+		String result="no";
+		if(res!=0) {
+			result="yes";
+		}
+		return result;
+	}
+
 
 }
