@@ -43,7 +43,7 @@
 				return;
 			}
 			
-			var url = "login.do";
+			var url = "user_login.do";
 			var param = "email=" + encodeURIComponent(email.value) + "&password=" + encodeURIComponent(password.value) ;
 			
 			sendRequest(url, param, login_result, "post");
@@ -53,7 +53,7 @@
 		// resultFn
 		function login_result(){
 			if ( xhr.readyState == 4 && xhr.status == 200 ){
-				alert("흠");
+				alert("배고프고 . . 졸립ㄴ다 . .");
 			}
 		}
 	
