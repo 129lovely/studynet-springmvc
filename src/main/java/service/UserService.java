@@ -45,4 +45,31 @@ public class UserService {
 		
 		return result;
 	}
+	
+	// 로그인
+	public String user_login( String email, String password ) {
+		
+		String res = "";
+		
+		UserVO user = userDAO.selectOne(email);
+		
+		// email이 일치하지 않는 경우
+		if ( user == null ) {
+			res = "no_email";
+			return res;
+		}
+		
+		// 비밀번호가 일치하지 않는 경우
+		if ( ! user.getPassword().equals(password) ) {
+			res = "no_password";
+			return res;
+		}
+		
+		// 모두 일치하는 경우
+		res = "clear";
+		
+		// 세션에 정보를 담아준다.
+		
+		return res;
+	}
 }

@@ -79,7 +79,6 @@ public class BoardService {
 		
 		// 페이지별 리스트 가져오기
 		
-
 		pageMap.put("pageMenu", pageMenu);
 		
 		

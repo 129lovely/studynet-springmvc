@@ -53,10 +53,12 @@ public class StudyController {
 		return Common.User.VIEW_PATH + "user_login.jsp";
 	}
 
-	// 로그인 - 1 ( 페이지 이동 )
+	// 로그인 - 2 ( 폼 전송 )
 	@RequestMapping("/user_login.do")
-	public String user_login(  ) {
-		return Common.User.VIEW_PATH + "user_login.jsp";
+	@ResponseBody
+	public String user_login( String email, String password ) {
+		String result = userService.user_login( email, password );
+		return result;
 	}
 
 	// 회원 가입 - 1 ( 약관 동의 페이지 )
