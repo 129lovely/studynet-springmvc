@@ -160,4 +160,14 @@ public class StudyController {
 		return Common.Board.VIEW_PATH + "board_list.jsp";
 
 	}
+	
+	//게시글 삭제
+	@RequestMapping("/community_delete.do")
+	public String delete(int idx) {
+		boardService.del(idx);
+
+		return "redirect:community_list.do";
+
+	}
+
 }

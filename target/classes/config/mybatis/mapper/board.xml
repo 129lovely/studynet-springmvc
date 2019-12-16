@@ -20,6 +20,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into board (user_idx, title, content) values (#{user_idx}, #{title}, #{content})
 	</insert>
 	
+	<!-- 게시글 삭제 부분 ( delete 타임만 추가 ) -->
+	<update id="board_del_update" parameterType="board">
+		 UPDATE board
+		 SET deleted_at = current_timestamp()
+		where idx=#{idx}
+	</update>
+	
+	
 		<!-- 조회수 증가 -->
 	<update id="update_hit" parameterType="int">
 		update board set hit = hit + 1

@@ -67,8 +67,8 @@ public class BoardService {
 		
 		BoardDAO board_dao = null;
 		int row_total = board_dao.getRowTotal();
-		String pageMenu = Paging.getPaging("page.do", nowPage, row_total, Common.BoardPaging.BLOCKLIST, Common.BoardPaging.BLOCKPAGE);
-		
+		String pageMenu = Paging.getPaging("page.do", nowPage, row_total,
+				Common.BoardPaging.BLOCKLIST, Common.BoardPaging.BLOCKPAGE);
 		
 		// 페이지별 리스트 가져오기
 		
@@ -86,5 +86,23 @@ public class BoardService {
 		return res;
 	}
 
+	// 글 삭제
+	public String del( int idx) {
 
+		BoardVO baseVO = boardDAO.selectOne(idx);
+
+		String result = "no";
+
+		if( baseVO == null ) {
+			return result;
+		}
+		
+		int res = boardDAO.del_update( baseVO );
+
+		if( res == 1 ) {
+			result = "yes";
+		}
+
+		return result;
+	}
 }

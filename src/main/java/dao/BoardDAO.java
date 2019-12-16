@@ -87,7 +87,7 @@ public class BoardDAO implements DAO {
 		return result;
 	}
 	
-	//조회수 증가시키기
+	// 조회수 증가시키기
 	public int update_hit(int idx){
 		int result1=sqlSession.update("board.update_hit",idx);
 		return result1;
@@ -106,5 +106,12 @@ public class BoardDAO implements DAO {
 		return list;
 	}
 
+	//게시글 삭제... 인데 왜 이렇게 하셨는진 잘 모르겠음
+	public int del_update( BoardVO baseVO ) {
+		
+		int res = sqlSession.update("board_del_update", baseVO);
+		
+		return res;
+	}
 
 }
