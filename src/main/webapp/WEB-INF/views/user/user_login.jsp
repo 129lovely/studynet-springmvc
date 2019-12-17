@@ -67,7 +67,7 @@
 					return;
 				}
 				
-				alert( "${user.getName()} 님 반갑습니다.");
+				alert( "<c:out value='${user.name}'/>");
 				location.href = "${prevPage}";
 			}
 		}
