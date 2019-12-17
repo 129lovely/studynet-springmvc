@@ -5,12 +5,13 @@
 <html>
 
 <head>
-<meta charset="UTF-8">
-<title>마이 페이지 | 내 스터디 룸</title>
+	<meta charset="UTF-8">
+	<title>마이 페이지 | 내 스터디 룸</title>
+	
+	<link type="text/css" rel="stylesheet" href="css/common.css" />
+	<link type="text/css" rel="stylesheet" href="css/reset.css" />
+	<script src="js/sample.js"></script>
 
-<link type="text/css" rel="stylesheet" href="css/common.css" />
-<link type="text/css" rel="stylesheet" href="css/reset.css" />
-<script src="js/sample.js"></script>
 </head>
 
 <body>
@@ -62,8 +63,11 @@
 						</div>
 
 					</div>
+					
+					
 					<div class="study-room-box ">
 						<div>
+						
 							<!-- if status == 승인대기 -->
 							<div class="study-room ready-confirm">
 								<a class="study-name" href="#"> <span
@@ -483,6 +487,7 @@
 								</div>
 							</div>
 
+
 							<!-- study가 아예 없을 경우 -->
 							<div class="study-room none">
 								<p class="study-name">참여중인 스터디가 존재하지 않습니다.</p>
@@ -493,8 +498,8 @@
 										class="my-btn yellow-black" value="스터디 개설하기">
 								</div>
 							</div>
+						
 						</div>
-
 					</div>
 				</div>
 			</div>

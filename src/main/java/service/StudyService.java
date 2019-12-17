@@ -8,6 +8,7 @@ public class StudyService {
 	BoardDAO boardDAO;
 	StudyDAO studyDAO;
 	UserDAO userDAO;
+	
 	public void setBoardDAO(BoardDAO boardDAO) {
 		this.boardDAO = boardDAO;
 	}

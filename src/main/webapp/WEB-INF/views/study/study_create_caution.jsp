@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>스터디 생성 안내</title>
 </head>
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
@@ -46,8 +46,8 @@
 					<input class="my-btn black-white" type="button" value="등록하기" />
 					<input class="my-btn black-white" type="button" value="취소하기" />
 				</div>
+			</div>
 		</div>
-	
 	</div>
 	<jsp:include page="../footer.jsp"></jsp:include>
 </body>

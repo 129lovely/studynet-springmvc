@@ -1,14 +1,29 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<!--  include file="../login_check.jsp" %> --> 
+
 <!DOCTYPE html>
+
 <html>
+
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>스터디 룸 생성</title>
+	
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
+ 
+ 	<script>
+ 		
+ 	</script>
+
+
 </head>
+
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
+	
 	<div class="body-bgcolor-set">
 		<div>
 			<form>
@@ -64,15 +79,7 @@
 											<th>신청 마감</th>
 											<td class="select-date">
 												<div>
-													<select>
-														<option>년</option>
-													</select>
-													<select>
-														<option>월</option>	
-													</select>
-													<select>
-														<option>일</option>
-													</select>
+													<input type="text" id="deadLine" name="deadline">
 												</div>
 												<div>
 													<input type="checkbox" id="recruit-type" name="">
@@ -111,11 +118,11 @@
 								</div>
 								<div>
 									<ul class="flex-box">
-										<li><a href="#"><span class="my-btn select yellow-black">공모전</span></a></li>
-										<li><a href="#"><span class="my-btn select yellow-black">취업준비</span></a></li>
-										<li><a href="#"><span class="my-btn select yellow-black">기상/습관</span></a></li>
-										<li><a href="#"><span class="my-btn select yellow-black">공부</span></a></li>
-										<li><a href="#"><span class="my-btn select yellow-black">기타</span></a></li>
+										<li><label  class="my-btn select yellow-black"><input type="radio"/>공모전</label></li>
+										<li><label  class="my-btn select yellow-black"><input type="radio"/>취업준비</label></li>
+										<li><label  class="my-btn select yellow-black"><input type="radio"/>기상/습관</label></li>
+										<li><label  class="my-btn select yellow-black"><input type="radio"/>공부</label></li>
+										<li><label  class="my-btn select yellow-black"><input type="radio"/>기타</label></li>
 									</ul>
 								</div>
 							</div>
@@ -124,6 +131,7 @@
 				</div>
 			
 				<!-- 스터디 추가 정보 -->
+			
 				<div class="study-option-box">
 					<div class="inner-box">
 						<div class="contents-box">
@@ -133,12 +141,40 @@
 									<table>
 										<tr>
 											<th>모임 장소</th>
-											<td><input type="text" placeholder="모임 장소의 주소나 사용 메신저를 적어주세요." /></td>
+											<td><input type="text" placeholder="모임 장소의 주소나 사용할 메신저를 적어주세요." /></td>
 										</tr>
-										<tr>
-											<th>옵션</th>
-											<td><input type="text" placeholder="옵션 설명" /></td>
-										</tr>
+										
+										<!-- 스터디 목적에 따라 바뀌는 부분 -->
+										<c:if test="">
+											<tr>
+												<th>옵션</th>
+												<td><input type="text" placeholder="옵션 설명" /></td>
+											</tr>
+										</c:if>
+										<c:if test="">
+											<tr>
+												<th>옵션</th>
+												<td><input type="text" placeholder="옵션 설명" /></td>
+											</tr>
+										</c:if>
+										<c:if test="">
+											<tr>
+												<th>옵션</th>
+												<td><input type="text" placeholder="옵션 설명" /></td>
+											</tr>
+										</c:if>
+										<c:if test="">
+											<tr>
+												<th>옵션</th>
+												<td><input type="text" placeholder="옵션 설명" /></td>
+											</tr>
+										</c:if>
+										<c:if test="">
+											<tr>
+												<th>옵션</th>
+												<td><input type="text" placeholder="옵션 설명" /></td>
+											</tr>
+										</c:if>
 										<tr>
 											<th>오픈 카톡</th>
 											<td><input type="text" placeholder="오픈 카톡 주소를 입력해 주세요" /></td>
@@ -147,15 +183,7 @@
 											<th>활동 시작</th>
 											<td class="select-date">
 												<div>
-													<select>
-														<option>년</option>
-													</select>
-													<select>
-														<option>월</option>	
-													</select>
-													<select>
-														<option>일</option>
-													</select>
+													<input type="text" id="startDate" name="start_date">
 												</div>
 											</td>	
 										</tr>	
@@ -163,15 +191,7 @@
 											<th>활동 종료</th>
 											<td class="select-date">
 												<div>
-													<select>
-														<option>년</option>
-													</select>
-													<select>
-														<option>월</option>	
-													</select>
-													<select>
-														<option>일</option>
-													</select>
+													<input type="text" id="endDate" name="end_date">
 												</div>
 											</td>	
 										</tr>
@@ -223,4 +243,68 @@
 	<jsp:include page="../footer.jsp"></jsp:include>
 
 </body>
+
+	<!-- DatePicker -->
+ 	<script type="text/javascript">
+ 		$(document).ready(function () {
+	            $( "#deadLine" ).datepicker({
+	                 changeMonth: true, 
+	                 changeYear: true,
+	                 nextText: '다음 달',
+	                 prevText: '이전 달', 
+	                 dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+	                 dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
+	                 monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	                 monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	                 dateFormat: "yy-mm-dd",
+	                 minDate: 0,                       // 선택할수있는 최대날짜, ( 0 : 오늘 이후 날짜 선택 불가)
+	                 onClose: function( selectedDate ) {    
+	                     // 마감일(deadLine)이 닫힐 때
+	                     // 시작일(startDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
+	                     $("#startDate").datepicker( "option", "minDate", selectedDate );
+	                 }
+	            }); 
+	            
+	            $( "#startDate" ).datepicker({
+	                 changeMonth: true, 
+	                 changeYear: true,
+	                 nextText: '다음 달',
+	                 prevText: '이전 달', 
+	                 dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+	                 dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
+	                 monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	                 monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	                 dateFormat: "yy-mm-dd",
+	                 minDate: 0,                       // 선택할수있는 최소날짜, ( 0 : 오늘 이후 날짜 선택 불가)
+	                 onClose: function( selectedDate ) {    
+	                      //시작일(startDate) datepicker가 닫힐때
+	                      //종료일(endDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
+	                     $("#endDate").datepicker( "option", "minDate", selectedDate );
+	                      
+	                 	  //시작일(startDate) datepicker가 닫힐때
+	                      //마감일(deadLine)의 선택할수있는 최대 날짜(maxDate)를 선택한 시작일로 지정
+	                     $("#deadLine").datepicker( "option", "maxDate", selectedDate );
+	                 }
+	            }); 
+	            
+	            $( "#endDate" ).datepicker({
+	                 changeMonth: true, 
+	                 changeYear: true,
+	                 nextText: '다음 달',
+	                 prevText: '이전 달', 
+	                 dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+	                 dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
+	                 monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	                 monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	                 dateFormat: "yy-mm-dd",
+	                 minDate: 0,                       // 선택할수있는 최대날짜, ( 0 : 오늘 이후 날짜 선택 불가)
+	                 onClose: function( selectedDate ) {    
+	                     // 종료일(endDate) datepicker가 닫힐때
+	                     // 시작일(startDate)의 선택할수있는 최대 날짜(maxDate)를 선택한 시작일로 지정
+	                     $("#startDate").datepicker( "option", "maxDate", selectedDate );
+	                 }
+	            });      
+
+ 		}); 
+	</script>
 </html>

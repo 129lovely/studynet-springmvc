@@ -18,6 +18,7 @@ import service.StudyService;
 import service.UserService;
 import vo.BoardCommentVO;
 import vo.BoardVO;
+import vo.StudyVO;
 import vo.UserVO;
 
 @Controller
@@ -251,5 +252,20 @@ public class StudyController {
 		return result;
 	}
 
+	// 마이페이지 스터디룸 - 1 
+	// 유저가 참여 중인 스터디의 idx를 모두 가져온 뒤 해당하는 idx의 스터디 정보와 유저의 참여 상태를 가져와야 함
+	// 일단은 이동만 ^^...
+	@RequestMapping("/study_myinfo.do")
+	public String user_study_list ( ) {
+		
+		return Common.Study.VIEW_PATH + "study_myinfo.jsp";
+	}
+
+	// 스터디 만들기 페이지 - 1 ( 이동 )
+	@RequestMapping("/study_create_form.do")
+	public String study_create_form ( ) {
+		
+		return Common.Study.VIEW_PATH + "study_create.jsp";
+	}
 
 }
