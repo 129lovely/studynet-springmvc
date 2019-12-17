@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +8,7 @@
 </head>
 <body>
 	<!-- 푸터 -->
-    <footer class="footer-box">
+	<footer class="footer-box">
 		<div class="inner-box contents-box">
 			<div>
 				<ul class="flex-box">
@@ -21,11 +21,13 @@
 				</ul>
 			</div>
 			<div class="flex-box">
-				<h1><span class="icon icon-logo-bw"></span></h1>
+				<h1>
+					<span class="icon icon-logo-bw"></span>
+				</h1>
 				<p>
-					(주)스터디넷 | 서울특별시 마포구 서강로 136 아이비 타워 2층<br />
-					studynet@studynet.com | 사업자등록번호 155-23-04679<br />
-					Copyright ⓒ 2019 스터디넷 All rights reserved.  
+					(주)스터디넷 | 서울특별시 마포구 서강로 136 아이비 타워 2층<br /> studynet@studynet.com
+					| 사업자등록번호 155-23-04679<br /> Copyright ⓒ 2019 스터디넷 All rights
+					reserved.
 				</p>
 			</div>
 		</div>

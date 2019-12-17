@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	initSummernote();
-})
+});
 
 var preBtn = null;
 
