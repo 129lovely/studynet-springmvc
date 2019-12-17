@@ -49,16 +49,37 @@ public class StudyController {
 
 	// 로그인 - 1 ( 페이지 이동 )
 	@RequestMapping("/user_login_form.do")
-	public String user_login_form(  ) {
+	public String user_login_form( HttpServletRequest request ) {
+		
+		// 이전 페이지 정보 세션에 저장
+		String prevPage = request.getHeader("referer");
+		HttpSession session = request.getSession();
+		session.setAttribute("prevPage", prevPage);
 		return Common.User.VIEW_PATH + "user_login.jsp";
 	}
 
-	// 로그인 - 2 ( 폼 전송 )
+	// 로그인 - 2 ( 폼 전송, 세션에 저장 )
 	@RequestMapping("/user_login.do")
 	@ResponseBody
-	public String user_login( String email, String password ) {
-		String result = userService.user_login( email, password );
-		return result;
+	public String user_login( String email, String password, HttpServletRequest request ) {
+		Map map = (Map) userService.user_login( email, password );
+		
+		// res 담기
+		String res = (String) map.get("res");
+		
+		// 세션에 유저 정보 담기 ( res == clear인 경우만 )
+		if ( res.equals("clear") ) {
+			
+			UserVO user = (UserVO) map.get("user");
+			
+			System.out.println(user.getName());
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("user", user);
+			session.setMaxInactiveInterval(120 * 60);
+		}
+		
+		return res;
 	}
 
 	// 회원 가입 - 1 ( 약관 동의 페이지 )

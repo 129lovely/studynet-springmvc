@@ -1,5 +1,8 @@
 package service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import dao.BoardDAO;
 import dao.StudyDAO;
 import dao.UserDAO;
@@ -47,29 +50,32 @@ public class UserService {
 	}
 	
 	// 로그인
-	public String user_login( String email, String password ) {
+	public Map user_login( String email, String password ) {
+		
+		Map userMap = new HashMap();
 		
 		String res = "";
 		
 		UserVO user = userDAO.selectOne(email);
 		
-		// email이 일치하지 않는 경우
-		if ( user == null ) {
+		
+		if ( user == null ) { // email이 일치하지 않는 경우
 			res = "no_email";
-			return res;
-		}
-		
-		// 비밀번호가 일치하지 않는 경우
-		if ( ! user.getPassword().equals(password) ) {
+			userMap.put("res", res);
+		} else if ( ! user.getPassword().equals(password) ) { // 비밀번호가 일치하지 않는 경우
 			res = "no_password";
-			return res;
+			userMap.put("res", res);
+		} else {
+			// 모두 일치하는 경우
+			res = "clear";
+			userMap.put("user", user);
 		}
 		
-		// 모두 일치하는 경우
-		res = "clear";
+		// 맵에 담아준다. 
+		userMap.put("res", res);
+
+		System.out.println(user.getName());
 		
-		// 세션에 정보를 담아준다.
-		
-		return res;
+		return userMap;
 	}
 }

@@ -45,7 +45,6 @@
 			
 			var url = "user_login.do";
 			var param = "email=" + encodeURIComponent(email.value) + "&password=" + encodeURIComponent(password.value) ;
-			
 			sendRequest(url, param, login_result, "post");
 			
 		}
@@ -53,7 +52,23 @@
 		// resultFn
 		function login_result(){
 			if ( xhr.readyState == 4 && xhr.status == 200 ){
-				alert("배고프고 . . 졸립ㄴ다 . .");
+				var res = xhr.responseText;
+				var f = document.login_form;
+				
+				if ( res == "no_email" ) {
+					alert("회원 정보에 존재하지 않는 이메일입니다.");
+					f.email.focus();
+					return;
+				} 
+				
+				if ( res == "no_password" ) {
+					alert("비밀번호가 올바르지 않습니다.");
+					f.password.focus();
+					return;
+				}
+				
+				alert( "${user.getName()} 님 반갑습니다.");
+				location.href = "${prevPage}";
 			}
 		}
 	
@@ -86,7 +101,7 @@
 						<div class="line-bottom">
 							<div class="log-input tac">
 								<div>
-									<form>
+									<form name="login_form">
 										<div class="mb30">
 											<input type="text" name="email" placeholder="Email을 입력하세요.">
 											<input type="password" name="password" placeholder="Password를 입력하세요.">
