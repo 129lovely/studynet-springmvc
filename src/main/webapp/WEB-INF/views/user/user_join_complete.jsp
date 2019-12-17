@@ -31,8 +31,8 @@
 						</div>
 					</div>
 					<div class="tac mb40">
-						<input class="my-btn black-white mb20" type="button" value="메인페이지" />
-						<input class="my-btn yellow-black mb20" type="button" value="마이페이지" />
+						<input class="my-btn black-white mb20" type="button" value="메인페이지" onClick="location.href='index.do'"/>
+						<input class="my-btn yellow-black mb20" type="button" value="로그인 하기" onClick="location.href='user_login_form.do'"/>
 					</div>
 				</div>
 			</div>

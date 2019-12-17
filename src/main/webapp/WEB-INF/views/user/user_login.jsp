@@ -5,7 +5,74 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>로그인</title>
+	
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/httpRequest.js"></script>
+	
+	<script type="text/javascript">
+	
+		// 로그인 버튼 기능
+		function login( f ) {
+
+			var email = f.email;
+			var password = f.password;
+			
+			// 유효성 체크 - 1
+			if( email.value == "" ){
+				alert("이메일을 입력해주세요.");
+				email.focus();
+				return;
+			} else if( password.value == "" ){
+				alert("비밀번호를 입력해주세요.");
+				password.focus();
+				return;
+			}
+			
+			// 유효성 체크  - 2
+			var email_patt = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+			var pwd_patt = /^(?=.*[a-zA-Z0-9])(?=.*[^a-zA-Z0-9가-힣]).{8,}$/;
+			
+			if ( ! email_patt.test( email.value ) ) {
+				alert("이메일 형식이 올바르지 않습니다. ");
+				email.focus();
+				return;
+				
+			} else if( ! pwd_patt.test( password.value ) ) {
+				alert("비밀번호 형식이 올바르지 않습니다. ");
+				password.focus();
+				return;
+			}
+			
+			var url = "user_login.do";
+			var param = "email=" + encodeURIComponent(email.value) + "&password=" + encodeURIComponent(password.value) ;
+			sendRequest(url, param, login_result, "post");
+			
+		}
+	
+		// resultFn
+		function login_result(){
+			if ( xhr.readyState == 4 && xhr.status == 200 ){
+				var res = xhr.responseText;
+				var f = document.login_form;
+				
+				if ( res == "no_email" ) {
+					alert("회원 정보에 존재하지 않는 이메일입니다.");
+					f.email.focus();
+					return;
+				} 
+				
+				if ( res == "no_password" ) {
+					alert("비밀번호가 올바르지 않습니다.");
+					f.password.focus();
+					return;
+				}
+				
+				alert( "${user.getName()} 님 반갑습니다.");
+				location.href = "${prevPage}";
+			}
+		}
+	
+	</script>
 </head>
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
@@ -34,14 +101,14 @@
 						<div class="line-bottom">
 							<div class="log-input tac">
 								<div>
-									<form>
+									<form name="login_form">
 										<div class="mb30">
-											<input type="text" class="id-input" placeholder="ID를 입력하세요.">
-											<input type="password" class="pwd-input" placeholder="Password를 입력하세요.">
+											<input type="text" name="email" placeholder="Email을 입력하세요.">
+											<input type="password" name="password" placeholder="Password를 입력하세요.">
 										</div>
 										<div>
-											<input type="button" class="my-btn black-white" value="로그인"/>
-											<input type="button" class="my-btn black-white" value="회원가입" onclick="location.href='user_join.html'"/>
+											<input type="button" class="my-btn black-white" value="로그인" onClick="login(this.form);"/>
+											<input type="button" class="my-btn black-white" value="회원가입" onclick="location.href='user_join_caution.do'"/>
 										</div>
 									</form>
 									<a href="#" class="icon icon-login-kakao"></a>

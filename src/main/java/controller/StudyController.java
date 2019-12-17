@@ -2,8 +2,10 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -47,11 +49,45 @@ public class StudyController {
 		return "/WEB-INF/views/iframe.jsp";
 	}
 
+	// index 
 	@RequestMapping(value = { "/", "/index.do" })
 	public String index(Model model) {
 		List<BoardVO> board = boardService.showCommunityList_index();
 		model.addAttribute("board", board);
 		return "/WEB-INF/views/index.jsp";
+	}
+
+	// 로그인 - 1 ( 페이지 이동 )
+	@RequestMapping("/user_login_form.do")
+	public String user_login_form( HttpServletRequest request ) {
+		
+		// 이전 페이지 정보 세션에 저장
+		String prevPage = request.getHeader("referer");
+		HttpSession session = request.getSession();
+		session.setAttribute("prevPage", prevPage);
+		return Common.User.VIEW_PATH + "user_login.jsp";
+	}
+
+	// 로그인 - 2 ( 폼 전송, 세션에 저장 )
+	@RequestMapping("/user_login.do")
+	@ResponseBody
+	public String user_login( String email, String password, HttpServletRequest request ) {
+		Map map = (Map) userService.user_login( email, password );
+		
+		// res 담기
+		String res = (String) map.get("res");
+		
+		// 세션에 유저 정보 담기 ( res == clear인 경우만 )
+		if ( res.equals("clear") ) {
+			
+			UserVO user = (UserVO) map.get("user");
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("user", user);
+			session.setMaxInactiveInterval(120 * 60);
+		}
+		
+		return res;
 	}
 
 	// 회원 가입 - 1 ( 약관 동의 페이지 )
@@ -76,9 +112,12 @@ public class StudyController {
 	
 	
 	@RequestMapping("/community_list.do")
-	public String community_list(Model model) {
+	public String community_list(Model model, HttpServletRequest request) {
 		List<BoardVO> list = boardService.showCommunityList();
 		model.addAttribute("list", list);
+		//세션에 등록되어 있던 show정보를 없앤다
+		request.getSession().removeAttribute("show");
+				
 		return Common.Board.VIEW_PATH + "community_list.jsp";
 	}
 
@@ -87,11 +126,29 @@ public class StudyController {
 		return Common.Board.VIEW_PATH + "community_write.jsp";
 	}
 
+	// 원글 수정하기
+	@RequestMapping("/community_write_update.do")
+	public String community_write_update(BoardVO vo) {
+		
+		int res=boardService.updateCommunity(vo);
+		return "community_list_detail.do?idx="+vo.getIdx();
+		
+	}
+	
 	@RequestMapping("/community_list_detail.do")
-	public String community_list_detail(Model model, int idx) {
+	public String community_list_detail(Model model, int idx , HttpServletRequest request) {
 		BoardVO board = (BoardVO) boardService.showCommunityListDetail(idx).get("board");
-		List<BoardCommentVO> comment = (ArrayList<BoardCommentVO>) boardService.showCommunityListDetail(idx)
-				.get("comment");
+		List<BoardCommentVO> comment = (ArrayList<BoardCommentVO>) boardService.showCommunityListDetail(idx).get("comment");
+		
+		//조회수 증가
+		HttpSession session = request.getSession();
+				String show = (String)session.getAttribute("show");
+				if( show == null ) {
+					//읽지 않은 게시물일때만 조회수를 증가
+					int res = boardService.hit_increase(idx);
+					session.setAttribute("show", "yes");
+				}
+		
 		model.addAttribute("board", board);
 		model.addAttribute("comment", comment);
 		return Common.Board.VIEW_PATH + "community_list_detail.jsp";
@@ -133,4 +190,66 @@ public class StudyController {
 		request.setAttribute("res", res);
 		return res;
 	}
+	
+	// 페이징
+	@RequestMapping( "/page.do" )
+	public String list( Model model, int page ) {
+
+		int nowPage = 1;
+
+		if( page != 0 ) {
+			nowPage = page;
+		}
+		
+		
+		Map pageMap = boardService.showCommunityListPage(nowPage);
+		
+		model.addAttribute("list", pageMap.get("list") );
+		model.addAttribute("page", pageMap.get("page"));
+
+		
+		return Common.Board.VIEW_PATH + "board_list.jsp";
+
+	}
+	
+	//게시글 삭제
+	@RequestMapping("/community_delete.do")
+	public String delete(int idx) {
+		boardService.del(idx);
+
+		return "redirect:community_list.do";
+
+	}
+	
+	// 추천버튼 클릭시 추천 수 올리기
+	@RequestMapping("/community_recommend.do")
+	public String community_recommend(int idx) {
+		
+		int res=boardService.updateRecommend(idx);
+		return "community_list_detail.do?idx="+idx;
+		
+	}
+	
+	// 댓글달기
+	@RequestMapping("/comment_origin_reply.do")
+	public String comment_origin_reply(BoardCommentVO vo) {
+		boardService.writeComment(vo);
+		return "community_list_detail.do?idx="+vo.getBoard_idx();		
+	}
+
+	// 댓글 수정
+	@RequestMapping("/comment_update.do")
+	@ResponseBody
+	public String comment_update(BoardCommentVO vo) {
+		
+		int res= boardService.updateComment(vo);
+		
+		String result="no";
+		if(res!=0) {
+			result="yes";
+		}
+		return result;
+	}
+
+
 }

@@ -25,6 +25,12 @@ public class UserDAO implements DAO {
 		return null;
 	}
 
+	@Override
+	public int insert(Object vo) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	
 	// 회원 가입
 	public int insert(UserVO vo) {
 		int res = sqlSession.insert( "user.insert", vo );
@@ -48,10 +54,10 @@ public class UserDAO implements DAO {
 		String email = sqlSession.selectOne("user.emailCheck", input_email);
 		return email;
 	}
-
-	@Override
-	public int insert(Object vo) {
-		// TODO Auto-generated method stub
-		return 0;
+	
+	// 로그인 정보 가져오기 
+	public UserVO selectOne( String email ) {
+		UserVO user = sqlSession.selectOne("user.login", email);
+		return user;
 	}
 }

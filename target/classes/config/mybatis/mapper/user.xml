@@ -10,7 +10,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 아이디 중복 확인 -->
 	<select id="emailCheck" resultType="java.lang.String" parameterType="java.lang.String">
-	 SELECT email FROM user WHERE email = #{email}
+		SELECT email FROM user WHERE email = #{email}
 	</select>
 	
 	<!-- 회원 가입 -->
@@ -18,6 +18,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into user (email, password, name, phone, is_phone_auth, job, region)
 		values (#{email}, #{password}, #{name}, #{phone}, #{is_phone_auth}, #{job}, #{region})
 	</insert>
+	
+	<!-- 로그인 -->
+	<select id="login" parameterType="java.lang.String" resultType="user">
+		SELECT * FROM user WHERE email = #{email}
+	</select>
 </mapper>
 
 

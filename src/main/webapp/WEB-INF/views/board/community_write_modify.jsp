@@ -5,8 +5,36 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>커뮤니티 글 수정</title>
+	
+	<script>
+		function write_modify(f){
+			
+			var title=f.title.value;
+			var content=f.content.value;
+			var idx=f.idx.value;
+			
+			if(title==''){
+				alert("제목을 입력해주세요");
+				return;
+			}
+			
+			if(content==''){
+				alert("내용을 입력해주세요");
+				return;
+			}
+			
+			f.method="post";
+			f.action="community_write_update.do";
+			
+			f.submit();
+			
+		}
+	
+	</script>
+	
 </head>
+
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
     <div class="body-bgcolor-set">
