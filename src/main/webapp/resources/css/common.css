@@ -1425,6 +1425,7 @@ textarea {
 .study-method-box .sub-section-title {
     margin-right: 20px;
 }
+
 .study-method-box .study-method-title {
     justify-content: space-between;
     flex-wrap: wrap;
@@ -1448,6 +1449,14 @@ textarea {
     margin-bottom: 10px;
 }
 
+.study-method-box ul li input[type="radio"] {
+	display: none;
+}
+
+.study-method-box ul li input[type="radio"]:checked + label{
+	background-color: #32539D;
+	color: #DFE1E4;
+}
 
 /*
 //----------------------------------------------------------------------------------
