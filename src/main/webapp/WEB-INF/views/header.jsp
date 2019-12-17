@@ -18,6 +18,23 @@
 	<script type="text/javascript" src="${ pageContext.request.contextPath }/resources/js/summernote.js"></script>
 	<script type="text/javascript" src="${ pageContext.request.contextPath }/resources/js/summernote-ko-KR.js"></script>
     <script type="text/javascript" src="${ pageContext.request.contextPath }/resources/js/sample.js"></script>
+    
+    <!-- 로그인 여부에 따라 헤더 메뉴 변경 -->
+    <script type="text/javascript">
+    	window.onload = function () {
+
+    		if ( "${ !empty sessionScope.user }" ) {
+    			document.getElementById("member").style.display = "flex";
+    			document.getElementById("not_member").style.display = "none";
+    		}
+    		
+    		if ( "${ empty sessionScope.user }" ) {
+    			document.getElementById("member").style.display = "none";
+    			document.getElementById("not_member").style.display = "flex";
+    		}
+    	}
+    	
+    </script>
 </head>
 <body>
 	<!-- 헤더 메뉴 -->
@@ -25,10 +42,14 @@
     	<div class="user-menu">
         	<div class="inner-box">
 	            <nav>
-					<ul class="flex-box">
+					<ul class="flex-box" id="not_member">
 						<li><a href="user_login_form.do"><span>로그인</span></a></li>
 						<li><a href="user_join_caution.do"><span>회원가입</span></a></li>
 					</ul>	
+					<ul class="flex-box" id="member">
+						<li><a href="user_logout.do"><span>로그아웃</span></a></li>
+						<li><a href="user_myinfo.do"><span>마이페이지</span></a></li>
+					</ul>
 	            </nav>
         	</div>
 		</div>

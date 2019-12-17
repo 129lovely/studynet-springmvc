@@ -44,7 +44,7 @@
                 	
                     <h3 class="section-title blue">커뮤니티 글 작성</h3>
                     <p class="section-discription tal mb40">이용약관을 준수하여 올바른 커뮤니티 사용을 부탁드립니다.</p>
-                    
+
                     <!--제목-->
                     <div class="line-bottom flex-box">
                         <label for="board-title">제목</label>

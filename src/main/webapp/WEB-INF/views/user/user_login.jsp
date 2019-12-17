@@ -11,6 +11,14 @@
 	
 	<script type="text/javascript">
 	
+		// 혹시라도 로그인 한 유저가 로그인 url을 통해 접근했을 경우를 막기 위한 부분
+		window.onload = function () {
+			if ( ${ !empty user } ) {
+				alert("잘못된 접근입니다.");
+				location.href = "index.do";
+			}	
+		}
+		
 		// 로그인 버튼 기능
 		function login( f ) {
 
@@ -67,8 +75,10 @@
 					return;
 				}
 				
-				alert( "${user.getName()} 님 반갑습니다.");
+				alert("<c:out value='${user.name}'/> 님 반갑습니다. ");
+					
 				location.href = "${prevPage}";
+
 			}
 		}
 	
