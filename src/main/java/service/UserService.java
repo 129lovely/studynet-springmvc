@@ -74,8 +74,6 @@ public class UserService {
 		// 맵에 담아준다. 
 		userMap.put("res", res);
 
-		System.out.println(user.getName());
-		
 		return userMap;
 	}
 }

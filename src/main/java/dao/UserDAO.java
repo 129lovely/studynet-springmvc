@@ -58,7 +58,6 @@ public class UserDAO implements DAO {
 	// 로그인 정보 가져오기 
 	public UserVO selectOne( String email ) {
 		UserVO user = sqlSession.selectOne("user.login", email);
-		System.out.println(user.getName());
 		return user;
 	}
 }

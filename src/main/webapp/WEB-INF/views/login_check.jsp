@@ -10,7 +10,7 @@
 		<meta charset="UTF-8">
 		<title>로그인 확인 페이지</title>
 		
-		<c:if test=${ empty sessionScope.user }">
+		<c:if test="${ empty sessionScope.user }">
 			<script type="text/javascript">
 				alert("로그인 후에 이용하실 수 있습니다.");
 				location.href="user_login_form.do";
@@ -19,6 +19,6 @@
 	</head>
 	
 	<body>
-	
+
 	</body>
 </html>

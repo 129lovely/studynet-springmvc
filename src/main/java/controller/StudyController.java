@@ -72,8 +72,6 @@ public class StudyController {
 			
 			UserVO user = (UserVO) map.get("user");
 			
-			System.out.println(user.getName());
-			
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
 			session.setMaxInactiveInterval(120 * 60);
