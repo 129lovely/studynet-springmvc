@@ -1448,14 +1448,6 @@ textarea {
     margin-bottom: 10px;
 }
 
-.study-method-box ul li span {
-    transition: all 0.25s;
-}
-
-.study-method-box ul li span:hover {
-    background-color: #3B5BA2;
-	color: #EFF4FA;
-}
 
 /*
 //----------------------------------------------------------------------------------
@@ -1469,8 +1461,9 @@ textarea {
 }
 .study-option-box table tr th {
     font-weight: bold;
-    text-align: left;
-    min-width: 80px;
+    text-align: right;
+    min-width: 100px;
+    padding-right: 15px;
 }
 
 .study-option-box table tr td{

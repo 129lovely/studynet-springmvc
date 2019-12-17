@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css">
 	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css">
     <link type="text/css" rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/reset.css">
-    <link type="text/css" rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/common.css">
+    <link type="text/css" rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/common.css?ver=2">
     
     <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>

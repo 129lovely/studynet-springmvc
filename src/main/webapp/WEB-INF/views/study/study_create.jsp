@@ -13,11 +13,6 @@
 	<title>스터디 룸 생성</title>
 	
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
- 
- 	<script>
- 		
- 	</script>
-
 
 </head>
 
@@ -118,11 +113,16 @@
 								</div>
 								<div>
 									<ul class="flex-box">
-										<li><label  class="my-btn select yellow-black"><input type="radio"/>공모전</label></li>
-										<li><label  class="my-btn select yellow-black"><input type="radio"/>취업준비</label></li>
-										<li><label  class="my-btn select yellow-black"><input type="radio"/>기상/습관</label></li>
-										<li><label  class="my-btn select yellow-black"><input type="radio"/>공부</label></li>
-										<li><label  class="my-btn select yellow-black"><input type="radio"/>기타</label></li>
+										<li><input type="radio" name="purpose" value="공모전" id="purp_1" onClick="show();"/>
+										<label class="my-btn select yellow-black" for="purp_1">공모전</label></li>
+										<li><input type="radio" name="purpose" value="취업준비" id="purp_2" onClick="show();"/>
+										<label class="my-btn select yellow-black" for="purp_2">취업준비</label></li>
+										<li><input type="radio" name="purpose" value="기상/습관" id="purp_3" onClick="show();"/>
+										<label class="my-btn select yellow-black" for="purp_3">기상/습관</label></li>
+										<li><input type="radio" name="purpose" value="공부" id="purp_4" onClick="show();"/>
+										<label class="my-btn select yellow-black" for="purp_4">공부</label></li>
+										<li><input type="radio" name="purpose" value="기타" id="purp_5" onClick="show();"/>
+										<label class="my-btn select yellow-black" for="purp_5">기타</label></li>
 									</ul>
 								</div>
 							</div>
@@ -145,36 +145,37 @@
 										</tr>
 										
 										<!-- 스터디 목적에 따라 바뀌는 부분 -->
-										<c:if test="">
-											<tr>
-												<th>옵션</th>
-												<td><input type="text" placeholder="옵션 설명" /></td>
+											<tr id="op_1">
+												<th>공모전 링크</th>
+												<td><input type="text" name="extra_input"
+												placeholder="참여를 준비하는 공모전의 안내 페이지를 링크해주세요." /></td>
 											</tr>
-										</c:if>
-										<c:if test="">
-											<tr>
-												<th>옵션</th>
-												<td><input type="text" placeholder="옵션 설명" /></td>
+
+											<tr id="op_2">
+												<th>준비 분야</th>
+												<td><input type="text" name="extra_input"
+												placeholder="면접, 자소서 등 준비하는 분야를 간략히 적어주세요." /></td>
 											</tr>
-										</c:if>
-										<c:if test="">
-											<tr>
-												<th>옵션</th>
-												<td><input type="text" placeholder="옵션 설명" /></td>
+
+											<tr id="op_3">
+												<th>스터디 목표</th>
+												<td><input type="text" name="extra_input"
+												placeholder="스터디 목표를 간략하게 적어주세요." /></td>
 											</tr>
-										</c:if>
-										<c:if test="">
-											<tr>
-												<th>옵션</th>
-												<td><input type="text" placeholder="옵션 설명" /></td>
+
+											<tr id="op_4">
+												<th>스터디 과목</th>
+												<td><input type="text" name="extra_input"
+												placeholder="스터디 과목이나 분야, 자격증 명 등을 기입해주세요." /></td>
 											</tr>
-										</c:if>
-										<c:if test="">
-											<tr>
-												<th>옵션</th>
-												<td><input type="text" placeholder="옵션 설명" /></td>
+
+											<tr id="op_5">
+												<th>스터디 과목</th>
+												<td><input type="text" name="extra_input"
+												placeholder="스터디 과목이나 분야, 자격증 명 등을 기입해주세요." /></td>
 											</tr>
-										</c:if>
+
+
 										<tr>
 											<th>오픈 카톡</th>
 											<td><input type="text" placeholder="오픈 카톡 주소를 입력해 주세요" /></td>
@@ -307,4 +308,37 @@
 
  		}); 
 	</script>
+	
+	<!-- 라디오 따라서 달라지는 레이아웃 -->
+ 	<script>
+ 		
+ 		$(document).ready(function(){
+ 			
+ 			var purpose = document.getElementsByName("purpose"); //라디오 name
+ 			
+ 			for ( var i = 0; i < purpose.length; i++) {
+		 		 var design = document.getElementById("op_" + (i+1));
+		 		 design.style.display = "none";
+			}
+ 			
+ 		});
+ 		
+	 	function show() {
+	 		var purpose = document.getElementsByName("purpose"); //라디오 name
+	 		
+	 		for ( var i = 0; i < purpose.length; i++) {
+		 		 var design = document.getElementById("op_" + (i+1)); // 보여질내용
+		 		 if(purpose[i].checked == true ){
+		 			design.style.display = "";
+		 		 }else{
+		 			purpose[i].checked = false;
+		 			design.style.display = "none";
+		 		 }
+	 		 }
+	 	}
+ 	
+ 	
+ 	
+ 	</script>
+	
 </html>
