@@ -310,11 +310,39 @@ public class StudyController {
 		return Common.Study.VIEW_PATH + "study_create.jsp";
 	}
 	
-	// 스터디 만들기 페이지 - 2 ( 생성 안내 페이지 )
+	// 스터디 만들기 페이지 - 2 ( 생성 안내 페이지로 이동 )
 	@RequestMapping("/study_create_caution.do")
 	public String create_caution ( StudyVO vo, Model model ) {
 		model.addAttribute("vo", vo);
 		return Common.Study.VIEW_PATH + "study_create_caution.jsp";
 	}
 
+	// 스터디 만들기 페이지 - 3 ( vo 정보 DB로 전송 )
+	@RequestMapping("/study_insert.do")
+	public String study_insert ( StudyVO vo ) {
+		
+		studyService.insert( vo );
+		
+		
+		return "redirect:study_list.do";
+	}
+	
+	// 스터디 찾기 페이지 목록
+	@RequestMapping("/study_list.do")
+	public String study_list() {
+		return Common.Study.VIEW_PATH + "study_list.jsp";
+	}
+		
+	//스터디 상세 페이지
+		@RequestMapping("/study_list_detail.do")
+		public String study_list_detail() {
+			return Common.Study.VIEW_PATH + "study_list_detail.jsp";
+		}
+		
+	//스터디 참가 신청하기
+	@RequestMapping("/study_apply_caution.do")
+	public String study_apply_caution() {
+		return Common.Study.VIEW_PATH + "study_apply_caution.jsp";
+	}
+	
 }

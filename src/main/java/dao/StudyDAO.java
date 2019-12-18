@@ -25,8 +25,8 @@ public class StudyDAO implements DAO {
 
 	@Override
 	public int insert(Object vo) {
-		// TODO Auto-generated method stub
-		return 0;
+		int res = sqlSession.insert("study.insert");
+		return res;
 	}
 
 	@Override

@@ -7,6 +7,23 @@
 	<meta charset="UTF-8">
 	<title>스터디 생성 안내</title>
 </head>
+
+	<script type="text/javascript">
+		function send() {
+			var cb1 = document.getElementById("cb1");
+			var cb2 = document.getElementById("cb2");
+			
+			if ( !cb1.checked || !cb2.checked) {
+				alert("안내 사항을 모두 확인해주세요.");
+			}
+			
+			var f = document.vo;
+			
+			f.action = "study_create_caution.do";
+			f.submit();
+		}
+	
+	</script>
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
 	<div class="study-guide body-bgcolor-set">
@@ -24,8 +41,8 @@
 									참여 인원이 0명일 경우에만 모집글을 삭제하실 수 있습니다.
 								</p>
 								<div class="tg">
-										<input type="checkbox" id="cb1" class=tgl-skewed>
-										<label class="tgl-btn" data-tg-off="비동의" data-tg-on="동의" for="cb1"></label>
+									<input type="checkbox" id="cb1" class=tgl-skewed>
+									<label class="tgl-btn" data-tg-off="비동의" data-tg-on="동의" for="cb1"></label>
 								</div>
 							</div>
 							<div class="line-bottom flex-box">
@@ -34,16 +51,20 @@
 									신청을 승인하거나 거절할 수 있습니다.
 								</p>
 								<div class="tg">
-										<input type="checkbox" id="cb2" class=tgl-skewed>
-										<label class="tgl-btn" data-tg-off="비동의" data-tg-on="동의" for="cb2"></label>
+									<input type="checkbox" id="cb2" class=tgl-skewed>
+									<label class="tgl-btn" data-tg-off="비동의" data-tg-on="동의" for="cb2"></label>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
+				
+				<form>
+					<input type="hidden" value="${ vo }" name="vo">
+				</form>
 				<!-- 등록/취소 버튼 -->
 				<div class="tac btn-box">
-					<input class="my-btn black-white" type="button" value="등록하기" onClick="" />
+					<input class="my-btn black-white" type="button" value="등록하기" onClick="send();" />
 					<input class="my-btn black-white" type="button" value="취소하기" onClick="history.go(-1)"/>
 				</div>
 			</div>

@@ -168,10 +168,15 @@
 			}
 				
 			// 다 값이 들어있다면 ~.~
-			alert("trtㅅㄳㄳ");
+			var res = confirm("입력하신 정보에 수정할 부분이 없는지 확인 하셨나요? 모집 글을 올린 뒤에는 신청 인원, 참여 인원이 0명일 경우에만 수정이 가능합니다.");
+			
+			if ( res == false ) {
+				return;
+			}
 			
 			f.action = "study_create_caution.do";
-			f.method = "get";
+			f.method = "post";
+			f.enctype = "multipart/form-data"
 			
 			f.submit();
 		}
@@ -209,6 +214,7 @@
 							<div class="line-bottom">
 								<h2 class="sub-section-title">스터디 기본 정보</h2>
 								<div class="table-indent">
+									<input type="hidden" name="create_user_idx" value="${ user.idx }">
 									<table>
 										<tr>
 											<th rowspan="9">스터디명</th>
@@ -385,6 +391,9 @@
 					<div class="inner-box">
 						<div class="contents-box">
 							<h2 class="sub-section-title">상세 설명</h2>
+							<div>
+								<p class="section-discription tal">[ 대표 사진 업로드 ]<input type="file" name="photo"> </p><br>
+							</div>
 							<div class="note-my-custom">
 								<textarea class="summernote-study-explanation-box" name="detail_info"></textarea>	
 							</div>
@@ -486,8 +495,7 @@
  			
  		});
  	
- 	
- 	
+
  	</script>
 	
 </html>

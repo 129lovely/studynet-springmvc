@@ -1,5 +1,7 @@
 package vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class StudyVO {
 	
 	private int idx, create_user_idx, min_count, max_count
@@ -9,6 +11,15 @@ public class StudyVO {
 				   , condition, detail_info, status, created_at
 				   , updated_at, deleted_at;
 	
+	private MultipartFile photo_file;
+	
+	
+	public MultipartFile getPhoto_file() {
+		return photo_file;
+	}
+	public void setPhoto_file(MultipartFile photo_file) {
+		this.photo_file = photo_file;
+	}
 	public int getIdx() {
 		return idx;
 	}
