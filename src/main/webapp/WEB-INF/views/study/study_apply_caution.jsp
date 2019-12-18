@@ -54,6 +54,11 @@
 							</div>
 						</div>	
 					</div>
+											
+						<div class="introduce-box line-bottom">
+							<p class="section-discription">자신을 어필할 짧은 자기소개를 입력해주세요!</p><br>
+							<input type="text" name="introduce">
+						</div>
 					
 					<!-- 신청하기/취소 버튼 -->
 					<div class="tac btn-box">
