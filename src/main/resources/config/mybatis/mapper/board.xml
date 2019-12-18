@@ -72,18 +72,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select resultType="board" id="list_condition"
-		parameterType="java.util.Map">select * from (select rank() over(order by idx asc) no,
-		b.*from (select * from board) b ) list where no between #{start} AND
-		#{end}
+		parameterType="java.util.Map">
+		select * 
+		from (SELECT rank() over(order by idx desc) AS no, b.* FROM (select * from board) AS b ) AS list
+		where no between #{start} AND #{end}
 	</select>
 
 	<!-- 전체게시물 수 조회 -->
-	<select resultType="int" id="count">select count(*) from board </select>
+	<select resultType="int" id="count">
+		select count(*) from board
+	</select>
 
 	<!-- 검색기능 -->
 	<select resultType="board" id="list_search"
-		parameterType="String">
+		parameterType="java.util.Map">
 		select *
+		from (SELECT rank() over(order by idx desc) AS no, b.*
+				FROM (select * from board where title like CONCAT('%',#{search},'%')) AS b ) AS list
+		where no between #{start} AND #{end}
+	</select>
+	
+	<select resultType="int" id="search_count" parameterType="java.lang.String">
+		select count(*)
 		from board
 		where title like CONCAT('%',#{search},'%')
 	</select>

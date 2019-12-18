@@ -131,8 +131,16 @@ public class BoardService {
 	}
 
 	//검색기능
-	public List<BoardVO> search_list(String search){
-		List<BoardVO> res=boardDAO.search(search);
+	public Map search_list(Map map){
+		List<BoardVO> list = boardDAO.search(map);
+		int cnt = boardDAO.search_cnt( (String) map.get("search") );
+		
+		System.out.println(cnt);
+		
+		Map res = new HashMap();
+		res.put("list", list);
+		res.put("cnt", cnt);
+		
 		return res;
 	}
 	
