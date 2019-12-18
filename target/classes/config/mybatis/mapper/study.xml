@@ -7,9 +7,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from study
 	</select>
 	
-	<insert id="insert">
-		insert into study ( title, create_user_idx) 
-		values ()
+	<insert id="insert" parameterType="study">
+		INSERT INTO study (title, create_user_idx, 
+						min_count, max_count, deadline, start_date,
+						end_date, open_kakao, purpose, is_online,
+						place, extra_info, apply_condition, detail_info,
+						study_status, photo) 											
+		VALUES (#{title}, #{create_user_idx}, #{min_count}, #{max_count},
+				#{deadline}, #{start_date}, #{end_date}, #{open_kakao},
+ 				#{purpose}, #{is_online},#{place}, #{extra_info}, #{apply_condition}, 
+		 		#{detail_info}, '모집중', #{photo} )
 	</insert>
 </mapper>
 

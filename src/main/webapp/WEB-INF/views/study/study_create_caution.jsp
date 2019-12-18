@@ -15,12 +15,10 @@
 			
 			if ( !cb1.checked || !cb2.checked) {
 				alert("안내 사항을 모두 확인해주세요.");
-			}
-			
-			var f = document.vo;
-			
-			f.action = "study_create_caution.do";
-			f.submit();
+				return;
+			}	
+		
+			location.href = "study_insert.do";
 		}
 	
 	</script>
@@ -59,9 +57,6 @@
 					</div>
 				</div>
 				
-				<form>
-					<input type="hidden" value="${ vo }" name="vo">
-				</form>
 				<!-- 등록/취소 버튼 -->
 				<div class="tac btn-box">
 					<input class="my-btn black-white" type="button" value="등록하기" onClick="send();" />

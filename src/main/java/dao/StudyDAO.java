@@ -25,7 +25,7 @@ public class StudyDAO implements DAO {
 
 	@Override
 	public int insert(Object vo) {
-		int res = sqlSession.insert("study.insert");
+		int res = sqlSession.insert("study.insert", vo);
 		return res;
 	}
 
