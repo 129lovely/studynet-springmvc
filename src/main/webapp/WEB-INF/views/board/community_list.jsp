@@ -69,11 +69,14 @@
                     </div>
     
                     <!-- 페이징 -->
-                    <div class="paging-box tac">
+                   <!--  <div class="paging-box tac">
                         <a href="#" class="left-page"></a>
                         <a href="#">1</a>
                         <a href="#">2</a>
                         <a href="#" class="right-page"></a>
+                    </div> -->
+                    <div class="paging-box tac">
+                        ${pageMenu}
                     </div>
                 </div>
             </div>

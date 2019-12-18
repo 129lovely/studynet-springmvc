@@ -57,9 +57,9 @@ public class Paging {
 			for(int i=startPage; i<= endPage ;i++){
 				if(i>totalPage)break;
 				if(i == nowPage){ //?꾩옱 ?덈뒗 ?섏씠吏
-					sb.append("&nbsp;<b><font color='#f00'>");
+					sb.append("&nbsp;");
 					sb.append(i);
-					sb.append("</font></b>");
+					sb.append("&nbsp;");
 				}
 
 			else{//현재 페이지가 아니면
@@ -67,16 +67,12 @@ public class Paging {
 				sb.append(i);
 				sb.append("'>");
 				
-				sb.append("<font color='gray'>");
 				sb.append(i);
-				sb.append("</font>");
 				
-				sb.append("</a>");
+				sb.append("</a>&nbsp;");
 				
 			}
 		}// end for
-		
-		sb.append("&nbsp;");
 		
 //-----그룹페이지처리 다음 ----------------------------------------------------------------------------------------------
 		if(isNextPage){
