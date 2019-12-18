@@ -1320,6 +1320,11 @@ textarea {
     margin-right: 5px;
 }
 
+.study-apply .introduce-box{
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+}
 /*
 //----------------------------------------------------------------------------------
 //
