@@ -3,6 +3,7 @@ package service;
 import dao.BoardDAO;
 import dao.StudyDAO;
 import dao.UserDAO;
+import vo.StudyVO;
 
 public class StudyService {
 	BoardDAO boardDAO;
@@ -18,5 +19,8 @@ public class StudyService {
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
 	}
-	
+
+	public int insert( StudyVO vo ) {
+		return studyDAO.insert(vo);
+	}
 }

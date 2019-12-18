@@ -27,8 +27,6 @@
 		 			
 		 		 }else{
 		 			purpose[i].checked = false;
-		 			// design.lastChild.firstChild.disabled=true;
-		 			// 선택되지 않은 애들은 내용 지워야 되지 않나?....ㅋ........ ㅠㅠ
 		 			design.style.display = "none";
 		 		 }
 	 		 }
@@ -47,9 +45,11 @@
 			var purpose = f.purpose;
 			var is_online = f.is_online;
 			var place = f.place;
-			var extra_info = f.extra_info;
+			var extra_info = document.getElementsByName("extra_info");
 			var condition = f.condition;
 			var detail_info = f.detail_info;
+			
+			var num_patt = /^[0-9]+$/;
 			
 			if ( title.value == "" ) {
 				alert("스터디 제목을 입력해주세요.");
@@ -57,9 +57,27 @@
 				return;
 			}
 			
-			if ( min_count.value == "" ) {
-				alert("최소 모집 인원을 선택해주세요.");
+			if ( min_count.value > max_count.value ) {
+				alert("최소 모집 인원은 최대 모집 인원보다 작거나 같아야 합니다.");
 				min_count.focus();
+				return;
+			}
+			
+			if ( ! num_patt.test(min_count.value) ){
+				alert("최소 모집 인원은 숫자로 입력해주세요.");
+				min_count.focus();
+				return;
+			}
+			
+			if ( ! num_patt.test(max_count.value) ){
+				alert("최대 모집 인원은 숫자로 입력해주세요.");
+				max_count.focus();
+				return;
+			}
+			
+			if ( max_count.value == "" ) {
+				alert("최대 모집 인원을 선택해주세요.");
+				max_count.focus();
 				return;
 			}
 			
@@ -117,6 +135,50 @@
 				return;
 			}
 			
+			if ( purpose.value == "" ) {
+				alert("스터디 목적을 선택해주세요.");
+				return;
+			}
+			
+			// 상시모집이 체크되어 있다면 스터디 종료 날짜를 모집 마감일로 설정
+			if ( document.getElementById("always").checked == true ){
+				f.deadline.value = f.end_date.value;
+			}
+			
+			// 선택된 스터디 방식에 따라 추가 정보의 text를 정한다. 
+			var val = 0;
+			
+			if ( purpose.value == "공모전" ) {
+				val = 0;
+			} else if ( purpose.value == "취업준비" ) {
+				val = 1;
+			} else if ( purpose.value == "기상/습관" ) {
+				val = 2;
+			} else if ( purpose.value == "공부" ) {
+				val = 3;
+			} else {
+				val = 4;
+			}
+			
+			for ( var i = 0 ; i < extra_info.length ; i ++ ) {
+				if ( i != val ) {
+					extra_info[i].value= "";
+					extra_info[i].disabled = true;
+				} 
+			}
+				
+			// 다 값이 들어있다면 ~.~
+			var res = confirm("입력하신 정보에 수정할 부분이 없는지 확인 하셨나요? 모집 글을 올린 뒤에는 신청 인원, 참여 인원이 0명일 경우에만 수정이 가능합니다.");
+			
+			if ( res == false ) {
+				return;
+			}
+			
+			f.action = "study_create_caution.do";
+			f.method = "post";
+			f.enctype = "multipart/form-data"
+			
+			f.submit();
 		}
 	
 	</script>
@@ -152,6 +214,7 @@
 							<div class="line-bottom">
 								<h2 class="sub-section-title">스터디 기본 정보</h2>
 								<div class="table-indent">
+									<input type="hidden" name="create_user_idx" value="${ user.idx }">
 									<table>
 										<tr>
 											<th rowspan="9">스터디명</th>
@@ -183,7 +246,7 @@
 													<input type="text" id="deadLine" name="deadline">
 												</div>
 												<div>
-													<input type="checkbox" id="recruit-type" name="">
+													<input type="checkbox" id="always">
 													<label for="recruit-type">상시 모집</label>
 												</div>
 											</td>
@@ -204,22 +267,22 @@
 									<h2 class="sub-section-title">스터디 방식 선택</h2>
 									<div class="flex-box">
 										<div>
-											<input type="radio" name="is_online" id="study-type-online" value="온라인" checked>
+											<input type="radio" name="is_online" id="study-type-online" value="1" checked>
 											<label for="study-type-online">온라인</label>
 										</div>
 										<div>
-											<input type="radio" name="is_online" id="study-type-offline" value="오프라인">
+											<input type="radio" name="is_online" id="study-type-offline" value="0">
 											<label for="study-type-offline">오프라인</label>
 										</div>
 										<div>
-											<input type="radio" name="is_online" id="study-type-complex" value="복합">
+											<input type="radio" name="is_online" id="study-type-complex" value="2">
 											<label for="study-type-complex">복합</label>
 										</div>
 									</div>
 								</div>
 								<div>
 									<ul class="flex-box">
-										<li><input type="radio" name="purpose" value="공모전" id="purp_1" onClick="show();" checked/>
+										<li><input type="radio" name="purpose" value="공모전" id="purp_1" onClick="show();"/>
 										<label class="my-btn select yellow-black" for="purp_1">공모전</label></li>
 										<li><input type="radio" name="purpose" value="취업준비" id="purp_2" onClick="show();"/>
 										<label class="my-btn select yellow-black" for="purp_2">취업준비</label></li>
@@ -247,7 +310,7 @@
 									<table>
 										<tr>
 											<th>모임 장소</th>
-											<td><input type="text" placeholder="모임 장소의 주소나 사용할 메신저를 적어주세요." name="info"/></td>
+											<td><input type="text" placeholder="모임 장소의 주소나 사용할 메신저를 적어주세요." name="place"/></td>
 										</tr>
 										
 										<!-- 스터디 목적에 따라 바뀌는 부분 -->
@@ -316,7 +379,7 @@
 							<div class="line-bottom">
 								<h2 class="sub-section-title">모집 조건</h2>
 								<div class="note-my-custom">
-									<textarea class="summernote-study-condition-box" placeholder="" name="condition"></textarea>	
+									<textarea class="summernote-study-condition-box" name="condition"></textarea>	
 								</div>
 							</div>
 						</div>
@@ -328,6 +391,9 @@
 					<div class="inner-box">
 						<div class="contents-box">
 							<h2 class="sub-section-title">상세 설명</h2>
+							<div>
+								<p class="section-discription tal">[ 대표 사진 업로드 ]<input type="file" name="photo"> </p><br>
+							</div>
 							<div class="note-my-custom">
 								<textarea class="summernote-study-explanation-box" name="detail_info"></textarea>	
 							</div>
@@ -429,8 +495,7 @@
  			
  		});
  	
- 	
- 	
+
  	</script>
 	
 </html>

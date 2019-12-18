@@ -6,6 +6,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectList" resultType="study">
 		select * from study
 	</select>
+	
+	<insert id="insert">
+		insert into study ( title, create_user_idx) 
+		values ()
+	</insert>
 </mapper>
 
 
