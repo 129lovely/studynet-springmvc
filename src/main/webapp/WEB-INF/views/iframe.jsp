@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>스터디넷</title>
 <link type="text/css" rel="stylesheet"
 	href="${ pageContext.request.contextPath }/resources/css/reset.css">
 <link type="text/css" rel="stylesheet"

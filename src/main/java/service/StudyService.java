@@ -21,6 +21,8 @@ public class StudyService {
 	}
 
 	public int insert( StudyVO vo ) {
+		
 		return studyDAO.insert(vo);
 	}
+
 }

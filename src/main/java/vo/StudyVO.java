@@ -8,7 +8,7 @@ public class StudyVO {
 				, apply_count, approve_count, is_online;
 	private String title, photo, deadline, start_date, end_date
 				   , open_kakao, purpose, place, extra_info
-				   , condition, detail_info, status, created_at
+				   , apply_condition, detail_info, study_status, created_at
 				   , updated_at, deleted_at;
 	
 	private MultipartFile photo_file;
@@ -117,10 +117,10 @@ public class StudyVO {
 		this.extra_info = extra_info;
 	}
 	public String getCondition() {
-		return condition;
+		return apply_condition;
 	}
 	public void setCondition(String condition) {
-		this.condition = condition;
+		this.apply_condition = condition;
 	}
 	public String getDetail_info() {
 		return detail_info;
@@ -129,10 +129,10 @@ public class StudyVO {
 		this.detail_info = detail_info;
 	}
 	public String getStatus() {
-		return status;
+		return study_status;
 	}
 	public void setStatus(String status) {
-		this.status = status;
+		this.study_status = status;
 	}
 	public String getCreated_at() {
 		return created_at;

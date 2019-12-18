@@ -1,10 +1,12 @@
 package controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import common.Common;
 import common.Paging;
@@ -317,18 +320,70 @@ public class StudyController {
 	
 	// 스터디 만들기 페이지 - 2 ( 생성 안내 페이지로 이동 )
 	@RequestMapping("/study_create_caution.do")
-	public String create_caution ( StudyVO vo, Model model ) {
-		model.addAttribute("vo", vo);
+	public String create_caution ( StudyVO vo, HttpSession session, HttpServletRequest request) {
+		
+		ServletContext application = request.getServletContext();
+		
+		// 대표 사진은 따로 저장해주기 위해 절대 경로를 만든다.
+		String webPath = "/resources/images/study_profile";
+		String savePath = application.getRealPath(webPath);
+		System.out.println(savePath);
+		
+		MultipartFile photo_file = vo.getPhoto_file();
+		String photo = "no_photo";
+		
+		if ( ! photo_file.isEmpty() ) {
+			
+			// 실제 파일명으로 변경 
+			photo = photo_file.getOriginalFilename();
+			
+			File saveFile = new File(savePath, photo);
+			
+		
+			if ( ! saveFile.exists() ) {	// 저장할 경로가 존재하지 않는다면 새로 생성
+				saveFile.mkdirs();
+				
+			} else {	// 동일 파일명 처리
+				long time = System.currentTimeMillis();
+				photo = String.format("%d_%s", time, photo);
+				saveFile = new File(savePath, photo);
+			}
+			
+			try {	// 로컬 파일로 복사 
+				photo_file.transferTo(saveFile);
+			} catch (Exception e) {
+				e.printStackTrace();
+			} 
+			
+			
+		} else {
+			// 지정된 파일이 없을 경우 샘플에서 가져온다. 
+			if( vo.getPurpose().equals("공모전") ) {
+				photo = "preview01";
+			} else if( vo.getPurpose().equals("취업준비") ) {
+				photo = "preview02";
+			} else if( vo.getPurpose().equals("기상/습관") ) {
+				photo = "preview03";
+			} else {
+				photo = "preview04";
+			}
+		}
+		 
+		vo.setPhoto(photo);
+		
+		session.setAttribute("vo", vo);
 		return Common.Study.VIEW_PATH + "study_create_caution.jsp";
 	}
 
 	// 스터디 만들기 페이지 - 3 ( vo 정보 DB로 전송 )
 	@RequestMapping("/study_insert.do")
-	public String study_insert ( StudyVO vo ) {
+	public String study_insert ( HttpSession session ) {
+		
+		StudyVO vo = (StudyVO) session.getAttribute("vo");
 		
 		studyService.insert( vo );
 		
-		
+		session.removeAttribute("vo");
 		return "redirect:study_list.do";
 	}
 	

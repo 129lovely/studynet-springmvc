@@ -12,7 +12,7 @@
 	<div class="study-search-page">
 		<!-- 원하는 스터디 검색하기 -->
 		<form class="search-box mb20">
-			<div class="flex-box">
+			<div class="flex-box pt190">
 				<h2 class="section-title">원하는 스터디 검색하기</h2>
 				<p class="mb10">step 1. 스터디 목적 선택하기 (복수 선택 가능)</p>
 				<div class="btn-box mb10">

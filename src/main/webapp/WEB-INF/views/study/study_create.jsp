@@ -46,7 +46,7 @@
 			var is_online = f.is_online;
 			var place = f.place;
 			var extra_info = document.getElementsByName("extra_info");
-			var condition = f.condition;
+			var apply_condition = f.apply_condition;
 			var detail_info = f.detail_info;
 			
 			var num_patt = /^[0-9]+$/;
@@ -123,9 +123,9 @@
 				return;
 			}
 			
-			if ( condition.value == "" ) {
+			if ( apply_condition.value == "" ) {
 				alert("모집 조건을 작성해주세요.");
-				condition.focus();
+				apply_condition.focus();
 				return;
 			}
 			
@@ -176,7 +176,6 @@
 			
 			f.action = "study_create_caution.do";
 			f.method = "post";
-			f.enctype = "multipart/form-data"
 			
 			f.submit();
 		}
@@ -189,7 +188,7 @@
 	
 	<div class="body-bgcolor-set">
 		<div>
-			<form>
+			<form enctype="multipart/form-data">
 				<!-- 스터디 룸 만들기  -->
 				<div class="study-create-box">
 					<div class="inner-box pt190">
@@ -379,7 +378,7 @@
 							<div class="line-bottom">
 								<h2 class="sub-section-title">모집 조건</h2>
 								<div class="note-my-custom">
-									<textarea class="summernote-study-condition-box" name="condition"></textarea>	
+									<textarea class="summernote-study-condition-box" name="apply_condition"></textarea>	
 								</div>
 							</div>
 						</div>
@@ -392,7 +391,7 @@
 						<div class="contents-box">
 							<h2 class="sub-section-title">상세 설명</h2>
 							<div>
-								<p class="section-discription tal">[ 대표 사진 업로드 ]<input type="file" name="photo"> </p><br>
+								<p class="section-discription tal">[ 대표 사진 업로드 ]<input type="file" name="photo_file"> </p><br>
 							</div>
 							<div class="note-my-custom">
 								<textarea class="summernote-study-explanation-box" name="detail_info"></textarea>	
