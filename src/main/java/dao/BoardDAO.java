@@ -149,6 +149,12 @@ public class BoardDAO implements DAO {
 		List<BoardVO>result=sqlSession.selectList("board.list_search",search);
 		return result;
 	}
+	
+	//원글 삭제
+	public int delete_community(int idx) {
+		int res = sqlSession.delete("board.delete_community",idx);
+		return res;
+	}
 
 
 

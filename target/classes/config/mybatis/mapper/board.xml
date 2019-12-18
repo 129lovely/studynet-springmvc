@@ -87,6 +87,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		from board
 		where title like CONCAT('%',#{search},'%')
 	</select>
+	
+	<!-- 원글 삭제하기 -->
+	<update id="delete_community" parameterType="int">
+		update board
+		set title='삭제된 게시물입니다', deleted_at=current_timestamp()
+		where idx=#{idx}
+	</update>
 </mapper>
 
 

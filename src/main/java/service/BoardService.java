@@ -135,5 +135,11 @@ public class BoardService {
 		List<BoardVO> res=boardDAO.search(search);
 		return res;
 	}
+	
+	// 원글 삭제
+	public int board_del( int idx) {
+		int res=boardDAO.delete_community(idx);
+		return res;
+	}
 
 }

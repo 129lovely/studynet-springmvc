@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,18 +16,18 @@
             <div class="inner-box pt190">
                 <div class="contents-box board">
                     <h2 class="section-title">
-                        스터디넷에서 다양한 <span class="section-title blue">정보</span>를 나눠주세요.
+                     	   스터디넷에서 다양한 <span class="section-title blue">정보</span>를 나눠주세요.
                     </h2>
                     <div class="flex-box community-board-info mb30">
                             <span class="icon icon-caution"></span>
                             <p>
-                                홈페이지 특성에 맞지 않고 관련 없는 글이나,
-                                광고성 / 음란성 / 누군가를 비방하는 글 등은
-                                무통보 삭제되거나 제제를 받을 수 있습니다.
+			                                홈페이지 특성에 맞지 않고 관련 없는 글이나,
+			                                광고성 / 음란성 / 누군가를 비방하는 글 등은
+			                                무통보 삭제되거나 제제를 받을 수 있습니다.
                             </p>
                     </div>
                     <div class="search-result mb10">
-                        <span>(검색 결과: 총 24건)</span>
+                        <span>(검색 결과: 총  ${ fn:length(list) }건)</span>
                     </div>
     
                     <!-- 테이블 -->
@@ -41,8 +42,15 @@
                             </tr>
                             
                             <c:forEach var="vo" items="${ list }">
-                            	<tr>
-	                                <td><a href="community_list_detail.do?idx=${ vo.idx }">${ vo.title }</a></td>
+                           		 <tr>
+	                            	<c:if test="${ vo.deleted_at != null }"> <!-- 삭제된 게시물 -->
+                            		<td><a href="javascript:del_alert();">${ vo.title }</a></td>
+	                            	</c:if>
+	                            	
+	                            	<c:if test="${ vo.deleted_at == null }"> <!-- 일반 게시물 -->
+	                            	<td><a href="community_list_detail.do?idx=${ vo.idx }">${ vo.title }</a></td>	                            	
+	                            	</c:if>
+                       				
 	                                <td>${ vo.user_idx }</td>
 	                                <td>${ vo.created_at }</td>
 	                                <td>${ vo.hit }</td>
@@ -106,6 +114,10 @@
     	
     	dao 에서 list 반환 -> service에서도 컨트롤러로 리스트 반환 -> 컨트롤러에서는 community_list.jsp 로 list를 바인딩해서 보내기만 하면 ok
 		*/
+	}
+    
+    function del_alert() {
+		alert("삭제된 게시물입니다");
 	}
     </script>
 </body>

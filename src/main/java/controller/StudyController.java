@@ -181,6 +181,14 @@ public class StudyController {
 	public String community_write_form() {
 		return Common.Board.VIEW_PATH + "community_write.jsp";
 	}
+	
+	//원글 삭제
+	@RequestMapping("/del.do")
+	public String board_del(int idx) {
+		int res = boardService.board_del(idx);
+		return "redirect:community_list.do";
+		
+	}
 
 	// 원글 수정하기
 	@RequestMapping("/community_write_update.do")
