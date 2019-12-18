@@ -1,5 +1,6 @@
 package controller;
 
+import java.lang.ProcessBuilder.Redirect;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -58,13 +59,13 @@ public class StudyController {
 		return "/WEB-INF/views/socket_test2.jsp";
 	}
 	
-	@RequestMapping("/")
+	@RequestMapping(value = { "/", "/home.do" })
 	public String iframe_test(Model model) {
 		return "/WEB-INF/views/iframe.jsp";
 	}
 	
 	// index 
-	@RequestMapping(value = { "/index.do" })
+	@RequestMapping("/index.do")
 	public String index(Model model) {
 		List<BoardVO> board = boardService.showCommunityList_index();
 		model.addAttribute("board", board);
@@ -86,29 +87,42 @@ public class StudyController {
 		String prevPage = request.getHeader("referer");
 		HttpSession session = request.getSession();
 		session.setAttribute("prevPage", prevPage);
+		
 		return Common.User.VIEW_PATH + "user_login.jsp";
 	}
 
 	// 로그인 - 2 ( 폼 전송, 세션에 저장 )
 	@RequestMapping("/user_login.do")
 	@ResponseBody
-	public String user_login( String email, String password, HttpServletRequest request ) {
+	public Map user_login( String email, String password, HttpServletRequest request ) {
 		Map map = (Map) userService.user_login( email, password );
 		
-		// res 담기
+		// 결과 문장, 유저 이름 배열에 담기
+		Map<String, String> resMap = new HashMap<String, String>();
 		String res = (String) map.get("res");
+		resMap.put("res", res);
 		
 		// 세션에 유저 정보 담기 ( res == clear인 경우만 )
 		if ( res.equals("clear") ) {
 			
 			UserVO user = (UserVO) map.get("user");
 			
+			resMap.put("name", user.getName());
+			
 			HttpSession session = request.getSession();
 			session.setAttribute("user", user);
 			session.setMaxInactiveInterval(120 * 60);
 		}
 		
-		return res;
+		return resMap;
+	}
+	
+	// 로그아웃
+	@RequestMapping("/user_logout.do")
+	public String user_logout( HttpServletRequest request ) {
+		HttpSession session = request.getSession();
+		session.removeAttribute("user");
+		return "redirect:home.do";
 	}
 
 	// 회원 가입 - 1 ( 약관 동의 페이지 )

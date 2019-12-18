@@ -52,7 +52,7 @@
 			}
 			
 			var url = "user_login.do";
-			var param = "email=" + encodeURIComponent(email.value) + "&password=" + encodeURIComponent(password.value) ;
+			var param = "email=" + encodeURIComponent(email.value) + "&password=" + encodeURIComponent(password.value);
 			sendRequest(url, param, login_result, "post");
 			
 		}
@@ -60,25 +60,24 @@
 		// resultFn
 		function login_result(){
 			if ( xhr.readyState == 4 && xhr.status == 200 ){
-				var res = xhr.responseText;
+				var res = JSON.parse(xhr.responseText);
+				
 				var f = document.login_form;
 				
-				if ( res == "no_email" ) {
+				if ( res.res == "no_email" ) {
 					alert("회원 정보에 존재하지 않는 이메일입니다.");
 					f.email.focus();
 					return;
 				} 
 				
-				if ( res == "no_password" ) {
+				if ( res.res == "no_password" ) {
 					alert("비밀번호가 올바르지 않습니다.");
 					f.password.focus();
 					return;
 				}
 				
-				alert("<c:out value='${user.name}'/> 님 반갑습니다. ");
-					
+				alert( res.name + "님 반갑습니다." );
 				location.href = "${prevPage}";
-
 			}
 		}
 	

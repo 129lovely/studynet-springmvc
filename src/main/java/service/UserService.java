@@ -52,28 +52,26 @@ public class UserService {
 	// 로그인
 	public Map user_login( String email, String password ) {
 		
-		Map userMap = new HashMap();
+		UserVO user = null;
+		user = userDAO.selectOne(email);
 		
-		String res = "";
-		
-		UserVO user = userDAO.selectOne(email);
-		
+		Map map = new HashMap();
+		String res = "";	
 		
 		if ( user == null ) { // email이 일치하지 않는 경우
 			res = "no_email";
-			userMap.put("res", res);
-		} else if ( ! user.getPassword().equals(password) ) { // 비밀번호가 일치하지 않는 경우
+			map.put("res", res);
+		} else if ( !user.getPassword().equals(password) ) { // 비밀번호가 일치하지 않는 경우
 			res = "no_password";
-			userMap.put("res", res);
-		} else {
-			// 모두 일치하는 경우
+			map.put("res", res);
+		} else { // 모두 일치하는 경우
 			res = "clear";
-			userMap.put("user", user);
+			map.put("user", user);
 		}
 		
 		// 맵에 담아준다. 
-		userMap.put("res", res);
+		map.put("res", res);
 
-		return userMap;
+		return map;
 	}
 }

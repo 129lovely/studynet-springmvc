@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,8 +52,8 @@
 	                            	<td><a href="community_list_detail.do?idx=${ vo.idx }">${ vo.title }</a></td>	                            	
 	                            	</c:if>
                        				
-	                                <td>${ vo.user_idx }</td>
-	                                <td>${ vo.created_at }</td>
+	                                <td>${ vo.name }</td>
+	                                <td><fmt:formatDate value="${vo.created_at}" type="date" pattern="yyyy.MM.dd"/></td>
 	                                <td>${ vo.hit }</td>
 	                                <td>${ vo.recommend }</td>
                             	</tr>

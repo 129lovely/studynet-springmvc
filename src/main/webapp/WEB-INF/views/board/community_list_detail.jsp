@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +23,7 @@
 			alert(content);
 			
 			var url="comment_update.do";
-			var param="idx="+${vo.idx}+"&content"+content;
+			var param="idx=${vo.idx}&content"+content;
 			
 			sendRequest(url, param, resultFn, "post");
 				
@@ -60,6 +61,26 @@
 			f.submit();
 			
 		}
+		
+		// 게시글 수정
+		function modify() {
+			if( ${ board.user_idx } != ${ sessionScope.user.idx } ){
+				alert("작성자 본인만 수정할 수 있습니다.");
+				return;
+			}
+			location.href="community_write_modify_form.do?idx=${ board.idx }";
+		}
+		// 게시글 삭제
+		function b_delete() {
+			if( ${ board.user_idx } != ${ sessionScope.user.idx } ){
+				alert("작성자 본인만 삭제할 수 있습니다.");
+				return;
+			}
+			
+			if( confirm("정말 삭제하시겠습니까?") == true ){
+				location.href="del.do?idx=${ board.idx }";				
+			}
+		}
 
 	</script>
 	
@@ -79,7 +100,7 @@
 					</div>
 					<div>
 						<span class="txt-only">작성일:</span>
-						<span>${ board.created_at }</span>
+						<span><fmt:formatDate value="${board.created_at}" type="date" pattern="yyyy.MM.dd"/></span>
 						<span>조회수:</span>
 						<span>${ board.hit }</span>
 						<span>추천수:</span>
@@ -90,8 +111,8 @@
 				<div class="board-contents summernote-board-contents-load">
 					
 					<div class="btn-box-mod">
-						<a class="edit" href="community_write_modify_form.do?idx=${ board.idx }">수정</a>
-						<a href="del.do?idx=${ board.idx }">삭제</a>
+						<a class="edit" href="javascript:modify();">수정</a>
+						<a href="javascript:b_delete();">삭제</a>
 
 					</div>
 					${ board.content }

@@ -47,7 +47,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 작성자 idx이용해서 idx값이아닌 이름나오게하기 -->
 	<select id="select_community_list_name" parameterType="int"
 		resultType="string">
-		select user.name
+		select user.name, *
 		from board left outer join user
 		on
 		user.idx=#{board.idx}
@@ -73,8 +73,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<select resultType="board" id="list_condition"
 		parameterType="java.util.Map">
-		select * 
+		select *, user.name
 		from (SELECT rank() over(order by idx desc) AS no, b.* FROM (select * from board) AS b ) AS list
+		left outer join user
+		on user.idx = list.user_idx
 		where no between #{start} AND #{end}
 	</select>
 
@@ -86,9 +88,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 검색기능 -->
 	<select resultType="board" id="list_search"
 		parameterType="java.util.Map">
-		select *
+		select *, user.name
 		from (SELECT rank() over(order by idx desc) AS no, b.*
 				FROM (select * from board where title like CONCAT('%',#{search},'%')) AS b ) AS list
+		left outer join user
+		on user.idx = list.user_idx
 		where no between #{start} AND #{end}
 	</select>
 	
