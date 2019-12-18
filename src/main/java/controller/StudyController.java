@@ -167,6 +167,15 @@ public class StudyController {
 
 		return Common.Board.VIEW_PATH + "community_list.jsp";
 	}
+	
+	//검색기능 and 검색결과 레코드 개수
+	@RequestMapping("/community_list_search.do")
+	public String list_search(Model model, String search ) {
+		System.out.println(search);
+		List<BoardVO> list = boardService.search_list(search);
+		model.addAttribute("list", list);
+		return Common.Board.VIEW_PATH + "community_list.jsp";
+	}
 
 	@RequestMapping("/community_write_form.do")
 	public String community_write_form() {

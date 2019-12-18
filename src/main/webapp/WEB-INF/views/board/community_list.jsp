@@ -60,8 +60,8 @@
                                 <option>분류</option>
                                 <option>각종 팁</option>
                             </select>
-                            <input type="text" placeholder="검색어 입력" class="tac"/>
-                            <a href="#" class="my-btn black-white">검색</a>
+                            <input type="text" id="search-content" placeholder="검색어 입력" class="tac"/>
+                           	<a href="javascript:send();" class="my-btn black-white">검색</a>
                         </div>
                         <div>
                             <a href="community_write_form.do" class="my-btn black-white">글 작성</a>
@@ -84,5 +84,29 @@
     </div>
     
     <jsp:include page="../footer.jsp"></jsp:include>
+    <script type="text/javascript">
+    function send() {
+    	var search=document.getElementById("search-content").value;//아이디를 통해서 검색내용var타입으로 저장하기
+    	var url="community_list_search.do?search=" + search;
+    	location.href=url;
+    	
+    	/*
+    	var 검색내용 = 아이디값 이용해서 input 검색 value 가져오고
+    	var url = "~.do?search=" + 검색내용
+    			
+    	location.href=url;
+    	
+    	
+    	(컨트롤러 -> 서비스(검색내용) 보내주고 -> dao(검색내용, 즉 파라미터는 string 한개) -> 매퍼에서
+    	
+    			반환하는 resultType=board
+    	select *
+    	from board
+    	where like 사용해서 제목에 검색내용이 있는 것들 다 가져오기 )
+    	
+    	dao 에서 list 반환 -> service에서도 컨트롤러로 리스트 반환 -> 컨트롤러에서는 community_list.jsp 로 list를 바인딩해서 보내기만 하면 ok
+		*/
+	}
+    </script>
 </body>
 </html>

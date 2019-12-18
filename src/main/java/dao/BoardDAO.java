@@ -144,6 +144,12 @@ public class BoardDAO implements DAO {
 		return res;
 	}
 
+	//검색기능
+	public List<BoardVO> search(String search){
+		List<BoardVO>result=sqlSession.selectList("board.list_search",search);
+		return result;
+	}
+
 
 
 }

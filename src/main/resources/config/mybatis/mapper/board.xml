@@ -26,7 +26,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 게시글 삭제 부분 ( delete 타임만 추가 ) -->
 	<update id="board_del_update" parameterType="board">
 		UPDATE board
-		SET deleted_at = current_timestamp()
+		SET
+		deleted_at = current_timestamp()
 		where idx=#{idx}
 	</update>
 
@@ -38,11 +39,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 	<!-- 커뮤니티 목록보기 -->
-	<select id="select_community_list" parameterType="board"
-		resultType="board">
-		select * from board
-
-	</select>
+	<select resultType="board" id="select_community_list">
+		select *
+		from board b left outer join user u
+		on u.idx = b.user_idx </select>
 
 	<!-- 작성자 idx이용해서 idx값이아닌 이름나오게하기 -->
 	<select id="select_community_list_name" parameterType="int"
@@ -67,15 +67,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 
 	<!-- 전체 게시물 조회 -->
-	<select resultType="board" id="list_page">select * from board order by ref desc, step asc </select>
+	<select resultType="board" id="list_page">select * from board order by ref
+		desc, step asc
+	</select>
 
 	<select resultType="board" id="list_condition"
 		parameterType="java.util.Map">select * from (select rank() over(order by idx asc) no,
 		b.*from (select * from board) b ) list where no between #{start} AND
-		#{end} </select>
+		#{end}
+	</select>
 
 	<!-- 전체게시물 수 조회 -->
 	<select resultType="int" id="count">select count(*) from board </select>
+
+	<!-- 검색기능 -->
+	<select resultType="board" id="list_search"
+		parameterType="String">
+		select *
+		from board
+		where title like CONCAT('%',#{search},'%')
+	</select>
 </mapper>
 
 
