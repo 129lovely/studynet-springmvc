@@ -83,13 +83,14 @@
 	white-space: normal;
 	word-break: break-all;
 	line-height: 1.5rem;
+	font-size: 0.9rem;
 	
 	width: 100%;
 	height: 200px;
 	overflow-x: hidden;
 	overflow-y: auto;
 	margin-bottom: 10px;
-	padding: 5px;
+	padding: 10px;
 	
 	background-color: #DFE1E4;
 }
@@ -136,7 +137,11 @@
 		<div id="live-chat-box" class="">
 			<a href="javascript:close_liveChat();">X</a>
 			<h2>스터디넷 실시간 채팅</h2>
-			<div id="messages"></div>
+			<div id="messages">
+				<span style="font-weight: bold; font-size: 0.8rem;">
+					&nbsp;>&nbsp;새로고침(F5)하면 채팅 아이디가 변경됩니다.<br/>
+				</span>
+			</div>
 			<div class="input-box">
 				<input type="hidden" id="sender" value="비회원">
 				<textarea id="messageinput"></textarea>
