@@ -43,8 +43,8 @@
 				</div>
 				<!-- 등록/취소 버튼 -->
 				<div class="tac btn-box">
-					<input class="my-btn black-white" type="button" value="등록하기" />
-					<input class="my-btn black-white" type="button" value="취소하기" />
+					<input class="my-btn black-white" type="button" value="등록하기" onClick="" />
+					<input class="my-btn black-white" type="button" value="취소하기" onClick="history.go(-1)"/>
 				</div>
 			</div>
 		</div>
