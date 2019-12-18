@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>스터디 신청 안내</title>
 </head>
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>

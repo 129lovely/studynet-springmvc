@@ -1,14 +1,130 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<!--  include file="../login_check.jsp" %> --> 
+
 <!DOCTYPE html>
+
 <html>
+
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>스터디 룸 생성</title>
+	
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
+
+	<script>
+		
+	 	function show() {
+	 		var purpose = document.getElementsByName("purpose"); //라디오 name
+	 		
+	 		for ( var i = 0; i < purpose.length; i++) {
+		 		 var design = document.getElementById("op_" + (i+1)); // 보여질내용
+		 		 if(purpose[i].checked == true ){
+
+		 			design.style.display = "";
+		 			
+		 		 }else{
+		 			purpose[i].checked = false;
+		 			// design.lastChild.firstChild.disabled=true;
+		 			// 선택되지 않은 애들은 내용 지워야 되지 않나?....ㅋ........ ㅠㅠ
+		 			design.style.display = "none";
+		 		 }
+	 		 }
+	 	}
+	 	
+		// 생성 버튼을 누르면 유효성 검사 후, 정보를 가지고 안내 페이지로 간다.
+		function create( f ) {
+			
+			var title = f.title;
+			var min_count = f.min_count;
+			var max_count = f.max_count;
+			var deadline = f.deadline;
+			var start_date = f.start_date;
+			var end_date = f.end_date;
+			var open_kakao = f.open_kakao;
+			var purpose = f.purpose;
+			var is_online = f.is_online;
+			var place = f.place;
+			var extra_info = f.extra_info;
+			var condition = f.condition;
+			var detail_info = f.detail_info;
+			
+			if ( title.value == "" ) {
+				alert("스터디 제목을 입력해주세요.");
+				title.focus();
+				return;
+			}
+			
+			if ( min_count.value == "" ) {
+				alert("최소 모집 인원을 선택해주세요.");
+				min_count.focus();
+				return;
+			}
+			
+			if ( max_count.value == "" ) {
+				alert("최대 모집 인원을 선택해주세요.");
+				max_count.focus();
+				return;
+			}
+			
+			if ( deadline.value == "" ) {
+				alert("모집 마감일을 선택해주세요.");
+				deadline.focus();
+				return;
+			}
+			
+			if ( start_date.value == "" ) {
+				alert("스터디 시작일을 선택해주세요.");
+				start_date.focus();
+				return;
+			}
+			
+			if ( end_date.value == "" ) {
+				alert("스터디 종료일을 입력해주세요.");
+				end_date.focus();
+				return;
+			}
+			
+			if ( open_kakao.value == "" ) {
+				alert("오픈 카카오톡 주소를 기입해주세요.");
+				open_kakao.focus();
+				return;
+			}
+			
+			if ( place.value == "" ) {
+				alert("모임 장소 / 사용 메신저 란을 작성해주세요.");
+				place.focus();
+				return;
+			}
+			
+			if ( extra_info.value == "" ) {
+				alert("스터디 목적 별 추가 정보를 작성해주세요.");
+				extra_info.focus();
+				return;
+			}
+			
+			if ( condition.value == "" ) {
+				alert("모집 조건을 작성해주세요.");
+				condition.focus();
+				return;
+			}
+			
+			if ( detail_info.value == "" ) {
+				alert("상세 설명을 작성해주세요.");
+				detail_info.focus();
+				return;
+			}
+			
+		}
+	
+	</script>
 </head>
+
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
+	
 	<div class="body-bgcolor-set">
 		<div>
 			<form>
@@ -39,7 +155,7 @@
 									<table>
 										<tr>
 											<th rowspan="9">스터디명</th>
-											<td colspan="2"><input type="text" placeholder="스터디 이름을 간결하고 알기 쉽게 입력해주세요.(최대20글자)" /></td>
+											<td colspan="2"><input type="text" name="title" placeholder="스터디 이름을 간결하고 알기 쉽게 입력해주세요.(최대20글자)" /></td>
 										</tr>
 										<tr>
 											<td colspan="3">* 인원은 수용 가능한 범위에서 기입해주세요</td>
@@ -48,14 +164,14 @@
 										<tr>
 											<th>최소 인원</th>
 											<td>
-												<input type="text" class="number" title=""/>
+												<input type="text" class="number" name="min_count"/>
 												<span>명</span>
 											</td>
 										</tr>
 										<tr>
 											<th>최대 인원</th>
 											<td>
-												<input type="text" class="number" title=""/>
+												<input type="text" class="number" name="max_count"/>
 												<span>명</span>
 											</td>
 										</tr>
@@ -64,15 +180,7 @@
 											<th>신청 마감</th>
 											<td class="select-date">
 												<div>
-													<select>
-														<option>년</option>
-													</select>
-													<select>
-														<option>월</option>	
-													</select>
-													<select>
-														<option>일</option>
-													</select>
+													<input type="text" id="deadLine" name="deadline">
 												</div>
 												<div>
 													<input type="checkbox" id="recruit-type" name="">
@@ -96,26 +204,31 @@
 									<h2 class="sub-section-title">스터디 방식 선택</h2>
 									<div class="flex-box">
 										<div>
-											<input type="radio" name="study-type" id="study-type-online">
+											<input type="radio" name="is_online" id="study-type-online" value="온라인" checked>
 											<label for="study-type-online">온라인</label>
 										</div>
 										<div>
-											<input type="radio" name="study-type" id="study-type-offline">
+											<input type="radio" name="is_online" id="study-type-offline" value="오프라인">
 											<label for="study-type-offline">오프라인</label>
 										</div>
 										<div>
-											<input type="radio" name="study-type" id="study-type-complex">
+											<input type="radio" name="is_online" id="study-type-complex" value="복합">
 											<label for="study-type-complex">복합</label>
 										</div>
 									</div>
 								</div>
 								<div>
 									<ul class="flex-box">
-										<li><a href="#"><span class="my-btn select yellow-black">공모전</span></a></li>
-										<li><a href="#"><span class="my-btn select yellow-black">취업준비</span></a></li>
-										<li><a href="#"><span class="my-btn select yellow-black">기상/습관</span></a></li>
-										<li><a href="#"><span class="my-btn select yellow-black">공부</span></a></li>
-										<li><a href="#"><span class="my-btn select yellow-black">기타</span></a></li>
+										<li><input type="radio" name="purpose" value="공모전" id="purp_1" onClick="show();" checked/>
+										<label class="my-btn select yellow-black" for="purp_1">공모전</label></li>
+										<li><input type="radio" name="purpose" value="취업준비" id="purp_2" onClick="show();"/>
+										<label class="my-btn select yellow-black" for="purp_2">취업준비</label></li>
+										<li><input type="radio" name="purpose" value="기상/습관" id="purp_3" onClick="show();"/>
+										<label class="my-btn select yellow-black" for="purp_3">기상/습관</label></li>
+										<li><input type="radio" name="purpose" value="공부" id="purp_4" onClick="show();"/>
+										<label class="my-btn select yellow-black" for="purp_4">공부</label></li>
+										<li><input type="radio" name="purpose" value="기타" id="purp_5" onClick="show();"/>
+										<label class="my-btn select yellow-black" for="purp_5">기타</label></li>
 									</ul>
 								</div>
 							</div>
@@ -124,6 +237,7 @@
 				</div>
 			
 				<!-- 스터디 추가 정보 -->
+			
 				<div class="study-option-box">
 					<div class="inner-box">
 						<div class="contents-box">
@@ -133,29 +247,50 @@
 									<table>
 										<tr>
 											<th>모임 장소</th>
-											<td><input type="text" placeholder="모임 장소의 주소나 사용 메신저를 적어주세요." /></td>
+											<td><input type="text" placeholder="모임 장소의 주소나 사용할 메신저를 적어주세요." name="info"/></td>
 										</tr>
-										<tr>
-											<th>옵션</th>
-											<td><input type="text" placeholder="옵션 설명" /></td>
-										</tr>
+										
+										<!-- 스터디 목적에 따라 바뀌는 부분 -->
+											<tr id="op_1">
+												<th>공모전 링크</th>
+												<td><input type="text" name="extra_info"
+												placeholder="참여를 준비하는 공모전의 안내 페이지를 링크해주세요." /></td>
+											</tr>
+
+											<tr id="op_2">
+												<th>준비 분야</th>
+												<td><input type="text" name="extra_info"
+												placeholder="면접, 자소서 등 준비하는 분야를 간략히 적어주세요." /></td>
+											</tr>
+
+											<tr id="op_3">
+												<th>스터디 목표</th>
+												<td><input type="text" name="extra_info"
+												placeholder="스터디 목표를 간략하게 적어주세요." /></td>
+											</tr>
+
+											<tr id="op_4">
+												<th>스터디 과목</th>
+												<td><input type="text" name="extra_info"
+												placeholder="스터디 과목이나 분야, 자격증 명 등을 기입해주세요." /></td>
+											</tr>
+
+											<tr id="op_5">
+												<th>스터디 과목</th>
+												<td><input type="text" name="extra_info"
+												placeholder="스터디 과목이나 분야, 자격증 명 등을 기입해주세요." /></td>
+											</tr>
+
+
 										<tr>
 											<th>오픈 카톡</th>
-											<td><input type="text" placeholder="오픈 카톡 주소를 입력해 주세요" /></td>
+											<td><input type="text" placeholder="오픈 카톡 주소를 입력해 주세요" name="open_kakao"/></td>
 										</tr>
 										<tr>
 											<th>활동 시작</th>
 											<td class="select-date">
 												<div>
-													<select>
-														<option>년</option>
-													</select>
-													<select>
-														<option>월</option>	
-													</select>
-													<select>
-														<option>일</option>
-													</select>
+													<input type="text" id="startDate" name="start_date">
 												</div>
 											</td>	
 										</tr>	
@@ -163,15 +298,7 @@
 											<th>활동 종료</th>
 											<td class="select-date">
 												<div>
-													<select>
-														<option>년</option>
-													</select>
-													<select>
-														<option>월</option>	
-													</select>
-													<select>
-														<option>일</option>
-													</select>
+													<input type="text" id="endDate" name="end_date">
 												</div>
 											</td>	
 										</tr>
@@ -189,7 +316,7 @@
 							<div class="line-bottom">
 								<h2 class="sub-section-title">모집 조건</h2>
 								<div class="note-my-custom">
-									<textarea class="summernote-study-condition-box" placeholder=""></textarea>	
+									<textarea class="summernote-study-condition-box" placeholder="" name="condition"></textarea>	
 								</div>
 							</div>
 						</div>
@@ -202,7 +329,7 @@
 						<div class="contents-box">
 							<h2 class="sub-section-title">상세 설명</h2>
 							<div class="note-my-custom">
-								<textarea class="summernote-study-explanation-box" placeholder="asdf"></textarea>	
+								<textarea class="summernote-study-explanation-box" name="detail_info"></textarea>	
 							</div>
 						</div>
 					</div>	
@@ -212,8 +339,8 @@
 				<div class="study-create-btn-box">
 					<div class="inner-box">
 						<div class="contents-box flex-box">
-							<input class="my-btn black-white" type="button" value="등록" />
-							<input class="my-btn black-white" type="button" value="취소" />
+							<input class="my-btn black-white" type="button" value="등록" onClick="create(this.form);"/>
+							<input class="my-btn black-white" type="button" value="취소" onClick="location.href='index.do'"/>
 						</div>
 					</div>
 				</div>
@@ -223,4 +350,87 @@
 	<jsp:include page="../footer.jsp"></jsp:include>
 
 </body>
+
+	<!-- DatePicker -->
+ 	<script type="text/javascript">
+ 		$(document).ready(function () {
+	            $( "#deadLine" ).datepicker({
+	                 changeMonth: true, 
+	                 changeYear: true,
+	                 nextText: '다음 달',
+	                 prevText: '이전 달', 
+	                 dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+	                 dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
+	                 monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	                 monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	                 dateFormat: "yy-mm-dd",
+	                 minDate: 0,                       // 선택할수있는 최대날짜, ( 0 : 오늘 이후 날짜 선택 불가)
+	                 onClose: function( selectedDate ) {    
+	                     // 마감일(deadLine)이 닫힐 때
+	                     // 시작일(startDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
+	                     $("#startDate").datepicker( "option", "minDate", selectedDate );
+	                 }
+	            }); 
+	            
+	            $( "#startDate" ).datepicker({
+	                 changeMonth: true, 
+	                 changeYear: true,
+	                 nextText: '다음 달',
+	                 prevText: '이전 달', 
+	                 dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+	                 dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
+	                 monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	                 monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	                 dateFormat: "yy-mm-dd",
+	                 minDate: 0,                       // 선택할수있는 최소날짜, ( 0 : 오늘 이후 날짜 선택 불가)
+	                 onClose: function( selectedDate ) {    
+	                      //시작일(startDate) datepicker가 닫힐때
+	                      //종료일(endDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
+	                     $("#endDate").datepicker( "option", "minDate", selectedDate );
+	                      
+	                 	  //시작일(startDate) datepicker가 닫힐때
+	                      //마감일(deadLine)의 선택할수있는 최대 날짜(maxDate)를 선택한 시작일로 지정
+	                     $("#deadLine").datepicker( "option", "maxDate", selectedDate );
+	                 }
+	            }); 
+	            
+	            $( "#endDate" ).datepicker({
+	                 changeMonth: true, 
+	                 changeYear: true,
+	                 nextText: '다음 달',
+	                 prevText: '이전 달', 
+	                 dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+	                 dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
+	                 monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	                 monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+	                 dateFormat: "yy-mm-dd",
+	                 minDate: 0,                       // 선택할수있는 최대날짜, ( 0 : 오늘 이후 날짜 선택 불가)
+	                 onClose: function( selectedDate ) {    
+	                     // 종료일(endDate) datepicker가 닫힐때
+	                     // 시작일(startDate)의 선택할수있는 최대 날짜(maxDate)를 선택한 시작일로 지정
+	                     $("#startDate").datepicker( "option", "maxDate", selectedDate );
+	                 }
+	            });      
+
+ 		}); 
+	</script>
+	
+	<!-- 라디오 따라서 달라지는 레이아웃 -->
+ 	<script>
+ 		
+ 		$(document).ready(function(){
+ 			
+ 			var purpose = document.getElementsByName("purpose"); //라디오 name
+ 			
+ 			for ( var i = 0; i < purpose.length; i++) {
+		 		 var design = document.getElementById("op_" + (i+1));
+		 		 design.style.display = "none";
+			}
+ 			
+ 		});
+ 	
+ 	
+ 	
+ 	</script>
+	
 </html>

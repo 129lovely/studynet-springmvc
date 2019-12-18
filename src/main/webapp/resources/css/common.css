@@ -1432,6 +1432,7 @@ textarea {
 .study-method-box .sub-section-title {
     margin-right: 20px;
 }
+
 .study-method-box .study-method-title {
     justify-content: space-between;
     flex-wrap: wrap;
@@ -1455,13 +1456,13 @@ textarea {
     margin-bottom: 10px;
 }
 
-.study-method-box ul li span {
-    transition: all 0.25s;
+.study-method-box ul li input[type="radio"] {
+	display: none;
 }
 
-.study-method-box ul li span:hover {
-    background-color: #3B5BA2;
-	color: #EFF4FA;
+.study-method-box ul li input[type="radio"]:checked + label{
+	background-color: #32539D;
+	color: #DFE1E4;
 }
 
 /*
@@ -1476,8 +1477,9 @@ textarea {
 }
 .study-option-box table tr th {
     font-weight: bold;
-    text-align: left;
-    min-width: 80px;
+    text-align: right;
+    min-width: 100px;
+    padding-right: 15px;
 }
 
 .study-option-box table tr td{

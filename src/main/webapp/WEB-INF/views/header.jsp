@@ -10,11 +10,15 @@
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css">
 	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css">
     <link type="text/css" rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/reset.css">
-    <link type="text/css" rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/common.css">
+    <link type="text/css" rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/common.css?ver=2">
     
     <script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+	
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
 	<script type="text/javascript" src="${ pageContext.request.contextPath }/resources/js/summernote.js"></script>
 	<script type="text/javascript" src="${ pageContext.request.contextPath }/resources/js/summernote-ko-KR.js"></script>
     <script type="text/javascript" src="${ pageContext.request.contextPath }/resources/js/sample.js"></script>
@@ -61,7 +65,7 @@
 	        		<ul class="flex-box">
 	        			<li><a href="community_list.do"><span>커뮤니티</span></a></li>
 						<li><a href="study_list.html"><span>스터디 찾기</span></a></li>
-						<li><a href="study_create.html"><span>스터디 만들기</span></a></li>
+						<li><a href="study_create_form.do"><span>스터디 만들기</span></a></li>
 	        		</ul>
 	        	</nav>
 	        </div>
