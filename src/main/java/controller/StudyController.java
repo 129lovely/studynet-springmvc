@@ -313,7 +313,6 @@ public class StudyController {
 	// 스터디 만들기 페이지 - 2 ( 생성 안내 페이지 )
 	@RequestMapping("/study_create_caution.do")
 	public String create_caution ( StudyVO vo, Model model ) {
-		
 		model.addAttribute("vo", vo);
 		return Common.Study.VIEW_PATH + "study_create_caution.jsp";
 	}

@@ -261,15 +261,15 @@
 									<h2 class="sub-section-title">스터디 방식 선택</h2>
 									<div class="flex-box">
 										<div>
-											<input type="radio" name="is_online" id="study-type-online" value="온라인" checked>
+											<input type="radio" name="is_online" id="study-type-online" value="1" checked>
 											<label for="study-type-online">온라인</label>
 										</div>
 										<div>
-											<input type="radio" name="is_online" id="study-type-offline" value="오프라인">
+											<input type="radio" name="is_online" id="study-type-offline" value="0">
 											<label for="study-type-offline">오프라인</label>
 										</div>
 										<div>
-											<input type="radio" name="is_online" id="study-type-complex" value="복합">
+											<input type="radio" name="is_online" id="study-type-complex" value="2">
 											<label for="study-type-complex">복합</label>
 										</div>
 									</div>
@@ -373,7 +373,7 @@
 							<div class="line-bottom">
 								<h2 class="sub-section-title">모집 조건</h2>
 								<div class="note-my-custom">
-									<textarea class="summernote-study-condition-box" placeholder="" name="condition"></textarea>	
+									<textarea class="summernote-study-condition-box" name="condition"></textarea>	
 								</div>
 							</div>
 						</div>
