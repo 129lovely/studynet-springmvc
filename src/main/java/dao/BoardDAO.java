@@ -144,10 +144,16 @@ public class BoardDAO implements DAO {
 		return res;
 	}
 
-	//검색기능
-	public List<BoardVO> search(String search){
-		List<BoardVO>result=sqlSession.selectList("board.list_search",search);
+	//검색기능 (리스트 가져오기)
+	public List<BoardVO> search(Map map){
+		List<BoardVO>result=sqlSession.selectList("board.list_search",map);
 		return result;
+	}
+	
+	// 검색기능 (총 리스트 갯수)
+	public int search_cnt(String search){
+		int cnt = sqlSession.selectOne("board.search_count", search);
+		return cnt;
 	}
 	
 	//원글 삭제

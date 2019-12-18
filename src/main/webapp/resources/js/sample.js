@@ -1,5 +1,6 @@
 $(document).ready(function(){
 	initSummernote();
+	$('.note-btn').removeAttr('title'); 
 });
 
 var preBtn = null;
@@ -64,7 +65,7 @@ function initSummernote(){
 			['height', ['height']],
 			['table', ['table']],
 			['insert', ['link', 'picture']],
-			['view', ['fullscreen', 'codeview', 'help']],
+			['view', ['fullscreen', 'codeview']],
 			]
 	});
 
@@ -85,7 +86,7 @@ function initSummernote(){
 			['height', ['height']],
 			['table', ['table']],
 			['insert', ['link', 'picture']],
-			['view', ['fullscreen', 'codeview', 'help']],
+			['view', ['fullscreen', 'codeview']],
 			]
 	});
 
@@ -106,10 +107,12 @@ function initSummernote(){
 			['height', ['height']],
 			['table', ['table']],
 			['insert', ['link', 'picture']],
-			['view', ['fullscreen', 'codeview', 'help']],
+			['view', ['fullscreen', 'codeview']],
 			]
 	});
 }
+
+
 
 //마이페이지 메뉴 슬라이드 바
 function move_right(){

@@ -70,6 +70,13 @@ public class StudyController {
 		model.addAttribute("board", board);
 		return "/WEB-INF/views/index.jsp";
 	}
+	
+	@RequestMapping("/community_list2.do")
+	public String com_list2(Model model) {
+		List<BoardVO> list = boardService.showCommunityList();
+		model.addAttribute("list", list);
+		return Common.Board.VIEW_PATH + "community_list2.jsp";
+	}
 
 	// 로그인 - 1 ( 페이지 이동 )
 	@RequestMapping("/user_login_form.do")
@@ -130,17 +137,17 @@ public class StudyController {
 		int nowPage = 1;
 
 		if( page != null ) {
-			nowPage = page;
+			nowPage = page; // ~.do?page=3 처럼 입력할 경우
 		}
 		
-		System.out.println(nowPage + ": now page");
-		System.out.println(page + ": page");
+//		System.out.println(nowPage + ": now page");
+//		System.out.println(page + ": page");
 		
 		//한페이지에서 표시되는 게시물의 시작과 끝번호를 계산
 		//1페이지라면 1 ~ 10번 게시물까지만 보여줘야 한다.
 		//2페이지라면 11 ~ 20번 게시물까지만 보여줘야한다.
 		int start = (nowPage -1) * Common.BoardPaging.BLOCKLIST + 1;
-		int end = start + Common.BoardPaging.BLOCKLIST -1;
+		int end = start + Common.BoardPaging.BLOCKLIST - 1;
 
 		//start와 end를 map에 저장
 		Map map = new HashMap();
@@ -148,10 +155,7 @@ public class StudyController {
 		map.put("end", end);
 
 		//게시글 전체목록 가져오기
-		//List<BoardVO> list = boardService.showCommunityList(map);
-		//model.addAttribute("list", list);
 		List<BoardVO> list = null;
-		
 		list = boardDAO.selectList( map );	
 
 		//전체 게시물 수 구하기
@@ -160,7 +164,8 @@ public class StudyController {
 		//페이지 메뉴 생성하기
 		//ㄴ ◀1 2 3 4 5▶
 		String pageMenu = Paging.getPaging(
-				"community_list.do", nowPage, row_total, Common.BoardPaging.BLOCKLIST, Common.BoardPaging.BLOCKPAGE);
+				"community_list.do", nowPage, row_total, Common.BoardPaging.BLOCKLIST, 
+				Common.BoardPaging.BLOCKPAGE, null);
 
 		//request영역에 list바인딩
 		model.addAttribute("list", list);
@@ -173,13 +178,55 @@ public class StudyController {
 		return Common.Board.VIEW_PATH + "community_list.jsp";
 	}
 	
-	//검색기능 and 검색결과 레코드 개수
+	//검색기능 and 검색결과 레코드 개수 (페이징 적용)
 	@RequestMapping("/community_list_search.do")
-	public String list_search(Model model, String search ) {
-		System.out.println(search);
-		List<BoardVO> list = boardService.search_list(search);
+	public String list_search( Model model, Integer page, HttpServletRequest request, String search ) {
+		int nowPage = 1;
+
+		if( page != null ) {
+			nowPage = page; // ~.do?page=3 처럼 입력할 경우
+		}
+		
+//		System.out.println(nowPage + ": now page");
+//		System.out.println(page + ": page");
+		
+		//한페이지에서 표시되는 게시물의 시작과 끝번호를 계산
+		//1페이지라면 1 ~ 10번 게시물까지만 보여줘야 한다.
+		//2페이지라면 11 ~ 20번 게시물까지만 보여줘야한다.
+		int start = (nowPage -1) * Common.BoardPaging.BLOCKLIST + 1;
+		int end = start + Common.BoardPaging.BLOCKLIST - 1;
+
+		//start와 end를 map에 저장
+		Map map = new HashMap();
+		map.put("start", start);
+		map.put("end", end);
+		
+		map.put("search", search);
+
+		//게시글 전체목록 가져오기
+		List<BoardVO> list = null;
+		list = (List<BoardVO>) boardService.search_list(map).get("list");
+
+		//전체 게시물 수 구하기
+		int row_total = (int) boardService.search_list(map).get("cnt");
+
+		//페이지 메뉴 생성하기
+		//ㄴ ◀1 2 3 4 5▶
+		String pageMenu = Paging.getPaging(
+				"community_list_search.do" , nowPage, row_total,
+				Common.BoardPaging.BLOCKLIST, Common.BoardPaging.BLOCKPAGE,
+				search);
+
+		//request영역에 list바인딩
 		model.addAttribute("list", list);
+		model.addAttribute("pageMenu", pageMenu);
+		model.addAttribute("row_total", row_total);
+		
+		//세션에 등록되어 있던 show정보를 없앤다
+		request.getSession().removeAttribute("show");
+
 		return Common.Board.VIEW_PATH + "community_list.jsp";
+		
 	}
 
 	@RequestMapping("/community_write_form.do")
