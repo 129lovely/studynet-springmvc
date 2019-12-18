@@ -15,6 +15,7 @@
 			
 			if ( !cb1.checked || !cb2.checked) {
 				alert("안내 사항을 모두 확인해주세요.");
+				return;
 			}	
 		
 			location.href = "study_insert.do";
