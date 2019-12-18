@@ -25,21 +25,29 @@ public class BoardDAO implements DAO {
 		return list;
 	}
 
-	//전체 게시물 페이지 조회
+	//전체 게시물 조회
+	public List<BoardVO> List(){
+
+		List<BoardVO> list = null;
+		list = sqlSession.selectList("board.list_page");
+		return list;
+
+	}
+
+	//페이징을 포함한 조건별 검색
 	public List<BoardVO> selectList( Map map ){
 
 		List<BoardVO> list = null;
 
-		list = sqlSession.selectList("b.board_list_page", map);
+		list = sqlSession.selectList("board.list_condition", map);
 
 		return list;
-
 	}
-	
+
 	//게시글 갯수
 	public int getRowTotal() {
 
-		int count = sqlSession.selectOne("board_count");
+		int count = sqlSession.selectOne("board.count");
 
 		return count;
 
@@ -89,38 +97,38 @@ public class BoardDAO implements DAO {
 		int result = sqlSession.update("comment.update", vo);
 		return result;
 	}
-	
+
 	// 커뮤니티 원글 수정
 	public int update_community(BoardVO vo) {
 		int result=sqlSession.update("board.update_modify",vo);
 		return result;
 	}
-	
+
 	// 커뮤니티 추천수 올리기
 	public int update_recommend(int idx) {
 		int result=sqlSession.update("board.update_recommend", idx);
 		return result;
 	}
-	
+
 	// 커뮤니티 원글에 댓글달기
 	public int insert_comment(BoardCommentVO vo) {
 		int result=sqlSession.insert("comment.insert", vo);
 		System.out.println("DAO ");
 		return result;
 	}
-	
+
 	// 조회수 증가시키기
 	public int update_hit(int idx){
 		int result1=sqlSession.update("board.update_hit",idx);
 		return result1;
 	}
-	
+
 	//작성자 idx이용해서 이름 나오게 하기
 	public int list_name(int idx) {
 		int result=sqlSession.selectOne("board.select_community_list_name",idx);
 		return result;
 	}
-	
+
 	// 커뮤니티 리스트가져오기
 	public List<BoardVO> select_community_list() {
 		List<BoardVO> list = new ArrayList<BoardVO>();
@@ -130,12 +138,24 @@ public class BoardDAO implements DAO {
 
 	//게시글 삭제... 인데 왜 이렇게 하셨는진 잘 모르겠음
 	public int del_update( BoardVO baseVO ) {
-		
+
 		int res = sqlSession.update("board_del_update", baseVO);
-		
+
 		return res;
 	}
+
+	//검색기능
+	public List<BoardVO> search(String search){
+		List<BoardVO>result=sqlSession.selectList("board.list_search",search);
+		return result;
+	}
 	
-	
+	//원글 삭제
+	public int delete_community(int idx) {
+		int res = sqlSession.delete("board.delete_community",idx);
+		return res;
+	}
+
+
 
 }

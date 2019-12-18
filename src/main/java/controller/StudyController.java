@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import common.Common;
+import common.Paging;
+import dao.BoardDAO;
 import service.BoardService;
 import service.StudyService;
 import service.UserService;
@@ -27,7 +30,12 @@ public class StudyController {
 	StudyService studyService;
 	UserService userService;
 	BoardService boardService;
+	BoardDAO boardDAO;
 
+	public void setBoardDAO(BoardDAO boardDAO) {
+		this.boardDAO = boardDAO;
+	}
+	
 	public void setStudyService(StudyService studyService) {
 		this.studyService = studyService;
 	}
@@ -112,19 +120,74 @@ public class StudyController {
 	}
 	
 	
-	@RequestMapping("/community_list.do")
-	public String community_list(Model model, HttpServletRequest request) {
-		List<BoardVO> list = boardService.showCommunityList();
+	@RequestMapping( "/community_list.do")
+	public String list( Model model, Integer page, HttpServletRequest request ) {
+		int nowPage = 1;
+
+		if( page != null ) {
+			nowPage = page;
+		}
+		
+		System.out.println(nowPage + ": now page");
+		System.out.println(page + ": page");
+		
+		//한페이지에서 표시되는 게시물의 시작과 끝번호를 계산
+		//1페이지라면 1 ~ 10번 게시물까지만 보여줘야 한다.
+		//2페이지라면 11 ~ 20번 게시물까지만 보여줘야한다.
+		int start = (nowPage -1) * Common.BoardPaging.BLOCKLIST + 1;
+		int end = start + Common.BoardPaging.BLOCKLIST -1;
+
+		//start와 end를 map에 저장
+		Map map = new HashMap();
+		map.put("start", start);
+		map.put("end", end);
+
+		//게시글 전체목록 가져오기
+		//List<BoardVO> list = boardService.showCommunityList(map);
+		//model.addAttribute("list", list);
+		List<BoardVO> list = null;
+		
+		list = boardDAO.selectList( map );	
+
+		//전체 게시물 수 구하기
+		int row_total = boardDAO.getRowTotal();
+
+		//페이지 메뉴 생성하기
+		//ㄴ ◀1 2 3 4 5▶
+		String pageMenu = Paging.getPaging(
+				"community_list.do", nowPage, row_total, Common.BoardPaging.BLOCKLIST, Common.BoardPaging.BLOCKPAGE);
+
+		//request영역에 list바인딩
 		model.addAttribute("list", list);
+		model.addAttribute("pageMenu", pageMenu);
+		model.addAttribute("row_total", row_total);
+		
 		//세션에 등록되어 있던 show정보를 없앤다
 		request.getSession().removeAttribute("show");
-				
+
+		return Common.Board.VIEW_PATH + "community_list.jsp";
+	}
+	
+	//검색기능 and 검색결과 레코드 개수
+	@RequestMapping("/community_list_search.do")
+	public String list_search(Model model, String search ) {
+		System.out.println(search);
+		List<BoardVO> list = boardService.search_list(search);
+		model.addAttribute("list", list);
 		return Common.Board.VIEW_PATH + "community_list.jsp";
 	}
 
 	@RequestMapping("/community_write_form.do")
 	public String community_write_form() {
 		return Common.Board.VIEW_PATH + "community_write.jsp";
+	}
+	
+	//원글 삭제
+	@RequestMapping("/del.do")
+	public String board_del(int idx) {
+		int res = boardService.board_del(idx);
+		return "redirect:community_list.do";
+		
 	}
 
 	// 원글 수정하기
@@ -190,27 +253,6 @@ public class StudyController {
 		String res = userService.emailCheck(input_email);
 		request.setAttribute("res", res);
 		return res;
-	}
-	
-	// 페이징
-	@RequestMapping( "/page.do" )
-	public String list( Model model, int page ) {
-
-		int nowPage = 1;
-
-		if( page != 0 ) {
-			nowPage = page;
-		}
-		
-		
-		Map pageMap = boardService.showCommunityListPage(nowPage);
-		
-		model.addAttribute("list", pageMap.get("list") );
-		model.addAttribute("page", pageMap.get("page"));
-
-		
-		return Common.Board.VIEW_PATH + "board_list.jsp";
-
 	}
 	
 	//게시글 삭제

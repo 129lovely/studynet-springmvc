@@ -91,7 +91,7 @@
 					
 					<div class="btn-box-mod">
 						<a class="edit" href="community_write_modify_form.do?idx=${ board.idx }">수정</a>
-						<a href="del.do?idx=${vo.idx}" onclick="del();">삭제</a>
+						<a href="del.do?idx=${ board.idx }">삭제</a>
 
 					</div>
 					${ board.content }
