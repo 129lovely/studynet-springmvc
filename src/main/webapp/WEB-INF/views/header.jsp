@@ -91,10 +91,10 @@
 	</header>
 	
 	<!-- 실시간 채팅 -->
-	<div class="chat-box">
+	<!-- <div class="chat-box">
 		<div class="inner-box contents-box flex-box">
 				<a href="javascript:void(0);"><span class="icon icon-chat"></span></a>
 		</div>
-	</div>
+	</div> -->
 </body>
 </html>

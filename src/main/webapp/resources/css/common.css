@@ -646,23 +646,6 @@ textarea {
 //
 //----------------------------------------------------------------------------------
 */
-.chat-box {
-	position: fixed;
-    width: 100%;
-    bottom: 0;
-	left: 0;
-	
-	z-index: 5;
-}
-
-.chat-box > div {
-	justify-content: flex-end;
-}
-
-.chat-box > div > a {
-	display: inline-block;
-	margin-bottom: 20px;
-}
 
 /*
 //----------------------------------------------------------------------------------

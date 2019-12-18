@@ -48,18 +48,23 @@ public class StudyController {
 		this.boardService = boardService;
 	}
 	
+	//----------------------------------------------------------------------------
+	//
+	// mapping
+	//
+	//----------------------------------------------------------------------------
 	@RequestMapping("/socket_test2.do")
 	public String socket_test(Model model) {
 		return "/WEB-INF/views/socket_test2.jsp";
 	}
 	
-	@RequestMapping("/iframe.do")
+	@RequestMapping("/")
 	public String iframe_test(Model model) {
 		return "/WEB-INF/views/iframe.jsp";
 	}
-
+	
 	// index 
-	@RequestMapping(value = { "/", "/index.do" })
+	@RequestMapping(value = { "/index.do" })
 	public String index(Model model) {
 		List<BoardVO> board = boardService.showCommunityList_index();
 		model.addAttribute("board", board);
