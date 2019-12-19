@@ -43,7 +43,6 @@ public class BoardService {
 		map.put("board", boardDAO.selectOne(idx));
 
 		BoardVO vo = (BoardVO)map.get("board");
-		System.out.println( vo.getContent() );
 
 		map.put("comment", boardDAO.selectCommentList(idx));
 

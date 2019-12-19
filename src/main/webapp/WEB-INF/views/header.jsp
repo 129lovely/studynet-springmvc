@@ -17,9 +17,6 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
 	
-	<!-- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
-	
 	<script type="text/javascript" src="${ pageContext.request.contextPath }/resources/js/summernote.js"></script>
 	<script type="text/javascript" src="${ pageContext.request.contextPath }/resources/js/summernote-ko-KR.js"></script>
     <script type="text/javascript" src="${ pageContext.request.contextPath }/resources/js/sample.js"></script>

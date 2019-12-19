@@ -978,6 +978,11 @@ textarea {
     background-color: #eef3fa;
 }
 
+/* 수정 박스 만들기 */
+.community-list-detail .comment-box .comment-origin .comment-modify-txttag{
+   display:none;
+}
+
 /*
 //----------------------------------------------------------------------------------
 //
