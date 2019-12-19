@@ -8,20 +8,25 @@
 	<title>스터디 찾아보기</title>
 	<script type="text/javascript">
 	function send(f){
-		var keyword=f.keyword.value;
-		if(studyform.search_option.option[0]){//옵션중에서 선택게 분류라면
-			var search_option=studyform.search_option.option[0];
-			location.href="study_list_search.do?search&search_option"+search&search_option;//
-		}else if(studyform.search_option.option[1]){//온라인이면
-			var search_option=studyform.search_option.option[1];
-			location.href="study_list_search.do?search&search_option"+search&search_option;//텍스트 입력값을 넘긴다.
+		var search=f.search.value;	// 어디서 나왔던 keyword 였을까요?... ㅎ
+		
+		/* 멀쩡히 f 받아두시고 왜 studyform을 쓰세여 */
+		if(f.search_option.option[0]){//옵션중에서 선택게 분류라면
+			var search_option = studyform.search_option.option[0];
+			location.href = "study_list_search.do?search&search_option"+search&search_option;//텍스트 입력값을 넘긴다.
+			
+		}else if(f.search_option.option[1]){//온라인이면
+			var search_option = studyform.search_option.option[1];
+			location.href = "study_list_search.do?search&search_option"+search&search_option;
 			
 		}else{//오프라인이면
-			var search_option=studyform.search_option.option[2];
-			location.href="study_list_search.do?search&search_option"+search&search_option;//텍스트 입력값을 넘긴다.
+			var search_option = f.search_option.option[2];
+			location.href = "study_list_search.do?search&search_option"+search&search_option;
 		}
 		
 		// 이거 복합 옵션도 추가하셔야 해요 !!
+		// 그리고 파라미터 저렇게 넘기시면 안 돼요 "...?search=" + search + "&search_option=" + search_option 으로 하셔야 해여 따로따로
+		// 글구 이거 option 값 선택되는 거 확인하신 건가여?? .value 이런식으로 하셔야 될텐데  값 중간중간 확인 하면서 하세여 ~~
 	}
 	</script>
 </head>
