@@ -504,13 +504,63 @@ public class StudyController {
 		return Common.Study.VIEW_PATH + "study_list.jsp";
 	}
 		
+	
+	// 스터디 찾기에서 검색기능 and 검색결과 레코드 개수 (페이징 적용)
+		@RequestMapping("/study_list_search.do")
+		public String study_list_search( Model model, Integer page, HttpServletRequest request, String search, String search_option ) {
+			int nowPage = 1;
+
+			if( page != null ) {
+				nowPage = page; // ~.do?page=3 처럼 입력할 경우
+			}
+			
+//			System.out.println(nowPage + ": now page");
+//			System.out.println(page + ": page");
+			
+			//한페이지에서 표시되는 게시물의 시작과 끝번호를 계산
+			//1페이지라면 1 ~ 10번 게시물까지만 보여줘야 한다.
+			//2페이지라면 11 ~ 20번 게시물까지만 보여줘야한다.
+			int start = (nowPage -1) * Common.BoardPaging.BLOCKLIST + 1;
+			int end = start + Common.BoardPaging.BLOCKLIST - 1;
+
+			//start와 end를 map에 저장
+			Map map = new HashMap();
+			map.put("start", start);
+			map.put("end", end);
+			map.put("search_option",search_option);
+			map.put("search", search);
+
+			//게시글 전체목록 가져오기
+			List<BoardVO> list = null;
+			list = (List<BoardVO>) studyService.search_list(map).get("list");
+
+			//전체 게시물 수 구하기
+			int row_total = (int) studyService.search_list(map).get("cnt");
+
+			//페이지 메뉴 생성하기
+			//ㄴ ◀1 2 3 4 5▶
+			String pageMenu = Paging.getPaging(
+					"study_list_search.do" , nowPage, row_total,
+					Common.BoardPaging.BLOCKLIST, Common.BoardPaging.BLOCKPAGE,
+					search);
+
+			//request영역에 list바인딩
+			model.addAttribute("list", list);
+			model.addAttribute("pageMenu", pageMenu);
+			model.addAttribute("row_total", row_total);
+		
+			return Common.Board.VIEW_PATH + "study_list.jsp";
+			
+		}
+	
 	//스터디 상세 페이지
 	@RequestMapping("/study_list_detail.do")
 	public String study_list_detail(Model model, int idx,HttpServletRequest request) {
-		StudyVO study=studyService.showStudyDetail(idx);
+		/* StudyVO study=studyService.showStudyDetail(idx); */
+		// 이게 머죠?? 없는 메서드르 ㄹ왜 부르신거지 오류떠서 주석처리 해뒀어요.
 		UserVO user=userService.select_userName(idx);
 		
-		model.addAttribute("study",study);
+		/* model.addAttribute("study",study); */
 		model.addAttribute("user", user);
 		return Common.Study.VIEW_PATH + "study_list_detail.jsp";
 	}

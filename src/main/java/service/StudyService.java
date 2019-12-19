@@ -1,8 +1,13 @@
 package service;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import dao.BoardDAO;
 import dao.StudyDAO;
 import dao.UserDAO;
+import vo.BoardVO;
 import vo.StudyVO;
 
 public class StudyService {
@@ -23,6 +28,20 @@ public class StudyService {
 	public int insert( StudyVO vo ) {
 		
 		return studyDAO.insert(vo);
+	}
+
+	//검색기능
+	public Map search_list(Map map){
+		List<StudyVO> list = studyDAO.search(map);
+		int cnt = studyDAO.search_cnt( (String) map.get("search") );
+		
+		System.out.println(cnt);
+		
+		Map res = new HashMap();
+		res.put("list", list);
+		res.put("cnt", cnt);
+		
+		return res;
 	}
 
 }

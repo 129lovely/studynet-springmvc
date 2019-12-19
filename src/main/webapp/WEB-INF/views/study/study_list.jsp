@@ -6,12 +6,30 @@
 <head>
 	<meta charset="UTF-8">
 	<title>스터디 찾아보기</title>
+	<script type="text/javascript">
+	function send(f){
+		var keyword=f.keyword.value;
+		if(studyform.search_option.option[0]){//옵션중에서 선택게 분류라면
+			var search_option=studyform.search_option.option[0];
+			location.href="study_list_search.do?search&search_option"+search&search_option;//
+		}else if(studyform.search_option.option[1]){//온라인이면
+			var search_option=studyform.search_option.option[1];
+			location.href="study_list_search.do?search&search_option"+search&search_option;//텍스트 입력값을 넘긴다.
+			
+		}else{//오프라인이면
+			var search_option=studyform.search_option.option[2];
+			location.href="study_list_search.do?search&search_option"+search&search_option;//텍스트 입력값을 넘긴다.
+		}
+		
+		// 이거 복합 옵션도 추가하셔야 해요 !!
+	}
+	</script>
 </head>
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
 	<div class="study-search-page">
 		<!-- 원하는 스터디 검색하기 -->
-		<form class="search-box mb20">
+		<form class="search-box mb20" action="study_list_search.do" name="studyform">
 			<div class="flex-box pt190">
 				<h2 class="section-title">원하는 스터디 검색하기</h2>
 				<p class="mb10">step 1. 스터디 목적 선택하기 (복수 선택 가능)</p>
@@ -25,14 +43,23 @@
 				<p class="mb10">step2.온/오프라인 분류를 선택하고 검색어 입력하기</p>
 				<div class="mb40 flex-box">
 					<div class="flex-box">
-						<select name="">
-							<option>분류</option>
-							<option>온라인</option>
-							<option>오프라인</option>
+					
+						<select name="search_option">
+							<option value="by_all" 
+							<c:if test="${map.search_option=='by_all'}">selected</c:if>
+							>분류</option>
+							<option value="by_online"
+							<c:if test="${map.search_option=='by_online'}">selected</c:if>
+							>온라인</option>
+							<option value="by_offline"
+							<c:if test="${map.search_option=='by_offline'}">selected</c:if>
+							>오프라인</option>
 						</select>
-						<input type="text" placeholder="검색어를 입력해주세요"/>
+						<input type="text" placeholder="검색어를 입력해주세요" name="search" id="search"/>
 					</div>
-					<input class="my-btn black-white" type="button" value="찾아보기"/>
+					<input class="my-btn black-white" type="button" value="찾아보기" name="btnSearch" id="btnSearch"
+								onclick="send(this.form);" />
+				
 				</div>
 			</div>
 		</form>

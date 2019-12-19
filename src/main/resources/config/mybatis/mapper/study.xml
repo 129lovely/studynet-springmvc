@@ -18,6 +18,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  				#{purpose}, #{is_online},#{place}, #{extra_info}, #{apply_condition}, 
 		 		#{detail_info}, '모집중', #{photo} )
 	</insert>
+	
+	<!-- 검색기능 -->
+	<select resultType="study" id="list_search"
+		parameterType="java.util.Map">
+		select *
+		from (SELECT rank() over(order by idx desc) AS no, b.*
+				FROM (select * from study where title like CONCAT('%',#{search},'%')) AS b ) AS list
+		where no between #{start} AND #{end}
+	</select>
+	
+	<select resultType="int" id="search_count" parameterType="java.lang.String">
+		select count(*)
+		from study
+		where title like CONCAT('%',#{search},'%')
+	</select>
 </mapper>
 
 
