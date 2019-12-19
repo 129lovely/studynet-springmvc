@@ -505,10 +505,15 @@ public class StudyController {
 	}
 		
 	//스터디 상세 페이지
-		@RequestMapping("/study_list_detail.do")
-		public String study_list_detail() {
-			return Common.Study.VIEW_PATH + "study_list_detail.jsp";
-		}
+	@RequestMapping("/study_list_detail.do")
+	public String study_list_detail(Model model, int idx,HttpServletRequest request) {
+		StudyVO study=studyService.showStudyDetail(idx);
+		UserVO user=userService.select_userName(idx);
+		
+		model.addAttribute("study",study);
+		model.addAttribute("user", user);
+		return Common.Study.VIEW_PATH + "study_list_detail.jsp";
+	}
 		
 	//스터디 참가 신청하기
 	@RequestMapping("/study_apply_caution.do")

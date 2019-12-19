@@ -23,6 +23,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="login" parameterType="java.lang.String" resultType="user">
 		SELECT * FROM user WHERE email = #{email}
 	</select>
+	
+	<!--study의 create_user_idx의 이름 가져오기  -->
+	<select id="select_name" parameterType="int" resultType="user">
+		SELECT * from user WHERE idx=(SELECT create_user_idx from study where idx=#{idx})
+	</select>
 </mapper>
 
 

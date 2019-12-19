@@ -74,4 +74,10 @@ public class UserService {
 
 		return map;
 	}
+	
+	// study의 create_user_idx의 name가져오기
+	public UserVO select_userName(int idx) {
+		UserVO vo=userDAO.selectUserName(idx);
+		return vo;
+	}
 }

@@ -60,4 +60,10 @@ public class UserDAO implements DAO {
 		UserVO user = sqlSession.selectOne("user.login", email);
 		return user;
 	}
+	
+	// user의 이름 가져오기
+	public UserVO selectUserName(int idx) {
+		UserVO vo=sqlSession.selectOne("user.select_name", idx);
+		return vo;
+	}
 }
