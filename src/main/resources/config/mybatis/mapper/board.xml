@@ -59,12 +59,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		title=#{title}, content=#{content}, updated_at=current_timestamp()
 		where idx=#{idx}
 	</update>
+	
+	<!-- 중복 추천 확인 -->
+	<select id="check_recommend" parameterType="java.util.Map" resultType="int">
+		select count(*)
+		from board_recommend
+		where board_idx=#{idx} and user_idx=#{now_user} and is_recommend=1
+	</select>
 
-	<!-- 추천수 올리기 -->
-	<update id="update_recommend" parameterType="int">
-		update board set
-		recommend=recommend+1 where idx=#{idx}
+	<!-- board 테이블 추천수 올리기 -->
+	<update id="update_b_recommend" parameterType="int">
+		update board
+		set recommend=recommend+1
+		where idx=#{idx}
 	</update>
+	
+	<!-- board_recommend 업데이트 -->
+	<insert id="update_br_recommend" parameterType="java.util.Map">
+		insert into board_recommend (board_idx, user_idx)
+		values (#{idx}, #{now_user})
+	</insert>
+	
+	
+	
+	
+	
+	
+	
 
 	<!-- 전체 게시물 조회 -->
 	<select resultType="board" id="list_page">select * from board order by ref
@@ -108,6 +129,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		set title='삭제된 게시물입니다', deleted_at=current_timestamp()
 		where idx=#{idx}
 	</update>
+	
 </mapper>
 
 

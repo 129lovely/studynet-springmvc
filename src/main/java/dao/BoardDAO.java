@@ -93,8 +93,8 @@ public class BoardDAO implements DAO {
 	}
 
 	// 댓글 수정
-	public int update_comment(BoardCommentVO vo) {
-		int result = sqlSession.update("comment.update", vo);
+	public int update_comment(Map map) {
+		int result = sqlSession.update("comment.update", map);
 		return result;
 	}
 
@@ -103,19 +103,37 @@ public class BoardDAO implements DAO {
 		int result=sqlSession.update("board.update_modify",vo);
 		return result;
 	}
-
-	// 커뮤니티 추천수 올리기
-	public int update_recommend(int idx) {
-		int result=sqlSession.update("board.update_recommend", idx);
-		return result;
+	
+	//-------------------------------------------------------------------
+	//
+	// 커뮤니티 추천 관련
+	//
+	//-------------------------------------------------------------------
+	// 중복 추천 확인하기
+	public int check_recommend(Map map) {
+		int is_over = sqlSession.selectOne("board.check_recommend", map);
+		return is_over;
 	}
+
+	// board 테이블 추천수 올리기
+	public int update_b_recommend(int idx) {
+		int res = sqlSession.update("board.update_b_recommend", idx);
+		return res;
+	}
+
+	// board_recommend에 정보 넣기
+	public int update_br_recommend(Map map) {
+		int res = sqlSession.insert("board.update_br_recommend", map);
+		return res;
+	}
+	//-------------------------------------------------------------------
 
 	// 커뮤니티 원글에 댓글달기
 	public int insert_comment(BoardCommentVO vo) {
 		int result=sqlSession.insert("comment.insert", vo);
 		return result;
 	}
-
+	
 	// 조회수 증가시키기
 	public int update_hit(int idx){
 		int result1=sqlSession.update("board.update_hit",idx);
@@ -148,16 +166,40 @@ public class BoardDAO implements DAO {
 		List<BoardVO>result=sqlSession.selectList("board.list_search",map);
 		return result;
 	}
-	
+
 	// 검색기능 (총 리스트 갯수)
 	public int search_cnt(String search){
 		int cnt = sqlSession.selectOne("board.search_count", search);
 		return cnt;
 	}
-	
+
 	//원글 삭제
 	public int delete_community(int idx) {
-		int res = sqlSession.delete("board.delete_community",idx);
+		int res = sqlSession.update("board.delete_community",idx);
+		return res;
+	}
+
+	// 댓글 삭제
+	public int delete_comment(int idx) {
+		int res = sqlSession.update("comment.del_comment", idx);
+		return res;
+	}
+
+	// 대댓글 parent 댓글 idx 찾기
+	public int getRealParent(Map map) {
+		int parent = sqlSession.selectOne("comment.find_parent", map);
+		return parent;
+	}
+
+	// 대댓글 달기(1): 나머지 댓글 seq 증가
+	public int update_comment_reply_seq(Map map) {
+		int res = sqlSession.insert("comment.update_comment_re_seq", map);
+		return res;
+	}
+
+	// 대댓글 달기(2): 대댓글 넣기
+	public int insert_comment_reply(Map map) {
+		int res = sqlSession.insert("comment.insert_comment_re", map);
 		return res;
 	}
 

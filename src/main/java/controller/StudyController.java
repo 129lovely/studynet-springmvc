@@ -302,12 +302,21 @@ public class StudyController {
 		return Common.Board.VIEW_PATH + "community_list_detail.jsp";
 	}
 
-	// 댓글 수정 박스띄우기
-	@RequestMapping("/community_list_detail_modify_form.do")
-	public String community_list_detail_modify_form(Model model, int idx, String show) {
-		show="yes";
-		model.addAttribute("show", show);
-		return Common.Board.VIEW_PATH + "community_list_detail.jsp";
+	
+	// 대댓글 작성
+	@RequestMapping("/write_comment_reply.do")
+	public String write_comment_reply(int parent, String content, int is_re, int b_idx, HttpServletRequest request) {
+		UserVO user = (UserVO) request.getSession().getAttribute("user");
+		
+		Map map = new HashMap();
+		map.put("parent", parent); // 부모 댓글
+		map.put("content", content); // 내용
+		map.put("is_re", is_re); // 0: 원댓의 댓, 1: 대댓의 댓
+		map.put("b_idx", b_idx); // 게시글 idx
+		map.put("user_idx", user.getIdx()); // 작성자 idx
+		
+		int res = boardService.comment_reply(map);
+		return "redirect:community_list_detail.do?idx="+b_idx;
 	}
 
 	@RequestMapping("/community_list_detail_modify.do")
@@ -350,11 +359,13 @@ public class StudyController {
 	
 	// 추천버튼 클릭시 추천 수 올리기
 	@RequestMapping("/community_recommend.do")
-	public String community_recommend(int idx) {
+	@ResponseBody
+	public String community_recommend(int idx, int user_idx, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		UserVO user = (UserVO) session.getAttribute("user");
 		
-		int res=boardService.updateRecommend(idx);
-		return "community_list_detail.do?idx="+idx;
-		
+		String res = boardService.updateRecommend(idx, user_idx, user.getIdx());
+		return res;
 	}
 	
 	// 댓글달기
@@ -369,17 +380,37 @@ public class StudyController {
 	}
 
 	// 댓글 수정
-	@RequestMapping("/comment_update.do")
+	@RequestMapping("/comment_mod.do")
 	@ResponseBody
-	public String comment_update(BoardCommentVO vo) {
+	public String comment_mod(int idx, int user_idx, String content, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		UserVO vo = (UserVO) session.getAttribute("user");
 		
-		int res= boardService.updateComment(vo);
+		String res = "fail";
 		
-		String result="no";
-		if(res!=0) {
-			result="yes";
+		if( vo.getIdx() == user_idx ) { // 유저 정보 일치하면
+			int sqlRes = boardService.comment_mod(idx, content);
+			res = "success";
 		}
-		return result;
+
+		return res;
+	}
+	
+	// 댓글 삭제
+	@RequestMapping("/comment_del.do")
+	@ResponseBody
+	public String comment_del(int idx, int user_idx, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		UserVO vo = (UserVO) session.getAttribute("user");
+		
+		String res = "fail";
+		
+		if( vo.getIdx() == user_idx ) { // 유저 정보 일치하면
+			int sqlRes = boardService.comment_del(idx);
+			res = "success";
+		}
+
+		return res;
 	}
 
 	// 마이페이지 스터디룸 - 1 

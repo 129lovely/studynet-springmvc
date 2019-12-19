@@ -5,20 +5,58 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="comment">
 
 	<select parameterType="int" resultType="boardComment" id="selectList">
-	select * from board_comment where board_idx=#{board_idx} order by seq asc 
+	select *
+	from board_comment c
+	left outer join user u
+	on c.user_idx = u.idx
+	where board_idx=#{board_idx}	
+	order by seq asc 
 	</select>
 
 	<!-- 댓글 수정하기 -->
-	<update parameterType="boardComment" id="update">
+	<update id="update" parameterType="java.util.Map">
 	update board_comment 
-	set content=#{content}, updated_at=current_timestamp() where idx=#{idx} 
+	set content=#{content}, updated_at=current_timestamp()
+	where idx=#{idx}
 	</update>
 	
 	<!-- 원글에 댓글 달기 -->
 	<insert parameterType="boardComment" id="insert">
-		insert into board_comment (board_idx, user_idx, content, seq) values(#{board_idx}, #{user_idx} ,#{content}, MAX(seq)+1) 
+		insert into board_comment (board_idx, user_idx, content, seq)
+		values (#{board_idx},
+				#{user_idx},
+				#{content},
+				(SELECT IFNULL(MAX(seq)+1, 1) FROM board_comment ALIAS_FOR_SUBQUERY WHERE board_idx = #{board_idx}) ) 
 	</insert>
-
+	
+	<!-- 댓글 삭제 -->
+	<update id="del_comment" parameterType="int">
+		update board_comment
+		set content='삭제된 댓글입니다', deleted_at=current_timestamp()
+		where idx=#{idx}
+	</update>
+	
+	<!-- 대댓글 parent idx 찾기 -->
+	<select id="find_parent" resultType="int" parameterType="java.util.Map">
+		select parent
+		from board_comment
+		where idx=#{parent}
+	</select>
+	
+	<!-- 대댓글 달기(1): board_idx 같은 댓글/대댓글 중
+	parent 댓글의 seq보다 큰 seq를 가진 댓글/대댓글의 seq를 1 증가 -->
+	<update id="update_comment_re_seq" parameterType="java.util.Map">
+		update board_comment
+		set seq=seq+1
+		where board_idx=#{b_idx} and seq>( SELECT seq FROM board_comment ALIAS_FOR_SUBQUERY WHERE idx=#{parent} )
+	</update>
+	
+	<!-- 대댓글 달기(2): 대댓글 자신은 parent 댓글의 seq보다 1 큰 seq로 insert -->
+	<insert id="insert_comment_re" parameterType="java.util.Map">
+		insert into board_comment (board_idx, user_idx, content, parent, seq)
+		values (#{b_idx}, #{user_idx}, #{content}, #{parent},
+				(SELECT seq FROM board_comment ALIAS_FOR_SUBQUERY WHERE idx=#{parent}) + 1 )
+	</insert>
 </mapper>
 
 

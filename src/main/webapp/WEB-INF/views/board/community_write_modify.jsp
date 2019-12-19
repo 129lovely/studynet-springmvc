@@ -29,8 +29,7 @@
 			f.method="post";
 			f.action="community_write_update.do";
 			
-			f.submit();
-			
+			f.submit();	
 		}
 	
 	</script>
@@ -43,18 +42,20 @@
         <div class="community-writing">
             <div class="inner-box pt190">
                 <form class="contents-box board">
+                	<input type="hidden" name="idx" value="${ vo.idx }">
+                
                     <h3 class="section-title blue">커뮤니티 글 수정</h3>
                     <p class="section-discription tal mb40">이용약관을 준수하여 올바른 커뮤니티 사용을 부탁드립니다.</p>
                     
                     <!--제목-->
                     <div class="line-bottom flex-box">
                         <label for="board-title">제목</label>
-                        <input id="board-title" type="text" placeholder="제목을 입력해주세요." value="${ vo.title }" />
+                        <input name="title" id="board-title" type="text" placeholder="제목을 입력해주세요." value="${ vo.title }" />
                     </div>
                     
                     <!--텍스트-->
                     <div class="note-my-custom">
-                        <textarea class="summernote-community-writing-box">${ vo.content }</textarea>	
+                        <textarea name="content" class="summernote-community-writing-box">${ vo.content }</textarea>	
                     </div>
                     
                     <!--버튼-->
