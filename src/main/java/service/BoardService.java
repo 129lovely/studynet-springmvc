@@ -55,12 +55,6 @@ public class BoardService {
 		boardDAO.insert(vo);
 	}
 
-	// 게시글 댓글 수정하기
-	public int updateComment(BoardCommentVO vo) {
-		int res=boardDAO.update_comment(vo);
-		return res;
-	}
-
 	//상세페이지 들어갈때 조회수 증가시키기
 	public int hit_increase(int idx){
 		int re = boardDAO.update_hit(idx);
@@ -118,9 +112,26 @@ public class BoardService {
 	}
 
 	// 추천수 올리기
-	public int updateRecommend(int idx) {
-		int res=boardDAO.update_recommend(idx);
-		return res;
+	public String updateRecommend(int idx, int board_user, int now_user ) {
+		String resStr = "";
+		
+		Map map = new HashMap();
+		map.put("idx", idx);
+		map.put("board_user", board_user);
+		map.put("now_user", now_user);
+		
+		if( board_user == now_user ) { // 본인 글
+			return resStr = "self";
+		}
+		
+		if( boardDAO.check_recommend(map) != 0 ) { // 중복 추천
+			return resStr = "over";
+		}
+		
+		int res = boardDAO.update_b_recommend(idx);
+		res = boardDAO.update_br_recommend(map);
+		return resStr = "success";
+		
 	}
 
 	// 원글에 댓글달기
@@ -133,19 +144,52 @@ public class BoardService {
 	public Map search_list(Map map){
 		List<BoardVO> list = boardDAO.search(map);
 		int cnt = boardDAO.search_cnt( (String) map.get("search") );
-		
+
 		System.out.println(cnt);
-		
+
 		Map res = new HashMap();
 		res.put("list", list);
 		res.put("cnt", cnt);
+
+		return res;
+	}
+
+	// 원글 삭제
+	public int board_del(int idx) {
+		int res=boardDAO.delete_community(idx);
+		return res;
+	}
+
+	// 댓글 삭제
+	public int comment_del(int idx) {
+		int res = boardDAO.delete_comment(idx);
+		return res;
+	}
+	
+	// 대댓글 달기
+	public int comment_reply(Map map) {
+		int is_re = (int) map.get("is_re");
+		
+		// parent 설정
+		// 원댓의 대댓글일 경우 -> 가져온 parent 그대로 사용
+		// 대댓의 대댓글일 경우 -> parent를 idx로 갖는 댓글의 parent(원댓)를 사용 
+		if( is_re == 1 ) {
+			map.put( "parent", boardDAO.getRealParent( map ) );
+		}
+		
+		int res = boardDAO.update_comment_reply_seq(map);
+		res = boardDAO.insert_comment_reply(map);
 		
 		return res;
 	}
 	
-	// 원글 삭제
-	public int board_del( int idx) {
-		int res=boardDAO.delete_community(idx);
+	// 댓글 수정
+	public int comment_mod(int idx, String content) {
+		Map map = new HashMap();
+		map.put("idx", idx);
+		map.put("content", content);
+		
+		int res = boardDAO.update_comment(map);
 		return res;
 	}
 

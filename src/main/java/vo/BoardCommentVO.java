@@ -5,9 +5,15 @@ import java.util.Date;
 public class BoardCommentVO {
 	
 	private int idx, board_idx, user_idx, parent, seq;
-	private String content;
+	private String content, name;
 	private Date created_at, updated_at, deleted_at;
 	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	public int getIdx() {
 		return idx;
 	}
