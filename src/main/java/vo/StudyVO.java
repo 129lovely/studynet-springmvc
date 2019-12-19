@@ -1,18 +1,18 @@
 package vo;
 
+import java.util.Date;
+
 import org.springframework.web.multipart.MultipartFile;
 
 public class StudyVO {
 	
 	private int idx, create_user_idx, min_count, max_count
 				, apply_count, approve_count, is_online;
-	private String title, photo, deadline, start_date, end_date
-				   , open_kakao, purpose, place, extra_info
-				   , apply_condition, detail_info, study_status, created_at
-				   , updated_at, deleted_at;
+	private String title, photo, open_kakao, purpose, place, extra_info, 
+					apply_condition, detail_info, study_status; 
 	
 	private MultipartFile photo_file;
-	
+	private Date deadline, start_date, end_date, created_at, updated_at, deleted_at;
 	
 	public MultipartFile getPhoto_file() {
 		return photo_file;
@@ -74,24 +74,6 @@ public class StudyVO {
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
-	public String getDeadline() {
-		return deadline;
-	}
-	public void setDeadline(String deadline) {
-		this.deadline = deadline;
-	}
-	public String getStart_date() {
-		return start_date;
-	}
-	public void setStart_date(String start_date) {
-		this.start_date = start_date;
-	}
-	public String getEnd_date() {
-		return end_date;
-	}
-	public void setEnd_date(String end_date) {
-		this.end_date = end_date;
-	}
 	public String getOpen_kakao() {
 		return open_kakao;
 	}
@@ -141,23 +123,42 @@ public class StudyVO {
 	public void setStatus(String status) {
 		this.study_status = status;
 	}
-	public String getCreated_at() {
+	public Date getDeadline() {
+		return deadline;
+	}
+	public void setDeadline(Date deadline) {
+		this.deadline = deadline;
+	}
+	public Date getStart_date() {
+		return start_date;
+	}
+	public void setStart_date(Date start_date) {
+		this.start_date = start_date;
+	}
+	public Date getEnd_date() {
+		return end_date;
+	}
+	public void setEnd_date(Date end_date) {
+		this.end_date = end_date;
+	}
+	public Date getCreated_at() {
 		return created_at;
 	}
-	public void setCreated_at(String created_at) {
+	public void setCreated_at(Date created_at) {
 		this.created_at = created_at;
 	}
-	public String getUpdated_at() {
+	public Date getUpdated_at() {
 		return updated_at;
 	}
-	public void setUpdated_at(String updated_at) {
+	public void setUpdated_at(Date updated_at) {
 		this.updated_at = updated_at;
 	}
-	public String getDeleted_at() {
+	public Date getDeleted_at() {
 		return deleted_at;
 	}
-	public void setDeleted_at(String deleted_at) {
+	public void setDeleted_at(Date deleted_at) {
 		this.deleted_at = deleted_at;
 	}
+	
 
 }

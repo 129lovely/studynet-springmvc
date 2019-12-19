@@ -1,10 +1,11 @@
 package vo;
 
+import java.util.Date;
+
 public class UserVO {
 	private int idx, is_email_auth, is_phone_auth, study;
-	private String email, password, name, phone, job
-				   , region, created_at, updated_at, deleted_at
-				   , sns_token, sns_type, sns_connected_at;
+	private String email, password, name, phone, job, region, sns_token, sns_type;
+	private Date created_at, updated_at, deleted_at, sns_connected_at;
 	
 	public int getIdx() {
 		return idx;
@@ -66,24 +67,6 @@ public class UserVO {
 	public void setRegion(String region) {
 		this.region = region;
 	}
-	public String getCreated_at() {
-		return created_at;
-	}
-	public void setCreated_at(String created_at) {
-		this.created_at = created_at;
-	}
-	public String getUpdated_at() {
-		return updated_at;
-	}
-	public void setUpdated_at(String updated_at) {
-		this.updated_at = updated_at;
-	}
-	public String getDeleted_at() {
-		return deleted_at;
-	}
-	public void setDeleted_at(String deleted_at) {
-		this.deleted_at = deleted_at;
-	}
 	public String getSns_token() {
 		return sns_token;
 	}
@@ -96,10 +79,28 @@ public class UserVO {
 	public void setSns_type(String sns_type) {
 		this.sns_type = sns_type;
 	}
-	public String getSns_connected_at() {
+	public Date getCreated_at() {
+		return created_at;
+	}
+	public void setCreated_at(Date created_at) {
+		this.created_at = created_at;
+	}
+	public Date getUpdated_at() {
+		return updated_at;
+	}
+	public void setUpdated_at(Date updated_at) {
+		this.updated_at = updated_at;
+	}
+	public Date getDeleted_at() {
+		return deleted_at;
+	}
+	public void setDeleted_at(Date deleted_at) {
+		this.deleted_at = deleted_at;
+	}
+	public Date getSns_connected_at() {
 		return sns_connected_at;
 	}
-	public void setSns_connected_at(String sns_connected_at) {
+	public void setSns_connected_at(Date sns_connected_at) {
 		this.sns_connected_at = sns_connected_at;
 	}
 	
