@@ -12,10 +12,47 @@
 	<meta charset="UTF-8">
 	<title>스터디 룸 생성</title>
 	
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> 
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+	<!-- Flatpickr related files -->
+	<link href="https://cdn.jsdelivr.net/npm/flatpickr@4/dist/flatpickr.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr@4/dist/flatpickr.min.js"></script>
 
+	<!-- flatpickr -->
+	<script>
+		/* window.onload = function () {
+			window.flatpickr(document.getElementById("deadline"));
+		} */
+		
+		/* onload 넣어도 안 넣어도 이러고 ㄱ- 파라미터로 넣어도 밖에다 넣어도 이러고  */
+		
+		/* $(document).ready(function() {
+	          flatpickr("#deadline", { 
+	            "dateFormat":"Y-m-d", 
+	            "allowInput":true,
+	            "onOpen": function(selectedDates, dateStr, instance) {
+	              instance.setDate(instance.input.value, false);
+	            }
+	          });
+		 }); */
+	</script>
+	
+	
+	<!-- pikaday related -->
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
+	<script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
+	
+	
+	<!-- 원래 이거 붙여주라는데 얘는 먼 404 오류가 뜨고... -->
+	<!-- 	<script src="../pikaday.js"></script> -->
+	<script type="text/javascript">
+		var field = document.getElementById('deadline');
+		var picker = new Pikaday({
+		    onSelect: function(date) {
+		        field.value = picker.toString();
+		    }
+		});
+	</script>
+	
+	
 	<script>
 		
 	 	function show() {
@@ -418,9 +455,11 @@
 
 </body>
 
+
+
 	<!-- DatePicker -->
  	<script type="text/javascript">
- 		$(document).ready(function () {
+ 		/* $(document).ready(function () {
 	            $( "#deadLine" ).datepicker({
 	                 changeMonth: true, 
 	                 changeYear: true,
@@ -479,7 +518,7 @@
 	                 }
 	            });      
 
- 		}); 
+ 		});  */
 	</script>
 	
 	<!-- 라디오 따라서 달라지는 레이아웃 -->
@@ -494,9 +533,13 @@
 		 		 design.style.display = "none";
 			}
  			
+ 			
+ 			
  		});
  	
 
  	</script>
-	
+
+
+
 </html>
