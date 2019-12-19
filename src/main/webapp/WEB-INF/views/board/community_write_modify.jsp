@@ -59,8 +59,8 @@
                     
                     <!--버튼-->
                     <div class="btn-box tac">
-                        <input class="my-btn yellow-black" type="button" value="수정하기" />
-                        <input class="my-btn yellow-black" type="button" value="취소" />
+                        <input class="my-btn yellow-black" type="button" value="수정하기" onclick="write_modify(this.form);"/>
+                        <input class="my-btn yellow-black" type="button" value="취소" onclick="location.href='community_list_detail.do?idx=${ vo.idx }'" />
                     </div>
                 </form>
             </div>

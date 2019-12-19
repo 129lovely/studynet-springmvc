@@ -62,7 +62,16 @@ public class StudyController {
 	}
 	
 	@RequestMapping("/")
-	public String iframe_test(Model model) {
+	public String iframe_test(Model model, HttpServletRequest request) {
+//		HttpSession session = request.getSession();
+//		
+//		Map user = new HashMap();
+//		user.put("name", "비회원");
+//		user.put("idx", -1);
+//		
+//		session.setAttribute("user", user);
+//		session.setMaxInactiveInterval(300 * 60);
+		
 		return "/WEB-INF/views/iframe.jsp";
 	}
 	
@@ -111,6 +120,7 @@ public class StudyController {
 			resMap.put("name", user.getName());
 			
 			HttpSession session = request.getSession();
+//			session.removeAttribute("user");
 			session.setAttribute("user", user);
 			session.setMaxInactiveInterval(120 * 60);
 		}
@@ -123,7 +133,14 @@ public class StudyController {
 	public String user_logout( HttpServletRequest request ) {
 		HttpSession session = request.getSession();
 		session.removeAttribute("user");
-		return "redirect:home.do";
+
+//		Map user = new HashMap();
+//		user.put("name", "비회원");
+//		user.put("idx", -1);
+//		session.setAttribute("user", user);
+//		session.setMaxInactiveInterval(300 * 60);
+		
+		return "redirect:index.do";
 	}
 
 	// 회원 가입 - 1 ( 약관 동의 페이지 )
@@ -342,7 +359,11 @@ public class StudyController {
 	
 	// 댓글달기
 	@RequestMapping("/comment_origin_reply.do")
-	public String comment_origin_reply(BoardCommentVO vo) {
+	public String comment_origin_reply(BoardCommentVO vo, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		UserVO user = (UserVO) session.getAttribute("user");
+		
+		vo.setUser_idx( user.getIdx() );
 		boardService.writeComment(vo);
 		return "community_list_detail.do?idx="+vo.getBoard_idx();		
 	}

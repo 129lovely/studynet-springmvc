@@ -62,6 +62,12 @@
 	
       // 댓글 달기
       function reply(board_idx){ /* board_idx = board테이블에서의 idx */
+		if( ${ empty sessionScope.user.idx } ){
+  			
+  			alert("로그인이 필요합니다.");
+  			location.href="user_login_form.do";
+  			return;
+  		}
          
          var content = document.getElementById("comment-write-txtarea").value;
          
@@ -105,7 +111,14 @@
 
 	// 게시글 수정
 	function b_modify() {
-		if( ${board.user_idx} != ${sessionScope.user.idx} ){
+		if( ${ empty sessionScope.user.idx } ){
+			
+			alert("로그인이 필요합니다.");
+			location.href="user_login_form.do";
+			return;
+		}
+		
+		if( ${ board.user_idx != sessionScope.user.idx } ){
 			alert("작성자 본인만 수정할 수 있습니다.");
 			return;
 		}
@@ -115,7 +128,12 @@
 	
 	// 게시글 삭제
 	function b_delete() {
-		if( ${board.user_idx} != ${sessionScope.user.idx} ){
+		if( ${ empty sessionScope.user.idx } ){
+			alert("로그인이 필요합니다.");
+			location.href="user_login_form.do";
+			return;
+		}
+		if( ${ board.user_idx != sessionScope.user.idx } ){
 			alert("작성자 본인만 삭제할 수 있습니다.");
 			return;
 		}
@@ -142,11 +160,9 @@
 						<h3>${ board.user_idx }</h3>
 					</div>
 					<div>
-						<span class="txt-only">작성일: </span>
-						<span><fmt:formatDate value="${board.created_at}" type="date" pattern="yyyy.MM.dd" /></span>
-						<span>조회수: </span> 
-						<span>${ board.hit }</span> 
-						<span>추천수: </span> 
+						<span class="txt-only">작성일: </span> <span><fmt:formatDate
+								value="${board.created_at}" type="date" pattern="yyyy.MM.dd" /></span>
+						<span>조회수: </span> <span>${ board.hit }</span> <span>추천수: </span>
 						<span>${ board.recommend }</span>
 					</div>
 				</div>
@@ -158,22 +174,22 @@
 							href="javascript:b_delete();">삭제</a>
 
 					</div>
-					
+
 					${ board.content }
-					
+
 					<div class="btn-box-rec tac">
-						<a href="community_recommend.do?idx=${board.idx}" class="my-btn yellow-black">추천</a> 
-						<a class="my-btn black-white list" href="community_list.do">목록으로</a>
+						<a href="community_recommend.do?idx=${board.idx}"
+							class="my-btn yellow-black">추천</a> <a
+							class="my-btn black-white list" href="community_list.do">목록으로</a>
 					</div>
 				</div>
 
 				<!-- 댓글 갯수 -->
-				<div class="comment-info bg-blue">
-					댓글 ${ fn:length(comment) }개
+				<div class="comment-info bg-blue">댓글 ${ fn:length(comment) }개
 				</div>
 
 				<c:if test="${ fn:length(comment) != 0 }">
-				
+
 					<!-- 코멘트 -->
 					<div class="comment-box">
 						<!-- db 가져온 것 -->
@@ -182,47 +198,54 @@
 								<div class="comment-origin" data-cidx="${ vo.idx }">
 									<div>
 										<h3>${ vo.user_idx }</h3>
-										<span><fmt:formatDate value="${vo.created_at}" type="date" pattern="yyyy.MM.dd HH:mm" /></span> 
-										<a href="javascript:void(0);" onclick="openReComment(this);">대댓글 달기</a> 
-                  						<a class="edit" href="javascript:void(0);" onClick="modify_box();">수정</a>
-										<a href="#">삭제</a> 
+										<span><fmt:formatDate value="${vo.created_at}"
+												type="date" pattern="yyyy.MM.dd HH:mm" /></span> <a
+											href="javascript:void(0);" onclick="openReComment(this);">대댓글
+											달기</a> <a class="edit" href="javascript:void(0);"
+											onClick="modify_box();">수정</a> <a href="#">삭제</a>
 									</div>
-									
-									<div id="comment-standard">                           
-		                    	   	    <p class="comment-standard">${ vo.content }</p>
-				                    </div>
-				                        
-				                    <div id="comment-modify-set" class="comment-modify-txttag">                                 
-			                           	<textarea class="modify-comment-txtarea">${vo.content}</textarea>
-			                           	<a id="modify_href" class="my-btn black-white" href="javascript:void(0);" 
-			                           	onclick="modify_comment(this, ${vo.idx}, ${ vo.board_idx} );">댓글 수정</a>                              
-				               		</div>
+
+									<div id="comment-standard">
+										<p class="comment-standard">${ vo.content }</p>
+									</div>
+
+									<div id="comment-modify-set" class="comment-modify-txttag">
+										<textarea class="modify-comment-txtarea">${vo.content}</textarea>
+										<a id="modify_href" class="my-btn black-white"
+											href="javascript:void(0);"
+											onclick="modify_comment(this, ${vo.idx}, ${ vo.board_idx} );">댓글
+											수정</a>
+									</div>
 								</div>
 							</c:if>
-							
+
 							<!-- 대댓글 -->
 							<c:if test="${ vo.parent != '' }">
 								<div class="comment-reply flex-box">
 									<span>ㄴ</span>
 									<div class="comment-reply-content">
-									
+
 										<div>
 											<h3>${ vo.user_idx }</h3>
-											<span><fmt:formatDate value="${vo.created_at}" type="date" pattern="yyyy.MM.dd HH:mm"/></span> 
-											<a href="javascript:void(0);" onclick="openReComment(this);">대댓글 달기</a> 
-											<a href="javascript:void(0)" onClick= "modify_box( );">수정</a>                              
+											<span><fmt:formatDate value="${vo.created_at}"
+													type="date" pattern="yyyy.MM.dd HH:mm" /></span> <a
+												href="javascript:void(0);" onclick="openReComment(this);">대댓글
+												달기</a> <a href="javascript:void(0)" onClick="modify_box( );">수정</a>
 											<a href="#">삭제</a>
 										</div>
-										
-										<div id="comment-standard">                           
-			                              <p class="comment-standard"> ${ vo.content } </p>
-			                           	</div>
-			                           
-			                          	<div id="comment-modify-set"  class="comment-modify-txttag">                                 
-				                            <textarea class="modify-comment-txtarea">${vo.content}</textarea>
-				                            <a id="modify_href" class="my-btn black-white" href="javascript:void(0);" onclick="modify_comment(this, ${vo.idx}, ${ vo.board_idx} );">댓글 수정</a>                              
-			                          	</div>
-			
+
+										<div id="comment-standard">
+											<p class="comment-standard">${ vo.content }</p>
+										</div>
+
+										<div id="comment-modify-set" class="comment-modify-txttag">
+											<textarea class="modify-comment-txtarea">${vo.content}</textarea>
+											<a id="modify_href" class="my-btn black-white"
+												href="javascript:void(0);"
+												onclick="modify_comment(this, ${vo.idx}, ${ vo.board_idx} );">댓글
+												수정</a>
+										</div>
+
 									</div>
 								</div>
 							</c:if>
@@ -230,12 +253,13 @@
 					</div>
 				</c:if>
 
-	            <form class="write-comment-box flex-box" name="comment">
-	               <input type="hidden" name="board_idx" value="${board.idx}">
-	               <textarea id="comment-write-txtarea" placeholder="내용을 입력하세요"></textarea>                              
-	               <a class="my-btn black-white" href="javascript:void(0);" onclick="reply(${ board.idx });">댓글 달기</a>
-	            </form>     
-	                
+				<form class="write-comment-box flex-box" name="comment">
+					<input type="hidden" name="board_idx" value="${board.idx}">
+					<textarea id="comment-write-txtarea" placeholder="내용을 입력하세요"></textarea>
+					<a class="my-btn black-white" href="javascript:void(0);"
+						onclick="reply(${ board.idx });">댓글 달기</a>
+				</form>
+
 			</div>
 
 		</div>

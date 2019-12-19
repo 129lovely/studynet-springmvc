@@ -113,7 +113,6 @@ public class BoardDAO implements DAO {
 	// 커뮤니티 원글에 댓글달기
 	public int insert_comment(BoardCommentVO vo) {
 		int result=sqlSession.insert("comment.insert", vo);
-		System.out.println("DAO ");
 		return result;
 	}
 

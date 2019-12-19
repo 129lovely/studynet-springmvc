@@ -45,17 +45,17 @@
                             <c:forEach var="vo" items="${ list }">
                            		 <tr>
 	                            	<c:if test="${ vo.deleted_at != null }"> <!-- 삭제된 게시물 -->
-                            		<td><a href="javascript:del_alert();">${ vo.title }</a></td>
+                            		<td colspan="5"><a href="javascript:del_alert();" style="color: #DFE1E4;">${ vo.title }</a></td>
 	                            	</c:if>
 	                            	
 	                            	<c:if test="${ vo.deleted_at == null }"> <!-- 일반 게시물 -->
 	                            	<td><a href="community_list_detail.do?idx=${ vo.idx }">${ vo.title }</a></td>	                            	
-	                            	</c:if>
-                       				
 	                                <td>${ vo.name }</td>
 	                                <td><fmt:formatDate value="${vo.created_at}" type="date" pattern="yyyy.MM.dd"/></td>
 	                                <td>${ vo.hit }</td>
 	                                <td>${ vo.recommend }</td>
+	                            	</c:if>
+                       				
                             	</tr>
                             </c:forEach>
          

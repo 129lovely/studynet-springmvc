@@ -16,7 +16,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 원글에 댓글 달기 -->
 	<insert parameterType="boardComment" id="insert">
-	insert into board_comment (board_idx,user_idx,content) values(#{idx},#{user_idx},#{content}) 
+		insert into board_comment (board_idx, user_idx, content, seq) values(#{board_idx}, #{user_idx} ,#{content}, MAX(seq)+1) 
 	</insert>
 
 </mapper>
