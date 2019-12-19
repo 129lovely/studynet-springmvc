@@ -134,7 +134,6 @@
 	    			return;
 	        	}
 	        	
-	        	alert(content);
 	        	cancelModifyComment(content);
 	        	alert("댓글 수정 완료");
 	        }
