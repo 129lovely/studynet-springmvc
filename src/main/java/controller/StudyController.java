@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 import common.Common;
 import common.Paging;
 import dao.BoardDAO;
+import dao.StudyDAO;
 import service.BoardService;
 import service.StudyService;
 import service.UserService;
@@ -34,6 +35,7 @@ public class StudyController {
 	UserService userService;
 	BoardService boardService;
 	BoardDAO boardDAO;
+	StudyDAO studyDAO;
 
 	public void setBoardDAO(BoardDAO boardDAO) {
 		this.boardDAO = boardDAO;
@@ -51,6 +53,10 @@ public class StudyController {
 		this.boardService = boardService;
 	}
 	
+	public void setStudyDAO(StudyDAO studyDAO) {
+		this.studyDAO = studyDAO;
+	}
+
 	//----------------------------------------------------------------------------
 	//
 	// mapping
@@ -500,7 +506,51 @@ public class StudyController {
 	
 	// 스터디 찾기 페이지 목록
 	@RequestMapping("/study_list.do")
-	public String study_list() {
+	public String study_list(Model model, Integer page, HttpServletRequest request ) {
+		int nowPage = 1;
+
+		if( page != null ) {
+			nowPage = page; // ~.do?page=3 처럼 입력할 경우
+		}
+
+		//		System.out.println(nowPage + ": now page");
+		//		System.out.println(page + ": page");
+
+		//한페이지에서 표시되는 게시물의 시작과 끝번호를 계산
+		//1페이지라면 1 ~ 5번 게시물까지만 보여줘야 한다.
+		//2페이지라면 6 ~ 10번 게시물까지만 보여줘야한다.
+		int start = (nowPage -1) * Common.StudyPaging.BLOCKLIST + 1;
+		int end = start + Common.StudyPaging.BLOCKLIST - 1;
+
+		//start와 end를 map에 저장
+		Map map = new HashMap();
+		map.put("start", start);
+		map.put("end", end);
+		
+		System.out.println( map.get("start"));
+		System.out.println( map.get("end"));
+
+		//게시글 전체목록 가져오기
+		List<StudyVO> list = null;
+		list = studyDAO.selectList( map );	
+		System.out.println(list.size());
+		
+		//전체 게시물 수 구하기
+		int row_total = studyDAO.getRowTotal();
+
+		//페이지 메뉴 생성하기
+		//ㄴ ◀1 2 3 4 5▶
+		String pageMenu = Paging.getPaging(
+				"study_list.do", nowPage, row_total, Common.StudyPaging.BLOCKLIST, 
+				Common.StudyPaging.BLOCKPAGE, null);
+
+		//request영역에 list바인딩
+		model.addAttribute("list", list);
+		model.addAttribute("pageMenu", pageMenu);
+		model.addAttribute("row_total", row_total);
+
+		//세션에 등록되어 있던 show정보를 없앤다
+		request.getSession().removeAttribute("show");
 		return Common.Study.VIEW_PATH + "study_list.jsp";
 	}
 		
@@ -531,8 +581,9 @@ public class StudyController {
 			map.put("search", search);
 
 			//게시글 전체목록 가져오기
-			List<BoardVO> list = null;
-			list = (List<BoardVO>) studyService.search_list(map).get("list");
+			// 이거 왜 BoardVO로?....
+			List<StudyVO> list = null;
+			list = (List<StudyVO>) studyService.search_list(map).get("list");
 
 			//전체 게시물 수 구하기
 			int row_total = (int) studyService.search_list(map).get("cnt");
@@ -556,11 +607,11 @@ public class StudyController {
 	//스터디 상세 페이지
 	@RequestMapping("/study_list_detail.do")
 	public String study_list_detail(Model model, int idx,HttpServletRequest request) {
-		/* StudyVO study=studyService.showStudyDetail(idx); */
+		StudyVO study=studyService.showStudyDetail(idx);
 		// 이게 머죠?? 없는 메서드르 ㄹ왜 부르신거지 오류떠서 주석처리 해뒀어요.
 		UserVO user=userService.select_userName(idx);
 		
-		/* model.addAttribute("study",study); */
+		model.addAttribute("study",study);
 		model.addAttribute("user", user);
 		return Common.Study.VIEW_PATH + "study_list_detail.jsp";
 	}

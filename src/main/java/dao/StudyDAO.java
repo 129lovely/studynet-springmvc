@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+import vo.BoardVO;
 import vo.StudyVO;
 
 public class StudyDAO implements DAO {
@@ -44,6 +45,35 @@ public class StudyDAO implements DAO {
 		return 0;
 	}
 	
+	
+	
+	//스터리 리스트 전체 게시물 조회
+	public List<StudyVO> List(){
+
+		List<StudyVO> list = null;
+		list = sqlSession.selectList("study.list_page");
+		return list;
+
+	}
+
+	//스터디 리스트 페이징을 포함한 조건별 검색
+	public List<StudyVO> selectList( Map map ){
+
+		List<StudyVO> list = null;
+
+		list = sqlSession.selectList("study.list_condition", map);
+
+		return list;
+	}
+	
+	//스터디 갯수
+	public int getRowTotal() {
+
+		int count = sqlSession.selectOne("study.count");
+
+		return count;
+
+	}
 		//검색기능 (리스트 가져오기)
 		public List<StudyVO> search(Map map){
 			List<StudyVO> result=sqlSession.selectList("study.list_search",map);

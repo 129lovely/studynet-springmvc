@@ -80,13 +80,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values (#{idx}, #{now_user})
 	</insert>
 	
-	
-	
-	
-	
-	
-	
-
 	<!-- 전체 게시물 조회 -->
 	<select resultType="board" id="list_page">select * from board order by ref
 		desc, step asc

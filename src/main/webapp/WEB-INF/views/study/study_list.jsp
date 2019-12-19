@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -72,7 +75,7 @@
 		<!-- 검색 결과 -->
 		<div class="search-result-box">
 			<div class="contents-box">
-				<p class="mb10">총 8건 검색 결과가 있습니다</p>
+				<p class="mb10">총 ${ fn:length(list) }건</p>
 				<div class="search-result">
 					<ul>
 						<li class="flex-box">
@@ -105,12 +108,11 @@
 					</ul>
 				</div>
 			</div>
-			<div class="paging-box tac mb20">
-				<a href="#" class="left-page"></a>
-				<a href="#">1</a>
-				<a href="#">2</a>
-				<a href="#" class="right-page"></a>
-			</div>
+			 <!-- 페이징 -->
+				<div class="paging-box tac mb20">
+				${pageMenu}
+				</div>
+				
 			<div class="tac mb40">
 				<span>마음에 드는 스터디가 없으신가요?</span></br>
 				<a href="#"><span>직접 스터디 만들기</span></a>

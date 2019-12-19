@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import common.Common;
+import common.Paging;
 import dao.BoardDAO;
 import dao.StudyDAO;
 import dao.UserDAO;
@@ -42,6 +44,10 @@ public class StudyService {
 		res.put("cnt", cnt);
 		
 		return res;
+	}
+	public StudyVO showStudyDetail(int idx) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

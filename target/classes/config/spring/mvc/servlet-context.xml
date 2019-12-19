@@ -36,6 +36,7 @@
 		<beans:property name="userService" ref="userService" />
 		<beans:property name="studyService" ref="studyService" />
 		<beans:property name="boardDAO" ref="boardDAO"/>
+		<beans:property name="studyDAO" ref="studyDAO"/>
 	</beans:bean>
 
 </beans:beans>

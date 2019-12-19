@@ -23,4 +23,11 @@ public class Common {
 		public final static int BLOCKPAGE = 5;
 	}
 	
+	public static class StudyPaging{
+		
+		public final static int BLOCKLIST = 5;
+		public final static int BLOCKPAGE = 5;
+	}
+	
+	
 }

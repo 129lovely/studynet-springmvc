@@ -3,10 +3,16 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="study">
+
 	<select id="selectList" resultType="study">
 		select * from study
 	</select>
-	
+
+	<!-- 스터디 전체게시물 수 조회 -->
+	<select resultType="int" id="count">
+		select count(*) from study
+	</select>
+
 	<insert id="insert" parameterType="study">
 		INSERT INTO study (title, create_user_idx, 
 						min_count, max_count, deadline, start_date,
@@ -20,8 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!-- 검색기능 -->
-	<select resultType="study" id="list_search"
-		parameterType="java.util.Map">
+	<select resultType="study" id="list_search" parameterType="java.util.Map">
 		select *
 		from (SELECT rank() over(order by idx desc) AS no, b.*
 				FROM (select * from study where title like CONCAT('%',#{search},'%')) AS b ) AS list
@@ -32,6 +37,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(*)
 		from study
 		where title like CONCAT('%',#{search},'%')
+	</select>
+	
+		<select resultType="study" id="list_condition"
+		parameterType="java.util.Map">
+		select *, user.name
+		from (SELECT rank() over(order by idx
+		desc) AS no, s.* FROM (select * from study) AS s ) AS list
+		left outer
+		join user
+		on user.idx = list.create_user_idx
+		where no between #{start} AND
+		#{end}
 	</select>
 </mapper>
 
