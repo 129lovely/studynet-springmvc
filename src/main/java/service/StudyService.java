@@ -1,4 +1,4 @@
-package service;
+﻿package service;
 
 import java.util.HashMap;
 import java.util.List;
@@ -48,6 +48,11 @@ public class StudyService {
 	public StudyVO showStudyDetail(int idx) {
 		StudyVO vo=studyDAO.selectOne(idx);
 		return vo;
+	}
+
+	public int studyModify(int idx) {
+		int res=studyDAO.update_study(idx);
+		return res;
 	}
 	
 }

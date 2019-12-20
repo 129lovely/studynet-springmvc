@@ -8,6 +8,7 @@
 	<meta charset="UTF-8">
 	<title>스터디 상세 정보</title>
 	
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script>
 		
 		function send_apply(max_count,approve_count,idx){
@@ -19,6 +20,7 @@
 			}
 
 		 	location.href= "study_apply_caution.do?idx=" + idx;
+			location.href= "study_apply_caution.do?idx=" + idx;
 			
 		}
 	
@@ -56,6 +58,10 @@
 						<span>${study.min_count}명 / ${study.max_count}명</span>
 					</div>
 					<div>
+						<span>지원현황</span>
+						<span>${study.approve_count}명 / ${study.max_count}명</span>
+					</div>					
+					<div>
 						<span>모임 장소</span>
 						<span>${study.place}</span>
 					</div>
@@ -69,7 +75,7 @@
 				<div class="recruit-detail-info mb30">
 					<h2>세부 정보</h2>
 					<p>
-						-- 추가정보<br>
+						-- 준비분야<br>
 						${study.extra_info}<br><br>
 						-- 상세설명 <br>
 						${study.detail_info}<br>
@@ -77,7 +83,7 @@
 				</div>
 				<div class="mb40 tac">
 				<c:if test=""></c:if>
-					<input id="btn" class="my-btn yellow-black" type="button" value="신청하기" onclick="send_apply(${study.max_count},${study.approve_count});"> 
+					<input id="btn" class="my-btn yellow-black" type="button" value="신청하기" onclick="send_apply(${study.max_count},${study.approve_count},${study.idx });"> 
 					<input class="my-btn  yellow-black" type="button" value="목록으로" onclick="location.href='study_list.do'">
 				</div>
 			</div>

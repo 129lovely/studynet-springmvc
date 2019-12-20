@@ -1,4 +1,4 @@
-package dao;
+﻿package dao;
 
 import java.util.List;
 import java.util.Map;
@@ -85,5 +85,11 @@ public class StudyDAO implements DAO {
 			int cnt = sqlSession.selectOne("study.search_count", search);
 			return cnt;
 		}
+
+	// 스터디 수정
+	public int update_study(int idx) {
+		int result=sqlSession.update("study.update_study", idx);
+		return result;
+	}
 
 }

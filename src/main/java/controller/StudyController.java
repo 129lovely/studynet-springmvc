@@ -1,4 +1,4 @@
-package controller;
+﻿package controller;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -789,6 +789,23 @@ public class StudyController {
 	@RequestMapping("/study_apply_caution.do")
 	public String study_apply_caution() {
 		return Common.Study.VIEW_PATH + "study_apply_caution.jsp";
+	}
+
+	// 스터디 수정하기 폼
+	@RequestMapping("/study_create_modify_form.do")
+	public String study_create_mod(Model model, int idx) {
+		StudyVO study = studyService.showStudyDetail(idx);
+
+		model.addAttribute("study", study);
+		return Common.Study.VIEW_PATH + "study_create_modify.jsp";
+	}
+
+	// 스터디 수정하기
+	@RequestMapping("/study_create_modify.do")
+	public String study_create_modify(int idx) {
+		int res = studyService.studyModify(idx);
+
+		return "study_list_detail.do?idx=" + idx;
 	}
 	
 }

@@ -1244,6 +1244,10 @@ textarea {
     line-height: 1.6rem;
 }
 
+.study-list-detail .recruit-info span.image { /*이부분 안들어감*/
+    height: 300px;
+}
+
 .study-list-detail .recruit-info > span:first-child {
     display: inline-block;
     width: 100%;
@@ -1255,6 +1259,11 @@ textarea {
     margin: 0 5px;
     font-size: 0.9rem;
     vertical-align: top;
+}
+
+.study-list-detail .recruit-info img { /* 이부분도*/
+	width: 100%;
+	overflow: hidden;	
 }
 
 .study-list-detail .board > div > h2 {
