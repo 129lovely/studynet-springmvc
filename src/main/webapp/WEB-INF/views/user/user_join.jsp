@@ -89,7 +89,7 @@
 				var res = xhr.responseText;
 				
 				if( res == 'yes' ){
-					alert("이메일이 중복됩니다");
+					alert("콜백");
 					return;
 				}
 				
@@ -100,7 +100,7 @@
 				
 				email.value = input_email.value;
 				
-				location.href = "#close_input";
+				location.href = "#close_email";
 			}
 		}
 		
@@ -124,10 +124,37 @@
 		
 			document.getElementById("phone").value = input_phone.value ;
 			
-			location.href="#close_phone"
-			/* var url = "user_login.do";
-			var param = "email=" + encodeURIComponent(email.value) + "&password=" + encodeURIComponent(password.value);
-			sendRequest(url, param, login_result, "post"); */
+			location.href="#close_phone";
+			location.href="#open_key";
+			
+			// 이제 컨트롤러랑 콜백 메서드 만들어야함.
+			
+			var url = "user_join_certificate.do";
+			var param = "phone=" + encodeURIComponent(input_phone.value)
+			sendRequest(url, param, certificate_result, "get");
+		}
+		
+		// 폰 인증 resultfn 
+		function certificate_result() {
+			if( xhr.readyState == 4 && xhr.status == 200 ){
+				
+				var email = document.getElementById("email");
+				
+				// 번호랑 같이 넘기는 게 나으려나 ㅎ,,,ㅋ,,,
+/* 				var key = xhr.responseText;
+				
+				if( key == 'yes' ){
+					alert("콜백");
+					return;
+				}
+				
+				alert("사용할 수 있는 이메일입니다.");
+				
+				
+				
+				email.value = input_email.value; */
+				
+				location.href = "#close_key";
 		}
 		
 		// 폼 전체 유효성 검사

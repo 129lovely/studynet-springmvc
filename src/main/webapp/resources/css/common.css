@@ -1929,10 +1929,10 @@ textarea {
 }
 .info_content > div {
 	position: absolute;
-	top: 25%;
+	top: 15%;
 	left: 15%;
 	width: 70%;
-	height: 50%;
+	height: 70%;
 	padding: 16px;
     border: 16px solid #FFC267;
     border-radius: 5px;
