@@ -28,6 +28,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="select_name" parameterType="int" resultType="user">
 		SELECT * from user WHERE idx=(SELECT create_user_idx from study where idx=#{idx})
 	</select>
+	
+	<!-- sns 로그인 처리 관련 -->
+	<select id="selectOne_user_sns" parameterType="java.lang.String" resultType="user">
+		select *
+		from user
+		where sns_id=#{id}
+	</select>
+	<update id="update_user_sns" parameterType="java.util.Map">
+		update user
+		set sns_type='naver', sns_id=#{id}
+		where email=#{email}
+	</update>
+	<insert id="insert_user_sns" parameterType="java.util.Map">
+		insert into user (email, is_email_auth, password, name, sns_type, sns_id)
+		values (#{email}, 1, #{password}, #{name}, 'naver', #{id})
+	</insert>
+	
 </mapper>
 
 

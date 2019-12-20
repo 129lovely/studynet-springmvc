@@ -1,6 +1,14 @@
 package controller;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,11 +18,20 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 
 import common.Common;
 import common.Paging;
@@ -68,17 +85,150 @@ public class StudyController {
 	}
 	
 	@RequestMapping("/")
-	public String iframe_test(Model model, HttpServletRequest request) {
-//		HttpSession session = request.getSession();
-//		
-//		Map user = new HashMap();
-//		user.put("name", "비회원");
-//		user.put("idx", -1);
-//		
-//		session.setAttribute("user", user);
-//		session.setMaxInactiveInterval(300 * 60);
-		
+	public String iframe_test(Model model, HttpServletRequest request) {		
 		return "/WEB-INF/views/iframe.jsp";
+	}
+	
+	// 네이버 로그인
+	@RequestMapping("/nlogin.do")
+	public ModelAndView nlogin(HttpServletRequest request) {		
+		String clientId = "weu2tfr6_Z8ML_0Dng4h"; // 애플리케이션 클라이언트 아이디값
+		String redirectURI = "";
+	    
+		try {
+			redirectURI = URLEncoder.encode("http://localhost:9090/web/nlogin_callback.do", "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		SecureRandom random = new SecureRandom();
+		String state = new BigInteger(130, random).toString();
+		String apiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code";
+		apiURL += "&client_id=" + clientId;
+		apiURL += "&redirect_uri=" + redirectURI;
+		apiURL += "&state=" + state;
+		request.getSession().setAttribute("state", state);
+		
+		return new ModelAndView("redirect:" + apiURL); 
+	}
+	
+	// 네이버 로그인 - 콜백
+	@RequestMapping("/nlogin_callback.do")
+	public ModelAndView nlogin_callback(HttpServletRequest request) {
+		String prevPage = "";
+		
+		String clientId = "weu2tfr6_Z8ML_0Dng4h"; // 애플리케이션 클라이언트 아이디값
+		String clientSecret = "b5nklGsDtk"; // 애플리케이션 클라이언트 시크릿값
+		String code = request.getParameter("code");
+		String state = request.getParameter("state");
+		String redirectURI = "";
+		try {
+			redirectURI = URLEncoder.encode("http://localhost:9090/web/nlogin_callback.do", "UTF-8");
+		} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String apiURL;
+		apiURL = "https://nid.naver.com/oauth2.0/token?grant_type=authorization_code&";
+		apiURL += "client_id=" + clientId;
+		apiURL += "&client_secret=" + clientSecret;
+		apiURL += "&redirect_uri=" + redirectURI;
+		apiURL += "&code=" + code;
+		apiURL += "&state=" + state;
+		String access_token = "";
+		String refresh_token = "";
+		System.out.println("apiURL="+apiURL);
+		try {
+			// access_token 발급 요청
+			// response : access_token, refresh_token, token_type, expires_in
+			URL url = new URL(apiURL);
+			HttpURLConnection con = (HttpURLConnection)url.openConnection();
+			con.setRequestMethod("POST");
+			int responseCode = con.getResponseCode();
+			BufferedReader br;
+			
+			if(responseCode==200) { // 정상 호출
+				br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			} else {  // 에러 발생
+				br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+			}
+			String inputLine;
+			StringBuffer res = new StringBuffer();
+			while ((inputLine = br.readLine()) != null) {
+				res.append(inputLine);
+			}
+			br.close();
+
+			if(responseCode==200) { // 로그인 성공했을 경우
+				ObjectMapper mapper = new ObjectMapper();
+				Map<String, String> map = mapper.readValue(res.toString(), Map.class);
+				access_token = map.get("access_token");
+				refresh_token = map.get("refresh_token");
+				
+				// access_token 사용하여 프로필api 호출
+				Map<String, String> info = getProfileApi(access_token);
+				
+				// info 황용하여 db 작업
+				UserVO user = userService.nlogin(info);
+				
+				// 로그인 세션 처리
+				HttpSession session = request.getSession();
+				
+				session.setAttribute("user", user);
+				prevPage = (String) session.getAttribute("prevPage");
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
+		return new ModelAndView("redirect:" + prevPage);
+	}
+
+	public Map<String, String> getProfileApi(String access_token) {
+		Map<String, String> info = new HashMap<>();
+
+		try {
+			URL url = new URL("https://openapi.naver.com/v1/nid/me");
+			HttpURLConnection con = (HttpURLConnection)url.openConnection();
+			con.setRequestMethod("POST");
+
+			// 요청 header에 포함될 내용
+			con.setRequestProperty("Authorization", "Bearer " + access_token);
+			
+			int responseCode = con.getResponseCode();
+			BufferedReader br;
+			if(responseCode == 200){ // 정상 호출
+				br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+			}else {
+				br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+			}
+			String inputLine;
+			String result = "";
+			while ((inputLine = br.readLine()) != null) {
+				result += inputLine;
+			}
+			br.close();
+			
+			if(responseCode==200) { // 로그인 성공했을 경우
+				// 프로필api map에 저장
+				com.google.gson.JsonParser parser = new com.google.gson.JsonParser();
+				JsonElement element = parser.parse(result);
+				JsonObject response = element.getAsJsonObject().get("response").getAsJsonObject();
+				
+				String name = response.getAsJsonObject().get("name").getAsString();
+				String email = response.getAsJsonObject().get("email").getAsString();
+				String id = response.getAsJsonObject().get("id").getAsString();
+				
+				info.put("name", name);
+				info.put("email", email);
+				info.put("id", id);				
+			}
+		} catch (Exception e) { 
+			System.out.println(e);
+		}
+		
+		return info;
 	}
 	
 	// index 

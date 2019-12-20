@@ -2,6 +2,7 @@ package service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import dao.BoardDAO;
 import dao.StudyDAO;
@@ -79,5 +80,39 @@ public class UserService {
 	public UserVO select_userName(int idx) {
 		UserVO vo=userDAO.selectUserName(idx);
 		return vo;
+	}
+	
+	// 네이버 sns 로그인
+	public UserVO nlogin(Map<String, String> info) {
+		/**
+		 * 이후 service와 controller에 토큰 관련 처리 추가할 것
+		 */
+		
+		UserVO user = null;
+		int result = 0;
+		
+		// 기존 sns 회원인지 확인
+		user = userDAO.selectOne_user_sns(info.get("id"));	
+		if( user != null ) {
+			return user; // 기존 sns 회원이면 바로 로그인
+		}
+		
+		// sns 회원이 아니라면...
+		// 기존 email 회원인지 확인
+		user = userDAO.selectOne(info.get("email"));
+		if( user != null ) {
+			result = userDAO.update_user_sns(info); // 기존 email 회원이면 기존 정보에 sns 정보 추가
+			return user;
+		}
+		
+		// sns 회원도 email 회원도 아니라면...
+		String password = UUID.randomUUID().toString(); // password 랜덤 생성
+		System.out.println(password);
+		info.put("password", password);
+		result = userDAO.insert_user_sns(info);
+		
+		user = userDAO.selectOne_user_sns(info.get("id"));
+		
+		return user;
 	}
 }

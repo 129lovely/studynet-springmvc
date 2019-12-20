@@ -4,8 +4,11 @@ import java.util.Date;
 
 public class UserVO {
 	private int idx, is_email_auth, is_phone_auth, study;
-	private String email, password, name, phone, job, region, sns_token, sns_type;
-	private Date created_at, updated_at, deleted_at, sns_connected_at;
+	private String email, password, name, phone, job, region;
+	private Date created_at, updated_at, deleted_at;
+	
+	// sns 관련
+	private String sns_type, sns_id, sns_access_token, sns_refresh_token;
 	
 	public int getIdx() {
 		return idx;
@@ -67,12 +70,6 @@ public class UserVO {
 	public void setRegion(String region) {
 		this.region = region;
 	}
-	public String getSns_token() {
-		return sns_token;
-	}
-	public void setSns_token(String sns_token) {
-		this.sns_token = sns_token;
-	}
 	public String getSns_type() {
 		return sns_type;
 	}
@@ -97,11 +94,24 @@ public class UserVO {
 	public void setDeleted_at(Date deleted_at) {
 		this.deleted_at = deleted_at;
 	}
-	public Date getSns_connected_at() {
-		return sns_connected_at;
+	public String getSns_id() {
+		return sns_id;
 	}
-	public void setSns_connected_at(Date sns_connected_at) {
-		this.sns_connected_at = sns_connected_at;
+	public void setSns_id(String sns_id) {
+		this.sns_id = sns_id;
 	}
+	public String getSns_access_token() {
+		return sns_access_token;
+	}
+	public void setSns_access_token(String sns_access_token) {
+		this.sns_access_token = sns_access_token;
+	}
+	public String getSns_refresh_token() {
+		return sns_refresh_token;
+	}
+	public void setSns_refresh_token(String sns_refresh_token) {
+		this.sns_refresh_token = sns_refresh_token;
+	}
+
 	
 }

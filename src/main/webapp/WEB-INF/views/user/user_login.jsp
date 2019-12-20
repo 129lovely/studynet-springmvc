@@ -8,15 +8,20 @@
 	<title>로그인</title>
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/httpRequest.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 	
-	<script type="text/javascript">
-	
+	<script type="text/javascript">	  	
 		// 혹시라도 로그인 한 유저가 로그인 url을 통해 접근했을 경우를 막기 위한 부분
 		window.onload = function () {
 			if ( ${! empty user} ) {
 				alert("잘못된 접근입니다.");
 				location.href = "index.do";
 			}	
+		}
+		
+		// 네이버 로그인
+		function nlogin() {
+			location.href="nlogin.do";
 		}
 		
 		// 로그인 버튼 기능
@@ -120,7 +125,10 @@
 											<input type="button" class="my-btn black-white" value="회원가입" onclick="location.href='user_join_caution.do'"/>
 										</div>
 									</form>
-									<a href="#" class="icon icon-login-kakao"></a>
+									<a href="javascript:void(0);" class="icon icon-login-kakao"></a>
+									
+									<a href="javascript:nlogin();"><img height="50" src="http://static.nid.naver.com/oauth/small_g_in.PNG"/></a>
+									
 									<div class="link_find">
 									<p class="section-discription">아이디나 비밀 번호를 잊으셨나요?</p>
 									<p class="section-discription"><a href="#">아이디 / 비밀번호 찾기</a></p>

@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -66,4 +67,26 @@ public class UserDAO implements DAO {
 		UserVO vo=sqlSession.selectOne("user.select_name", idx);
 		return vo;
 	}
+	
+	//--------------------------------------------------------------------
+	//
+	// sns 로그인 처리 관련
+	//
+	//--------------------------------------------------------------------
+	public UserVO selectOne_user_sns(String sns_id) {
+		UserVO vo = sqlSession.selectOne("user.selectOne_user_sns", sns_id);
+		return null;
+	}
+
+	public int update_user_sns(Map<String, String> info) {
+		int res = sqlSession.update("update_user_sns", info);
+		return 0;
+	}
+
+	public int insert_user_sns(Map<String, String> info) {
+		int res = sqlSession.insert("insert_user_sns", info);
+		return 0;
+	}
+	
+	
 }
