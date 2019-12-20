@@ -608,7 +608,6 @@ public class StudyController {
 	@RequestMapping("/study_list_detail.do")
 	public String study_list_detail(Model model, int idx,HttpServletRequest request) {
 		StudyVO study=studyService.showStudyDetail(idx);
-		// 이게 머죠?? 없는 메서드르 ㄹ왜 부르신거지 오류떠서 주석처리 해뒀어요.
 		UserVO user=userService.select_userName(idx);
 		
 		model.addAttribute("study",study);

@@ -25,6 +25,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		 		#{detail_info}, '모집중', #{photo} )
 	</insert>
 	
+	<select id="selectOne" parameterType="int" resultType="study">
+		select * from study where idx=#{idx}
+	</select>
+	
 	<!-- 검색기능 -->
 	<select resultType="study" id="list_search" parameterType="java.util.Map">
 		select *

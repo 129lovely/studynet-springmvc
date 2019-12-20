@@ -22,9 +22,9 @@ public class StudyDAO implements DAO {
 	}
 
 	@Override
-	public Object selectOne(int idx) {
-		// TODO Auto-generated method stub
-		return null;
+	public StudyVO selectOne(int idx) {
+		StudyVO vo=sqlSession.selectOne("study.selectOne", idx);
+		return vo;
 	}
 
 	@Override

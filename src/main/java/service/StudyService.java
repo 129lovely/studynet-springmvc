@@ -46,8 +46,8 @@ public class StudyService {
 		return res;
 	}
 	public StudyVO showStudyDetail(int idx) {
-		// TODO Auto-generated method stub
-		return null;
+		StudyVO vo=studyDAO.selectOne(idx);
+		return vo;
 	}
-
+	
 }
