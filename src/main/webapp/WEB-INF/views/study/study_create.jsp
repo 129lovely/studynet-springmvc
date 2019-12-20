@@ -15,43 +15,33 @@
 	<!-- Flatpickr related files -->
 	<link href="https://cdn.jsdelivr.net/npm/flatpickr@4/dist/flatpickr.min.css" rel="stylesheet">
 	<script src="https://cdn.jsdelivr.net/npm/flatpickr@4/dist/flatpickr.min.js"></script>
-
+	<link rel="stylesheet" type="text/css" href="https://npmcdn.com/flatpickr/dist/themes/confetti.css">
+	
 	<!-- flatpickr -->
 	<script>
-		/* window.onload = function () {
-			window.flatpickr(document.getElementById("deadline"));
-		} */
-		
-		/* onload 넣어도 안 넣어도 이러고 ㄱ- 파라미터로 넣어도 밖에다 넣어도 이러고  */
-		
-		/* $(document).ready(function() {
-	          flatpickr("#deadline", { 
-	            "dateFormat":"Y-m-d", 
-	            "allowInput":true,
-	            "onOpen": function(selectedDates, dateStr, instance) {
-	              instance.setDate(instance.input.value, false);
-	            }
-	          });
-		 }); */
+	window.onload = function () {
+
+			 var deadLine = flatpickr ("#deadLine", {
+					minDate: "today"
+	                }                 
+	
+		        );
+			  
+			 var startDate = flatpickr ("#startDate", {
+					minDate: "today"
+	                }                 
+
+	            );
+			  
+			 var endDate = flatpickr ("#endDate", {
+					minDate: "today",
+	                }                 
+
+	            );
+			
+		}
 	</script>
-	
-	
-	<!-- pikaday related -->
-	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/pikaday/css/pikaday.css">
-	<script src="https://cdn.jsdelivr.net/npm/pikaday/pikaday.js"></script>
-	
-	
-	<!-- 원래 이거 붙여주라는데 얘는 먼 404 오류가 뜨고... -->
-	<!-- 	<script src="../pikaday.js"></script> -->
-	<script type="text/javascript">
-		var field = document.getElementById('deadline');
-		var picker = new Pikaday({
-		    onSelect: function(date) {
-		        field.value = picker.toString();
-		    }
-		});
-	</script>
-	
+
 	
 	<script>
 		
@@ -256,7 +246,7 @@
 									<table>
 										<tr>
 											<th rowspan="9">스터디명</th>
-											<td colspan="2"><input type="text" name="title" placeholder="스터디 이름을 간결하고 알기 쉽게 입력해주세요.(최대20글자)" /></td>
+											<td colspan="2"><input type="text" name="title" placeholder="스터디 이름을 간결하고 알기 쉽게 입력해주세요.(최대20글자)" maxlength="20"/></td>
 										</tr>
 										<tr>
 											<td colspan="3">* 인원은 수용 가능한 범위에서 기입해주세요</td>
@@ -282,6 +272,7 @@
 											<td class="select-date">
 												<div>
 													<input type="text" id="deadLine" name="deadline">
+													
 												</div>
 												<div>
 													<input type="checkbox" id="always">
@@ -454,72 +445,6 @@
 	<jsp:include page="../footer.jsp"></jsp:include>
 
 </body>
-
-
-
-	<!-- DatePicker -->
- 	<script type="text/javascript">
- 		/* $(document).ready(function () {
-	            $( "#deadLine" ).datepicker({
-	                 changeMonth: true, 
-	                 changeYear: true,
-	                 nextText: '다음 달',
-	                 prevText: '이전 달', 
-	                 dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
-	                 dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
-	                 monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-	                 monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-	                 dateFormat: "yy-mm-dd",
-	                 minDate: 0,                       // 선택할수있는 최대날짜, ( 0 : 오늘 이후 날짜 선택 불가)
-	                 onClose: function( selectedDate ) {    
-	                     // 마감일(deadLine)이 닫힐 때
-	                     // 시작일(startDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
-	                     $("#startDate").datepicker( "option", "minDate", selectedDate );
-	                 }
-	            }); 
-	            
-	            $( "#startDate" ).datepicker({
-	                 changeMonth: true, 
-	                 changeYear: true,
-	                 nextText: '다음 달',
-	                 prevText: '이전 달', 
-	                 dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
-	                 dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
-	                 monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-	                 monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-	                 dateFormat: "yy-mm-dd",
-	                 minDate: 0,                       // 선택할수있는 최소날짜, ( 0 : 오늘 이후 날짜 선택 불가)
-	                 onClose: function( selectedDate ) {    
-	                      //시작일(startDate) datepicker가 닫힐때
-	                      //종료일(endDate)의 선택할수있는 최소 날짜(minDate)를 선택한 시작일로 지정
-	                     $("#endDate").datepicker( "option", "minDate", selectedDate );
-	                      
-	                 	  //시작일(startDate) datepicker가 닫힐때
-	                      //마감일(deadLine)의 선택할수있는 최대 날짜(maxDate)를 선택한 시작일로 지정
-	                     $("#deadLine").datepicker( "option", "maxDate", selectedDate );
-	                 }
-	            }); 
-	            
-	            $( "#endDate" ).datepicker({
-	                 changeMonth: true, 
-	                 changeYear: true,
-	                 nextText: '다음 달',
-	                 prevText: '이전 달', 
-	                 dayNames: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
-	                 dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
-	                 monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-	                 monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-	                 dateFormat: "yy-mm-dd",
-	                 minDate: 0,                       // 선택할수있는 최대날짜, ( 0 : 오늘 이후 날짜 선택 불가)
-	                 onClose: function( selectedDate ) {    
-	                     // 종료일(endDate) datepicker가 닫힐때
-	                     // 시작일(startDate)의 선택할수있는 최대 날짜(maxDate)를 선택한 시작일로 지정
-	                     $("#startDate").datepicker( "option", "maxDate", selectedDate );
-	                 }
-	            });      
-
- 		});  */
-	</script>
 	
 	<!-- 라디오 따라서 달라지는 레이아웃 -->
  	<script>
@@ -532,12 +457,9 @@
 		 		 var design = document.getElementById("op_" + (i+1));
 		 		 design.style.display = "none";
 			}
- 			
- 			
- 			
- 		});
- 	
 
+ 		});
+ 
  	</script>
 
 

@@ -59,7 +59,7 @@ public final class SMSFactory {
 		rDate = base64Encode(nullcheck(rDate, ""));
 		rTime = base64Encode(nullcheck(rTime, ""));
 		mode = base64Encode("1");
-		testFlag = base64Encode(nullcheck(testFlag, ""));
+		testFlag = base64Encode(nullcheck(testFlag, "Y"));
 		destination = base64Encode(nullcheck(destination, ""));
 		repeatFlag = base64Encode(nullcheck(repeatFlag, ""));
 		repeatNum = base64Encode(nullcheck(repeatNum, ""));
