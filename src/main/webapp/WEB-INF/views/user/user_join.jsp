@@ -55,7 +55,7 @@
 			  	console.log(this.value);
 			  	this.value = autoHypenPhone( this.value ) ;  
 			}
-		}
+		};
 		
 	</script>
 	
@@ -105,7 +105,7 @@
 		}
 		
 		// 핸드폰 본인 인증
-		function certificate() {
+		function do_certificate() {
 			var input_phone = document.getElementById("phone-input");
 			
 			// '-'이 바르게 들어갔는지 확인
@@ -124,37 +124,53 @@
 		
 			document.getElementById("phone").value = input_phone.value ;
 			
-			location.href="#close_phone";
+			location.href = "#close_phone";
 			location.href="#open_key";
-			
-			// 이제 컨트롤러랑 콜백 메서드 만들어야함.
 			
 			var url = "user_join_certificate.do";
 			var param = "phone=" + encodeURIComponent(input_phone.value)
 			sendRequest(url, param, certificate_result, "get");
+
 		}
 		
 		// 폰 인증 resultfn 
 		function certificate_result() {
 			if( xhr.readyState == 4 && xhr.status == 200 ){
 				
-				var email = document.getElementById("email");
+				var phone = document.getElementById("phone");
+				var key_input = document.getElementById("key-input");
 				
-				// 번호랑 같이 넘기는 게 나으려나 ㅎ,,,ㅋ,,,
-/* 				var key = xhr.responseText;
 				
-				if( key == 'yes' ){
-					alert("콜백");
+				var res = JSON.parse(xhr.responseText);
+				
+				if ( res.tempKey != null && res.phone != null ){
+					alert("입력하신 전화번호로 인증키가 발송되었습니다. SMS를 확인해주세요. ");
+					var key = res.tempKey;
+					var phoneNum = res.phone;
+					
+					alert("key:" + key);
+					alert("phoneNum:" + phoneNum);
+					
+					document.getElementById("certificateBtn").onClick = function () {
+						if( key_input.value == "" ){
+							alert("인증키를 입력해주세요.");
+							return;
+						} 
+						
+						if ( key.equals(key_input.value) ) {
+							phone.value = phoneNum;
+							alert("인증되었습니다.");
+							location.href="#close_key";
+							return;
+							
+						}
+					}
+					
+				} else {
+					alert("문제가 발생했습니다... 재시도해주십시오.");
 					return;
-				}
-				
-				alert("사용할 수 있는 이메일입니다.");
-				
-				
-				
-				email.value = input_email.value; */
-				
-				location.href = "#close_key";
+				} 
+			}
 		}
 		
 		// 폼 전체 유효성 검사
@@ -231,8 +247,8 @@
 			f.submit();
 			
 		}
-	
 	</script>
+	
 </head>
 
 <body>
@@ -316,18 +332,18 @@
 													본인의 휴대폰 번호를 입력해주세요.<br><br>
 													<input type="text" id="phone-input" placeholder="'-'이 자동으로 입력됩니다." maxlength="13">
 												</p>
-												<input type="button" class="my-btn yellow-black" onClick="certificate();" value="인증"/>
+												<input type="button" class="my-btn yellow-black" onClick="do_certificate();" value="인증"/>
 												<input type="button" class="my-btn yellow-black" onClick="location.href='#close_phone'" value="취소"/>
 											</div>
 										</div>		
 										<div class="info_content input" id="open_key">
 											<div>
 												<p class="section-discription tal">
-													인증번호가 발송되었습니다. <br>문자가 오지 않는다면 재전송 버튼을 눌러주세요. <br><br>
+													문자가 오지 않는다면 재전송 버튼을 눌러주세요.<br>재전송은 1회만 가능합니다. <br><br>
 													<input type="text" id="key-input" placeholder="SMS로 전송된 6자리 인증키를 입력해주세요.">
 												</p>
-												<input type="button" class="my-btn yellow-black" onClick="certificate();" value="재전송"/>
-												<input type="button" class="my-btn yellow-black" onClick="" value="입력"/>
+												<input type="button" class="my-btn yellow-black" onClick="re_certificate();" value="재전송"/>
+												<input type="button" class="my-btn yellow-black" id="certificateBtn" value="인증"/>
 												<input type="button" class="my-btn yellow-black" onClick="location.href='#close_key'" value="취소"/>
 											</div>
 										</div>			

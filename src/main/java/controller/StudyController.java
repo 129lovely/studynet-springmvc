@@ -33,6 +33,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import common.CertificationKeyGenerator;
 import common.Common;
 import common.Paging;
 import dao.BoardDAO;
@@ -500,9 +501,28 @@ public class StudyController {
 	@ResponseBody
 	public String email_check( String input_email, HttpServletRequest request ){
 		String res = userService.emailCheck(input_email);
-		request.setAttribute("res", res);
 		return res;
 	}
+	
+	// 본인 인증  (인증 번호 ajax로 보내기)
+	@RequestMapping("/user_join_certificate.do")
+	@ResponseBody
+	public Map user_join_certificate( String phone ) {
+		
+		// 전화번호 중복되는 거 없는지도 확인해야함 
+		CertificationKeyGenerator keyGen = CertificationKeyGenerator.newInstance();
+		Map map = null;
+		
+		try {
+			map = keyGen.tempKeyGenerator(phone);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return map;
+	}
+	
 	
 	//게시글 삭제
 	@RequestMapping("/community_delete.do")
@@ -532,7 +552,7 @@ public class StudyController {
 		
 		vo.setUser_idx( user.getIdx() );
 		boardService.writeComment(vo);
-		return "community_list_detail.do?idx="+vo.getBoard_idx();		
+		return "community_list_detail.do?idx="+vo.getBoard_idx();
 	}
 
 	// 댓글 수정
@@ -626,13 +646,13 @@ public class StudyController {
 		} else {
 			// 지정된 파일이 없을 경우 샘플에서 가져온다. 
 			if( vo.getPurpose().equals("공모전") ) {
-				photo = "preview01";
+				photo = "preview01.jpg";
 			} else if( vo.getPurpose().equals("취업준비") ) {
-				photo = "preview02";
+				photo = "preview02.jpg";
 			} else if( vo.getPurpose().equals("기상/습관") ) {
-				photo = "preview03";
+				photo = "preview03.jpg";
 			} else {
-				photo = "preview04";
+				photo = "preview04.jpg";
 			}
 		}
 		 

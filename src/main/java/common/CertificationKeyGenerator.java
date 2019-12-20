@@ -38,7 +38,7 @@ public class CertificationKeyGenerator {
 	 * @param thamesMemberDAO
 	 * @param phone
 	 */
-	public void tempKeyGenerator( String phone ) throws Exception{
+	public HashMap tempKeyGenerator( String phone ) throws Exception{
 		//인증키 생성
 		String tempKey = tempKeyGenarator(phone);
 		System.out.println("암호화키 : "+tempKey);
@@ -54,6 +54,8 @@ public class CertificationKeyGenerator {
 			// 발송 완료 확인
 			System.out.println("sms 전송 완료");	
 		}
+		
+		return param;
 	}
 	
 	/**

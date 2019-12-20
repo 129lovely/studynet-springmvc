@@ -10,7 +10,7 @@
 	
 	<script>
 		
-		function send_apply(max_count,approve_count){
+		function send_apply(max_count,approve_count,idx){
 			
 			var btn=document.getElementById("btn");
 			if(max_count==approve_count){
@@ -39,9 +39,8 @@
 					</div>
 				</div>
 				<div class="recruit-info">
-					<span class="mb10">
-						그림<br><br>
-						<img src="resources/images/study_profile/${study.photo}" width="200" height="100">
+					<span class="mb10 image">
+						<img src="resources/images/study_profile/${study.photo}.jpg">
 					</span>
 					
 					<div>
@@ -70,9 +69,9 @@
 				<div class="recruit-detail-info mb30">
 					<h2>세부 정보</h2>
 					<p>
-						-- 추가정보
+						-- 추가정보<br>
 						${study.extra_info}<br><br>
-						-- 상세설명 
+						-- 상세설명 <br>
 						${study.detail_info}<br>
 					</p>
 				</div>

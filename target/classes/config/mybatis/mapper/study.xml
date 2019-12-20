@@ -43,8 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where title like CONCAT('%',#{search},'%')
 	</select>
 	
-		<select resultType="study" id="list_condition"
-		parameterType="java.util.Map">
+	<select resultType="study" id="list_condition" parameterType="java.util.Map">
 		select *, user.name
 		from (SELECT rank() over(order by idx
 		desc) AS no, s.* FROM (select * from study) AS s ) AS list
