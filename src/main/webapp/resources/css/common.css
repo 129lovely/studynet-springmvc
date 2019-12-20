@@ -507,10 +507,10 @@ textarea {
 	margin-bottom: 30px;
 }
 
-.icon-login-kakao {
-	background-image: url(../images/icon/kakao_login.png);
+.icon-login-naver {
+	background-image: url(../images/icon/naver_login_green.PNG);
     width: 300px;
-	height: 39.4px;
+	height: 50px;
 	margin: 10px 0;
 }
 

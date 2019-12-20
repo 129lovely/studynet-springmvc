@@ -16,6 +16,7 @@
 			if ( ${! empty user} ) {
 				alert("잘못된 접근입니다.");
 				location.href = "index.do";
+				return;
 			}	
 		}
 		
@@ -125,10 +126,8 @@
 											<input type="button" class="my-btn black-white" value="회원가입" onclick="location.href='user_join_caution.do'"/>
 										</div>
 									</form>
-									<a href="javascript:void(0);" class="icon icon-login-kakao"></a>
-									
-									<a href="javascript:nlogin();"><img height="50" src="http://static.nid.naver.com/oauth/small_g_in.PNG"/></a>
-									
+									<a href="javascript:nlogin();" class="icon icon-login-naver"></a>
+							
 									<div class="link_find">
 									<p class="section-discription">아이디나 비밀 번호를 잊으셨나요?</p>
 									<p class="section-discription"><a href="#">아이디 / 비밀번호 찾기</a></p>

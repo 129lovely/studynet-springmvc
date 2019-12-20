@@ -12,6 +12,8 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/httpRequest.js"></script>
 	
 		<script type="text/javascript">
+		
+		
 		// 하이픈 자동 입력 스크립트
 		var autoHypenPhone = function(str){
 	      	str = str.replace(/[^0-9]/g, '');
@@ -49,6 +51,7 @@
 	
 		// 적용
 		window.onload = function () {
+			
 			var phoneNum = document.getElementById('phone-input');
 			
 			phoneNum.onkeyup = function(){
