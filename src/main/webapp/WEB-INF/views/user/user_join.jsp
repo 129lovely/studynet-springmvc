@@ -8,12 +8,57 @@
 <head>
 	<meta charset="UTF-8">
 	<title>회원 정보 입력</title>
-</head>
-
-<body>
-	<jsp:include page="../header.jsp"></jsp:include>
 	
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/httpRequest.js"></script>
+	
+		<script type="text/javascript">
+		// 하이픈 자동 입력 스크립트
+		var autoHypenPhone = function(str){
+	      	str = str.replace(/[^0-9]/g, '');
+	      	
+	     	 	var tmp = '';
+	     	 	
+	      	if( str.length < 4){
+	          	return str;
+	          	
+	      	} else if(str.length < 7){
+	          	tmp += str.substr(0, 3);
+	          	tmp += '-';
+	          	tmp += str.substr(3);
+	          	return tmp;
+	          	
+	      } else if(str.length < 11){
+	          	tmp += str.substr(0, 3);
+	          	tmp += '-';
+	          	tmp += str.substr(3, 3);
+	          	tmp += '-';
+	          	tmp += str.substr(6);
+	          	return tmp;
+	          	
+	      } else {              
+	          	tmp += str.substr(0, 3);
+	          	tmp += '-';
+	          	tmp += str.substr(3, 4);
+	          	tmp += '-';
+	          	tmp += str.substr(7);
+	          	return tmp;
+	      }
+	  
+	      return str;
+	}
+	
+		// 적용
+		window.onload = function () {
+			var phoneNum = document.getElementById('phone-input');
+			
+			phoneNum.onkeyup = function(){
+			  	console.log(this.value);
+			  	this.value = autoHypenPhone( this.value ) ;  
+			}
+		}
 		
+	</script>
+	
 	<script type="text/javascript">
 	
 		// 이메일 중복 체크 메서드
@@ -59,6 +104,32 @@
 			}
 		}
 		
+		// 핸드폰 본인 인증
+		function certificate() {
+			var input_phone = document.getElementById("phone-input");
+			
+			// '-'이 바르게 들어갔는지 확인
+			if( input_phone.value == null  ) {
+				alert("전화번호를 입력해주세요.");
+				return;
+			}
+			
+			// 하이픈이 올바르게 들어갔는지 확인
+			var patt = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
+			
+			if ( ! patt.test(input_phone.value) ) {
+				alert("전화번호 형식이 올바르지 않습니다.");
+				return;
+			}
+		
+			document.getElementById("phone").value = input_phone.value ;
+			
+			location.href="#close_phone"
+			/* var url = "user_login.do";
+			var param = "email=" + encodeURIComponent(email.value) + "&password=" + encodeURIComponent(password.value);
+			sendRequest(url, param, login_result, "post"); */
+		}
+		
 		// 폼 전체 유효성 검사
 		function send( f ) {
 			var email = f.email;
@@ -72,6 +143,13 @@
 				alert("이메일을 확인해주세요.");
 				email.focus();
 			}
+			
+			// 혹시라도 전화번호가 비어있는지 확인
+			if ( !phone.value ) {
+				alert("전화번호를 확인해주세요.");
+				phone.focus();
+			}
+			
 			
 			// 이름 입력했는지 확인
 			if ( ! name.value ) {
@@ -99,8 +177,6 @@
 				pwd_check.focus();
 				return;
 			}
-			
-			// 전화번호 인증 여부
 			
 			
 			// 직업
@@ -130,6 +206,10 @@
 		}
 	
 	</script>
+</head>
+
+<body>
+	<jsp:include page="../header.jsp"></jsp:include>
 	
 	<div class="body-bgcolor-set">
 		<div class="study-join">
@@ -157,18 +237,19 @@
 								<tr>
 									<th>이메일</th>
 									<td>
-										<input type="text" id="email" name="email" placeholder="example@studynet.com" readonly>
+										<input type="text" id="email" name="email" placeholder="중복 확인을 통해 입력해주세요." readonly>
 									</td>
 									<td>
-										<input class="my-btn black-white" name="" type="button" value="이메일 입력" onClick="location.href='#open_input'">
-											<div class="info_content input" id="open_input">
+										<input class="my-btn black-white" name="" type="button" value="중복 확인" onClick="location.href='#open_email'">
+											<div class="info_content input" id="open_email">
 												<div>
 													<p class="section-discription tal">
-														입력된 이메일은 아이디로 사용되오니 꼭 실제 사용하시는 이메일을 기입해주시기 바랍니다. <br><br>
+														입력된 이메일은 아이디로 사용되오니 꼭 실제 사용하시는 이메일을 기입해주시기 바랍니다. <br>
+														또한 참여하는 스터디와 관련된 정보가 메일로 발송됩니다. <br><br>
 														<input type="text" id="email-input" placeholder="example@studynet.com">
 													</p>
 													<input type="button" class="my-btn yellow-black" onClick="verify();" value="중복 확인"/>
-													<input type="button" class="my-btn yellow-black" onClick="location.href='#close_input'" value="취소"/>
+													<input type="button" class="my-btn yellow-black" onClick="location.href='#close_email'" value="취소"/>
 												</div>
 											</div>
 									</td>
@@ -198,10 +279,31 @@
 								<tr>	
 									<th>전화번호</th>
 									<td>
-										<input type="text" name="phone" placeholder="'-'을 제외하고 입력해주세요.">
+										<input type="text" name="phone" id="phone" placeholder="본인 인증을 통해 입력해주세요." readonly>
 									</td>
 									<td>
-										<input class="my-btn black-white" name="" type="button" value="본인 인증">							
+										<input class="my-btn black-white" onClick="location.href='#open_phone'" type="button" value="본인 인증">		
+										<div class="info_content input" id="open_phone">
+											<div>
+												<p class="section-discription tal">
+													본인의 휴대폰 번호를 입력해주세요.<br><br>
+													<input type="text" id="phone-input" placeholder="'-'이 자동으로 입력됩니다." maxlength="13">
+												</p>
+												<input type="button" class="my-btn yellow-black" onClick="certificate();" value="인증"/>
+												<input type="button" class="my-btn yellow-black" onClick="location.href='#close_phone'" value="취소"/>
+											</div>
+										</div>		
+										<div class="info_content input" id="open_key">
+											<div>
+												<p class="section-discription tal">
+													인증번호가 발송되었습니다. <br>문자가 오지 않는다면 재전송 버튼을 눌러주세요. <br><br>
+													<input type="text" id="key-input" placeholder="SMS로 전송된 6자리 인증키를 입력해주세요.">
+												</p>
+												<input type="button" class="my-btn yellow-black" onClick="certificate();" value="재전송"/>
+												<input type="button" class="my-btn yellow-black" onClick="" value="입력"/>
+												<input type="button" class="my-btn yellow-black" onClick="location.href='#close_key'" value="취소"/>
+											</div>
+										</div>			
 										<input type="hidden" value="1" name="is_phone_auth">
 									</td>
 								</tr>
@@ -277,7 +379,7 @@
 	<jsp:include page="../footer.jsp"></jsp:include>
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/httpRequest.js"></script>
-
+	
 </body>
-
+	
 </html>

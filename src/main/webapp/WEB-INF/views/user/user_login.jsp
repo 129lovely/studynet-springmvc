@@ -13,7 +13,7 @@
 	
 		// 혹시라도 로그인 한 유저가 로그인 url을 통해 접근했을 경우를 막기 위한 부분
 		window.onload = function () {
-			if ( ${ !empty user } ) {
+			if ( ${! empty user} ) {
 				alert("잘못된 접근입니다.");
 				location.href = "index.do";
 			}	
