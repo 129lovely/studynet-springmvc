@@ -78,33 +78,45 @@
 				<p class="mb10">총 ${ fn:length(list) }건</p>
 				<div class="search-result">
 					<ul>
-						<li class="flex-box">
-							<span class="icon icon-pre01"></span>
-							<div>
-								<h3 class="mb10"><a href="javascript:void(0);"><span>[온라인] 웹 페이지 만들기 좀 긴 제목의 경우</span></a></h3>
-								<p>모집 기간 &nbsp;|&nbsp; 2019.12.08 ~ 2019.12.08</p>
-								<p>스터디 목적 &nbsp;|&nbsp; 공부</p>
-								<p>모집 인원 &nbsp;|&nbsp; 10명</p>
-							</div>
-						</li>
-						<li class="flex-box">
-							<span class="icon icon-pre02"></span>
-							<div>
-								<h3><a href="javascript:void(0);"><span>[오프라인] 취업 면접 연습하기</span></a></h3>
-								<p>모집 기간 &nbsp;|&nbsp; 2019.12.08 ~ 2019.12.08</p>
-								<p>스터디 목적 &nbsp;|&nbsp; 공부</p>
-								<p>모집 인원 &nbsp;|&nbsp; 10명</p>
-							</div>
-						</li>
-						<li class="flex-box">
-							<span class="icon icon-pre01"></span>
-							<div>
-								<h3><a href="javascript:void(0);"><span>[온라인] 웹 페이지 만들기</span></a></h3>
-								<p>모집 기간 &nbsp;|&nbsp; 2019.12.08 ~ 2019.12.08</p>
-								<p>스터디 목적 &nbsp;|&nbsp; 공부</p>
-								<p>모집 인원 &nbsp;|&nbsp; 10명</p>
-							</div>
-						</li>
+						<c:forEach var="vo" items="${list }">
+						
+							<li class="flex-box">
+							<span><img src="resources/images/study_profile/${vo.photo}"/> </span>
+								<!-- 온라인 -->
+                         	<c:if test="${ vo.is_online == 0 }">
+		                        <div>
+		                           	<h3><a href="study_list_detail.do?idx=${ vo.idx }">[온라인] &nbsp;${ vo.title }</a></h3>	                            	
+		                            <p>모집기간  &nbsp;|&nbsp; <fmt:formatDate value="${vo.deadline}"  pattern="YYYY.MM.dd"/> </p>
+		                            <p>스터디목적  &nbsp;|&nbsp; ${ vo.purpose }</p>
+		                            <p>모집 인원 &nbsp;|&nbsp; ${ vo.approve_count }</p>
+	              				</div>
+              				</c:if>
+	              				
+	              				
+	              				<!-- 오프라인 -->
+                         	<c:if test="${ vo.is_online == 1 }">
+	                         	<div>
+		                           	<h3><a href="study_list_detail.do?idx=${ vo.idx }">[오프라인] &nbsp;${ vo.title }</a></h3>	                            	
+		                            <p>모집기간  &nbsp;|&nbsp; <fmt:formatDate value="${vo.deadline}"  pattern="YYYY.MM.dd"/> </p>
+		                            <p>스터디목적  &nbsp;|&nbsp; ${ vo.purpose }</p>
+		                            <p>모집 인원 &nbsp;|&nbsp; ${ vo.approve_count }</p>
+	              				</div>
+              				</c:if>
+	              				
+	              				
+	              				<!-- 온/오프라인 -->
+	                        <c:if test="${ vo.is_online == 2 }">
+		                        <div>
+		                           	<h3><a href="study_list_detail.do?idx=${ vo.idx }">[온/오프라인] &nbsp;${ vo.title }</a></h3>	                            	
+		                            <p>모집기간  &nbsp;|&nbsp; <fmt:formatDate value="${vo.deadline}"  pattern="YYYY.MM.dd"/> </p>
+		                            <p>스터디목적  &nbsp;|&nbsp; ${ vo.purpose }</p>
+		                            <p>모집 인원 &nbsp;|&nbsp; ${ vo.approve_count }</p>
+		                        </div>
+              				</c:if>	
+
+							</li>
+						</c:forEach>
+						
 					</ul>
 				</div>
 			</div>

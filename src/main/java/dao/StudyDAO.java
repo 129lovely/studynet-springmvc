@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
-import vo.BoardVO;
 import vo.StudyVO;
 
 public class StudyDAO implements DAO {
@@ -91,5 +90,18 @@ public class StudyDAO implements DAO {
 		int result=sqlSession.update("study.update_study", idx);
 		return result;
 	}
+	
+	//스터디 신청하기
+	public int study_apply(Map map) {
+		int res = sqlSession.insert("study.apply", map);
+		return res;
+	}
+	
+	//스터디 신청인원 추가
+	public int study_add_member(Map map) {
+		int res = sqlSession.update("study.add_member", map);
+		return res;
+	}
 
+	
 }

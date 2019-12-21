@@ -63,6 +63,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		apply_condition=#{apply_condition},detail_info=#{detail_info},
 		updated_at=current_timestamp() where idx=#{idx}
 	</update>
+	
+	
+	<!-- 스터디신청하기 -->
+	<insert id="apply" parameterType="java.util.Map">
+		insert into study_member (user_idx, study_idx, status, is_admin, introduce)
+		values (#{user_idx}, #{study_idx}, "승인 대기", 0, #{introduce} )
+	</insert>
+	
+	<update id="add_member" parameterType="java.util.Map">
+		update study set apply_count = apply_count + 1
+		where study_idx = #{study_idx}
+	</update>
+	
 </mapper>
 
 

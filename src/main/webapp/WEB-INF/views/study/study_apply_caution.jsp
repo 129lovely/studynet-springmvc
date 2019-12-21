@@ -7,6 +7,35 @@
 	<meta charset="UTF-8">
 	<title>스터디 신청 안내</title>
 </head>
+<script type="text/javascript">
+
+
+	function send(form) {
+if( ${ empty sessionScope.user.idx } ){
+  			
+  			alert("로그인이 필요합니다.");
+  			location.href="user_login_form.do";
+  			return;
+  		}
+  		
+		var cb1 = document.getElementById("cb1");
+		var cb2 = document.getElementById("cb2");
+		var cb3 = document.getElementById("cb3");
+		var introduce = form.introduce.value;
+		
+		if ( !cb1.checked || !cb2.checked || !cb3.checked) {
+			alert("안내 사항을 모두 확인해주세요.");
+			return;
+		}
+		if (introduce == "") {
+			alert("자기소개를 입력해주세요");
+			return;
+		}
+	
+		location.href = "study_apply.do?study_idx="+${ study_idx }+"&introduce="+introduce;
+	}
+		
+</script>
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
 	<div class="study-apply body-bgcolor-set">

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,14 +14,24 @@
 		
 		function send_apply(max_count,approve_count,idx){
 			
+			// 비회원 차단
+			if( ${ empty sessionScope.user} ){
+	  			
+	  			alert("로그인이 필요합니다.");
+	  			location.href="user_login_form.do";
+	  			return;
+	  		}
+			
+			// 신청 인원이 다 찼는지 확인
 			var btn=document.getElementById("btn");
+			
 			if(max_count==approve_count){
 				btn.disabled='disabled';
 				$('#btn').css('background-color','#DEE0E3');
+				return;
 			}
 
-		 	location.href= "study_apply_caution.do?idx=" + idx;
-			location.href= "study_apply_caution.do?idx=" + idx;
+		 	location.href= "study_apply_caution.do?study_idx=" + idx;
 			
 		}
 	
@@ -42,7 +53,7 @@
 				</div>
 				<div class="recruit-info">
 					<span class="mb10 image">
-						<img src="resources/images/study_profile/${study.photo}.jpg">
+						<img src="resources/images/study_profile/${study.photo}">
 					</span>
 					
 					<div>

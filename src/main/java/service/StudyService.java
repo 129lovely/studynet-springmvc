@@ -55,4 +55,17 @@ public class StudyService {
 		return res;
 	}
 	
+    //신청하기  
+	public int study_apply(Map map ) {
+		int res = studyDAO.study_apply(map);
+		int addRes = 0;
+		// 신청이 성공적으로 이루어지면 그때 신청 인원을 늘려줘야 함
+		if ( res != 0 ) {
+			addRes = studyDAO.study_add_member(map);
+		}
+		
+		return addRes;
+		
+	}
+
 }

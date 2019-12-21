@@ -808,4 +808,20 @@ public class StudyController {
 		return "study_list_detail.do?idx=" + idx;
 	}
 	
+	//스터디 지원
+	@RequestMapping("/study_apply.do")
+		public String study_apply(String introduce, int study_idx, HttpServletRequest request){
+	
+		UserVO user = (UserVO) request.getSession().getAttribute("user");
+		Map map = new HashMap();
+		map.put("user_idx", user.getIdx());
+		map.put("study_idx", study_idx);
+		map.put("introduce", introduce);
+		
+		int res = studyService.study_apply(map);
+		return "redirect:study_list_detail.do?idx=" + study_idx; 
+		
+	}
+
+	
 }

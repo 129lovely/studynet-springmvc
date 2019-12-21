@@ -1166,13 +1166,20 @@ textarea {
 .study-search-page .search-result-box ul li {
 	border: 3px solid #DFE1E4;
 	border-radius: 10px;
-   
     padding: 20px;
     margin-bottom: 20px;
 }
 
 .study-search-page .search-result-box ul li > span {
     flex-shrink: 0;
+    display: inline-block;
+    width: 25%;
+    margin-right: 25px;
+}
+
+.study-search-page .search-result-box img {
+	width: 100%;
+	object-fit: cover;
 }
 
 .study-search-page .search-result-box ul li > div {
