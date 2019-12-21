@@ -53,6 +53,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where no between #{start} AND
 		#{end}
 	</select>
+	
+	<!-- 스터디룸 수정하기 -->
+	<update id="update_study" parameterType="study">
+		UPDATE study SET title=#{title}, photo=#{photo}, min_count=#{min_count},
+		max_count=#{max_count},deadline=#{deadline},start_date=#{start_date},
+		end_date=#{end_date},open_kakao=#{open_kakao},purpose=#{purpose},
+		is_online=#{is_online},place=#{place},extra_info=#{extra_info},
+		apply_condition=#{apply_condition},detail_info=#{detail_info},
+		updated_at=current_timestamp() where idx=#{idx}
+	</update>
 </mapper>
 
 
