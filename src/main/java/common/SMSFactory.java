@@ -52,7 +52,6 @@ public final class SMSFactory {
 		secure = base64Encode("3a405c4a281dde612d10f162387d2f6a");// 인증키
 		msg = base64Encode(nullcheck(setMessage(tempKey), ""));
 		receive_phone_number = base64Encode(nullcheck(phone, ""));
-
 		first_phone_number = base64Encode(nullcheck("010", ""));
 		second_phone_number = base64Encode(nullcheck("2284", ""));
 		third_phone_number = base64Encode(nullcheck("7142", ""));
@@ -69,8 +68,6 @@ public final class SMSFactory {
 		System.out.println("sms공장 생성자 완료");
 	}
 
-	// public static String SECURE =
-	// base64Encode("7c65c2cbaa92e7467c4bfb94a98eb70d");
 	/**
 	 * 널체크, null일 경우 파라미터로 들어온 디폴트값으로 대체.
 	 * 
@@ -183,6 +180,7 @@ public final class SMSFactory {
 
 	    InetAddress addr = InetAddress.getByName(host);
 	    Socket socket = new Socket(host, port);
+	    
 	    // 헤더 전송
 	    BufferedWriter wr = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), charsetType));
 	    wr.write("POST "+path+" HTTP/1.0\r\n");
@@ -235,21 +233,13 @@ public final class SMSFactory {
 	        return false;
 	    }
 
-//	    System.out.println(noInteractive);
-//
-//	    if(noInteractive.equals("1") && !(Result.equals("Test Success!")) && !(Result.equals("success")) && !(Result.equals("reserved")) ) {
-//	    	
-//	    }
-//	    else if(!(noInteractive.equals("1"))) {
-//	    	System.out.println("alert : " + alert);
-//	    }
 	}
 	
 	/**
 	 * 전송시 메시지 가공
 	 */
 	private String setMessage(String msg){
-		return "요청한 인증키는 [ "+msg+" ] 입니다.";
+		return "[스터디넷 ] 요청하신 인증키는  "+msg+"  입니다.";
 	}
 	
 	/**

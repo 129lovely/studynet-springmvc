@@ -24,11 +24,13 @@ public class CertificationKeyGenerator {
 	public String tempKeyGenarator(String Number){
 		String lastNumberString = null;
 		String numberArray[] = Number.split("-");
+		
 		if(numberArray[2].charAt(0) == '0'){
 			lastNumberString = "1"+numberArray[2].substring(1, numberArray[2].length());
 		}else{
 			lastNumberString = numberArray[2];
 		}
+		
 		String last = Long.toString((Integer.parseInt(lastNumberString) * System.currentTimeMillis()));
 		return last.substring(last.length()-6, last.length());
 	}
@@ -56,32 +58,5 @@ public class CertificationKeyGenerator {
 		}
 		
 		return param;
-	}
-	
-	/**
-	 * 인풋키와 임시키를 비교하여 일치하는지 반환함
-	 * @param thamesMemberDAO
-	 * @param phone
-	 * @param input
-	 * @return
-	 */
-	public boolean isCorrectCertifiKey( String key, String phone , String inputKey){
-		//db에서 dbKey를 가져와 저장할 임시변수
-		String dbKey = key;
-		//암호화된 전화번호로 임시키 가져옴
-		//dbKey = certifiDAO.getTempKey(phone);
-		//임시키와 인풋키 공백제거
-		dbKey = dbKey.trim();
-		inputKey = inputKey.trim();
-		//디비에 누적된 임시키 삭제
-		//certifiDAO.deleteTempKey(phone);
-		
-		//인풋키와 임시키 비교
-		if(inputKey.equals(dbKey)){
-			return true;
-		}
-		else{
-			return false;
-		}
 	}
 }
