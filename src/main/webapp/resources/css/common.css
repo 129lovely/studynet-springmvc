@@ -1245,13 +1245,12 @@ textarea {
 }
 
 .study-list-detail .recruit-info span.image { /*이부분 안들어감*/
-    height: 300px;
+    display: inline-block;
 }
 
 .study-list-detail .recruit-info > span:first-child {
     display: inline-block;
     width: 100%;
-    background-color: rgb(87, 86, 86);
 }
 
 .study-list-detail .recruit-info > div > span:first-child::after {
@@ -1263,7 +1262,7 @@ textarea {
 
 .study-list-detail .recruit-info img { /* 이부분도*/
 	width: 100%;
-	overflow: hidden;	
+	object-fit: cover;
 }
 
 .study-list-detail .board > div > h2 {
