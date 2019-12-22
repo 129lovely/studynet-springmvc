@@ -314,7 +314,7 @@ public class StudyController {
 	
 	// 회원가입 - 3 ( 회원 가입 처리 후 완료 페이지로 포워딩)
 	@RequestMapping("/user_insert.do")
-	public String user_insert( UserVO vo, Model model ) {
+	public String user_insert( UserVO vo, Model model ) throws Exception {
 		String res = userService.user_insert( vo );
 		model.addAttribute("res", res);
 		return Common.User.VIEW_PATH + "user_join_complete.jsp";
@@ -598,16 +598,24 @@ public class StudyController {
 		return Common.Study.VIEW_PATH + "study_myinfo.jsp";
 	}
 
-	// 스터디 만들기 페이지 - 1 ( 이동 )
+	// 스터디 만들기 페이지 - 1 ( 생성 안내 페이지로 이동 )
+	@RequestMapping("/study_create_caution.do")
+	public String study_create_caution ( ) {
+		
+		return Common.Study.VIEW_PATH + "study_create_caution.jsp";
+	}
+	
+	// 스터디 만들기 페이지 - 2 ( 생성 폼 페이지로 이동 )
 	@RequestMapping("/study_create_form.do")
-	public String study_create_form ( ) {
+	public String create_form ( ) {
 		
 		return Common.Study.VIEW_PATH + "study_create.jsp";
 	}
-	
-	// 스터디 만들기 페이지 - 2 ( 생성 안내 페이지로 이동 )
-	@RequestMapping("/study_create_caution.do")
-	public String create_caution ( StudyVO vo, HttpSession session, HttpServletRequest request) {
+
+	// 스터디 만들기 페이지 - 3 ( vo 정보 DB로 전송 )
+	@RequestMapping("/study_insert.do")
+	public String study_insert ( StudyVO vo, HttpServletRequest request) {
+		
 		
 		ServletContext application = request.getServletContext();
 		
@@ -658,19 +666,8 @@ public class StudyController {
 		 
 		vo.setPhoto(photo);
 		
-		session.setAttribute("vo", vo);
-		return Common.Study.VIEW_PATH + "study_create_caution.jsp";
-	}
-
-	// 스터디 만들기 페이지 - 3 ( vo 정보 DB로 전송 )
-	@RequestMapping("/study_insert.do")
-	public String study_insert ( HttpSession session ) {
+		studyService.insert( vo );	
 		
-		StudyVO vo = (StudyVO) session.getAttribute("vo");
-		
-		studyService.insert( vo );
-		
-		session.removeAttribute("vo");
 		return "redirect:study_list.do";
 	}
 	

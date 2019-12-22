@@ -48,7 +48,7 @@
 	        		<ul class="flex-box">
 	        			<li><a href="community_list.do"><span>커뮤니티</span></a></li>
 						<li><a href="study_list.do"><span>스터디 찾기</span></a></li>
-						<li><a href="study_create_form.do"><span>스터디 만들기</span></a></li>
+						<li><a href="study_create_caution.do"><span>스터디 만들기</span></a></li>
 	        		</ul>
 	        	</nav>
 	        </div>

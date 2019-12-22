@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%@ include file="../login_check.jsp" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,13 +14,7 @@
 
 
 	function send(form) {
-if( ${ empty sessionScope.user.idx } ){
-  			
-  			alert("로그인이 필요합니다.");
-  			location.href="user_login_form.do";
-  			return;
-  		}
-  		
+
 		var cb1 = document.getElementById("cb1");
 		var cb2 = document.getElementById("cb2");
 		var cb3 = document.getElementById("cb3");

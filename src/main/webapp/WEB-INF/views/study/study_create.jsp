@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!--  include file="../login_check.jsp" %> --> 
+<%@ include file="../login_check.jsp" %>
 
 <!DOCTYPE html>
 
@@ -134,6 +134,12 @@
 				return;
 			}
 			
+			if ( deadline.value >= end_date.value ){
+				alert("스터디 종료일은 모집 마감일보다 빠를 수 없습니다.");
+				end_date.focus();
+				return;
+			}
+			
 			if ( open_kakao.value == "" ) {
 				alert("오픈 카카오톡 주소를 기입해주세요.");
 				open_kakao.focus();
@@ -203,8 +209,8 @@
 				return;
 			}
 			
-			f.action = "study_create_caution.do";
-			f.method = "post";
+			f.action = "study_insert.do";
+			f.method = "get";
 			
 			f.submit();
 		}
@@ -276,7 +282,7 @@
 												</div>
 												<div>
 													<input type="checkbox" id="always">
-													<label for="recruit-type">상시 모집</label>
+													<label for="always">상시 모집</label>
 												</div>
 											</td>
 										</tr>						
@@ -461,7 +467,5 @@
  		});
  
  	</script>
-
-
 
 </html>
