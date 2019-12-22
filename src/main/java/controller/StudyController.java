@@ -508,10 +508,21 @@ public class StudyController {
 	@RequestMapping("/user_join_certificate.do")
 	@ResponseBody
 	public Map user_join_certificate( String phone ) {
-		
-		// 전화번호 중복되는 거 없는지도 확인해야함 
+
 		CertificationKeyGenerator keyGen = CertificationKeyGenerator.newInstance();
 		Map map = null;
+		
+		// 전화번호 중복되는 거 없는지도 확인해야함 
+		int res = userService.selectOne( phone );
+		
+		if ( res != 0 ) {
+			map = new HashMap();
+			map.put("tempKey", "member");
+			map.put("phone", "phone");
+			
+			return map;
+		}
+		
 		
 		try {
 			map = keyGen.tempKeyGenerator(phone);

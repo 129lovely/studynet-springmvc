@@ -45,6 +45,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values (#{email}, 1, #{password}, #{name}, 'naver', #{id})
 	</insert>
 	
+	<!-- 전화번호 중복 체크 -->
+	<select id="phoneCheck" parameterType="java.lang.String" resultType="int">
+		select count(*) from user WHERE phone = #{phone}
+	</select>
+	
 </mapper>
 
 

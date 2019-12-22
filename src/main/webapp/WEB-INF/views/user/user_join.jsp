@@ -14,7 +14,7 @@
 		<script type="text/javascript">
 		// 로그인 유저가 접근 시 차단
 		window.onload = function () {
-			if ( ${! empty user} ) {
+			if ( ${! empty sessionScope.user } ) {
 				alert("잘못된 접근입니다.");
 				location.href = "index.do";
 				return;
@@ -149,13 +149,19 @@
 				
 				var res = JSON.parse(xhr.responseText);
 				
+				
 				if ( res.tempKey != null && res.phone != null ){
+					
+					if ( res.tempKey == "member" ) {
+						location.href="#close_key";
+						alert("이미 회원 정보가 있는 전화번호입니다. ");
+						return;
+					}
+					
 					alert("입력하신 전화번호로 인증키가 발송되었습니다. SMS를 확인해주세요. ");
+					
 					var key = res.tempKey;
 					var phoneNum = res.phone;
-					
-					alert("key:" + key);
-					alert("phoneNum:" + phoneNum);
 					
 					// body 내부에 inpuy hidden으로 결과값을 숨겨둔다.
 					  var key_tag = document.createElement("input");
@@ -177,6 +183,52 @@
 			}
 		}
 		
+		// 재전송 여부	
+		var re_certi = false;
+		
+		// 인증키 재전송 
+		function re_certificate() {
+			
+			if ( re_certi == true ) {
+				alert("이미 인증키 재전송을 하셨습니다. ");
+			}
+			
+			re_certi = true;
+			
+			
+			var input_phone = document.getElementById("phone-input");
+			
+			var url = "user_join_certificate.do";
+			var param = "phone=" + encodeURIComponent(input_phone.value)
+			sendRequest(url, param, certificate_result2, "get");
+			
+		}
+		
+		// 인증키 재전송 resultFn 
+		// 폰 인증 resultfn 
+		function certificate_result2() {
+			if( xhr.readyState == 4 && xhr.status == 200 ){
+
+				
+				var res = JSON.parse(xhr.responseText);
+				
+				if ( res.tempKey != null && res.phone != null ){
+					alert("인증키가 재전송되었습니다. SMS를 확인해주세요. ");
+					var key = res.tempKey;
+					var phoneNum = res.phone;
+					
+					// body 내부에 input hidden으로 숨겨뒀던 값을 새 키로 바꿔준다.
+					  var key_tag = document.getElementById("key");
+					  key_tag.setAttribute("value", key);
+					  
+				} else {
+					alert("문제가 발생했습니다... 재시도해주십시오.");
+					return;
+				} 
+			}
+		}
+		
+		
 		// 인증키 인증 버튼
 		function certificateBtn( ) {
 			var key_input = document.getElementById("key-input");
@@ -184,8 +236,6 @@
 			// hidden으로 숨겨둔 값들 불러오기
 			var key = document.getElementById("key").value;
 			var phoneNum = document.getElementById("phoneNum").value;
-			
-			alert(key);
 			
 			if( key_input.value == "" ){
 				alert("인증키를 입력해주세요.");
@@ -375,7 +425,7 @@
 													<input type="text" id="key-input" placeholder="SMS로 전송된 6자리 인증키를 입력해주세요.">
 												</p>
 												<input type="button" class="my-btn yellow-black" onClick="re_certificate();" value="재전송"/>
-												<input type="button" class="my-btn yellow-black" onClick="certificateBtn( );" value="인증"/>
+												<input type="button" class="my-btn yellow-black" onClick="certificateBtn();" value="인증"/>
 												<input type="button" class="my-btn yellow-black" onClick="location.href='#close_key'" value="취소"/>
 											</div>
 										</div>			

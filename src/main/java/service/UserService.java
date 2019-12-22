@@ -150,4 +150,10 @@ public class UserService {
 		
 		return user;
 	}
+	
+	public int selectOne( String phone ) {
+		int res = userDAO.selectPhone(phone);
+		
+		return res;
+	}
 }

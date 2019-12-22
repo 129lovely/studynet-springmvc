@@ -68,6 +68,12 @@ public class UserDAO implements DAO {
 		return vo;
 	}
 	
+	// 전화번호 중복체크
+	public int selectPhone( String phone ) {
+		int res = sqlSession.selectOne("user.phoneCheck", phone);
+		return res;
+	}
+	
 	//--------------------------------------------------------------------
 	//
 	// sns 로그인 처리 관련
