@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import org.springframework.mail.javamail.JavaMailSender;
+
 import dao.BoardDAO;
 import dao.StudyDAO;
 import dao.UserDAO;
@@ -14,6 +16,8 @@ public class UserService {
 	StudyDAO studyDAO;
 	UserDAO userDAO;
 	
+	JavaMailSender mailSender;
+	
 	public void setBoardDAO(BoardDAO boardDAO) {
 		this.boardDAO = boardDAO;
 	}
@@ -23,7 +27,15 @@ public class UserService {
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
 	}
-
+	public void setMailSender(JavaMailSender mailSender) {
+		this.mailSender = mailSender;
+	}
+	
+	// MailUtils mail = new MailUtils(mailSender) ;
+	// 자꾸 mailSender가 null로 나와영 흑흑 세터 인젝션도 추가했는데 왤까여?? 
+	// 물론 추가 안 해도 null로 떠서 추가했어요 ^_^......................
+	// 스프링 이해도가 너무 떨어지는 것 같아 죄송함니다 . ..   .   .. .   .
+	
 	// 이메일 중복 체크
 	public String emailCheck(String input_email) {
 		String email = userDAO.emailCheck(input_email);
@@ -38,13 +50,36 @@ public class UserService {
 		return res;
 	}
 	
+
 	// 회원 가입 
-	public String user_insert( UserVO vo ) {
+	public String user_insert( UserVO vo ) throws Exception {
 		int res = userDAO.insert(vo);
 		String result = "fail";
 		
 		if ( res != 0 ) {
 			result = vo.getName();
+			
+			// 가입 축하 메일 발송
+			/*
+			mail.setSubject("[스터디넷] 회원 가입을 축하드립니다");
+			mail.setTo(vo.getEmail());
+			mail.setFrom("studynet2019web@gmail.com", "스터디넷");
+			
+			mail.setText(new StringBuffer()
+					.append("<body> <div>")
+					.append("<a href=\"http://localhost:9090/web/index.do\">")
+					.append("<img src=\"/images/icon/logo.png\" style=\"width: 150px; padding-top: 20px;\"> </a>")
+					.append("<h1 style=\"text-align: center; color: #eef3fa; background-color: #32539D; padding: 10px;\" >")
+					.append( "스터디넷 회원 가입을 축하드려요 !</h1>")
+					.append("<p style=\"margin: 10px; font-size: 1.5rem; text-align: center;\">")
+					.append("함께하는 시작을 위한 스터디 매칭 웹 사이트, 스터디넷입니다.<br>")
+					.append(vo.getName())
+					.append(" 님의 회원 가입을 진심으로 환영합니다.")
+					.append("</p> </div> </body>")
+					.toString());
+			
+			mail.send();
+			*/
 		}
 		
 		return result;

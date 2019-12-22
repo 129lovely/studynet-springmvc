@@ -12,7 +12,14 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/httpRequest.js"></script>
 	
 		<script type="text/javascript">
-		
+		// 로그인 유저가 접근 시 차단
+		window.onload = function () {
+			if ( ${! empty user} ) {
+				alert("잘못된 접근입니다.");
+				location.href = "index.do";
+				return;
+			}	
+		}
 		
 		// 하이픈 자동 입력 스크립트
 		var autoHypenPhone = function(str){
@@ -85,7 +92,7 @@
 			sendRequest( url, param, verify_result, "GET");
 		}
 		
-		// resultFn()
+		// 이메일 중복체크 resultFn()
 		function verify_result() {
 		if( xhr.readyState == 4 && xhr.status == 200 ){
 				
@@ -124,8 +131,6 @@
 				alert("전화번호 형식이 올바르지 않습니다.");
 				return;
 			}
-		
-			document.getElementById("phone").value = input_phone.value ;
 			
 			location.href = "#close_phone";
 			location.href="#open_key";
@@ -141,8 +146,6 @@
 			if( xhr.readyState == 4 && xhr.status == 200 ){
 				
 				var phone = document.getElementById("phone");
-				var key_input = document.getElementById("key-input");
-				
 				
 				var res = JSON.parse(xhr.responseText);
 				
@@ -154,25 +157,51 @@
 					alert("key:" + key);
 					alert("phoneNum:" + phoneNum);
 					
-					document.getElementById("certificateBtn").onClick = function () {
-						if( key_input.value == "" ){
-							alert("인증키를 입력해주세요.");
-							return;
-						} 
-						
-						if ( key.equals(key_input.value) ) {
-							phone.value = phoneNum;
-							alert("인증되었습니다.");
-							location.href="#close_key";
-							return;
-							
-						}
-					}
+					// body 내부에 inpuy hidden으로 결과값을 숨겨둔다.
+					  var key_tag = document.createElement("input");
+					  key_tag.setAttribute("type", "hidden");
+					  key_tag.setAttribute("id", "key");
+					  key_tag.setAttribute("value", key);
+				      document.forms[0].appendChild(key_tag);
+				      
+				      var phone_tag = document.createElement("input");
+				      phone_tag.setAttribute("type", "hidden");
+				      phone_tag.setAttribute("id", "phoneNum");
+				      phone_tag.setAttribute("value", phoneNum);
+				      document.forms[0].appendChild(phone_tag);
 					
 				} else {
 					alert("문제가 발생했습니다... 재시도해주십시오.");
 					return;
 				} 
+			}
+		}
+		
+		// 인증키 인증 버튼
+		function certificateBtn( ) {
+			var key_input = document.getElementById("key-input");
+			
+			// hidden으로 숨겨둔 값들 불러오기
+			var key = document.getElementById("key").value;
+			var phoneNum = document.getElementById("phoneNum").value;
+			
+			alert(key);
+			
+			if( key_input.value == "" ){
+				alert("인증키를 입력해주세요.");
+				return;
+			} 
+			
+			if ( key == key_input.value ) {
+				document.getElementById("phone").value = phoneNum;
+				alert("인증되었습니다.");
+				location.href="#close_key";
+				
+				return;
+				
+			} else {
+				alert("인증키가 올바르지 않습니다.");
+				return;
 			}
 		}
 		
@@ -182,7 +211,7 @@
 			var name = f.name;
 			var password = f.password;
 			var pwd_check = document.getElementById("pwd_check")
-			var phone = f.phone.value;
+			var phone = f.phone;
 
 			// 혹시라도 이메일이 비어있는지 확인
 			if ( !email.value ) {
@@ -346,7 +375,7 @@
 													<input type="text" id="key-input" placeholder="SMS로 전송된 6자리 인증키를 입력해주세요.">
 												</p>
 												<input type="button" class="my-btn yellow-black" onClick="re_certificate();" value="재전송"/>
-												<input type="button" class="my-btn yellow-black" id="certificateBtn" value="인증"/>
+												<input type="button" class="my-btn yellow-black" onClick="certificateBtn( );" value="인증"/>
 												<input type="button" class="my-btn yellow-black" onClick="location.href='#close_key'" value="취소"/>
 											</div>
 										</div>			
