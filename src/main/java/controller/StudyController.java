@@ -634,10 +634,9 @@ public class StudyController {
 			
 			File saveFile = new File(savePath, photo);
 			
-		
 			if ( ! saveFile.exists() ) {	// 저장할 경로가 존재하지 않는다면 새로 생성
 				saveFile.mkdirs();
-				
+
 			} else {	// 동일 파일명 처리
 				long time = System.currentTimeMillis();
 				photo = String.format("%d_%s", time, photo);

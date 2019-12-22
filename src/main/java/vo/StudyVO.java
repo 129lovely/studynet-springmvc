@@ -12,7 +12,8 @@ public class StudyVO {
 					apply_condition, detail_info, study_status; 
 	
 	private MultipartFile photo_file;
-	private Date deadline, start_date, end_date, created_at, updated_at, deleted_at;
+	private String deadline, start_date, end_date;
+	private Date created_at, updated_at, deleted_at;
 	
 	public MultipartFile getPhoto_file() {
 		return photo_file;
@@ -123,22 +124,22 @@ public class StudyVO {
 	public void setStatus(String status) {
 		this.study_status = status;
 	}
-	public Date getDeadline() {
+	public String getDeadline() {
 		return deadline;
 	}
-	public void setDeadline(Date deadline) {
+	public void setDeadline(String deadline) {
 		this.deadline = deadline;
 	}
-	public Date getStart_date() {
+	public String getStart_date() {
 		return start_date;
 	}
-	public void setStart_date(Date start_date) {
+	public void setStart_date(String start_date) {
 		this.start_date = start_date;
 	}
-	public Date getEnd_date() {
+	public String getEnd_date() {
 		return end_date;
 	}
-	public void setEnd_date(Date end_date) {
+	public void setEnd_date(String end_date) {
 		this.end_date = end_date;
 	}
 	public Date getCreated_at() {
@@ -159,6 +160,7 @@ public class StudyVO {
 	public void setDeleted_at(Date deleted_at) {
 		this.deleted_at = deleted_at;
 	}
+
 	
 
 }

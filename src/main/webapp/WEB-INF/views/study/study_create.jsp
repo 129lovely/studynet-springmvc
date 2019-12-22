@@ -63,7 +63,10 @@
 	 	
 		// 생성 버튼을 누르면 유효성 검사 후, 정보를 가지고 안내 페이지로 간다.
 		function create( f ) {
+			var purpose = f.purpose;
+			var extra_info = document.getElementsByName("extra_info");
 			
+			/*
 			var title = f.title;
 			var min_count = f.min_count;
 			var max_count = f.max_count;
@@ -179,7 +182,7 @@
 			if ( document.getElementById("always").checked == true ){
 				f.deadline.value = f.end_date.value;
 			}
-			
+			*/
 			// 선택된 스터디 방식에 따라 추가 정보의 text를 정한다. 
 			var val = 0;
 			
@@ -202,6 +205,7 @@
 				} 
 			}
 				
+			
 			// 다 값이 들어있다면 ~.~
 			var res = confirm("입력하신 정보에 수정할 부분이 없는지 확인 하셨나요? 모집 글을 올린 뒤에는 신청 인원, 참여 인원이 0명일 경우에만 수정이 가능합니다.");
 			
@@ -210,7 +214,7 @@
 			}
 			
 			f.action = "study_insert.do";
-			f.method = "get";
+			f.method = "post";
 			
 			f.submit();
 		}

@@ -86,7 +86,8 @@
                          	<c:if test="${ vo.is_online == 0 }">
 		                        <div>
 		                           	<h3><a href="study_list_detail.do?idx=${ vo.idx }">[온라인] &nbsp;${ vo.title }</a></h3>	                            	
-		                            <p>모집기간  &nbsp;|&nbsp; <fmt:formatDate value="${vo.deadline}"  pattern="YYYY.MM.dd"/> </p>
+		                            <p>모집 마감  &nbsp;|&nbsp;  <fmt:parseDate var="dateString" value="${vo.deadline}" pattern="yyyy-MM-dd HH:mm:ss.SSS" /> 
+						<fmt:formatDate value="${dateString}" pattern="yyyy.MM.dd" /></p>
 		                            <p>스터디목적  &nbsp;|&nbsp; ${ vo.purpose }</p>
 		                            <p>모집 인원 &nbsp;|&nbsp; ${ vo.approve_count }</p>
 	              				</div>
@@ -97,7 +98,8 @@
                          	<c:if test="${ vo.is_online == 1 }">
 	                         	<div>
 		                           	<h3><a href="study_list_detail.do?idx=${ vo.idx }">[오프라인] &nbsp;${ vo.title }</a></h3>	                            	
-		                            <p>모집기간  &nbsp;|&nbsp; <fmt:formatDate value="${vo.deadline}"  pattern="YYYY.MM.dd"/> </p>
+		                            <p>모집 마감  &nbsp;|&nbsp; <fmt:parseDate var="dateString" value="${vo.deadline}" pattern="yyyy-MM-dd HH:mm:ss.SSS" /> 
+						<fmt:formatDate value="${dateString}" pattern="yyyy.MM.dd" /> </p>
 		                            <p>스터디목적  &nbsp;|&nbsp; ${ vo.purpose }</p>
 		                            <p>모집 인원 &nbsp;|&nbsp; ${ vo.approve_count }</p>
 	              				</div>
@@ -108,7 +110,8 @@
 	                        <c:if test="${ vo.is_online == 2 }">
 		                        <div>
 		                           	<h3><a href="study_list_detail.do?idx=${ vo.idx }">[온/오프라인] &nbsp;${ vo.title }</a></h3>	                            	
-		                            <p>모집기간  &nbsp;|&nbsp; <fmt:formatDate value="${vo.deadline}"  pattern="YYYY.MM.dd"/> </p>
+		                            <p>모집 마감  &nbsp;|&nbsp; <fmt:parseDate var="dateString" value="${vo.deadline}" pattern="yyyy-MM-dd HH:mm:ss.SSS" /> 
+						<fmt:formatDate value="${dateString}" pattern="yyyy.MM.dd" /> </p>
 		                            <p>스터디목적  &nbsp;|&nbsp; ${ vo.purpose }</p>
 		                            <p>모집 인원 &nbsp;|&nbsp; ${ vo.approve_count }</p>
 		                        </div>

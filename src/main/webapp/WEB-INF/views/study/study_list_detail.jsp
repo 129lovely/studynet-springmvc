@@ -45,7 +45,7 @@
 			<div class="contents-box board">
 				<h2 class="mb20">${study.title}</h2>
 				<div class="flex-box bg-blue">
-					<span><fmt:formatDate value="${study.created_at }"  pattern="YYYY.MM.dd"/></span>
+					<span><fmt:formatDate value="${ study.created_at }"  pattern="YYYY.MM.dd"/></span>
 					<div>
 						<span>개설자:</span>
 						<h3>${user.name}</h3>
@@ -62,7 +62,10 @@
 					</div>
 					<div>
 						<span>모집 마감</span>
-						<span><fmt:formatDate value="${study.deadline}"  pattern="YYYY.MM.dd"/></span>
+						<span>
+						<fmt:parseDate var="dateString" value="${study.deadline}" pattern="yyyy-MM-dd HH:mm:ss.SSS" /> 
+						<fmt:formatDate value="${dateString}" pattern="yyyy.MM.dd" />
+						</span>
 					</div>
 					<div>
 						<span>모집 인원(최소/최대)</span>
@@ -94,7 +97,7 @@
 				</div>
 				<div class="mb40 tac">
 				<c:if test=""></c:if>
-					<input id="btn" class="my-btn yellow-black" type="button" value="신청하기" onclick="send_apply(${study.max_count},${study.approve_count},${study.idx });"> 
+					<input id="btn" class="my-btn yellow-black" type="button" value="신청하기" onclick="send_apply(${study.max_count}, ${study.approve_count}, ${study.idx });"> 
 					<input class="my-btn  yellow-black" type="button" value="목록으로" onclick="location.href='study_list.do'">
 				</div>
 			</div>
