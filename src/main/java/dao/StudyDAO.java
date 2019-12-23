@@ -110,5 +110,10 @@ public class StudyDAO implements DAO {
 		int study = sqlSession.selectOne("study.check", map);
 		return study;
 	}
+
+	public int add_admin_member(Map map) {
+		int res = sqlSession.insert("study.add_admin_member", map);
+		return res;
+	}
 	
 }

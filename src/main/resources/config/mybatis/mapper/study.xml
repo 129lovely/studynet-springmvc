@@ -20,6 +20,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				#{deadline}, #{start_date}, #{end_date}, #{open_kakao},
  				#{purpose}, #{is_online},#{place}, #{extra_info}, #{apply_condition}, 
 		 		#{detail_info}, '모집중', #{photo} )
+		<selectKey resultType="int" keyProperty="idx" order="AFTER">
+			SELECT LAST_INSERT_ID()
+    	</selectKey> 
 	</insert>
 	
 	<!-- 스터디 상세보기 -->
@@ -113,6 +116,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND user_idx = #{user_idx}
 	</select>
 	
+	<!-- 스터디 관리자 멤버 추가 -->
+	<insert id="add_admin_member" parameterType="java.util.Map">
+		insert into study_member (user_idx, study_idx, is_admin, status)
+		values (#{user_idx}, #{idx}, 1, 'admin')
+	</insert>
 	
 </mapper>
 

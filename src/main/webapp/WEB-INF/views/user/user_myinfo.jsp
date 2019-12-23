@@ -143,6 +143,22 @@
 		</div>
 	</div>
 	<jsp:include page="../footer.jsp"></jsp:include>
+	<script type="text/javascript">
+	
+		//마이페이지 메뉴 슬라이드 바
+		function move_right(){
+			var bar = document.getElementById("bar");
+			bar.classList.add("right");
+			bar.classList.remove("left");
+		}
+	
+		function move_left(){
+			var bar = document.getElementById("bar");
+			bar.classList.remove("right");
+			bar.classList.add("left");
+		}
+	
+	</script>
 </body>
 
 </html>

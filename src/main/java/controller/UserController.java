@@ -282,5 +282,20 @@ public class UserController {
 
 		return info;
 	}
+	
+	// 스터디 생성, 신청할 때 회원 정보 체크
+	@RequestMapping("/user_check.do")
+	@ResponseBody
+	public String user_check(int user_idx) {
+		UserVO vo = userService.selectOne(user_idx);
+		
+		String res = "fail";
+		if( vo.getPhone() == null || vo.getJob() == null || vo.getRegion() == null ) {
+			return res;
+		}
+		
+		return res = "success";
+	}
+
 
 }

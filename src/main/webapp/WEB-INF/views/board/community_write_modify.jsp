@@ -8,32 +8,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>커뮤니티 글 수정</title>
-	
-	<script>
-		function write_modify(f){
-			
-			var title=f.title.value;
-			var content=f.content.value;
-			var idx=f.idx.value;
-			
-			if(title==''){
-				alert("제목을 입력해주세요");
-				return;
-			}
-			
-			if(content==''){
-				alert("내용을 입력해주세요");
-				return;
-			}
-			
-			f.method="post";
-			f.action="community_write_update.do";
-			
-			f.submit();	
-		}
-	
-	</script>
-	
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.8/summernote.css">
 </head>
 
 <body>
@@ -68,6 +43,56 @@
         </div>
     </div>
     <jsp:include page="../footer.jsp"></jsp:include>
+    
+    <script type="text/javascript" src="${ pageContext.request.contextPath }/resources/js/summernote.js"></script>
+	<script type="text/javascript" src="${ pageContext.request.contextPath }/resources/js/summernote-ko-KR.js"></script>
+    <script type="text/javascript">
+		$(document).ready(function(){
+			$('.summernote-community-writing-box').summernote({
+				lang: 'ko-KR',
+				height: 300 + 'px',                 // set editor height
+				minHeight: 200 + 'px',             // set minimum height of editor
+				maxHeight: 500 + 'px',             // set maximum height of editor
+				focus: false,                  // set focus to editable area after initializing summernote
+				placeholder: '',
+				toolbar: [
+					// [groupName, [list of button]]
+					['style', ['bold', 'italic', 'underline', 'clear']],
+					['font', ['strikethrough']],
+					['fontsize', ['fontsize']],
+					['color', ['color']],
+					['para', ['paragraph']],
+					['height', ['height']],
+					['table', ['table']],
+					['insert', ['link', 'picture']],
+					['view', ['fullscreen', 'codeview']],
+					]
+			});
+		});
+		
+		function write_modify(f){
+			
+			var title=f.title.value;
+			var content=f.content.value;
+			var idx=f.idx.value;
+			
+			if(title==''){
+				alert("제목을 입력해주세요");
+				return;
+			}
+			
+			if(content==''){
+				alert("내용을 입력해주세요");
+				return;
+			}
+			
+			f.method="post";
+			f.action="community_write_update.do";
+			
+			f.submit();	
+		}
+	
+	</script>
 </body>
 
 </html>

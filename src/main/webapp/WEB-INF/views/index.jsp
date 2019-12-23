@@ -7,6 +7,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>스터디넷</title>
+	<link rel="stylesheet" href="https://unpkg.com/swiper/css/swiper.min.css">
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>
@@ -138,6 +139,7 @@
 	<jsp:include page="footer.jsp"></jsp:include>
 	
 	<!-- swiper 스크립트 -->
+	<script src="https://unpkg.com/swiper/js/swiper.min.js"></script>
 	<script type="text/javascript">
 		var swiper1 = new Swiper('.swiper1', {
 			slidesPerView: 'auto',

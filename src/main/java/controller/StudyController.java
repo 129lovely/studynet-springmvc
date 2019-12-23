@@ -37,7 +37,7 @@ public class StudyController {
 	public void setBoardDAO(BoardDAO boardDAO) {
 		this.boardDAO = boardDAO;
 	}
-	
+
 	public void setStudyService(StudyService studyService) {
 		this.studyService = studyService;
 	}
@@ -49,7 +49,7 @@ public class StudyController {
 	public void setBoardService(BoardService boardService) {
 		this.boardService = boardService;
 	}
-	
+
 	public void setStudyDAO(StudyDAO studyDAO) {
 		this.studyDAO = studyDAO;
 	}
@@ -71,39 +71,39 @@ public class StudyController {
 	// 스터디 만들기 페이지 - 1 ( 생성 안내 페이지로 이동 )
 	@RequestMapping("/study_create_caution.do")
 	public String study_create_caution ( ) {
-		
+
 		return Common.Study.VIEW_PATH + "study_create_caution.jsp";
 	}
-	
+
 	// 스터디 만들기 페이지 - 2 ( 생성 폼 페이지로 이동 )
 	@RequestMapping("/study_create_form.do")
 	public String create_form ( ) {
-		
+
 		return Common.Study.VIEW_PATH + "study_create.jsp";
 	}
 
 	// 스터디 만들기 페이지 - 3 ( vo 정보 DB로 전송 )
 	@RequestMapping("/study_insert.do")
 	public String study_insert ( StudyVO vo, HttpServletRequest request) {
-		
-		
+
+
 		ServletContext application = request.getServletContext();
-		
+
 		// 대표 사진은 따로 저장해주기 위해 절대 경로를 만든다.
 		String webPath = "/resources/images/study_profile";
 		String savePath = application.getRealPath(webPath);
 		System.out.println(savePath);
-		
+
 		MultipartFile photo_file = vo.getPhoto_file();
 		String photo = "no_photo";
-		
+
 		if ( ! photo_file.isEmpty() ) {
-			
+
 			// 실제 파일명으로 변경 
 			photo = photo_file.getOriginalFilename();
-			
+
 			File saveFile = new File(savePath, photo);
-			
+
 			if ( ! saveFile.exists() ) {	// 저장할 경로가 존재하지 않는다면 새로 생성
 				saveFile.mkdirs();
 
@@ -112,14 +112,14 @@ public class StudyController {
 				photo = String.format("%d_%s", time, photo);
 				saveFile = new File(savePath, photo);
 			}
-			
+
 			try {	// 로컬 파일로 복사 
 				photo_file.transferTo(saveFile);
 			} catch (Exception e) {
 				e.printStackTrace();
 			} 
-			
-			
+
+
 		} else {
 			// 지정된 파일이 없을 경우 샘플에서 가져온다. 
 			if( vo.getPurpose().equals("공모전") ) {
@@ -132,14 +132,14 @@ public class StudyController {
 				photo = "preview04.jpg";
 			}
 		}
-		 
+
 		vo.setPhoto(photo);
-		
-		studyService.insert( vo );	
-		
+
+		int res = studyService.insert( vo );	
+
 		return "redirect:study_list.do";
 	}
-	
+
 	// 스터디 찾기 페이지 목록
 	@RequestMapping("/study_list.do")
 	public String study_list(Model model, Integer page, HttpServletRequest request ) {
@@ -166,7 +166,7 @@ public class StudyController {
 		//게시글 전체목록 가져오기
 		List<StudyVO> list = null;
 		list = studyDAO.selectList( map );	
-		
+
 		//전체 게시물 수 구하기
 		int row_total = studyDAO.getRowTotal();
 
@@ -183,79 +183,79 @@ public class StudyController {
 
 		//세션에 등록되어 있던 show정보를 없앤다
 		request.getSession().removeAttribute("show");
-		
+
 		return Common.Study.VIEW_PATH + "study_list.jsp";
 	}
-		
-	
+
+
 	// 스터디 찾기에서 검색기능 and 검색결과 레코드 개수 (페이징 적용)
-		@RequestMapping("/study_list_search.do")
-		public String study_list_search( Model model, Integer page, HttpServletRequest request, String search, int search_option ) {
-			int nowPage = 1;
+	@RequestMapping("/study_list_search.do")
+	public String study_list_search( Model model, Integer page, HttpServletRequest request, String search, int search_option ) {
+		int nowPage = 1;
 
-			if( page != null ) {
-				nowPage = page; // ~.do?page=3 처럼 입력할 경우
-			}
-			
-			//한페이지에서 표시되는 게시물의 시작과 끝번호를 계산
-			//1페이지라면 1 ~ 10번 게시물까지만 보여줘야 한다.
-			//2페이지라면 11 ~ 20번 게시물까지만 보여줘야한다.
-			int start = (nowPage -1) * Common.StudyPaging.BLOCKLIST + 1;
-			int end = start + Common.StudyPaging.BLOCKLIST - 1;
-
-			//start와 end를 map에 저장
-			Map map = new HashMap();
-			map.put("start", start);
-			map.put("end", end);
-			map.put("search_option", search_option);
-			map.put("search", search);
-
-			//게시글 전체목록 가져오기
-			List<StudyVO> list = null;
-			int row_total = 0;
-			
-			//search_option[index] 유무에따라 온라인,오프라인,복합 결정
-			if(search_option==2||search_option==0||search_option==1) {//옵션 선택일떄 온라인,오프라인 ,복합
-				//게시글 전체목록 가져오기
-				list = (List<StudyVO>) studyService.search_list_condition(map).get("list");
-				//전체 게시물 수 구하기
-				row_total = (int) studyService.search_list_condition(map).get("cnt");
-				
-			} else {//분류일때
-				//게시글 전체목록 가져오기
-				list = (List<StudyVO>) studyService.search_list(map).get("list");
-				//전체 게시물 수 구하기
-				row_total = (int) studyService.search_list(map).get("cnt");
-			}
-
-			//페이지 메뉴 생성하기
-			//ㄴ ◀1 2 3 4 5▶
-			String pageMenu = Paging.getPaging(
-					"study_list_search.do" , nowPage, row_total,
-					Common.StudyPaging.BLOCKLIST, Common.StudyPaging.BLOCKPAGE,
-					search);
-
-			//request영역에 list바인딩
-			model.addAttribute("list", list);
-		
-			model.addAttribute("pageMenu", pageMenu);
-			model.addAttribute("row_total", row_total);
-			
-			return Common.Study.VIEW_PATH + "study_list.jsp";
-			
+		if( page != null ) {
+			nowPage = page; // ~.do?page=3 처럼 입력할 경우
 		}
-	
+
+		//한페이지에서 표시되는 게시물의 시작과 끝번호를 계산
+		//1페이지라면 1 ~ 10번 게시물까지만 보여줘야 한다.
+		//2페이지라면 11 ~ 20번 게시물까지만 보여줘야한다.
+		int start = (nowPage -1) * Common.StudyPaging.BLOCKLIST + 1;
+		int end = start + Common.StudyPaging.BLOCKLIST - 1;
+
+		//start와 end를 map에 저장
+		Map map = new HashMap();
+		map.put("start", start);
+		map.put("end", end);
+		map.put("search_option", search_option);
+		map.put("search", search);
+
+		//게시글 전체목록 가져오기
+		List<StudyVO> list = null;
+		int row_total = 0;
+
+		//search_option[index] 유무에따라 온라인,오프라인,복합 결정
+		if(search_option==2||search_option==0||search_option==1) {//옵션 선택일떄 온라인,오프라인 ,복합
+			//게시글 전체목록 가져오기
+			list = (List<StudyVO>) studyService.search_list_condition(map).get("list");
+			//전체 게시물 수 구하기
+			row_total = (int) studyService.search_list_condition(map).get("cnt");
+
+		} else {//분류일때
+			//게시글 전체목록 가져오기
+			list = (List<StudyVO>) studyService.search_list(map).get("list");
+			//전체 게시물 수 구하기
+			row_total = (int) studyService.search_list(map).get("cnt");
+		}
+
+		//페이지 메뉴 생성하기
+		//ㄴ ◀1 2 3 4 5▶
+		String pageMenu = Paging.getPaging(
+				"study_list_search.do" , nowPage, row_total,
+				Common.StudyPaging.BLOCKLIST, Common.StudyPaging.BLOCKPAGE,
+				search);
+
+		//request영역에 list바인딩
+		model.addAttribute("list", list);
+
+		model.addAttribute("pageMenu", pageMenu);
+		model.addAttribute("row_total", row_total);
+
+		return Common.Study.VIEW_PATH + "study_list.jsp";
+
+	}
+
 	//스터디 상세 페이지
 	@RequestMapping("/study_list_detail.do")
 	public String study_list_detail(Model model, int idx,HttpServletRequest request) {
 		StudyVO study=studyService.showStudyDetail(idx);
 		UserVO user=userService.select_userName(idx);
-		
+
 		model.addAttribute("study",study);
 		model.addAttribute("user", user);
 		return Common.Study.VIEW_PATH + "study_list_detail.jsp";
 	}
-		
+
 	//스터디 참가 신청 페이지 이동
 	@RequestMapping("/study_apply_caution.do")
 	public String study_apply_caution(Model model, int study_idx) {
@@ -279,29 +279,29 @@ public class StudyController {
 
 		return "study_list_detail.do?idx=" + idx;
 	}
-	
+
 	//스터디 지원
 	@RequestMapping("/study_apply.do")
 	public String study_apply(String introduce, int study_idx, HttpServletRequest request){
 
-	UserVO user = (UserVO) request.getSession().getAttribute("user");
-	Map map = new HashMap();
-	map.put("user_idx", user.getIdx());
-	map.put("study_idx", study_idx);
-	map.put("introduce", introduce);
-	
-	int res = studyService.study_apply(map);
-	return "redirect:study_list_detail.do?idx=" + study_idx; 
-	
+		UserVO user = (UserVO) request.getSession().getAttribute("user");
+		Map map = new HashMap();
+		map.put("user_idx", user.getIdx());
+		map.put("study_idx", study_idx);
+		map.put("introduce", introduce);
+
+		int res = studyService.study_apply(map);
+		return "redirect:study_list_detail.do?idx=" + study_idx; 
+
 	}
-	
+
 	// 아이디 비번 찾기 페이지로 이동
 	@RequestMapping("/user_find.do")
 	public String user_find(HttpServletRequest request ) {
 
 		return Common.User.VIEW_PATH + "user_find.jsp";
 	}
-	
+
 	// 스터디 중복 체크
 	@RequestMapping("/study_check.do")
 	@ResponseBody
@@ -310,10 +310,10 @@ public class StudyController {
 		Map map = new HashMap();
 		map.put("user_idx", user.getIdx());
 		map.put("study_idx", study_idx);
-		
+
 		String res = studyService.studyCheck(map);
 		System.out.println("res: " + res);
-		
+
 		return res;
 	}
 

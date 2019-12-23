@@ -8,296 +8,6 @@
 <head>
 <meta charset="UTF-8">
 <title>${ board.title }</title>
-
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/httpRequest.js"></script>
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-
-<script type="text/javascript">
-
-// 추천하기
-	function recommend() {
-		if( ${ empty sessionScope.user.idx } ){
-  			
-  			alert("로그인이 필요합니다.");
-  			location.href="user_login_form.do";
-  			return;
-  		}
-  		
-		var idx = ${board.idx};
-		var user_idx = ${board.user_idx};
-	
-		$.ajax({
-	        url: "/web/community_recommend.do"
-	        , type: "get"
-	        , data: { "idx": idx, "user_idx": user_idx }
-	        , dataType: "text"
-	        , success: function(response){
-	        	var data = response;
-	        	
-	        	if( data == "self" ){
-	        		alert("본인이 작성한 글은 추천할 수 없습니다.");
-	    			return;
-	        	}
-	        	
-	        	if( data == "over" ){
-	        		alert("중복 추천은 불가능합니다.");
-	    			return;
-	        	}
-	        	
-	        	var cnt = ${ board.recommend };
-	        	cnt += 1;
-	        	
-	        	$("#rec_cnt").text( cnt );
-	        }
-	    });
-		
-	}
-//---------------------------------------------------------------------------------
-// 댓글 수정 관련 함수
-
-	// 댓글 수정창 열기 -> textarea로
-	var p_div = null;
-	var p_content = "";
-	
-	function openModifyComment(this_tag, idx, user_idx){
-		if( ${ empty sessionScope.user.idx } ){
-			alert("로그인이 필요합니다.");
-			location.href="user_login_form.do";
-			return;
-		}
-		
-		// #comment-standard -> div 가져오기
-		var p_div_new = $(this_tag).parent().parent().children("#comment-standard"); 
-		
-		// 이전과 같은 '수정' 버튼을 클릭하면 이전에 열었던거 닫기
-		if( p_div != null && p_div.get(0) == $(p_div_new).get(0) ){
-			cancelModifyComment(p_content);
-			p_div = null;
-			return;
-		}
-		
-		p_div = p_div_new;
-		var content = $(p_div).children("p").text(); // content 가져오기
-		
-		$(p_div).empty(); // p태그 지우기
-		
-		// textarea, 수정, 취소 버튼 만들기
-		var textarea = $("<textarea>" + content + "</textarea>").attr({
-			"class" : "modify-comment-txtarea"
-		});
-		var mod_btn = $('<a>수정</a>').attr({
-			"href" : "javascript:void(0);",
-			"onclick" : "modifyComment('" + content + "'," + idx + "," + user_idx + ");",
-			"class" : "my-btn yellow-black"
-		});
-		var cancel_btn = $('<a>취소</a>').attr({
-			"href" : "javascript:void(0);",
-			"onclick" : "cancelModifyComment();",
-			"class" : "my-btn black-white"
-		});
-		
-		// textarea & button 넣기
-		$(p_div).append(textarea);
-		$(p_div).append(mod_btn);
-		$(p_div).append(cancel_btn);
-		
-		p_content = content;
-		
-	}
-	
-	// 댓글 수정 취소 -> 다시 p 태그로
-	function cancelModifyComment(content){
-		$(p_div).empty(); // textarea, a태그 삭제
-		var p = $("<p>" + content + "</p>").attr({
-			"class" : "comment-standard"
-		});
-		$(p_div).append(p); // p태그 넣기
-	}
-	
-	// 댓글 수정 완료 -> db작업 & 다시 p태그로
-	function modifyComment(content, idx, user_idx){
-		// textarea의 수정된 내용 가져오기
-		var content = $(p_div).children("textarea").val();
-			
-		$.ajax({
-	        url: "/web/comment_mod.do"
-	        , type: "get"
-	        , data: { "idx": idx, "user_idx": user_idx, "content": content }
-	        , dataType: "text"
-	        , success: function(response){
-	        	var data = response;
-	        	
-	        	if( data == "fail" ){
-	        		alert("작성자 본인만 삭제할 수 있습니다.");
-	        		cancelModifyComment(p_content);
-	    			return;
-	        	}
-	        	
-	        	cancelModifyComment(content);
-	        	alert("댓글 수정 완료");
-	        }
-	    });
-		
-	}
-	
-
-    //---------------------------------------------------------------------------------
-	
-      // 댓글 달기
-      function reply(board_idx){ /* board_idx = board테이블에서의 idx */
-		if( ${ empty sessionScope.user.idx } ){
-  			
-  			alert("로그인이 필요합니다.");
-  			location.href="user_login_form.do";
-  			return;
-  		}
-         
-         var content = document.getElementById("comment-write-txtarea").value;
-         
-         if(content==''){
-            alert("내용을 입력하세요");
-            document.getElementById("comment-write-txtarea").focus();
-            return ;
-         }
-         
-         var link = "comment_origin_reply.do?board_idx=" + board_idx + "&content=" + content;
-         
-         location.href=link;
-               
-      }
-    
-    //---------------------------------------------------------------------------------
-    //----------------------------------------------
-	// 대댓글 달기
-	//----------------------------------------------
-	var preBtn = null;
-
-	function openReComment(btn, parent, is_re, b_idx) { // 열린 대댓글 박스 닫기
-		$('.write-comment-reply').remove();
-	
-		if( preBtn == null || preBtn.get(0) != $(btn).get(0) ){
-			// 이전과 다른 대댓글 달기 버튼을 클릭한 경우만 박스 생성
-			createReCommentBox(btn, parent, is_re, b_idx);
-			return;    
-		}
-	
-		preBtn = null;
-	}
-	
-	function createReCommentBox(btn, parent, is_re, b_idx) { // 대댓글 박스 생성
-		var btn_parent = $(btn).parent().parent();
-	
-		if( btn_parent.attr('class') == 'comment-reply-content' ) {
-			// 대댓글일 경우 한단계 상위 엘리먼트로 올라간다
-			btn_parent = btn_parent.parent();
-		}
-	
-		var outer_div = $('<div></div>').addClass('write-comment-reply');
-		var span = $('<span>ㄴ</span>');
-		var textarea = $('<textarea></textarea>');
-		var a = $('<a>대댓글 달기</a>').attr({
-			"href" : "javascript:void(0);",
-			"onclick" : "writeReComment(this," + parent + "," + is_re + "," + b_idx + ");"
-		})
-	
-		outer_div.append(span);
-		outer_div.append(textarea);
-		outer_div.append(a);
-	
-		btn_parent.after(outer_div);
-	
-		preBtn = $(btn);
-	
-		//<div class="write-comment-reply">
-		//	<span>ㄴ</span>
-		//	<textarea></textarea>
-		//	<a href="#">대댓글<br/>달기</a>
-		//</div>
-	}
-	
-	function writeReComment(rec_btn, parent, is_re, b_idx) { // 대댓글 내용 서버로 보내기
-		if( ${ empty sessionScope.user.idx } ){
-			alert("로그인이 필요합니다.");
-			location.href="user_login_form.do";
-			return;
-		}
-		
-		var content = $(rec_btn).parent().children("textarea").val();
-		var url = "write_comment_reply.do?content=" + content 
-				+ "&parent=" + parent + "&is_re=" + is_re + "&b_idx=" + b_idx;
-		
-		location.href = url;
-	}
-	
-	//---------------------------------------------------------------------------------
-	// 게시글 수정
-	function b_modify() {
-		if( ${ empty sessionScope.user.idx } ){
-			
-			alert("로그인이 필요합니다.");
-			location.href="user_login_form.do";
-			return;
-		}
-		
-		if( ${ board.user_idx != sessionScope.user.idx } ){
-			alert("작성자 본인만 수정할 수 있습니다.");
-			return;
-		}
-		
-		location.href="community_write_modify_form.do?idx=${ board.idx }";
-	}
-	
-	// 게시글 삭제
-	function b_delete() {
-		if( ${ empty sessionScope.user.idx } ){
-			alert("로그인이 필요합니다.");
-			location.href="user_login_form.do";
-			return;
-		}
-		if( ${ board.user_idx != sessionScope.user.idx } ){
-			alert("작성자 본인만 삭제할 수 있습니다.");
-			return;
-		}
-		
-		if( confirm("정말 삭제하시겠습니까?") == true ){
-			location.href="del.do?idx=${ board.idx }";				
-		}
-	}
-	
-	// 댓글 & 대댓글 삭제
-	function c_delete( idx, user_idx ){
-		if( ${ empty sessionScope.user.idx } ){
-			alert("로그인이 필요합니다.");
-			location.href="user_login_form.do";
-			return;
-		}
-		
-		if( confirm("정말 삭제하시겠습니까?") == false ){
-			return;
-		}
-		
-	    $.ajax({
-	        url: "/web/comment_del.do"
-	        , type: "get"
-	        , data: { "idx": idx, "user_idx": user_idx }
-	        , dataType: "text"
-	        , success: function(response){
-	        	var data = response;
-	        	
-	        	if( data == "fail" ){
-	        		alert("작성자 본인만 삭제할 수 있습니다.");
-	    			return;
-	        	}
-	        	
-	        	alert("댓글 삭제 완료");
-	        	location.href="community_list_detail.do?idx=${ board.idx }";
-	        }
-	    });	
-	}
-
-	</script>
-
 </head>
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
@@ -397,9 +107,289 @@
 				</form>
 
 			</div>
-
 		</div>
 	</div>
 	<jsp:include page="../footer.jsp"></jsp:include>
+	<script type="text/javascript">
+	//추천하기
+	function recommend() {
+		if( ${ empty sessionScope.user.idx } ){
+
+			alert("로그인이 필요합니다.");
+			location.href="user_login_form.do";
+			return;
+		}
+
+		var idx = ${board.idx};
+		var user_idx = ${board.user_idx};
+
+		$.ajax({
+			url: "/web/community_recommend.do"
+				, type: "get"
+					, data: { "idx": idx, "user_idx": user_idx }
+		, dataType: "text"
+			, success: function(response){
+				var data = response;
+
+				if( data == "self" ){
+					alert("본인이 작성한 글은 추천할 수 없습니다.");
+					return;
+				}
+
+				if( data == "over" ){
+					alert("중복 추천은 불가능합니다.");
+					return;
+				}
+
+				var cnt = ${ board.recommend };
+				cnt += 1;
+
+				$("#rec_cnt").text( cnt );
+			}
+		});
+
+	}
+	//---------------------------------------------------------------------------------
+	//댓글 수정 관련 함수
+
+	// 댓글 수정창 열기 -> textarea로
+	var p_div = null;
+	var p_content = "";
+
+	function openModifyComment(this_tag, idx, user_idx){
+		if( ${ empty sessionScope.user.idx } ){
+			alert("로그인이 필요합니다.");
+			location.href="user_login_form.do";
+			return;
+		}
+
+		// #comment-standard -> div 가져오기
+		var p_div_new = $(this_tag).parent().parent().children("#comment-standard"); 
+
+		// 이전과 같은 '수정' 버튼을 클릭하면 이전에 열었던거 닫기
+		if( p_div != null && p_div.get(0) == $(p_div_new).get(0) ){
+			cancelModifyComment(p_content);
+			p_div = null;
+			return;
+		}
+
+		p_div = p_div_new;
+		var content = $(p_div).children("p").text(); // content 가져오기
+
+		$(p_div).empty(); // p태그 지우기
+
+		// textarea, 수정, 취소 버튼 만들기
+		var textarea = $("<textarea>" + content + "</textarea>").attr({
+			"class" : "modify-comment-txtarea"
+		});
+		var mod_btn = $('<a>수정</a>').attr({
+			"href" : "javascript:void(0);",
+			"onclick" : "modifyComment('" + content + "'," + idx + "," + user_idx + ");",
+			"class" : "my-btn yellow-black"
+		});
+		var cancel_btn = $('<a>취소</a>').attr({
+			"href" : "javascript:void(0);",
+			"onclick" : "cancelModifyComment();",
+			"class" : "my-btn black-white"
+		});
+
+		// textarea & button 넣기
+		$(p_div).append(textarea);
+		$(p_div).append(mod_btn);
+		$(p_div).append(cancel_btn);
+
+		p_content = content;
+
+	}
+
+	// 댓글 수정 취소 -> 다시 p 태그로
+	function cancelModifyComment(content){
+		$(p_div).empty(); // textarea, a태그 삭제
+		var p = $("<p>" + content + "</p>").attr({
+			"class" : "comment-standard"
+		});
+		$(p_div).append(p); // p태그 넣기
+	}
+
+	// 댓글 수정 완료 -> db작업 & 다시 p태그로
+	function modifyComment(content, idx, user_idx){
+		// textarea의 수정된 내용 가져오기
+		var content = $(p_div).children("textarea").val();
+
+		$.ajax({
+			url: "/web/comment_mod.do"
+				, type: "get"
+					, data: { "idx": idx, "user_idx": user_idx, "content": content }
+		, dataType: "text"
+			, success: function(response){
+				var data = response;
+
+				if( data == "fail" ){
+					alert("작성자 본인만 삭제할 수 있습니다.");
+					cancelModifyComment(p_content);
+					return;
+				}
+
+				cancelModifyComment(content);
+				alert("댓글 수정 완료");
+			}
+		});
+
+	}
+
+
+	//---------------------------------------------------------------------------------
+
+	// 댓글 달기
+	function reply(board_idx){ /* board_idx = board테이블에서의 idx */
+		if( ${ empty sessionScope.user.idx } ){
+
+			alert("로그인이 필요합니다.");
+			location.href="user_login_form.do";
+			return;
+		}
+
+		var content = document.getElementById("comment-write-txtarea").value;
+
+		if(content==''){
+			alert("내용을 입력하세요");
+			document.getElementById("comment-write-txtarea").focus();
+			return ;
+		}
+
+		var link = "comment_origin_reply.do?board_idx=" + board_idx + "&content=" + content;
+
+		location.href=link;
+
+	}
+
+	//---------------------------------------------------------------------------------
+
+	// 대댓글 달기
+	var preBtn = null;
+
+	function openReComment(btn, parent, is_re, b_idx) { // 열린 대댓글 박스 닫기
+		$('.write-comment-reply').remove();
+
+		if( preBtn == null || preBtn.get(0) != $(btn).get(0) ){
+			// 이전과 다른 대댓글 달기 버튼을 클릭한 경우만 박스 생성
+			createReCommentBox(btn, parent, is_re, b_idx);
+			return;    
+		}
+
+		preBtn = null;
+	}
+
+	function createReCommentBox(btn, parent, is_re, b_idx) { // 대댓글 박스 생성
+		var btn_parent = $(btn).parent().parent();
+
+		if( btn_parent.attr('class') == 'comment-reply-content' ) {
+			// 대댓글일 경우 한단계 상위 엘리먼트로 올라간다
+			btn_parent = btn_parent.parent();
+		}
+
+		var outer_div = $('<div></div>').addClass('write-comment-reply');
+		var span = $('<span>ㄴ</span>');
+		var textarea = $('<textarea></textarea>');
+		var a = $('<a>대댓글 달기</a>').attr({
+			"href" : "javascript:void(0);",
+			"onclick" : "writeReComment(this," + parent + "," + is_re + "," + b_idx + ");"
+		})
+
+		outer_div.append(span);
+		outer_div.append(textarea);
+		outer_div.append(a);
+
+		btn_parent.after(outer_div);
+
+		preBtn = $(btn);
+
+		//<div class="write-comment-reply">
+		//	<span>ㄴ</span>
+		//	<textarea></textarea>
+		//	<a href="#">대댓글<br/>달기</a>
+		//</div>
+	}
+
+	function writeReComment(rec_btn, parent, is_re, b_idx) { // 대댓글 내용 서버로 보내기
+		if( ${ empty sessionScope.user.idx } ){
+			alert("로그인이 필요합니다.");
+			location.href="user_login_form.do";
+			return;
+		}
+
+		var content = $(rec_btn).parent().children("textarea").val();
+		var url = "write_comment_reply.do?content=" + content 
+		+ "&parent=" + parent + "&is_re=" + is_re + "&b_idx=" + b_idx;
+
+		location.href = url;
+	}
+
+	//---------------------------------------------------------------------------------
+	// 게시글 수정
+	function b_modify() {
+		if( ${ empty sessionScope.user.idx } ){
+
+			alert("로그인이 필요합니다.");
+			location.href="user_login_form.do";
+			return;
+		}
+
+		if( ${ board.user_idx != sessionScope.user.idx } ){
+			alert("작성자 본인만 수정할 수 있습니다.");
+			return;
+		}
+
+		location.href="community_write_modify_form.do?idx=${ board.idx }";
+	}
+
+	// 게시글 삭제
+	function b_delete() {
+		if( ${ empty sessionScope.user.idx } ){
+			alert("로그인이 필요합니다.");
+			location.href="user_login_form.do";
+			return;
+		}
+		if( ${ board.user_idx != sessionScope.user.idx } ){
+			alert("작성자 본인만 삭제할 수 있습니다.");
+			return;
+		}
+
+		if( confirm("정말 삭제하시겠습니까?") == true ){
+			location.href="del.do?idx=${ board.idx }";				
+		}
+	}
+
+	// 댓글 & 대댓글 삭제
+	function c_delete( idx, user_idx ){
+		if( ${ empty sessionScope.user.idx } ){
+			alert("로그인이 필요합니다.");
+			location.href="user_login_form.do";
+			return;
+		}
+
+		if( confirm("정말 삭제하시겠습니까?") == false ){
+			return;
+		}
+
+		$.ajax({
+			url: "/web/comment_del.do"
+				, type: "get"
+					, data: { "idx": idx, "user_idx": user_idx }
+		, dataType: "text"
+			, success: function(response){
+				var data = response;
+
+				if( data == "fail" ){
+					alert("작성자 본인만 삭제할 수 있습니다.");
+					return;
+				}
+
+				alert("댓글 삭제 완료");
+				location.href="community_list_detail.do?idx=${ board.idx }";
+			}
+		});	
+	}
+	</script>
 </body>
 </html>

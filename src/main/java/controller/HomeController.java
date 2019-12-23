@@ -24,13 +24,13 @@ public class HomeController {
 	}
 
 	// main - iframe
-	@RequestMapping("/")
+	@RequestMapping("/socket_index.do")
 	public String iframe_test(Model model, HttpServletRequest request) {		
 		return "/WEB-INF/views/iframe.jsp";
 	}
 
 	// index 
-	@RequestMapping("/index.do")
+	@RequestMapping(value = {"/", "index.do"})
 	public String index(Model model) {
 		List<BoardVO> board = boardService.showCommunityList_index();
 		model.addAttribute("board", board);

@@ -23,10 +23,20 @@ public class StudyService {
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
 	}
-
+	
+	// 스터디 생성
 	public int insert( StudyVO vo ) {
 		
-		return studyDAO.insert(vo);
+		// 레코드 생성 후 study_idx값 반환
+		int res = studyDAO.insert(vo);
+		
+		Map map = new HashMap();
+		map.put("user_idx", vo.getCreate_user_idx());
+		map.put("idx", vo.getIdx());
+		
+		res = studyDAO.add_admin_member(map);
+		
+		return res; 
 	}
 
 	//검색기능and게시물수,옵션이 분류일때
@@ -93,6 +103,7 @@ public class StudyService {
 		
 		return result;
 	}
+
 	
 	
 	

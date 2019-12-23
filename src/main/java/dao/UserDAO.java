@@ -22,8 +22,8 @@ public class UserDAO implements DAO {
 
 	@Override
 	public Object selectOne(int idx) {
-		// TODO Auto-generated method stub
-		return null;
+		UserVO vo = sqlSession.selectOne("user.selectOne_idx", idx);
+		return vo;
 	}
 
 	@Override

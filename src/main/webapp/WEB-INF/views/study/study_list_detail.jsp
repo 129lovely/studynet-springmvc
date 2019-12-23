@@ -2,37 +2,45 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ include file="../login_check.jsp" %>
 
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<title>스터디 상세 정보</title>
-	
-	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 	<script>
 		
 		function send_apply(max_count,approve_count,idx){
-			
-			// 비회원 차단
-			if( ${ empty sessionScope.user} ){
-	  			
-	  			alert("로그인이 필요합니다.");
-	  			location.href="user_login_form.do";
-	  			return;
-	  		}
-			
 			// 신청 인원이 다 찼는지 확인
 			var btn=document.getElementById("btn");
-			
 			if(max_count == approve_count){
 				btn.disabled='disabled';
 				$('#btn').css('background-color','#DEE0E3');
 				return;
 			}
-
-		 	location.href= "study_apply_caution.do?study_idx=" + idx;
 			
+			// 회원 정보가 모두 입력됐는지 확인
+			var user_idx = ${ user.idx };
+			$.ajax({
+				url: "/web/user_check.do"
+				, type: "get"
+				, data: { "user_idx": user_idx }
+				, dataType: "text"
+				, success: function(response){
+					var data = response;
+					
+					// 누락된 회원 정보가 있는 경우
+					if( data == "fail" ){
+						alert("연락처, 직업, 지역 등의 회원 정보를 모두 입력해야 스터디 가입 신청이 가능합니다.");
+						location.href = "user_modify.do";
+						return;
+					}
+					
+					location.href= "study_apply_caution.do?study_idx=" + idx;
+				}
+			});
+
 		}
 	
 	</script>

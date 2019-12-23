@@ -129,7 +129,7 @@
 				
 			<div class="tac mb40">
 				<span>마음에 드는 스터디가 없으신가요?</span></br>
-				<a href="#"><span>직접 스터디 만들기</span></a>
+				<a href="study_create_caution.do"><span>직접 스터디 만들기</span></a>
 			</div>
 		</div>	
 	</div>

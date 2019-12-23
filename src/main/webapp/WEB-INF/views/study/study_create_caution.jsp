@@ -20,9 +20,29 @@
 			if ( !cb1.checked || !cb2.checked || !cb3.checked ) {
 				alert("안내 사항을 모두 확인해주세요.");
 				return;
-			}	
-		
-			location.href = "study_create_form.do";
+			}
+			
+			// 회원 정보가 모두 입력됐는지 확인
+			var user_idx = ${ user.idx };
+			$.ajax({
+				url: "/web/user_check.do"
+				, type: "get"
+				, data: { "user_idx": user_idx }
+				, dataType: "text"
+				, success: function(response){
+					var data = response;
+					
+					// 누락된 회원 정보가 있는 경우
+					if( data == "fail" ){
+						alert("연락처, 직업, 지역 등의 회원 정보를 모두 입력해야 스터디를 생성할 수 있습니다.");
+						location.href = "user_modify.do";
+						return;
+					}
+					
+					location.href = "study_create_form.do";
+				}
+			});
+
 		}
 	
 	</script>

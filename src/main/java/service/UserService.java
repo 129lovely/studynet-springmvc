@@ -156,4 +156,9 @@ public class UserService {
 		
 		return res;
 	}
+	
+	public UserVO selectOne(int user_idx) {
+		UserVO vo = (UserVO) userDAO.selectOne(user_idx);
+		return vo;
+	}
 }
