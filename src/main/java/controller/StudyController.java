@@ -550,7 +550,6 @@ public class StudyController {
 				return map;
 			}
 			
-			
 			try {
 				map = keyGen.tempKeyGenerator(phone);
 			} catch (Exception e) {
