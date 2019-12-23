@@ -61,24 +61,6 @@ public class BoardService {
 		return re;
 	}
 
-	//	// 커뮤니티 리스트 페이징 포함 출력하기
-	//	public Map showCommunityListPage( int nowPage ) {
-	//		Map pageMap = null;
-	//		
-	//		BoardDAO board_dao = null;
-	//		int row_total = board_dao.getRowTotal();
-	//		String pageMenu = Paging.getPaging("page.do", nowPage, row_total,
-	//				Common.BoardPaging.BLOCKLIST, Common.BoardPaging.BLOCKPAGE);
-	//		
-	//		// 페이지별 리스트 가져오기
-	//		
-	//		pageMap.put("pageMenu", pageMenu);
-	//		
-	//		
-	//		return pageMap;
-	//	}
-
-
 	//작성자 idx이용해서 이름나오게하기
 	public int listview(int idx) {
 		int res=boardDAO.list_name(idx);

@@ -314,7 +314,7 @@
 					</div>
 					<div>
 						<span class="txt-only">작성일: </span> <span><fmt:formatDate
-								value="${board.created_at}" type="date" pattern="yyyy.MM.dd" /></span>
+								value="${board.created_at}" type="date" pattern="yyyy.MM.dd HH:mm" /></span>
 						<span>조회수: </span> <span>${ board.hit }</span> <span>추천수: </span>
 						<span id="rec_cnt">${ board.recommend }</span>
 					</div>

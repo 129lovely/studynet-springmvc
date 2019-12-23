@@ -41,13 +41,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where  title like CONCAT('%',#{search},'%')
 	</select>
 	
-	<!-- 검색기능 -->
+	<!-- 텍스트 검색기능 -->
 	<select resultType="study" id="list_search" parameterType="java.util.Map">
-				<!-- 분류 -->
-				select *
-				from (SELECT rank() over(order by idx desc) AS no,
-				b.* FROM (select * from study where title like CONCAT('%',#{search},'%')) AS b ) AS list
-				where no between #{start} AND #{end}
+		<!-- 분류 -->
+		select *
+		from (SELECT rank() over(order by idx desc) AS no,
+		b.* FROM (select * from study where title like CONCAT('%',#{search},'%')) AS b ) AS list
+		where no between #{start} AND #{end}
 	</select>
 	
 	<!-- 페이징 -->
@@ -70,13 +70,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		updated_at=current_timestamp() where idx=#{idx}
 	</update>
 	
-	
 	<!-- 스터디신청하기 -->
 	<insert id="apply" parameterType="java.util.Map">
 		insert into study_member (user_idx, study_idx, status, is_admin, introduce)
 		values (#{user_idx}, #{study_idx}, "승인 대기", 0, #{introduce} )
 	</insert>
-	
 	<update id="add_member" parameterType="java.util.Map">
 		update study set apply_count = apply_count + 1
 		where idx = #{study_idx}
@@ -84,17 +82,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 온오프 조건별 검색 -->
 	<select resultType="study" id="search_list_condition" parameterType="java.util.Map">
-		<if test="search_option !=null">
+	 	<if test="search_option != null">
 	
-			<if test="search_option =='0'.toString()"> <!-- 온라인 -->
+			<if test="search_option =='0'.toString()"> <!-- 오프라인 -->
 			 	select *
 				from (SELECT rank() over(order by idx desc) AS no, b.*
 				FROM (select * from study where is_online='0' AND title like CONCAT('%',#{search},'%')) AS b ) AS list
 				where no between #{start} AND #{end}
 			</if>
 		
-			<if test="search_option =='1'.toString()"><!-- 오프라인-->
-				
+			<if test="search_option =='1'.toString()"><!-- 온라인-->
 				select *
 				from (SELECT rank() over(order by idx desc) AS no, b.*
 				FROM (select * from study where is_online='1' AND title like CONCAT('%',#{search},'%')) AS b ) AS list
@@ -108,20 +105,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				where no between #{start} AND #{end} 
 			</if>
 		</if>
+
 	</select>
-		
-		<!-- 이건 대체 어디에 쓰는 쿼리문인가요? -->
-		<sql id="is_online0">
-			UPDATE study SET is_online='0'
-		</sql>
-		
-		<sql id="is_online1">
-			UPDATE study SET is_online='1'
-		</sql>
-		
-		<sql id="is_online2">
-			UPDATE study SET is_online='2'
-		</sql>
 	
 </mapper>
 

@@ -329,9 +329,6 @@ public class StudyController {
 			nowPage = page; // ~.do?page=3 처럼 입력할 경우
 		}
 		
-//		System.out.println(nowPage + ": now page");
-//		System.out.println(page + ": page");
-		
 		//한페이지에서 표시되는 게시물의 시작과 끝번호를 계산
 		//1페이지라면 1 ~ 10번 게시물까지만 보여줘야 한다.
 		//2페이지라면 11 ~ 20번 게시물까지만 보여줘야한다.
@@ -367,7 +364,7 @@ public class StudyController {
 		return Common.Board.VIEW_PATH + "community_list.jsp";
 	}
 	
-	//검색기능 and 검색결과 레코드 개수 (페이징 적용)
+	// 커뮤니티 검색기능 and 검색결과 레코드 개수 (페이징 적용)
 	@RequestMapping("/community_list_search.do")
 	public String list_search( Model model, Integer page, HttpServletRequest request, String search ) {
 		int nowPage = 1;
@@ -613,6 +610,7 @@ public class StudyController {
 	public String user_myinfo () {
 		return Common.User.VIEW_PATH + "user_myinfo.jsp";
 	}
+	
 	// 스터디 만들기 페이지 - 1 ( 생성 안내 페이지로 이동 )
 	@RequestMapping("/study_create_caution.do")
 	public String study_create_caution ( ) {
@@ -707,14 +705,10 @@ public class StudyController {
 		Map map = new HashMap();
 		map.put("start", start);
 		map.put("end", end);
-		
-		System.out.println( map.get("start"));
-		System.out.println( map.get("end"));
 
 		//게시글 전체목록 가져오기
 		List<StudyVO> list = null;
 		list = studyDAO.selectList( map );	
-		System.out.println(list.size());
 		
 		//전체 게시물 수 구하기
 		int row_total = studyDAO.getRowTotal();
@@ -739,7 +733,7 @@ public class StudyController {
 	
 	// 스터디 찾기에서 검색기능 and 검색결과 레코드 개수 (페이징 적용)
 		@RequestMapping("/study_list_search.do")
-		public String study_list_search( Model model, Integer page, HttpServletRequest request, String search, String search_option ) {
+		public String study_list_search( Model model, Integer page, HttpServletRequest request, String search, int search_option ) {
 			int nowPage = 1;
 
 			if( page != null ) {
@@ -760,24 +754,17 @@ public class StudyController {
 			map.put("search", search);
 
 			//게시글 전체목록 가져오기
-			// 이거 왜 BoardVO로?....
 			List<StudyVO> list = null;
 			int row_total = 0;
 			
 			//search_option[index] 유무에따라 온라인,오프라인,복합 결정
-			if(search_option=="2"||search_option=="0"||search_option=="1") {//옵션 선택일떄 온라인,오프라인 ,복합
-				map.put("search_option", search_option);
-				map.put("search", search);
+			if(search_option==2||search_option==0||search_option==1) {//옵션 선택일떄 온라인,오프라인 ,복합
 				//게시글 전체목록 가져오기
 				list = (List<StudyVO>) studyService.search_list_condition(map).get("list");
 				//전체 게시물 수 구하기
 				row_total = (int) studyService.search_list_condition(map).get("cnt");
 				
 			} else {//분류일때
-				map.put("search_option",search_option);
-				map.put("search", search);
-				//System.out.println(search_option);
-				//System.out.println(search); 2개 값 잘 넘어옴
 				//게시글 전체목록 가져오기
 				list = (List<StudyVO>) studyService.search_list(map).get("list");
 				//전체 게시물 수 구하기

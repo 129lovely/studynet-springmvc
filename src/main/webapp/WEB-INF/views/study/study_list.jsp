@@ -28,7 +28,7 @@
 	<jsp:include page="../header.jsp"></jsp:include>
 	<div class="study-search-page">
 		<!-- 원하는 스터디 검색하기 -->
-		<form class="search-box mb20" action="study_list_search.do" name="studyform">
+		<form class="search-box mb20"  >
 			<div class="flex-box pt190">
 				<h2 class="section-title">원하는 스터디 검색하기</h2>
 				<p class="mb10">step 1. 스터디 목적 선택하기 (복수 선택 가능)</p>
@@ -45,8 +45,8 @@
 						<form name="f">
 						<select name="search_option" id="search_option">
 							$("#search_option").append("<option value="3">분류</option>");
-							$("#search_option").append("<option value="0">온라인</option>");
-							$("#search_option").append("<option value="1">오프라인</option>");
+							$("#search_option").append("<option value="1">온라인</option>");
+							$("#search_option").append("<option value="0">오프라인</option>");
 							$("#search_option").append("<option value="2">복합</option>");
 						</select>
 					
@@ -73,7 +73,7 @@
 							<span><img src="resources/images/study_profile/${vo.photo}"/> </span>
 							
 								<!-- 온라인 -->
-                         	<c:if test="${ vo.is_online == 0 }">
+                         	<c:if test="${ vo.is_online == 1 }">
 		                        <div>
 		                           	<h3><a href="study_list_detail.do?idx=${ vo.idx }">[온라인] &nbsp;${ vo.title }</a></h3>	                            	
 		                            <p>모집 마감  &nbsp;|&nbsp;  <fmt:parseDate var="dateString" value="${vo.deadline}" pattern="yyyy-MM-dd HH:mm:ss.SSS" /> 
@@ -85,7 +85,7 @@
 	              				
 	              				
 	              				<!-- 오프라인 -->
-                         	<c:if test="${ vo.is_online == 1 }">
+                         	<c:if test="${ vo.is_online == 0 }">
 	                         	<div>
 		                           	<h3><a href="study_list_detail.do?idx=${ vo.idx }">[오프라인] &nbsp;${ vo.title }</a></h3>	                            	
 		                            <p>모집 마감  &nbsp;|&nbsp; <fmt:parseDate var="dateString" value="${vo.deadline}" pattern="yyyy-MM-dd HH:mm:ss.SSS" /> 
