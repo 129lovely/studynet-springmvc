@@ -38,6 +38,19 @@
 		<beans:property name="boardDAO" ref="boardDAO"/>
 		<beans:property name="studyDAO" ref="studyDAO"/>
 	</beans:bean>
+	
+	<beans:bean class="controller.BoardController">
+		<beans:property name="boardService" ref="boardService" />
+		<beans:property name="boardDAO" ref="boardDAO"/>
+	</beans:bean>
+	
+	<beans:bean class="controller.UserController">
+		<beans:property name="userService" ref="userService" />
+	</beans:bean>
+	
+	<beans:bean class="controller.HomeController">
+		<beans:property name="boardService" ref="boardService" />
+	</beans:bean>
 
 </beans:beans>
 
