@@ -8,7 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import vo.UserVO;
 
 public class UserDAO implements DAO {
-	
+
 	SqlSession sqlSession;
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
@@ -31,7 +31,7 @@ public class UserDAO implements DAO {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	
+
 	// 회원 가입
 	public int insert(UserVO vo) {
 		int res = sqlSession.insert( "user.insert", vo );
@@ -55,19 +55,19 @@ public class UserDAO implements DAO {
 		String email = sqlSession.selectOne("user.emailCheck", input_email);
 		return email;
 	}
-	
+
 	// 로그인 정보 가져오기 
 	public UserVO selectOne( String email ) {
 		UserVO user = sqlSession.selectOne("user.login", email);
 		return user;
 	}
-	
+
 	// user의 이름 가져오기
 	public UserVO selectUserName(int idx) {
 		UserVO vo=sqlSession.selectOne("user.select_name", idx);
 		return vo;
 	}
-	
+
 	// 전화번호 중복체크
 	public int selectPhone( String phone ) {
 		int res = sqlSession.selectOne("user.phoneCheck", phone);
@@ -75,11 +75,17 @@ public class UserDAO implements DAO {
 	}
 	
 	// 이메일 찾기 전화번호 인증 
-		public int selectEmail( Map map ) {
-			int res = sqlSession.selectOne("user.phone_name_check", map);
-			return res;
-		}
-	
+	public int selectEmail(Map map) {
+		int res = sqlSession.selectOne("user.phone_name_check", map);
+		return res;
+	}
+
+	// 가입한 스터디수 1 증가
+	public int update_study_cnt(int create_user_idx) {
+		int res = sqlSession.update("user.update_study_cnt", create_user_idx);
+		return 0;
+	}
+
 	//--------------------------------------------------------------------
 	//
 	// sns 로그인 처리 관련
@@ -87,18 +93,18 @@ public class UserDAO implements DAO {
 	//--------------------------------------------------------------------
 	public UserVO selectOne_user_sns(String sns_id) {
 		UserVO vo = sqlSession.selectOne("user.selectOne_user_sns", sns_id);
-		return null;
+		return vo;
 	}
 
 	public int update_user_sns(Map<String, String> info) {
-		int res = sqlSession.update("update_user_sns", info);
-		return 0;
+		int res = sqlSession.update("user.update_user_sns", info);
+		return res;
 	}
 
 	public int insert_user_sns(Map<String, String> info) {
-		int res = sqlSession.insert("insert_user_sns", info);
-		return 0;
+		int res = sqlSession.insert("user.insert_user_sns", info);
+		return res;
 	}
-	
-	
+
+
 }

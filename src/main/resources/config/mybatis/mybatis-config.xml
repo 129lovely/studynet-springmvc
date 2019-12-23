@@ -13,6 +13,7 @@
 		<typeAlias type="vo.BoardVO" alias="board"/>
 		<typeAlias type="vo.UserVO" alias="user"/>
 		<typeAlias type="vo.StudyVO" alias="study"/>
+		<typeAlias type="vo.StudyMemberVO" alias="studyMember"/>
 	</typeAliases>
 	
 	<mappers>

@@ -19,7 +19,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES (#{title}, #{create_user_idx}, #{min_count}, #{max_count},
 				#{deadline}, #{start_date}, #{end_date}, #{open_kakao},
  				#{purpose}, #{is_online},#{place}, #{extra_info}, #{apply_condition}, 
-		 		#{detail_info}, '모집중', #{photo} )
+		 		#{detail_info}, '모집중', #{photo})
 		<selectKey resultType="int" keyProperty="idx" order="AFTER">
 			SELECT LAST_INSERT_ID()
     	</selectKey> 
@@ -79,8 +79,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values (#{user_idx}, #{study_idx}, "승인 대기", 0, #{introduce} )
 	</insert>
 	<update id="add_member" parameterType="java.util.Map">
-		update study set apply_count = apply_count + 1
-		where idx = #{study_idx}
+		update study
+		set apply_count=apply_count+1
+		where idx=#{study_idx}
 	</update>
 	
 	<!-- 온오프 조건별 검색 -->
@@ -111,9 +112,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<!-- 스터디 중복 확인 -->
-	<select id="studyCheck" resultType="int" parameterType="java.util.Map">
-		SELECT count(*) FROM study_member WHERE study_idx = #{study_idx} 
-		AND user_idx = #{user_idx}
+	<select id="selectOne_member" resultType="studyMember" parameterType="java.util.Map">
+		SELECT * FROM study_member
+		WHERE study_idx = #{study_idx} AND user_idx = #{user_idx}
 	</select>
 	
 	<!-- 스터디 관리자 멤버 추가 -->

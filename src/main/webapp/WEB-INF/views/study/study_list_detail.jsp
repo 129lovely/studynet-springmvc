@@ -11,7 +11,7 @@
 	<title>스터디 상세 정보</title>
 	<script>
 		
-		function send_apply(max_count,approve_count,idx){
+		function send_apply(max_count, approve_count, idx){
 			// 신청 인원이 다 찼는지 확인
 			var btn=document.getElementById("btn");
 			if(max_count == approve_count){
@@ -20,8 +20,8 @@
 				return;
 			}
 			
-			// 회원 정보가 모두 입력됐는지 확인
-			var user_idx = ${ user.idx };
+			// 회원 정보 체크
+			var user_idx = ${ sessionScope.user.idx };
 			$.ajax({
 				url: "/web/user_check.do"
 				, type: "get"
@@ -34,6 +34,29 @@
 					if( data == "fail" ){
 						alert("연락처, 직업, 지역 등의 회원 정보를 모두 입력해야 스터디 가입 신청이 가능합니다.");
 						location.href = "user_modify.do";
+						return;
+					}
+					
+					// 활동중인 스터디 갯수가 3개인 경우
+					if( data == "over" ){
+						alert("1인당 3개의 스터디까지만 동시 활동 및 운영 가능합니다.");
+						return;
+					}
+				}
+			});
+			
+			// 중복 가입 여부 체크
+			$.ajax({
+				url: "/web/study_check.do"
+				, type: "get"
+				, data: { "user_idx": user_idx, "study_idx": idx }
+				, dataType: "text"
+				, success: function(response){
+					var data = response;
+					
+					// 누락된 회원 정보가 있는 경우
+					if( data == "fail" ){
+						alert("이미 가입 신청했거나 활동중인 스터디입니다.");
 						return;
 					}
 					

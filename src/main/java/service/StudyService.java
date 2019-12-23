@@ -7,6 +7,7 @@ import java.util.Map;
 import dao.BoardDAO;
 import dao.StudyDAO;
 import dao.UserDAO;
+import vo.StudyMemberVO;
 import vo.StudyVO;
 
 public class StudyService {
@@ -26,7 +27,6 @@ public class StudyService {
 	
 	// 스터디 생성
 	public int insert( StudyVO vo ) {
-		
 		// 레코드 생성 후 study_idx값 반환
 		int res = studyDAO.insert(vo);
 		
@@ -35,6 +35,7 @@ public class StudyService {
 		map.put("idx", vo.getIdx());
 		
 		res = studyDAO.add_admin_member(map);
+		res = userDAO.update_study_cnt(vo.getCreate_user_idx());
 		
 		return res; 
 	}
@@ -76,32 +77,17 @@ public class StudyService {
 		return res;
 	}
 	
-    //신청하기  
-	public int study_apply(Map map ) {
+    // 스터디 가입 신청  
+	public int study_apply(Map map) {
 		int res = studyDAO.study_apply(map);
-		int addRes = 0;
-		// 신청이 성공적으로 이루어지면 그때 신청 인원을 늘려줘야 함
-		if ( res != 0 ) {
-			addRes = studyDAO.study_add_member(map);
-		}
-		
-		return addRes;
-		
+		res = studyDAO.study_add_member(map); // 신청수 1증가
+		return res;
 	}
 
-	//스터디 중복 체크
-	
-	public String studyCheck(Map map) {
-		int res = studyDAO.studyCheck(map);
-		
-		String result = "no";
-		
-		// 중복신청 스터디가 있을 경우
-		if ( res != 0 ) {
-			result = "yes";
-		}
-		
-		return result;
+	// 스터디 중복 체크
+	public StudyMemberVO selectOne_member(Map map) {
+		StudyMemberVO vo = studyDAO.selectOne_member(map);
+		return vo;
 	}
 
 	

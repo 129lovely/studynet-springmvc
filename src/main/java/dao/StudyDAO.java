@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+import vo.StudyMemberVO;
 import vo.StudyVO;
 
 public class StudyDAO implements DAO {
@@ -105,15 +106,17 @@ public class StudyDAO implements DAO {
 		return res;
 	}
 
-	// 스터디 중복신청 
-	public int studyCheck(Map map) {
-		int study = sqlSession.selectOne("study.check", map);
-		return study;
+	// 스터디 중복체크
+	public StudyMemberVO selectOne_member(Map map) {
+		StudyMemberVO vo = sqlSession.selectOne("study.selectOne_member", map);
+		return vo;
 	}
+
 
 	public int add_admin_member(Map map) {
 		int res = sqlSession.insert("study.add_admin_member", map);
 		return res;
 	}
+
 	
 }

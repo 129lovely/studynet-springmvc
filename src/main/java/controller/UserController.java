@@ -294,6 +294,10 @@ public class UserController {
 			return res;
 		}
 		
+		if( vo.getStudy() >= 3 ) {
+			return res = "over";
+		}
+		
 		return res = "success";
 	}
 

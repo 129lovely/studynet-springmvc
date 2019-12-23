@@ -22,6 +22,7 @@ import service.BoardService;
 import service.StudyService;
 import service.UserService;
 import vo.BoardVO;
+import vo.StudyMemberVO;
 import vo.StudyVO;
 import vo.UserVO;
 
@@ -259,7 +260,8 @@ public class StudyController {
 	//스터디 참가 신청 페이지 이동
 	@RequestMapping("/study_apply_caution.do")
 	public String study_apply_caution(Model model, int study_idx) {
-		model.addAttribute("study_idx", study_idx); // 데이터 바인딩
+		StudyVO vo = studyService.showStudyDetail(study_idx);
+		model.addAttribute("vo", vo); // 데이터 바인딩
 		return Common.Study.VIEW_PATH + "study_apply_caution.jsp";
 	}
 
@@ -305,16 +307,19 @@ public class StudyController {
 	// 스터디 중복 체크
 	@RequestMapping("/study_check.do")
 	@ResponseBody
-	public String study_check( int study_idx, HttpServletRequest request ){
-		UserVO user = (UserVO) request.getSession().getAttribute("user");
+	public String study_check( int study_idx, int user_idx ){
 		Map map = new HashMap();
-		map.put("user_idx", user.getIdx());
+		map.put("user_idx", user_idx);
 		map.put("study_idx", study_idx);
 
-		String res = studyService.studyCheck(map);
-		System.out.println("res: " + res);
+		String resStr = "fail";
+		
+		StudyMemberVO vo = studyService.selectOne_member(map);
+		if( vo != null ) {
+			return resStr;
+		}
 
-		return res;
+		return resStr = "success";
 	}
 
 }
