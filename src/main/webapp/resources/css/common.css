@@ -1799,7 +1799,6 @@ textarea {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 60px 40px;
 }
 
 .user-find .inner-box {
@@ -1821,16 +1820,15 @@ textarea {
 
 .user-find label{
     font-weight: bold;
-    font-size: 1.5rem;
-    display: inline-block;
-    width: 350px;
     margin: 10px;
     text-align: right;
+    line-height: 2.5rem;
 }
 
 .user-find input[type="text"]{
     float: right;
     margin-right: 20px;
+    line-height: 1rem;
 }
 
 .user-find input[type="button"]{

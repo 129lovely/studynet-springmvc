@@ -838,4 +838,11 @@ public class StudyController {
 	
 	}
 	
+	// 아이디 비번 찾기 페이지로 이동
+	@RequestMapping("/user_find.do")
+	public String user_find(HttpServletRequest request ) {
+
+		return Common.User.VIEW_PATH + "user_find.jsp";
+	}
+	
 }

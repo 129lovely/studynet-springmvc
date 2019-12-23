@@ -130,7 +130,7 @@
 							
 									<div class="link_find">
 									<p class="section-discription">아이디나 비밀 번호를 잊으셨나요?</p>
-									<p class="section-discription"><a href="#">아이디 / 비밀번호 찾기</a></p>
+									<p class="section-discription"><a href="user_find.do">아이디 / 비밀번호 찾기</a></p>
 									</div>
 								</div>
 							</div>
