@@ -163,7 +163,7 @@
 					var key = res.tempKey;
 					var phoneNum = res.phone;
 					
-					// body 내부에 inpuy hidden으로 결과값을 숨겨둔다.
+					// body 내부에 input hidden으로 결과값을 숨겨둔다.
 					  var key_tag = document.createElement("input");
 					  key_tag.setAttribute("type", "hidden");
 					  key_tag.setAttribute("id", "key");

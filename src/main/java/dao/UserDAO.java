@@ -74,6 +74,12 @@ public class UserDAO implements DAO {
 		return res;
 	}
 	
+	// 이메일 찾기 전화번호 인증 
+		public int selectEmail( Map map ) {
+			int res = sqlSession.selectOne("user.phone_name_check", map);
+			return res;
+		}
+	
 	//--------------------------------------------------------------------
 	//
 	// sns 로그인 처리 관련
