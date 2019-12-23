@@ -158,6 +158,10 @@ public class UserService {
 		return res;
 	}
 	
+	public UserVO selectOne(int user_idx) {
+		UserVO vo = (UserVO) userDAO.selectOne(user_idx);
+		return vo;
+	}
 	// 전화번호 + 이름 확인
 		public int selectOne( String phone, String name ) {
 			
