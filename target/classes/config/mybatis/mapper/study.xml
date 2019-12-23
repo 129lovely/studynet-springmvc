@@ -29,18 +29,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from study where idx=#{idx}
 	</select>
 	
-	<!-- 검색기능 -->
-	<select resultType="study" id="list_search" parameterType="java.util.Map">
-		select *
-		from (SELECT rank() over(order by idx desc) AS no, b.*
-				FROM (select * from study where title like CONCAT('%',#{search},'%')) AS b ) AS list
-		where no between #{start} AND #{end}
-	</select>
-	
+	<!--텍스트검색에따른  게시글수 -->
 	<select resultType="int" id="search_count" parameterType="java.lang.String">
+	
 		select count(*)
 		from study
-		where title like CONCAT('%',#{search},'%')
+		where  title like CONCAT('%',#{search},'%')
+	</select>
+	
+	<!--옵션에대한 텍스트검색에따른  게시글수 -->
+	<select resultType="int" id="search_count_condition" parameterType="java.lang.String">
+	
+		select count(*)
+		from study
+		where  title like CONCAT('%',#{search},'%')
+	</select>
+	<!-- 검색기능 -->
+	<select resultType="study" id="list_search" parameterType="java.util.Map">
+		<if test="search_option !=null">
+			<if test="search_option =='3'.toString()">
+				 <!-- 분류 -->
+				select *
+				from (SELECT rank() over(order by idx desc) AS no, b.*
+						FROM (select * from study where title like CONCAT('%',#{search},'%')) AS b ) AS list
+				where no between #{start} AND #{end}
+			</if>
+		</if>
 	</select>
 	
 	<select resultType="study" id="list_condition" parameterType="java.util.Map">
@@ -75,6 +89,46 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		update study set apply_count = apply_count + 1
 		where study_idx = #{study_idx}
 	</update>
+	
+			<!-- 조건별 검색 -->
+	<select resultType="study" id="search_list_condition" parameterType="java.util.Map">
+		<if test="search_option !=null">
+	
+			<if test="search_option =='0'.toString()"> <!-- 온라인 -->
+			 	select *
+				from (SELECT rank() over(order by idx desc) AS no, b.*
+				FROM (select * from study where is_online='0' AND title like CONCAT('%',#{search},'%')) AS b ) AS list
+				where no between #{start} AND #{end}
+			</if>
+		
+			<if test="search_option =='1'.toString()"><!-- 오프라인-->
+				
+				select *
+				from (SELECT rank() over(order by idx desc) AS no, b.*
+				FROM (select * from study where is_online='1' AND title like CONCAT('%',#{search},'%')) AS b ) AS list
+				where no between #{start} AND #{end} 
+			</if>
+			
+			<if test="search_option =='2'.toString()"><!-- 복합 -->
+			 	select *
+				from (SELECT rank() over(order by idx desc) AS no, b.*
+				FROM (select * from study where is_online='2' AND title like CONCAT('%',#{search},'%')) AS b ) AS list
+				where no between #{start} AND #{end} 
+			</if>
+		</if>
+	</select>
+		
+		<sql id="is_online0">
+			UPDATE study SET is_online='0'
+		</sql>
+		
+		<sql id="is_online1">
+			UPDATE study SET is_online='1'
+		</sql>
+		
+		<sql id="is_online2">
+			UPDATE study SET is_online='2'
+		</sql>
 	
 </mapper>
 

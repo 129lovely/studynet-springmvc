@@ -32,7 +32,7 @@ public class StudyService {
 		return studyDAO.insert(vo);
 	}
 
-	//검색기능
+	//검색기능and게시물수,옵션이 분류일때
 	public Map search_list(Map map){
 		List<StudyVO> list = studyDAO.search(map);
 		int cnt = studyDAO.search_cnt( (String) map.get("search") );
@@ -45,6 +45,24 @@ public class StudyService {
 		
 		return res;
 	}
+	//검색기능and게시물수,조건별 검색
+		public Map search_list_condition(Map map){
+			
+			
+			List<StudyVO> list=studyDAO.search_condition( map);
+				
+
+			int cnt = studyDAO.search_cnt_condition( (String) map.get("search") );//게시물수
+			
+			System.out.println(cnt);
+			
+			Map res = new HashMap();
+		
+			res.put("list", list);
+			res.put("cnt", cnt);
+			
+			return res;
+		}
 	public StudyVO showStudyDetail(int idx) {
 		StudyVO vo=studyDAO.selectOne(idx);
 		return vo;

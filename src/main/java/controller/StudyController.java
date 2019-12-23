@@ -734,7 +734,7 @@ public class StudyController {
 	
 	// 스터디 찾기에서 검색기능 and 검색결과 레코드 개수 (페이징 적용)
 		@RequestMapping("/study_list_search.do")
-		public String study_list_search( Model model, Integer page, HttpServletRequest request, String search, String search_option ) {
+		public String study_list_search( Model model, Integer page, HttpServletRequest request, String search, int search_option ) {
 			int nowPage = 1;
 
 			if( page != null ) {
@@ -760,10 +760,31 @@ public class StudyController {
 			//게시글 전체목록 가져오기
 			// 이거 왜 BoardVO로?....
 			List<StudyVO> list = null;
-			list = (List<StudyVO>) studyService.search_list(map).get("list");
-
-			//전체 게시물 수 구하기
-			int row_total = (int) studyService.search_list(map).get("cnt");
+			int row_total = 0;
+			
+			//search_option[index] 유무에따라 온라인,오프라인,복합 결정
+			if(search_option==2||search_option==0||search_option==1) {//옵션 선택일떄 온라인,오프라인 ,복합
+				map.put("search_option", search_option);
+				map.put("search", search);
+				System.out.println(search_option);
+				System.out.println(search); 
+				//게시글 전체목록 가져오기
+				list = (List<StudyVO>) studyService.search_list_condition(map).get("list");
+				//전체 게시물 수 구하기
+				row_total = (int) studyService.search_list_condition(map).get("cnt");
+				System.out.println("로우토탈" + row_total);
+			}
+			else {//분류일때
+				map.put("search_option",search_option);
+				map.put("search", search);
+				//System.out.println(search_option);
+				//System.out.println(search); 2개 값 잘 넘어옴
+				//게시글 전체목록 가져오기
+				list = (List<StudyVO>) studyService.search_list(map).get("list");
+				//전체 게시물 수 구하기
+				row_total = (int) studyService.search_list(map).get("cnt");
+				System.out.println("로우토탈" + row_total);
+			}
 
 			//페이지 메뉴 생성하기
 			//ㄴ ◀1 2 3 4 5▶
@@ -774,10 +795,13 @@ public class StudyController {
 
 			//request영역에 list바인딩
 			model.addAttribute("list", list);
+			
+			System.out.println(list.size());
+		
 			model.addAttribute("pageMenu", pageMenu);
 			model.addAttribute("row_total", row_total);
-		
-			return Common.Board.VIEW_PATH + "study_list.jsp";
+			System.out.println(row_total);
+			return Common.Study.VIEW_PATH + "study_list.jsp";
 			
 		}
 	

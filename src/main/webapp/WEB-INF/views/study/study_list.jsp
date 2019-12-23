@@ -51,7 +51,13 @@
 				<p class="mb10">step2.온/오프라인 분류를 선택하고 검색어 입력하기</p>
 				<div class="mb40 flex-box">
 					<div class="flex-box">
-					
+						<form name="f">
+						<select name="search_option" id="search_option">
+							$("#search_option").append("<option value="3">분류</option>");
+							$("#search_option").append("<option value="0">온라인</option>");
+							$("#search_option").append("<option value="1">오프라인</option>");
+							$("#search_option").append("<option value="2">복합</option>");
+							
 						<select name="search_option">
 							<option value="by_all" 
 							<c:if test="${map.search_option=='by_all'}">selected</c:if>
@@ -111,12 +117,20 @@
 		                        <div>
 		                           	<h3><a href="study_list_detail.do?idx=${ vo.idx }">[온/오프라인] &nbsp;${ vo.title }</a></h3>	                            	
 		                            <p>모집 마감  &nbsp;|&nbsp; <fmt:parseDate var="dateString" value="${vo.deadline}" pattern="yyyy-MM-dd HH:mm:ss.SSS" /> 
-						<fmt:formatDate value="${dateString}" pattern="yyyy.MM.dd" /> </p>
+										<fmt:formatDate value="${dateString}" pattern="yyyy.MM.dd" /> </p>
 		                            <p>스터디목적  &nbsp;|&nbsp; ${ vo.purpose }</p>
 		                            <p>모집 인원 &nbsp;|&nbsp; ${ vo.approve_count }</p>
-		                        </div>
-              				</c:if>	
-
+	              				</c:if>
+	              				
+	              				<!--분류 -->
+	                         	<c:if test="${ vo.is_online == 3 }">분류
+	                           	<h3><a href="study_list_detail.do?idx=${ vo.idx }">${ vo.title }</a></h3>	                            	
+	                            <p>모집기간  &nbsp;|&nbsp; ${vo.deadline }</p>
+	                            <p>스터디목적  &nbsp;|&nbsp; ${ vo.purpose }</p>
+	                            <p>모집 인원 &nbsp;|&nbsp; ${ vo.approve_count }</p>
+	              				</c:if>
+	              				
+	                        </div>
 							</li>
 						</c:forEach>
 						
