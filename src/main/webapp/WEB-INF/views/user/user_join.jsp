@@ -99,7 +99,7 @@
 				var res = xhr.responseText;
 				
 				if( res == 'yes' ){
-					alert("콜백");
+					alert("이미 회원 정보가 존재하는 이메일입니다.");
 					return;
 				}
 				
