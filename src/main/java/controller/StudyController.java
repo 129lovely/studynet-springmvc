@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import common.Common;
 import common.Paging;
+import common.Paging_study;
 import dao.BoardDAO;
 import dao.StudyDAO;
 import service.BoardService;
@@ -191,7 +192,8 @@ public class StudyController {
 
 	// 스터디 찾기에서 검색기능 and 검색결과 레코드 개수 (페이징 적용)
 	@RequestMapping("/study_list_search.do")
-	public String study_list_search( Model model, Integer page, HttpServletRequest request, String search, int search_option ) {
+	public String study_list_search( Model model, Integer page, HttpServletRequest request, 
+			String search, int search_option, String[] purpose ) {
 		int nowPage = 1;
 
 		if( page != null ) {
@@ -208,12 +210,15 @@ public class StudyController {
 		Map map = new HashMap();
 		map.put("start", start);
 		map.put("end", end);
+		
+		List<StudyVO> list = null; // 전체 리스트 데이터 저장
+		int row_total = 0; // 전체 리스트 갯수 저장
+		
+		//--------------------------------------------------------------------------------------------------
+		
 		map.put("search_option", search_option);
 		map.put("search", search);
-
-		//게시글 전체목록 가져오기
-		List<StudyVO> list = null;
-		int row_total = 0;
+		map.put("purpose", purpose);
 
 		//search_option[index] 유무에따라 온라인,오프라인,복합 결정
 		if(search_option==2||search_option==0||search_option==1) {//옵션 선택일떄 온라인,오프라인 ,복합
@@ -228,13 +233,14 @@ public class StudyController {
 			//전체 게시물 수 구하기
 			row_total = (int) studyService.search_list(map).get("cnt");
 		}
+		//--------------------------------------------------------------------------------------------------
 
 		//페이지 메뉴 생성하기
 		//ㄴ ◀1 2 3 4 5▶
-		String pageMenu = Paging.getPaging(
+		String pageMenu = Paging_study.getPaging(
 				"study_list_search.do" , nowPage, row_total,
 				Common.StudyPaging.BLOCKLIST, Common.StudyPaging.BLOCKPAGE,
-				search);
+				search, purpose, search_option);
 
 		//request영역에 list바인딩
 		model.addAttribute("list", list);

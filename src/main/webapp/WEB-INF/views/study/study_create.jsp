@@ -120,7 +120,7 @@
 										<label class="my-btn select yellow-black" for="purp_1">공모전</label></li>
 										<li><input type="radio" name="purpose" value="취업준비" id="purp_2" onClick="show();"/>
 										<label class="my-btn select yellow-black" for="purp_2">취업준비</label></li>
-										<li><input type="radio" name="purpose" value="기상/습관" id="purp_3" onClick="show();"/>
+										<li><input type="radio" name="purpose" value="기상습관" id="purp_3" onClick="show();"/>
 										<label class="my-btn select yellow-black" for="purp_3">기상/습관</label></li>
 										<li><input type="radio" name="purpose" value="공부" id="purp_4" onClick="show();"/>
 										<label class="my-btn select yellow-black" for="purp_4">공부</label></li>

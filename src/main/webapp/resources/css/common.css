@@ -1137,7 +1137,7 @@ textarea {
     text-decoration: underline;
 }
 
-.study-search-page .search-box input[type="button"]:not(:last-child)
+.study-search-page .search-box li:not(:last-child)
 , .study-search-page .search-box input[type="text"]
 , .study-search-page .search-box select {
     margin-right: 5px;
@@ -1145,6 +1145,15 @@ textarea {
 
 .study-search-page .search-box .flex-box > p {
     margin-top: 5px;
+}
+
+.study-search-page .search-box input[type="checkbox"] {
+	display: none;
+}
+
+.study-search-page .search-box input[type="checkbox"]:checked + label {
+	background-color: #3B5BA2;
+	color: #EFF4FA;
 }
 
 /*
