@@ -34,7 +34,7 @@
 						</c:if>
 						<c:if test="${ !empty sessionScope.user }">
 							<li><a href="user_logout.do"><span>로그아웃</span></a></li>
-							<li><a href="javascript:void(0);"><span>${ sessionScope.user.name } 님</span></a></li>
+							<li><a href="study_myinfo.do"><span>${ sessionScope.user.name } 님</span></a></li>
 						</c:if>			
 					</ul>
 	            </nav>

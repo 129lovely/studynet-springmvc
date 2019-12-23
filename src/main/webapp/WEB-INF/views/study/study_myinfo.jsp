@@ -32,7 +32,7 @@
 						<div class="menu-bar-box">
 							<div class="mypage-menu-box">
 								<a href="#" class="menu room sub-section-title black tac">내
-									스터디룸</a> <a href="#" class="menu info sub-section-title black tac"
+									스터디룸</a> <a href="user_myinfo.do" class="menu info sub-section-title black tac"
 									onmouseover="move_right();" onmouseout="move_left();">회원 정보</a>
 							</div>
 							<div id="bar" class="left"></div>
@@ -41,7 +41,6 @@
 
 					<!-- 내 스터디룸 목록 -->
 					<div class="line-bottom study-room-info">
-						<h1 class="sub-section-title">스터디 룸</h1>
 						<!-- 스터디룸 알아보기 -->
 						<a href="#open" class="section-discription my-study-room-info">
 							Q. 내 스터디 룸 페이지에서는 뭘 할 수 있나요?</a>
@@ -296,7 +295,7 @@
 							</div>
 
 							<!-- if status == 폐쇄 -->
-							<div class="study-room close">
+							<div class="study-room closed">
 								<a class="study-name" href="#"> <span
 									class="status my-btn black-white">폐쇄</span> [오프라인]
 									냥냥이냥냥냐스터디제목이냥냥냥

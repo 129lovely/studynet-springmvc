@@ -605,10 +605,14 @@ public class StudyController {
 	// 일단은 이동만 ^^...
 	@RequestMapping("/study_myinfo.do")
 	public String user_study_list ( ) {
-		
 		return Common.Study.VIEW_PATH + "study_myinfo.jsp";
 	}
 
+	// 마이페이지 회원 정보
+	@RequestMapping("/user_myinfo.do")
+	public String user_myinfo () {
+		return Common.User.VIEW_PATH + "user_myinfo.jsp";
+	}
 	// 스터디 만들기 페이지 - 1 ( 생성 안내 페이지로 이동 )
 	@RequestMapping("/study_create_caution.do")
 	public String study_create_caution ( ) {
@@ -834,18 +838,17 @@ public class StudyController {
 	
 	//스터디 지원
 	@RequestMapping("/study_apply.do")
-		public String study_apply(String introduce, int study_idx, HttpServletRequest request){
-	
-		UserVO user = (UserVO) request.getSession().getAttribute("user");
-		Map map = new HashMap();
-		map.put("user_idx", user.getIdx());
-		map.put("study_idx", study_idx);
-		map.put("introduce", introduce);
-		
-		int res = studyService.study_apply(map);
-		return "redirect:study_list_detail.do?idx=" + study_idx; 
-		
-	}
+	public String study_apply(String introduce, int study_idx, HttpServletRequest request){
 
+	UserVO user = (UserVO) request.getSession().getAttribute("user");
+	Map map = new HashMap();
+	map.put("user_idx", user.getIdx());
+	map.put("study_idx", study_idx);
+	map.put("introduce", introduce);
+	
+	int res = studyService.study_apply(map);
+	return "redirect:study_list_detail.do?idx=" + study_idx; 
+	
+	}
 	
 }
