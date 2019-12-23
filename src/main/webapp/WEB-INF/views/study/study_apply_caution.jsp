@@ -38,7 +38,7 @@
 	<div class="study-apply body-bgcolor-set">
 		<div>
 			<div class="inner-box pt190">
-				<div class="contents-box board">
+				<form class="contents-box board">
 				
 					<!-- 스터디 참가 신청하기  -->
 					<div class="study-apply-box">
@@ -88,10 +88,10 @@
 					
 					<!-- 신청하기/취소 버튼 -->
 					<div class="tac btn-box">
-						<input class="my-btn black-white" type="button" value="신청하기" />
+						<input class="my-btn black-white" type="button" value="신청하기" onclick="send(this.form);"/>
 						<input class="my-btn black-white" type="button" value="취소하기" />
 					</div>
-				</div>
+				</form>
 			</div>
 		</div>
 	</div>
