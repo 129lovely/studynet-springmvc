@@ -1699,7 +1699,7 @@ textarea {
 	top: 30%;
 	left: 15%;
 	width: 70%;
-	height: 40%;
+	height: 250px;
 	padding: 16px;
     border: 16px solid #FFC267;
     border-radius: 5px;
@@ -1937,6 +1937,8 @@ textarea {
     -moz-transition: opacity 400ms ease-in;
     transition: opacity 400ms ease-in;
     pointer-events: none;
+    display: flex;
+    align-items: center;
 }
 .info_content:target {
     opacity:1;
@@ -1944,16 +1946,17 @@ textarea {
 }
 .info_content > div {
 	position: absolute;
-	top: 25%;
+	top: 22.5%;
 	left: 15%;
 	width: 70%;
-	height: 50%;
+	height: 65%;
 	padding: 16px;
     border: 16px solid #FFC267;
     border-radius: 5px;
 	background-color: #eef3fa;
     overflow: auto;	
     text-align: center;
+ 	max-height: 500px;
 }
 
 .info_content > div > p {
@@ -2083,10 +2086,25 @@ textarea {
 /*
 //----------------------------------------------------------------------------------
 //
-// [user] 내 스터디 아코디언 적용
+// [user] 내 스터디 폐쇄 동의 모달
 //
 //----------------------------------------------------------------------------------
 */
+
+.info_content.agree_close > div {
+	position: absolute;
+	top: 30%;
+	left: 15%;
+	width: 70%;
+	height: 50%;
+	padding: 16px;
+    border: 16px solid #FFC267;
+    border-radius: 5px;
+	background-color: #eef3fa;
+    overflow: auto;	
+    text-align: center;
+    max-height: 600px;
+}
 
 /*
 //----------------------------------------------------------------------------------

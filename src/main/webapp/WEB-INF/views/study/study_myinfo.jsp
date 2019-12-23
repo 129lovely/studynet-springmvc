@@ -48,13 +48,13 @@
 							<div>
 								<p class="section-title blue">내 스터디 룸 기능 알아보기</p>
 								<p class="section-discription tal">
-									- 신청한 스터디의 현재 상태를 확인하거나, - 승인되지 <br>않은 스터디의 신청을 취소할 수
+									- 신청한 스터디의 현재 상태를 확인하거나, 승인되지 <br>않은 스터디의 신청을 취소할 수
 									있습니다. <br>
-									<br> - 또한 삭제 가능한 상태( 승인 거부, 폐쇄, 종료, 개설 취소)의<br> -
+									<br> - 또한 삭제 가능한 상태( 승인 거부, 폐쇄, 종료, 개설 취소 )의<br>
 									스터디는 삭제하실 수 있습니다.<br>
-									<br> - 진행 중이거나 종료된 스터디는 스터디 룸 - 버튼을 눌러 <br>해당 스터디의
-									룸에서 스터디의 정보를 확인하고<br> - 투두 리스트를 작성하거나 출석 체크를 할 수 있습니다.<br>
-									<br> - 직접 개설/운영 중인 스터디의 경우 관리 페이지에서 <br> - 공지 작성,
+									<br> - 진행 중이거나 종료된 스터디는 스터디 룸 버튼을 눌러 <br>해당 스터디의
+									룸에서 스터디의 정보를 확인하고<br> (진행 중일 경우) 투두 리스트를 작성하거나 출석 체크를 할 수 있습니다.<br>
+									<br> - 직접 개설/운영 중인 스터디의 경우 관리 페이지에서 <br> 공지 작성,
 									일정/인원 관리 등 스터디를 관리할 수 있습니다.
 								</p>
 								<a href="#close" class="my-btn yellow-black">알겠어요</a>
@@ -174,7 +174,7 @@
 									</table>
 
 									<div class="room-btn-box">
-										<!-- <input type="button" class="my-btn yellow-black" value="신청 취소"> -->
+										<input type="button" class="my-btn yellow-black" value="스터디 룸">
 									</div>
 								</div>
 							</div>
@@ -251,7 +251,7 @@
 									<div class="room-btn-box">
 
 										<input type="button" class="my-btn yellow-black"
-											value="스터디 룸 가기">
+											value="스터디 룸">
 									</div>
 								</div>
 							</div>
@@ -288,8 +288,48 @@
 									</table>
 
 									<div class="room-btn-box">
-
-										<input type="button" class="my-btn yellow-black" value="폐쇄 동의">
+			
+										<input type="button" class="my-btn yellow-black" value="폐쇄 동의" onclick="location.href='#open_agree'">
+										<!-- 폐쇄 동의 모달창 -->
+										<div class="info_content agree_close" id="open_agree">
+											<div>
+												<h1 class="section-title blue line-bottom">스터디 폐쇄 진행 안내</h1>
+												<!-- 폐쇄 사유 -->
+												<h4 class="sub-section-title black">폐쇄 사유</h4>
+												<p class="section-discription">
+													어쩌구 저저구 폐쇄 사유입니당 <br>
+													흑흑ㅎ그흑흑 죄송함니다
+												</p>
+												<!-- 동의 현황 -->
+												<br>
+												<h4 class="sub-section-title black">동의 현황</h4>
+												<p class="section-discription">
+													3 / 15 명 동의 ( 20% ) 
+													<a href="#open_list">목록보기</a> <!-- 스터디 장만 보임 -->
+ 												</p>
+												<!-- 폐쇄 안내 -->
+												<p class="section-discription">
+													폐쇄에 동의하기 위해서는 아래의 폐쇄 동의 버튼을 누르시면 됩니다. <br>
+													한 번 동의하면 되돌릴 수 없으니 신중히 동의해주시기 바랍니다. <br>
+													전체 인원의 80% 이상이 동의하면 폐쇄되며, 스터디 룸에서 삭제하실 수 있습니다. 
+												</p>
+												<a href="javascript:void(0)" class="my-btn black-white">동의</a>
+												<a href="#close_agree" class="my-btn black-white">취소</a>
+											</div>
+										</div>
+										
+										<!-- 폐쇄 동의 인원 확인 -->
+										<div class="info_content agree_close list" id="open_list">
+											<div>
+												<h1 class="section-title blue line-bottom">동의 현황 확인</h1>
+												<table>
+												
+												
+												</table>
+												<a href="#open_agree" class="my-btn black-white">닫기</a>
+											</div>
+										</div>
+										
 									</div>
 								</div>
 							</div>
@@ -365,8 +405,8 @@
 
 									<div class="room-btn-box">
 										<input type="button" class="my-btn yellow-black"
-											value="스터디 룸 가기"> <input type="button"
-											class="my-btn yellow-black" value="삭제하기">
+											value="스터디 룸 "> 
+										<input type="button" class="my-btn yellow-black" value="삭제하기">
 									</div>
 								</div>
 							</div>
