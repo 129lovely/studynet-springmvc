@@ -1699,7 +1699,7 @@ textarea {
 	top: 30%;
 	left: 15%;
 	width: 70%;
-	height: 250px;
+	height: 300px;
 	padding: 16px;
     border: 16px solid #FFC267;
     border-radius: 5px;
@@ -1710,6 +1710,8 @@ textarea {
 
 .info_content.input > div > p input[type="text"]{
 	width: 70%;
+	display: block;
+	margin: 0 auto;
 }
 
 /*
@@ -1826,7 +1828,6 @@ textarea {
 }
 
 .user-find input[type="text"]{
-    float: right;
     margin-right: 20px;
     line-height: 1rem;
 }

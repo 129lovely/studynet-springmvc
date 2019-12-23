@@ -501,7 +501,7 @@ public class StudyController {
 		return res;
 	}
 	
-	// 본인 인증  (인증 번호 ajax로 보내기)
+	// 회원 가입 본인 인증  (인증 번호 ajax로 보내기)
 	@RequestMapping("/user_join_certificate.do")
 	@ResponseBody
 	public Map user_join_certificate( String phone ) {
@@ -531,7 +531,36 @@ public class StudyController {
 		return map;
 	}
 	
-	
+	// 이메일 찾기 본인 인증  (인증 번호 ajax로 보내기)
+		@RequestMapping("/user_find_phone_certificate.do")
+		@ResponseBody
+		public Map user_find_phone_certificate( String phone, String name ) {
+
+			CertificationKeyGenerator keyGen = CertificationKeyGenerator.newInstance();
+			
+			Map map = null;
+			
+			int res = userService.selectOne( phone, name );
+			
+			if ( res == 0 ) {
+				map = new HashMap();
+				map.put("tempKey", "not_member");
+				map.put("phone", "phone");
+				
+				return map;
+			}
+			
+			
+			try {
+				map = keyGen.tempKeyGenerator(phone);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			return map;
+		}
+		
 	//게시글 삭제
 	@RequestMapping("/community_delete.do")
 	public String delete(int idx) {

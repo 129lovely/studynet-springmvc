@@ -151,9 +151,22 @@ public class UserService {
 		return user;
 	}
 	
+	// 전화번호 중복 체크
 	public int selectOne( String phone ) {
 		int res = userDAO.selectPhone(phone);
 		
 		return res;
 	}
+	
+	// 전화번호 + 이름 확인
+		public int selectOne( String phone, String name ) {
+			
+			Map map = new HashMap();
+			map.put("phone", phone);
+			map.put("name", name);
+			
+			int res = userDAO.selectEmail(map);
+			
+			return res;
+		}
 }
