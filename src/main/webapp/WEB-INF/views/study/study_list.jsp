@@ -88,6 +88,7 @@
 						
 							<li class="flex-box">
 							<span><img src="resources/images/study_profile/${vo.photo}"/> </span>
+							
 								<!-- 온라인 -->
                          	<c:if test="${ vo.is_online == 0 }">
 		                        <div>
@@ -115,25 +116,27 @@
 	              				<!-- 온/오프라인 -->
 	                        <c:if test="${ vo.is_online == 2 }">
 		                        <div>
-		                           	<h3><a href="study_list_detail.do?idx=${ vo.idx }">[온/오프라인] &nbsp;${ vo.title }</a></h3>	                            	
+		                           	<h3><a href="study_list_detail.do?idx=${ vo.idx }">[복합] &nbsp;${ vo.title }</a></h3>	                            	
 		                            <p>모집 마감  &nbsp;|&nbsp; <fmt:parseDate var="dateString" value="${vo.deadline}" pattern="yyyy-MM-dd HH:mm:ss.SSS" /> 
 										<fmt:formatDate value="${dateString}" pattern="yyyy.MM.dd" /> </p>
 		                            <p>스터디목적  &nbsp;|&nbsp; ${ vo.purpose }</p>
 		                            <p>모집 인원 &nbsp;|&nbsp; ${ vo.approve_count }</p>
-	              				</c:if>
-	              				
-	              				<!--분류 -->
-	                         	<c:if test="${ vo.is_online == 3 }">분류
-	                           	<h3><a href="study_list_detail.do?idx=${ vo.idx }">${ vo.title }</a></h3>	                            	
-	                            <p>모집기간  &nbsp;|&nbsp; ${vo.deadline }</p>
-	                            <p>스터디목적  &nbsp;|&nbsp; ${ vo.purpose }</p>
-	                            <p>모집 인원 &nbsp;|&nbsp; ${ vo.approve_count }</p>
-	              				</c:if>
-	              				
-	                        </div>
+		              				
+		              			</div>
+		              			</c:if>
+		              				
+	<%-- 	              				<!--분류 -->
+		                         	<c:if test="${ vo.is_online == 3 }">분류
+		                         	<!-- 이거 이렇게 하는 게 아니라 온오프복합 전부 상관 없이 나오는 거라구 말씀 드렷는데,,,ㅎㅎ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,, -->
+		                           	<h3><a href="study_list_detail.do?idx=${ vo.idx }">
+		                           	${ vo.title }</a></h3>	                            	
+		                            <p>모집기간  &nbsp;|&nbsp; ${vo.deadline }</p>
+		                            <p>스터디목적  &nbsp;|&nbsp; ${ vo.purpose }</p>
+		                            <p>모집 인원 &nbsp;|&nbsp; ${ vo.approve_count }</p>
+		              				</c:if> --%>
+	                       		
 							</li>
 						</c:forEach>
-						
 					</ul>
 				</div>
 			</div>
