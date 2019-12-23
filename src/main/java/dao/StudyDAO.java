@@ -105,5 +105,10 @@ public class StudyDAO implements DAO {
 		return res;
 	}
 
+	// 스터디 중복신청 
+	public int studyCheck(Map map) {
+		int study = sqlSession.selectOne("study.check", map);
+		return study;
+	}
 	
 }

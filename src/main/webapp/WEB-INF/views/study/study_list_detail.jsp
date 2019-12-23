@@ -25,7 +25,7 @@
 			// 신청 인원이 다 찼는지 확인
 			var btn=document.getElementById("btn");
 			
-			if(max_count==approve_count){
+			if(max_count == approve_count){
 				btn.disabled='disabled';
 				$('#btn').css('background-color','#DEE0E3');
 				return;

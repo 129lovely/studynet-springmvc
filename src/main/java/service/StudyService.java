@@ -4,12 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import common.Common;
-import common.Paging;
 import dao.BoardDAO;
 import dao.StudyDAO;
 import dao.UserDAO;
-import vo.BoardVO;
 import vo.StudyVO;
 
 public class StudyService {
@@ -82,4 +79,23 @@ public class StudyService {
 		
 	}
 
+	//스터디 중복 체크
+	
+	public String studyCheck(Map map) {
+		int res = studyDAO.studyCheck(map);
+		
+		String result = "no";
+		
+		// 중복신청 스터디가 있을 경우
+		if ( res != 0 ) {
+			result = "yes";
+		}
+		
+		return result;
+	}
+	
+	
+	
+	
+	
 }

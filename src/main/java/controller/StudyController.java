@@ -799,7 +799,7 @@ public class StudyController {
 		return Common.Study.VIEW_PATH + "study_list_detail.jsp";
 	}
 		
-	//스터디 참가 신청하기
+	//스터디 참가 신청 페이지 이동
 	@RequestMapping("/study_apply_caution.do")
 	public String study_apply_caution(Model model, int study_idx) {
 		model.addAttribute("study_idx", study_idx); // 데이터 바인딩
@@ -845,4 +845,19 @@ public class StudyController {
 		return Common.User.VIEW_PATH + "user_find.jsp";
 	}
 	
+	// 스터디 중복 체크
+	@RequestMapping("/study_check.do")
+	@ResponseBody
+	public String study_check( int study_idx, HttpServletRequest request ){
+		UserVO user = (UserVO) request.getSession().getAttribute("user");
+		Map map = new HashMap();
+		map.put("user_idx", user.getIdx());
+		map.put("study_idx", study_idx);
+		
+		String res = studyService.studyCheck(map);
+		System.out.println("res: " + res);
+		
+		return res;
+	}
+
 }

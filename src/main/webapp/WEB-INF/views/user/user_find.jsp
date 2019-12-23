@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>아이디 / 비밀번호 찾기</title>
 </head>
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
@@ -19,12 +19,12 @@
 				<div class="find-input line-bottom">
 					<div class="find-input-text">
 						<div>
-							<label>이 &nbsp; &nbsp; &nbsp; 름&nbsp;&nbsp;
+							<label>이 &nbsp; &nbsp; &nbsp; 름&nbsp; &nbsp;
 								<input type="text" name="name" placeholder="이름을 입력해주세요.">
 							</label>
 						</div>
 						<div>
-							<label>전화번호&nbsp;&nbsp;
+							<label>전화번호&nbsp; &nbsp;
 									<input type="text" name="phone"" placeholder="'-'는 자동으로 입력됩니다.">
 							</label>
 						</div>
@@ -38,12 +38,12 @@
 				<div class="find-input line-bottom">
 					<div class="find-input-text">
 						<div>
-							<label>아이디&nbsp;&nbsp;
+							<label>아이디&nbsp; &nbsp;
 								<input type="text" name="name" placeholder="아이디를 입력해주세요.">
 							</label>
 						</div>
 						<div>
-							<label>이메일&nbsp;&nbsp;
+							<label>이메일&nbsp; &nbsp;
 									<input type="text" name="email" placeholder="example@email.com">
 							</label>
 						</div>

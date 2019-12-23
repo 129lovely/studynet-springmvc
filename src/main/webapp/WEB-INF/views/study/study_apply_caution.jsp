@@ -10,11 +10,18 @@
 	<meta charset="UTF-8">
 	<title>스터디 신청 안내</title>
 </head>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/httpRequest.js"></script>
 <script type="text/javascript">
 
 
 	function send(form) {
-
+		if( ${ empty sessionScope.user.idx } ){
+  			
+  			alert("로그인이 필요합니다.");
+  			location.href="user_login_form.do";
+  			return;
+  		}
+  		
 		var cb1 = document.getElementById("cb1");
 		var cb2 = document.getElementById("cb2");
 		var cb3 = document.getElementById("cb3");
@@ -29,9 +36,40 @@
 			return;
 		}
 	
-		location.href = "study_apply.do?study_idx="+${ study_idx }+"&introduce="+introduce;
-	}
+	
+ 			
+		// 스터디 중복 체크 메서드
+					
+		var study_idx = document.getElementById("study_idx");	
 		
+		alert(study_idx.value);
+		
+		var url = "study_check.do";
+		var param = "study_idx=" + study_idx;
+		sendRequest( url, param, verify_result, "GET");
+					
+		
+	}
+	
+	function verify_result(){
+		var introduce = document.forms[0].introduce.value;
+		
+		if(xhr.readyState == 4 && xhr.status == 200) {
+			var res = xhr.responseText;
+			
+			alert(res);
+			
+			if( res == 'yes' ){
+				alert("이미 신청하신 스터디입니다. 마이페이지에서 확인해주세요!");
+				return;
+			}
+			
+			alert("신청 완료 되었습니다.");
+			
+			location.href = "study_apply.do?study_idx="+${ study_idx }+"&introduce="+introduce;
+		}
+
+	}
 </script>
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>
@@ -39,12 +77,14 @@
 		<div>
 			<div class="inner-box pt190">
 				<form class="contents-box board">
+						<!-- idx 정보 숨겨놓기 -->
+						<input type="hidden" id="study_idx" value="${ study_idx }">
 				
 					<!-- 스터디 참가 신청하기  -->
 					<div class="study-apply-box">
 						<div class="line-bottom">
 							<h3 class="section-title blue tac mb30">스터디 참가 신청하기</h3>
-							<a class="section-discription mb20" href="#">[오프라인] 한 달만에 Python 마스터하기!!</a>
+							<a class="section-discription mb20" href="study_list_detail.do">[오프라인] 한 달만에 Python 마스터하기!!</a>
 							<p class="section-discription tal">
 								위의 스터디에 참가하시려는게 맞나요?<br>
 								선택하신 스터디에 참가 신청을 하시려면<br>

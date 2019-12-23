@@ -105,8 +105,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				where no between #{start} AND #{end} 
 			</if>
 		</if>
-
 	</select>
+	
+	<!-- 스터디 중복 확인 -->
+	<select id="studyCheck" resultType="int" parameterType="java.util.Map">
+		SELECT count(*) FROM study_member WHERE study_idx = #{study_idx} 
+		AND user_idx = #{user_idx}
+	</select>
+	
 	
 </mapper>
 
