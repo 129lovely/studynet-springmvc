@@ -36,6 +36,7 @@ public class UserController {
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
+	
 
 	// 로그인1 - 로그인 페이지로 이동
 	@RequestMapping("/user_login_form.do")
