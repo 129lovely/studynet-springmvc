@@ -214,26 +214,14 @@ public class StudyController {
 		List<StudyVO> list = null; // 전체 리스트 데이터 저장
 		int row_total = 0; // 전체 리스트 갯수 저장
 		
-		//--------------------------------------------------------------------------------------------------
-		
 		map.put("search_option", search_option);
 		map.put("search", search);
-		map.put("purpose", purpose);
+		map.put("array", purpose);
 
-		//search_option[index] 유무에따라 온라인,오프라인,복합 결정
-		if(search_option==2||search_option==0||search_option==1) {//옵션 선택일떄 온라인,오프라인 ,복합
-			//게시글 전체목록 가져오기
-			list = (List<StudyVO>) studyService.search_list_condition(map).get("list");
-			//전체 게시물 수 구하기
-			row_total = (int) studyService.search_list_condition(map).get("cnt");
-
-		} else {//분류일때
-			//게시글 전체목록 가져오기
-			list = (List<StudyVO>) studyService.search_list(map).get("list");
-			//전체 게시물 수 구하기
-			row_total = (int) studyService.search_list(map).get("cnt");
-		}
-		//--------------------------------------------------------------------------------------------------
+		//게시글 전체목록 가져오기
+		list = (List<StudyVO>) studyService.search_list_condition(map).get("list");
+		//전체 게시물 수 구하기
+		row_total = (int) studyService.search_list_condition(map).get("cnt");
 
 		//페이지 메뉴 생성하기
 		//ㄴ ◀1 2 3 4 5▶

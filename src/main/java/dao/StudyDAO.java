@@ -74,11 +74,11 @@ public class StudyDAO implements DAO {
 	public int search_cnt(String search){
 		int cnt = sqlSession.selectOne("study.search_count", search);
 		return cnt;
-		}
+	}
 
 	// 검색기능 (총 리스트 갯수)//온라인,오프라인,복합 옵션일떄
-	public int search_cnt_condition(String search){
-		int cnt = sqlSession.selectOne("study.search_count_condition", search);
+	public int search_cnt_condition(Map map){
+		int cnt = sqlSession.selectOne("study.search_count_condition", map);
 		return cnt;
 	}
 	

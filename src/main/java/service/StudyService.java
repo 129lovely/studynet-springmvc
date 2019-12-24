@@ -56,9 +56,8 @@ public class StudyService {
 	//검색기능and게시물수,조건별 검색
 	public Map search_list_condition(Map map){
 
-		List<StudyVO> list=studyDAO.search_condition( map );
-			
-		int cnt = studyDAO.search_cnt_condition( (String) map.get("search") );//게시물수
+		List<StudyVO> list = studyDAO.search_condition(map);
+		int cnt = studyDAO.search_cnt_condition(map);//게시물수
 		
 		Map res = new HashMap();
 		res.put("list", list);

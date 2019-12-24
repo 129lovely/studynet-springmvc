@@ -37,13 +37,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where  title like CONCAT('%',#{search},'%')
 	</select>
 	
-	<!-- 온오프 옵션 , 텍스트 검색에 따른  검색 결과 개수 -->
-	<select resultType="int" id="search_count_condition" parameterType="java.lang.String">
-		select count(*)
-		from study
-		where  title like CONCAT('%',#{search},'%')
-	</select>
-	
 	<!-- 텍스트 검색기능 -->
 	<select resultType="study" id="list_search" parameterType="java.util.Map">
 		<!-- 분류 -->
@@ -86,28 +79,37 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 온오프 조건별 검색 -->
 	<select resultType="study" id="search_list_condition" parameterType="java.util.Map">
-	 	<if test="search_option != null">
+		select * from (SELECT rank() over(order by idx desc) AS no, b.*
+		FROM (select * from study where
+		<foreach collection="array" item="item" open="(" close=")" separator="or">
+			purpose=#{item}
+		</foreach>
+		<if test="search != null and search_option != '3'.toString()">
+			and is_online=#{search_option} AND title like CONCAT('%',#{search},'%')
+		</if>
+		<if test="search == null and search_option != '3'.toString()">
+			and is_online=#{search_option}
+		</if>
+		<if test="search != null and search_option == '3'.toString()">
+			and title like CONCAT('%',#{search},'%')
+		</if>
+		) AS b ) AS list
+		where no between #{start} AND #{end}
+	</select>
 	
-			<if test="search_option =='0'.toString()"> <!-- 오프라인 -->
-			 	select *
-				from (SELECT rank() over(order by idx desc) AS no, b.*
-				FROM (select * from study where is_online='0' AND title like CONCAT('%',#{search},'%')) AS b ) AS list
-				where no between #{start} AND #{end}
-			</if>
-		
-			<if test="search_option =='1'.toString()"><!-- 온라인-->
-				select *
-				from (SELECT rank() over(order by idx desc) AS no, b.*
-				FROM (select * from study where is_online='1' AND title like CONCAT('%',#{search},'%')) AS b ) AS list
-				where no between #{start} AND #{end} 
-			</if>
-			
-			<if test="search_option =='2'.toString()"><!-- 복합 -->
-			 	select *
-				from (SELECT rank() over(order by idx desc) AS no, b.*
-				FROM (select * from study where is_online='2' AND title like CONCAT('%',#{search},'%')) AS b ) AS list
-				where no between #{start} AND #{end} 
-			</if>
+	<select resultType="int" id="search_count_condition" parameterType="java.util.Map">
+		select count(*) from study where
+		<foreach collection="array" item="item" open="(" close=")" separator="or">
+			purpose=#{item}
+		</foreach>
+		<if test="search != null and search_option != '3'.toString()">
+			and is_online=#{search_option} AND title like CONCAT('%',#{search},'%')
+		</if>
+		<if test="search == null and search_option != '3'.toString()">
+			and is_online=#{search_option}
+		</if>
+		<if test="search != null and search_option == '3'.toString()">
+			and title like CONCAT('%',#{search},'%')
 		</if>
 	</select>
 	
