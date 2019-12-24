@@ -316,4 +316,9 @@ public class StudyController {
 		return resStr = "success";
 	}
 
+	// 스터디 룸 개별 페이지 
+	@RequestMapping("/study_room_detail.do")
+	public String study_room_detail () {
+		return Common.Study.VIEW_PATH + "study_room.jsp";
+	}
 }

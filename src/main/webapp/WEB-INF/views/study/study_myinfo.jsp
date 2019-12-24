@@ -8,9 +8,21 @@
 	<meta charset="UTF-8">
 	<title>마이 페이지 | 내 스터디 룸</title>
 	
-	<link type="text/css" rel="stylesheet" href="css/common.css" />
-	<link type="text/css" rel="stylesheet" href="css/reset.css" />
-	<script src="js/sample.js"></script>
+	<script type="text/javascript">
+		//마이페이지 메뉴 슬라이드 바
+		function move_right(){
+		    var bar = document.getElementById("bar");
+		    bar.classList.add("right");
+		    bar.classList.remove("left");
+		}
+	
+		function move_left(){
+		    var bar = document.getElementById("bar");
+		    bar.classList.remove("right");
+		    bar.classList.add("left");
+		}
+	
+	</script>
 
 </head>
 
@@ -174,7 +186,7 @@
 									</table>
 
 									<div class="room-btn-box">
-										<input type="button" class="my-btn yellow-black" value="스터디 룸">
+										<input type="button" class="my-btn yellow-black" value="스터디 룸" onClick="location.href='study_room_detail.do'" >
 									</div>
 								</div>
 							</div>
@@ -251,7 +263,7 @@
 									<div class="room-btn-box">
 
 										<input type="button" class="my-btn yellow-black"
-											value="스터디 룸">
+											value="스터디 룸" onClick="location.href='study_room_detail.do'">
 									</div>
 								</div>
 							</div>
@@ -405,7 +417,7 @@
 
 									<div class="room-btn-box">
 										<input type="button" class="my-btn yellow-black"
-											value="스터디 룸 "> 
+											value="스터디 룸 " onClick="location.href='study_room_detail.do'"> 
 										<input type="button" class="my-btn yellow-black" value="삭제하기">
 									</div>
 								</div>
