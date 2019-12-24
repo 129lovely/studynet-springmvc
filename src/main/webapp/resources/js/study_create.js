@@ -127,6 +127,12 @@ function create( f ) {
 		min_count.focus();
 		return;
 	}
+	
+	if ( min_count.value < 2 ||  max_count.value < 2) {
+		alert("모집 인원은 본인을 포함하여 최소 2명부터 가능합니다.");
+		min_count.focus();
+		return;
+	}
 
 	if ( ! num_patt.test(min_count.value) ){
 		alert("최소 모집 인원은 숫자로 입력해주세요.");
@@ -246,7 +252,7 @@ function create( f ) {
 
 
 	// 다 값이 들어있다면
-	var res = confirm("입력하신 정보에 수정할 부분이 없는지 확인 하셨나요? 모집 글을 올린 뒤에는 신청 인원, 참여 인원이 0명일 경우에만 수정이 가능합니다.");
+	var res = confirm("입력하신 정보에 수정할 부분이 없는지 확인 하셨나요? 모집 글을 올린 뒤에는 신청 인원, 참여 인원이 1명일 경우에만 수정이 가능합니다.");
 
 	if ( res == false ) {
 		return;
