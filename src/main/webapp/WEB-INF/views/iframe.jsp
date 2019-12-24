@@ -119,9 +119,9 @@
 </head>
 <body style="margin: 0; padding: 0; overflow-x: hidden;">
 	<!-- 본페이지 아이프레임 -->
-	<iframe name="NeBoard" src="index.do"
+	<!-- <iframe name="NeBoard" src="index.do"
 		style="display: block; width: 100vw; height: 100vh; border: none; margin: 0;"
-		frameborder="0" marginwidth="0" marginheight="0"></iframe>
+		frameborder="0" marginwidth="0" marginheight="0"></iframe> -->
 
 	<!-- 실시간 채팅 -->
 	<!-- <div class="chat-box"> -->
