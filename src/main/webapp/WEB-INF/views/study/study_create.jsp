@@ -54,7 +54,7 @@
 											<td colspan="2"><input type="text" name="title" placeholder="스터디 이름을 간결하고 알기 쉽게 입력해주세요.(최대20글자)" maxlength="20"/></td>
 										</tr>
 										<tr>
-											<td colspan="3">* 인원은 수용 가능한 범위에서 기입해주세요</td>
+											<td colspan="3">* 인원은 수용 가능한 범위에서 개설자를 포함하여 기입해주세요</td>
 										</tr>
 		
 										<tr>
