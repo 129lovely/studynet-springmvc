@@ -125,6 +125,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values (#{user_idx}, #{idx}, 1, 'admin')
 	</insert>
 	
+	<!-- user의 idx로 study_member의 status가져오기 -->	
+	<select id="study_mem_status" parameterType="int" resultType="studyMember">
+		select * from study_member where user_idx=#{user_idx}
+	</select>
+	
+	<select id="study_mem_list" parameterType="int" resultType="study">
+		select * from study where idx=#{study_idx}
+	</select>
+		
 </mapper>
 
 

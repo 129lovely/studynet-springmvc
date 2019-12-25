@@ -1,5 +1,6 @@
 ﻿package dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -118,5 +119,17 @@ public class StudyDAO implements DAO {
 		return res;
 	}
 
+	// study_member_status가져오기
+	public StudyMemberVO study_member_status(int user_idx) {
+		StudyMemberVO vo = sqlSession.selectOne("study.study_mem_status", user_idx);
+		return vo;
+	}
+	
+	// study_member의 study_idx를 통해서 study내용 가져오기
+	public List<StudyVO> study_member_list(int study_idx){
+		List<StudyVO> list=sqlSession.selectList("study.study_mem_list", study_idx);
+		return list;
+	}
+	
 	
 }

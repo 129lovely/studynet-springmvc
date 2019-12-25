@@ -1,12 +1,14 @@
 ﻿package controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -60,7 +62,17 @@ public class StudyController {
 	// 유저가 참여 중인 스터디의 idx를 모두 가져온 뒤 해당하는 idx의 스터디 정보와 유저의 참여 상태를 가져와야 함
 	// 일단은 이동만 ^^...
 	@RequestMapping("/study_myinfo.do")
-	public String user_study_list ( ) {
+	public String user_study_list(HttpServletRequest request, Model model) {
+		HttpSession session = request.getSession();
+		UserVO user = (UserVO) session.getAttribute("user");
+		
+		StudyMemberVO member=studyService.studyMemStatus(user.getIdx());
+		List<StudyVO> list=(ArrayList<StudyVO>)studyService.studyMemList(member.getStudy_idx());
+		
+		model.addAttribute("member", member);
+		model.addAttribute("user", user);
+		model.addAttribute("list", list);
+		
 		return Common.Study.VIEW_PATH + "study_myinfo.jsp";
 	}
 

@@ -1,5 +1,6 @@
 ﻿package service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,9 +90,16 @@ public class StudyService {
 		return vo;
 	}
 
-	
-	
-	
-	
+	// study_myinfo에서 study_member의 status가져오기
+	public StudyMemberVO studyMemStatus(int user_idx) {
+		StudyMemberVO vo = studyDAO.study_member_status(user_idx);
+		return vo; 
+	}
+
+	// study_member의 study_idx를 통해서 study내용 가져오기
+	public List<StudyVO> studyMemList(int study_idx){
+		List<StudyVO> list=(ArrayList<StudyVO>)studyDAO.study_member_list(study_idx);
+		return list;
+	}
 	
 }
