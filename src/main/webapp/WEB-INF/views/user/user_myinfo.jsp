@@ -5,7 +5,22 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Insert title here</title>
+	<title>마이페이지 | 내 정보</title>
+	
+	<script type="text/javascript">
+		//마이페이지 메뉴 슬라이드 바
+		function move_right(){
+		    var bar = document.getElementById("bar");
+		    bar.classList.add("right");
+		    bar.classList.remove("left");
+		}
+	
+		function move_left(){
+		    var bar = document.getElementById("bar");
+		    bar.classList.remove("right");
+		    bar.classList.add("left");
+		}
+	</script>
 </head>
 <body>
 	<jsp:include page="../header.jsp"></jsp:include>

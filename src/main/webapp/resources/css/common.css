@@ -2199,6 +2199,112 @@ textarea {
 /*
 //----------------------------------------------------------------------------------
 //
+// [study] 스터디 룸 개별 페이지
+//
+//----------------------------------------------------------------------------------
+*/
+.my-study-room .flex-box.title{
+    justify-content: space-between;
+    align-items: center;
+}
+
+.my-study-room .flex-box.title h1{
+    padding-top: 20px;
+}
+
+.my-study-room table{
+    width: 90%;
+    margin: 0 auto;
+}
+
+.my-study-room .study-board table tr:not(:last-child) th {
+    background-color: #eef3fa;
+    border-bottom: 2px solid #DFE1E4;
+}
+
+.my-study-room .study-board table tr:not(:first-child) th {
+    background-color: #eef3fa;
+    border-top: 2px solid #DFE1E4;
+}
+
+.my-study-room .study-board table tr:not(:last-child) td {
+    border-bottom: 2px solid #DFE1E4;
+}
+
+.my-study-room .study-board table tr:not(:first-child) td {
+    border-top: 2px solid #DFE1E4;
+}
+
+.my-study-room .study-board table tr:first-child th{
+    background-color: #DFE1E4;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+.my-study-room .study-board table th, .my-study-room table td{
+    padding: 10px;
+    text-align: left;
+}
+
+.my-study-room .study-board table th:first-child,
+.my-study-room .study-board table td:first-child{
+    width: 40%;
+    padding-left: 30px;
+}
+
+.my-study-room .study-board table th:nth-child(2),
+.my-study-room .study-board table td:nth-child(2){
+    width: 30%;
+    text-align: center;
+}
+
+.my-study-room .study-board table th:last-child,
+.my-study-room .study-board table td:last-child{
+    width: 15%;
+    padding-right: 20px;
+    text-align: center;
+}
+
+.my-study-room .study-board table tr:not(:first-child) th:nth-child(2)::before,
+.my-study-room .study-board table tr:not(:first-child) td:nth-child(2)::before {
+	content: "|";
+	color: #DFE1E4;
+    padding-right: 30px;
+}
+
+.my-study-room .study-board table tr:not(:first-child) th:nth-child(2)::after,
+.my-study-room .study-board table tr:not(:first-child) td:nth-child(2)::after {
+	content: "|";
+	color: #DFE1E4;
+	padding-left: 30px;
+}
+
+.my-study-room caption i{
+    color: #32539D
+}
+
+.my-study-room .study-board.contents-box div .menu{
+    display: flex;
+    padding-left: 15%;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.my-study-room .study-board.contents-box div .menu a {
+    background-color: #DFE1E4;
+    padding: 5px;
+    border-radius: 5px;
+}
+.my-study-room .study-board.contents-box div .menu div {
+    padding-top: 5px;
+}
+
+
+
+/*
+//----------------------------------------------------------------------------------
+//
 // 푸터
 //
 //----------------------------------------------------------------------------------
