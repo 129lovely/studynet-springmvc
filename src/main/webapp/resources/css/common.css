@@ -2280,7 +2280,7 @@ textarea {
 	padding-left: 30px;
 }
 
-.my-study-room caption i{
+.my-study-room h1 i{
     color: #32539D
 }
 
@@ -2301,6 +2301,97 @@ textarea {
 }
 
 
+/*
+//----------------------------------------------------------------------------------
+//
+// [study] 스터디 룸 관리 페이지
+//
+//----------------------------------------------------------------------------------
+*/
+
+.study-mem .export-menu div{
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	padding: 10px;
+}
+
+.study-mem .crown div{
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	padding-bottom: 10px;
+	margin-bottom: 10px;
+	border-bottom: 2px solid #DFE1E4;
+}
+
+.study-mem .approve .manage-button {
+	display: flex;
+	justify-content: center;
+	padding-bottom: 15px;
+	margin-bottom: 15px;
+	border-bottom: 2px solid #DFE1E4;
+}
+
+.study-mem .manage-button {
+	display: flex;
+	justify-content: center;
+}
+
+.study-mem .manage-button input{
+	margin-right: 10px;
+	margin-top: 15px;
+}
+
+
+.study-mem .member-list-box {
+	max-height: 200px;
+	overflow: auto;
+
+}
+
+.study-mem .member-list {
+	margin-top: 5px;
+}
+
+.study-mem .member-list td, .study-mem .member-list th{
+	border: 2px solid #DFE1E4;
+	padding: 3px;
+	text-align: center;
+}
+
+.add_crown .input-box input[type="text"]{
+	margin: 10px;
+	width: 60%;
+}
+.study-close .input-box {
+	justify-content:space-around;
+	align-items: center;
+	width: 80%;
+	margin: 0 auto;
+}
+
+.study-close .input-box input[type="button"]{
+	display: inline-block;
+	height: 100%;
+}
+
+.study-close .input-box input[type="text"], 
+.study-close .input-box input[type="password"]{
+	width: 100%;
+}
+
+.study-close .input-box > div{
+	width: 60%;
+}
+
+.study-quit input{
+	margin-right: 10px;
+}
+
+.flex-box.notice {
+	justify-content: space-between;
+}
 
 /*
 //----------------------------------------------------------------------------------

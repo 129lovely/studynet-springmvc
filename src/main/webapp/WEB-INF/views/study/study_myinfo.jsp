@@ -457,7 +457,7 @@
 									<div class="room-btn-box">
 
 										<input type="button" class="my-btn yellow-black"
-											value="관리 페이지">
+											value="관리 페이지" onClick="location.href='study_room_manage.do'">
 									</div>
 								</div>
 							</div>
@@ -496,7 +496,9 @@
 									<div class="room-btn-box">
 
 										<input type="button" class="my-btn yellow-black"
-											value="관리 페이지">
+											value="관리 페이지" onClick="location.href='study_room_manage.do'">
+										<input type="button" class="my-btn yellow-black"
+											value="모집 마감">
 									</div>
 								</div>
 							</div>
@@ -533,7 +535,7 @@
 
 									<div class="room-btn-box">
 										<input type="button" class="my-btn yellow-black"
-											value="관리 페이지">
+											value="관리 페이지" onClick="location.href='study_room_manage.do'">
 									</div>
 								</div>
 							</div>

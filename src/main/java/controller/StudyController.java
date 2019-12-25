@@ -333,4 +333,10 @@ public class StudyController {
 	public String study_room_detail () {
 		return Common.Study.VIEW_PATH + "study_room.jsp";
 	}
+	
+	// 스터디 룸 개별 페이지 : 관리자
+		@RequestMapping("/study_room_manage.do")
+		public String study_room_manage () {
+			return Common.Study.VIEW_PATH + "study_room_manage.jsp";
+		}
 }
