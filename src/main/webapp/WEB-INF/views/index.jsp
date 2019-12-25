@@ -2,12 +2,23 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="UTF-8">
 	<title>스터디넷</title>
 	<link type="text/css" rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/swiper.min.css">
+	
+	<script type="text/javascript">
+	function send(f){
+		var search=f.search.value;//검색 텍스트 내용 저장
+		var search_option=$("#search_option option:selected").val();
+		//텍스트 입력값을 넘긴다.
+		location.href = "study_list_search.do?search="+search+"&search_option="+search_option;	
+	}
+	</script>
+
 </head>
 <body>
 	<jsp:include page="header.jsp"></jsp:include>

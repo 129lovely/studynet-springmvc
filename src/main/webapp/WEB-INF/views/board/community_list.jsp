@@ -28,7 +28,7 @@
                             </p>
                     </div>
                     <div class="search-result mb10">
-                        <span>(검색 결과: 총  ${ row_total }건)</span>
+                        <span>(총 게시물수:  ${ row_total }건)</span>
                     </div>
     
                     <!-- 테이블 -->

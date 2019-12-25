@@ -46,6 +46,12 @@ public class StudyDAO implements DAO {
 		return 0;
 	}
 
+	//index.jsp에서 스터디목록들 나오게하기(페이지 안넘김)
+	public List<StudyVO> index_study_list(){
+		List<StudyVO> list=null;
+		list=sqlSession.selectList("index_study_list");
+		return list;
+	}
 	//스터디 리스트 페이징을 포함한 전체목록
 	public List<StudyVO> selectList( Map map ){
 
