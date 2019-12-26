@@ -63,18 +63,8 @@ public class UserService {
 			mail.setFrom("studynet2019web@gmail.com", "스터디넷");
 			
 			mail.setText(new StringBuffer()
-					.append("<body> <div>")
-					.append("<a href=\"http://localhost:9090/web/index.do\">")
-					.append("<img src=\"/images/icon/logo.png\" style=\"width: 150px; padding-top: 20px;\"> </a>")
-					.append("<h1 style=\"text-align: center; color: #eef3fa; background-color: #32539D; padding: 10px;\" >")
-					.append( "스터디넷 회원 가입을 축하드려요 !</h1>")
-					.append("<p style=\"margin: 10px; font-size: 1.5rem; text-align: center;\">")
-					.append("함께하는 시작을 위한 스터디 매칭 웹 사이트, 스터디넷입니다.<br>")
-					.append(vo.getName())
-					.append(" 님의 회원 가입을 진심으로 환영합니다.")
-					.append("</p> </div> </body>")
+					.append("<body><div><table align=\"center\"><tr><td><img src=\"https://i.imgur.com/ATMKhlq.png\" style=\"width:150px; margin: 0 auto; \"><br></td></tr><tr><td><div style=\"background-image: url(https://i.imgur.com/xvx3htM.jpg); width:100%; height:300px; background-size:cover;\"><h1 style=\"color: ghostwhite; text-align: center; padding-top: 100px; padding-left: 10px;padding-right: 10px;\">함께하는 시작, 스터디넷에 가입하신 것을 환영합니다.</h1><a href=\"http://localhost:9090/web/index.do\" style=\"background: ghostwhite; text-decoration: none; padding: 15px 10px; color: steelblue; font-size: 1.5rem; font-weight: bold; border-radius: 10px; display: inline-block; width:30%; text-align:center; margin:10px 35%\">스터디넷 둘러보기</a></div><br></td></tr><tr><td style=\"border-bottom: 1px solid gray; padding: 10px;\"><h2 style=\"color: steelblue;\">스터디넷에서 시작해요</h2><p style=\"color: dimgrey ;\">자신과 딱 맞는, 자신이 원하는 스터디를 골라 신청하거나 직접 개설해서 인원을 모집할 수 있습니다. 또한 마이페이지에서 참여 중인 스터디를 손쉽게 관리하고 공지와 일정을 확인할 수 있습니다.</p><p style=\"color: dimgrey ;\">커뮤니티에서 글과 댓글을 자유롭게 작성하고 토론할 수 있습니다. 취업이나 스터디 등에 필요한 정보를 쉽게 얻고 공유할 수 있으며, 스터디 별로 개별적인 커뮤니티도 사용 가능합니다.</p><small style=\"color: steelblue;\">만약 스터디넷에 가입한 적이 없으시다면 이 메일을 무시해주세요.</small><br><br></td></tr><tr><td><small style=\"color: gray; margin-top: 30px;\">(주)스터디넷 | 서울특별시 마포구 서강로 136 아이비 타워 2층 | 02-1111-3333 | studynet2019web@gmail.com </small></td></tr></table></div></body>")
 					.toString());
-			
 			mail.send();
 			
 		}
