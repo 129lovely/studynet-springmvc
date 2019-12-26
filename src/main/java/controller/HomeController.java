@@ -51,14 +51,15 @@ public class HomeController {
 		return "/WEB-INF/views/iframe.jsp";
 	}
 
-	// index 
+	// index.jsp에서 스터디 목록 나오게하기 
 	@RequestMapping(value = {"/", "index.do"})
+	
 	public String index(Model model,HttpServletRequest request,Integer page) {
 		List<BoardVO> board = boardService.showCommunityList_index();
-		List<StudyVO> list=studyDAO.index_study_list();
+		List<StudyVO> list=studyService.index_study_list();
 		model.addAttribute("board", board);
 		model.addAttribute("list",list);
-		System.out.println(list);
 		return "/WEB-INF/views/index.jsp";
+		
 	}
 }

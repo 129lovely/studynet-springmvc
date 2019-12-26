@@ -11,11 +11,10 @@
 	<link type="text/css" rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/swiper.min.css">
 	
 	<script type="text/javascript">
-	function send(f){
-		var search=f.search.value;//검색 텍스트 내용 저장
-		var search_option=$("#search_option option:selected").val();
-		//텍스트 입력값을 넘긴다.
-		location.href = "study_list_search.do?search="+search+"&search_option="+search_option;	
+	function send1(f){
+		f.action = "study_list_search.do";
+		f.method = "get";
+		f.submit();
 	}
 	</script>
 
@@ -26,18 +25,26 @@
     <div class="title-box mb40">
     	<div class="inner-box">
     		<form class="search-box flex-box">
+    		
+    			<input type="hidden" name="purpose" value="공모전"/>
+    			<input type="hidden" name="purpose" value="취업준비"/>
+    			<input type="hidden" name="purpose" value="기상습관"/>
+    			<input type="hidden" name="purpose" value="공부"/>
+    			<input type="hidden" name="purpose" value="기타"/>		
+    			
     			<h2 class="section-title tac">
     				당신에게 <span class="section-title">딱</span> 맞는 스터디,<br />찾아보실래요?
     			</h2>
     			<div>
-    				<select>
-	    				<option>분류</option>
-	    				<option>온라인</option>
-	    				<option>오프라인</option>
+    				<select name="search_option" id="search_option">
+	    				<option value="3">전체</option>
+	    				<option value="0">오프라인</option>
+	    				<option value="1">온라인</option>
+	    				<option value="2">복합</option>
 					</select>
-					<input type="text" placeholder="검색어를 입력해주세요" />
+					<input type="text" placeholder="검색어를 입력해주세요" name="search" id="search" />
     			</div>
-    			<input class="my-btn black-white" type="button" value="검색" />
+    			<input class="my-btn black-white" type="button" value="검색" onclick="send1(this.form);" />
     		</form>
     	</div>
 	</div>
@@ -57,46 +64,42 @@
 							<span>카카오톡</span>
 						</p>
 					</li>
+					<c:forEach var="vo" items="${list}">
+					<c:if test="${vo.is_online==1 }"><!-- 온라인일떄 -->
 					<li class="swiper-slide">
-						<span class="icon icon-pre02"></span>
-						<h3><a href="javascript:void(0);"><span>[오프라인] 취업 면접 연습하기</span></a></h3>
+						<span class="icon icon-pre01" style="background-image: url(resources/images/study_profile/${vo.photo});"></span>
+						<h3><a href="study_list_detail.do?idx=${ vo.idx }"><span>[온라인] ${vo.title}</span></a></h3>
 						<p class="flex-box">
-							<span>2019.12.19 모집 마감</span>
-							<span>서울/경기</span>
-						</p>
-					</li>
-					<li class="swiper-slide">
-						<span class="icon icon-pre01"></span>
-						<h3><a href="javascript:void(0);"><span>[온라인] 웹 페이지 만들기</span></a></h3>
-						<p class="flex-box">
-							<span>2019.12.08 모집 마감</span>
+							<span><fmt:parseDate var="dateString" value="${vo.deadline}" pattern="yyyy-MM-dd HH:mm:ss.SSS" /> 
+						<fmt:formatDate value="${dateString}" pattern="yyyy.MM.dd" /> 모집 마감</span>
 							<span>카카오톡</span>
 						</p>
 					</li>
+					</c:if>
+					<c:if test="${vo.is_online==0 }"><!-- 오프라인일떄 -->
 					<li class="swiper-slide">
-						<span class="icon icon-pre02"></span>
-						<h3><a href="javascript:void(0);"><span>[오프라인] 취업 면접 연습하기</span></a></h3>
+						<span class="icon icon-pre01" style="background-image: url(resources/images/study_profile/${vo.photo});"></span>
+						<h3><a href="study_list_detail.do?idx=${ vo.idx }"><span>[오프라인] ${vo.title }</span></a></h3>
 						<p class="flex-box">
-							<span>2019.12.19 모집 마감</span>
-							<span>서울/경기</span>
+							<span><fmt:parseDate var="dateString" value="${vo.deadline}" pattern="yyyy-MM-dd HH:mm:ss.SSS" /> 
+						<fmt:formatDate value="${dateString}" pattern="yyyy.MM.dd" /> 모집 마감</span>
+							<span>카카오톡</span>
 						</p>
 					</li>
+					</c:if>
+				<c:if test="${vo.is_online==2 }"><!-- 복합일떄 -->
 					<li class="swiper-slide">
-						<span class="icon icon-pre02"></span>
-						<h3><a href="javascript:void(0);"><span>[오프라인] 취업 면접 연습하기</span></a></h3>
+						<span class="icon icon-pre01" style="background-image: url(resources/images/study_profile/${vo.photo});"></span>
+						<h3><a href="study_list_detail.do?idx=${ vo.idx }"><span>[복합] ${vo.title }</span></a></h3>
 						<p class="flex-box">
-							<span>2019.12.19 모집 마감</span>
-							<span>서울/경기</span>
+							<span><fmt:parseDate var="dateString" value="${vo.deadline}" pattern="yyyy-MM-dd HH:mm:ss.SSS" /> 
+						<fmt:formatDate value="${dateString}" pattern="yyyy.MM.dd" /> 모집 마감</span>
+							<span>카카오톡</span>
 						</p>
 					</li>
-					<li class="swiper-slide">
-						<span class="icon icon-pre02"></span>
-						<h3><a href="javascript:void(0);"><span>[오프라인] 취업 면접 연습하기</span></a></h3>
-						<p class="flex-box">
-							<span>2019.12.19 모집 마감</span>
-							<span>서울/경기</span>
-						</p>
-					</li>
+					</c:if>
+					</c:forEach>
+					
 				</ul>
 				<!-- Add Pagination -->
 				<div class="swiper-pagination swiper-pagination1"></div>

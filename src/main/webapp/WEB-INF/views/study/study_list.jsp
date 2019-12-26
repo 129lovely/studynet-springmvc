@@ -59,7 +59,7 @@
 					<div class="flex-box">
 						<form name="f">
 						<select name="search_option" id="search_option">
-							<option value="3">분류</option>
+							<option value="3">전체</option>
 							<option value="1">온라인</option>
 							<option value="0">오프라인</option>
 							<option value="2">복합</option>
@@ -78,7 +78,7 @@
 		<!-- 검색 결과 -->
 		<div class="search-result-box">
 			<div class="contents-box">
-				<p class="mb10"> <span>(검색 결과: 총  ${ row_total }건)</span></p>
+				<p class="mb10"> <span>(총 스터디 수: 총  ${ row_total }건)</span></p>
 				<div class="search-result">
 					<ul>
 						<c:forEach var="vo" items="${list }">

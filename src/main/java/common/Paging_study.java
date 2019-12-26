@@ -11,12 +11,14 @@ public class Paging_study {
 		
 		// 덧붙일 쿼리스트링 생성
 		String appendStr = "&search=" + search;
-		appendStr = "&search_option=" + search_option;
-		for( int i = 0; i < purpose.length; i++ ) {
-			appendStr += "&purpose=";
-			appendStr += purpose[i];
+		appendStr += "&search_option=" + search_option;
+		if(purpose!=null) {//스터디 목적이 있을경우 실행한다.
+			for( int i = 0; i < purpose.length; i++ ) {
+				appendStr += "&purpose=";
+				appendStr += purpose[i];
+			}
 		}
-
+		
 		int totalPage/*전체페이지수*/,
 		startPage/*시작페이지번호*/,
 		endPage;/*마지막페이지번호*/
@@ -56,7 +58,6 @@ public class Paging_study {
 			sb.append("<a href ='"+pageURL+"?page=");
 			//sb.append(nowPage - blockPage);
 			sb.append( startPage-1 );
-
 			sb.append( appendStr );
 	
 			sb.append("'>◀</a>");
@@ -77,7 +78,6 @@ public class Paging_study {
 			else{//현재 페이지가 아니면
 				sb.append("&nbsp;<a href='"+pageURL+"?page=");	
 				sb.append(i);
-
 				sb.append( appendStr );
 
 				sb.append("'>");
@@ -95,7 +95,6 @@ public class Paging_study {
 			else
 				nowPage = nowPage+blockPage;
 			sb.append(nowPage);*/
-
 			sb.append( appendStr );
 
 			sb.append("'>▶</a>");

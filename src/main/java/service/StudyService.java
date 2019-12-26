@@ -25,6 +25,12 @@ public class StudyService {
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
 	}
+	//index.jsp에서 스터디 목록나오게하기
+	public List<StudyVO> index_study_list(){
+		List<StudyVO> list=studyDAO.index_study_list();
+		return list;
+	}
+	
 	
 	// 스터디 생성
 	public int insert( StudyVO vo ) {

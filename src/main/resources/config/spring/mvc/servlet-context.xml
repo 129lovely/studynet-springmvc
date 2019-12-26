@@ -51,6 +51,7 @@
 	<beans:bean class="controller.HomeController">
 		<beans:property name="boardService" ref="boardService" />
 		<beans:property name="studyDAO" ref="studyDAO"/> <!-- index매핑이 홈컨트롤러에잇어서 추가햇어요 -->
+		<beans:property name="studyService" ref="studyService" /><!-- index매핑이 홈컨트롤러에잇어서 추가햇어요 -->
 	</beans:bean>
 
 </beans:beans>
