@@ -65,11 +65,7 @@
                     <!-- 버튼 -->
                     <div class="flex-box btn-box mb40">
                         <div class="flex-box">
-                            <select>
-                                <option>분류</option>
-                                <option>각종 팁</option>
-                            </select>
-                            <input type="text" id="search-content" placeholder="검색어 입력" class="tac"/>
+                            <input type="text" id="search-content" placeholder="검색할 제목 키워드 입력" class="tac"/>
                            	<a href="javascript:send();" class="my-btn black-white">검색</a>
                         </div>
                         <div>

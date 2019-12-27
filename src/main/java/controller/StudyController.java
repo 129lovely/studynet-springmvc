@@ -66,12 +66,12 @@ public class StudyController {
 		HttpSession session = request.getSession();
 		UserVO user = (UserVO) session.getAttribute("user");
 		
-		StudyMemberVO member=studyService.studyMemStatus(user.getIdx());
-		List<StudyVO> list=(ArrayList<StudyVO>)studyService.studyMemList(member.getStudy_idx());
+//		StudyMemberVO member=studyService.studyMemStatus(user.getIdx());
+//		List<StudyVO> list=(ArrayList<StudyVO>)studyService.studyMemList(member.getStudy_idx());
 		
-		model.addAttribute("member", member);
+//		model.addAttribute("member", member);
 		model.addAttribute("user", user);
-		model.addAttribute("list", list);
+//		model.addAttribute("list", list);
 		
 		return Common.Study.VIEW_PATH + "study_myinfo.jsp";
 	}
@@ -335,8 +335,8 @@ public class StudyController {
 	}
 	
 	// 스터디 룸 개별 페이지 : 관리자
-		@RequestMapping("/study_room_manage.do")
-		public String study_room_manage () {
-			return Common.Study.VIEW_PATH + "study_room_manage.jsp";
-		}
+	@RequestMapping("/study_room_manage.do")
+	public String study_room_manage () {
+		return Common.Study.VIEW_PATH + "study_room_manage.jsp";
+	}
 }
