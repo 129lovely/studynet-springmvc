@@ -107,4 +107,29 @@ public class UserDAO implements DAO {
 	}
 
 
+	// 내 정보 수정 
+	public int update_user(UserVO vo) {
+		int result=sqlSession.update("user.update_user", vo);
+		return result;
+	}
+	
+	
+	//초기 비밀번호 
+	public int update_user_TempPwd(Map map) {
+	
+		int res = sqlSession.update("user.update_user_TempPwd", map);
+		
+		
+		return res;
+		
+	}
+	
+	
+	//회원 탈퇴
+	public int user_del_update( UserVO baseVO ) {
+
+		int res = sqlSession.update("user_del_update", baseVO);
+
+		return res;
+	}
 }

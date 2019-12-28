@@ -333,6 +333,65 @@ public class UserController {
 		
 		return res = "success";
 	}
+	
+	// 아이디 비번 찾기 페이지로 이동
+	@RequestMapping("/user_find.do")
+	public String user_find(HttpServletRequest request ) {
 
+		return Common.User.VIEW_PATH + "user_find.jsp";
+	}
+
+	// 회원정보 페이지 이동
+	@RequestMapping("/user_myinfo_form.do")
+	public String user_myinfo_mod( ) {
+		
+//		UserVO user = userService.showUserDetail(idx);
+//
+//		model.addAttribute("user", user);
+		return Common.User.VIEW_PATH + "user_myinfo.jsp";
+	}
+
+	// 회원정보 수정하기
+	@RequestMapping("/user_update.do")
+	public String user_myinfo(UserVO vo) {
+		
+		try {
+			int res = userService.userMyinfo(vo);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "user_myinfo.do?idx"+vo;
+	}
+	
+	
+	// 초기 비밀번호 전송 
+	@RequestMapping("/user_temp_pwd.do")
+	@ResponseBody
+	public int user_temp_pwd(int idx) {
+		
+		int res = 0;
+		try {
+			res = userService.userTempPwd(idx);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return res;
+		
+	}
+	
+	//회원탈퇴
+	
+	@RequestMapping("/user_del.do")
+	public String user_del(int idx) {
+		String res = userService.user_del(idx);
+		return "redirect:/index.do";
+
+	}
+		
+	
 
 }

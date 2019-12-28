@@ -65,6 +65,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where idx=#{create_user_idx}
 	</update>
 	
+	<!-- 회원정보 수정하기 -->
+	<update id="update_user" parameterType="user">
+		UPDATE user SET
+		phone=#{phone}, job=#{job}, region = #{region} password = #{password}
+		where idx=#{idx}
+	</update>
+
+
+	<!-- 초기비밀번호 -->
+	<update id="update_user_TempPwd" parameterType="java.util.Map">
+		UPDATE user SET
+		password = #{tempPwd}
+		where idx=#{idx}
+	</update>
+
+
+
+	<!-- 회원 탈퇴 부분 ( delete 타임만 추가 ) -->
+	<update id="user_del_update" parameterType="user">
+		UPDATE board
+		SET
+		deleted_at = current_timestamp()
+		where idx=#{idx}
+	</update>
 </mapper>
 
 
