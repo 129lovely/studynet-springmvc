@@ -9,6 +9,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(*) from study
 	</select>
 
+	<!-- index.jsp에서 스터디목록들 나오게하기(스터디 페이지로 안넘어감) -->
+	<select id="index_study_list" resultType="study" >
+		select * from study
+		order by idx desc limit 8
+	</select>
 	<!-- 스터디 생성 -->
 	<insert id="insert" parameterType="study">
 		INSERT INTO study (title, create_user_idx, 
@@ -125,6 +130,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values (#{user_idx}, #{idx}, 1, 'admin')
 	</insert>
 	
+	<!-- user의 idx로 study_member의 status가져오기 -->	
+	<select id="study_mem_status" parameterType="int" resultType="studyMember">
+		select * from study_member where user_idx=#{user_idx}
+	</select>
+	
+	<select id="study_mem_list" parameterType="int" resultType="study">
+		select * from study where idx=#{study_idx}
+	</select>
+		
 </mapper>
 
 

@@ -100,9 +100,10 @@
 	function phone_certificate() {
 		if( xhr.readyState == 4 && xhr.status == 200 ){
 		
+			var phone = document.getElementById("phone");
 			var res = JSON.parse(xhr.responseText);
 
-			if ( res.tempKey != null && res.phone != null ){
+			if ( res.tempKey != null ){
 				
 				if ( res.tempKey == "not_member" ) {
 					alert("회원 정보로 등록되지 않은 정보입니다.");
@@ -110,7 +111,10 @@
 				}
 				
 				alert("입력하신 전화번호로 인증키가 발송되었습니다. SMS를 확인해주세요. ");
-
+				
+				var key = res.tempKey;
+				var email = res.email;
+				
 				location.href="#open_phone";
 				
 				// body 내부에 input hidden으로 결과값을 숨겨둔다.
@@ -120,6 +124,13 @@
 				  key_tag.setAttribute("id", "key");
 				  key_tag.setAttribute("value", res.tempKey);
 			      document.forms[0].appendChild(key_tag);
+			      
+			      var email_tag = document.createElement("input");
+					
+			      email_tag.setAttribute("type", "hidden");
+			      email_tag.setAttribute("id", "email");
+			      email_tag.setAttribute("value", email);
+			      document.forms[0].appendChild(email_tag);
 				
 			} else {
 				alert("문제가 발생했습니다... 재시도해주십시오.");
@@ -134,6 +145,8 @@
 		
 		// hidden으로 숨겨둔 값 불러오기
 		var key = document.getElementById("key").value;
+		var email = document.getElementById("email").value;
+		var email_info = document.getElementById("email_info");
 		
 		if( key_input.value == "" ){
 			alert("인증키를 입력해주세요.");
@@ -141,12 +154,10 @@
 		} 
 		
 		if ( key == key_input.value ) {
-			alert("인증되었습니다.");
 			
-			// 1. 입력된 phone 값에 해당되는 vo의 email 정보 다시 ajax로 가져와서 
-			// text 인풋에 value로 집어넣기 ( .setAttribute 사용 )
-			// 이름도 넣으세요
-			// resultFn에서 마지막에 location.href="#open_email_info";
+			email_info.value = email;
+			
+			alert("인증되었습니다.");
 			
 			location.href="#open_email_info";
 			
@@ -234,8 +245,8 @@
 			<div class="info_content input" id="open_email_info">
 				<div><br>
 					<p class="section-discription tal">
-						@@@님 반갑습니다. 아래의 이메일로 로그인해주세요. <br>	<!-- @@@ 이부분 회원 이름으로 채워주세용 -->
-						<br> <input type="text" id="email_info" readonly value="회원 이메일"/>
+						아래의 이메일로 로그인해주세요. <br>	
+						<br> <input type="text" id="email_info" readonly value=""/>
 					</p><br>
 					<input type="button" class="my-btn yellow-black" onClick="location.href='#close_email_info'" value="닫기" />
 				</div>

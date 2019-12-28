@@ -150,14 +150,14 @@ public class UserService {
 		return vo;
 	}
 	// 전화번호 + 이름 확인
-		public int selectOne( String phone, String name ) {
-			
-			Map map = new HashMap();
-			map.put("phone", phone);
-			map.put("name", name);
-			
-			int res = userDAO.selectEmail(map);
-			
-			return res;
-		}
+	public UserVO selectOne( String phone, String name ) {
+		
+		Map map = new HashMap();
+		map.put("phone", phone);
+		map.put("name", name);
+		
+		UserVO vo = userDAO.selectEmail(map);
+		
+		return vo;
+	}
 }

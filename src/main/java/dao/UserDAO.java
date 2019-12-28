@@ -75,9 +75,9 @@ public class UserDAO implements DAO {
 	}
 	
 	// 이메일 찾기 전화번호 인증 
-	public int selectEmail(Map map) {
-		int res = sqlSession.selectOne("user.phone_name_check", map);
-		return res;
+	public UserVO selectEmail(Map map) {
+		UserVO vo = sqlSession.selectOne("user.phone_name_check", map);
+		return vo;
 	}
 
 	// 가입한 스터디수 1 증가

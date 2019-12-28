@@ -141,6 +141,38 @@ public class UserController {
 		return map;
 	}
 
+	//아이디 찾기
+	@RequestMapping("/user_find_phone_certificate.do")
+	@ResponseBody
+	public Map user_find_phone_certificate(String phone, String name ) {
+		Map map = null;
+		
+		CertificationKeyGenerator keyGen = CertificationKeyGenerator.newInstance();
+		
+		System.out.println("phone:"+phone);
+		System.out.println("name:"+name);
+		
+		UserVO vo = userService.selectOne(phone, name);
+		
+		System.out.println("vo name: "+vo.getName());
+		
+		if(vo == null) {
+			map = new HashMap();
+			map.put("tempKey", "not_member");
+			
+			return map;
+		}
+		
+		try {
+			map = keyGen.tempKeyGenerator(phone);
+			map.put("email", vo.getEmail());
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return map;
+	}
 	// 네이버 로그인1
 	@RequestMapping("/nlogin.do")
 	public ModelAndView nlogin(HttpServletRequest request) {		
