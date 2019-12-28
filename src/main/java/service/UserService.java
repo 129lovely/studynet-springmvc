@@ -150,6 +150,7 @@ public class UserService {
 		UserVO vo = (UserVO) userDAO.selectOne(user_idx);
 		return vo;
 	}
+	
 	// 전화번호 + 이름 확인
 	public UserVO selectOne( String phone, String name ) {
 		
@@ -159,6 +160,9 @@ public class UserService {
 		
 		UserVO vo = userDAO.selectEmail(map);
 		
+		return vo;
+	}
+	
 	////회원정보수정
 	public UserVO showUserDetail(int idx) {
 		UserVO vo=(UserVO) userDAO.selectOne(idx);
