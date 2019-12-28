@@ -8,41 +8,6 @@
 	<title>마이페이지 | 내 정보</title>
 	
 	<script type="text/javascript">
-		// 초기 비밀번호 받기 버튼
-		function open_temp_pwd() {
-			
-			if ( "${user.sns_type}" != null) {
-				var check = confirm("가입하신 이메일로 초기 비밀번호를 발송할까요?");
-				
-				if( !check ) {
-					return;
-				}
-				
-				var url= "user_temp_pwd.do";
-				var param = "idx=" + "${user.idx}";
-				sendRequest(url, param, email_check, "get");
-				
-			} else {
-				alert("인증이 되어있는 계정입니다.");
-			}
-			
-				
-		}		
-			
-		
-		//이메일 
-		function email_check (){
-		
-			if( xhr.readyState == 4 && xhr.status == 200 ){
-				alert("이메일로 비밀번호가 발송되었습니다.");
-				window.reload();
-				location.href='#open_email';
-			}
-			
-		}
-		
-		
-		
 		// 핸드폰 본인 인증
 		function do_certificate() {
 			var input_phone = document.getElementById("phone-input");
@@ -112,10 +77,10 @@
 			}
 		}
 		
-		// 재전송 여부	
+		// 본인 인증 재전송 여부	
 		var re_certi = false;
 		
-		// 인증키 재전송 
+		// 본인 인증키 재전송 
 		function re_certificate() {
 			
 			if ( re_certi == true ) {
@@ -133,7 +98,7 @@
 			
 		}
 		
-		// 인증키 재전송 resultFn 
+		// 본인 인증키 재전송 resultFn 
 		function certificate_result2() {
 			if( xhr.readyState == 4 && xhr.status == 200 ){
 
@@ -157,7 +122,7 @@
 		}
 		
 		
-		// 인증키 인증 버튼
+		// 본인 인증키 인증 버튼
 		function certificateBtn( ) {
 			var key_input = document.getElementById("key-input");
 			
@@ -184,7 +149,7 @@
 		}			
 	
 		
-		// 유효성 
+		// 회원 정보 수정 유효성 검사 
 		function send( f ) {
 			
 			var original_pwd = f.original_pwd;
@@ -229,7 +194,7 @@
 			}			
 			
 			f.action = "user_update.do";
-			//f.method = "post";
+			f.method = "post";
 			f.submit();
 			
 		}
@@ -272,7 +237,7 @@
 					<div class="line-bottom">
 						<div class="menu-bar-box">
 							<div class="mypage-menu-box">
-								<a href="#" class="menu room sub-section-title black tac" onmouseover="move_left();" onmouseout="move_right();">내 스터디룸</a>
+								<a href="study_myinfo.do" class="menu room sub-section-title black tac" onmouseover="move_left();" onmouseout="move_right();">내 스터디룸</a>
 								<a href="#" class="menu info sub-section-title black tac" >회원 정보</a>
 							</div>
 							<div id="bar" class="right"></div>
@@ -291,69 +256,45 @@
 									<th>이메일</th>
 									<td><input type="text" readonly id="email"
 										title="id" value ="${user.email}"></td>
-									</td>
 								</tr>
 									
 								<tr>	
 									<th>이름</th>
 									<td><input type="text" readonly id="name"
 										title="이름" value ="${user.name}"></td>
-									</td>
-								</tr>
-
-								<tr>
-									<th>  </th>
-									<td>
-										<input class="my-btn black-white" name="" type="button" value="초기 비밀번호 받기">									
-									<p class="section-discription">* sns 로그인 유저만 1회에 한해 가입하신 이메일로 받으실 수 있습니다.</p>
-									<!-- 초기비밀번호인증모달 -->	
-									<div class="info_content input" id="open_email">
-										<div>
-											<br>
-											<p class="section-discription tal">
-												입력하신 이메일로 초기 비밀번호가 발송되었습니다. <br>
-												발송된 초기 비밀번호를 통해 비밀번호를 변경해주세요. <br>
-												
-											</p>
-											<br> <input type="button" class="my-btn yellow-black" onClick="certificateBtn_phone();" value="확인" /> 
-											<input type="button" class="my-btn yellow-black" onClick="location.href='#close_phone'" value="닫기" />
-										</div>
-									</div>
-									</td>
 								</tr>
 
 								<tr>	
 									<th>현재 비밀번호</th>
 									<td><input type="password" id="pwd" name="original_pwd" title="현재 비밀번호"
 										placeholder="특수기호 포함 영숫자 조합 8자 이상 "></td>
-									</td>
 								</tr>
 
+								<tr>	
+									<th></th>
+									<td><span class="section-discription">SNS 회원님의 경우 비밀번호 찾기를 통해 초기 비밀번호를 발급받아주세요.</span><br><br>
+									<input type="button" class="my-btn black-white" value="비밀번호 찾기" onClick="location.href='user_find.do'"></td>
+								</tr>
+								
 								<tr>
 									<th>바꿀 비밀번호</th>
-									<td><input type="password" id="new_pwd" name="password" title="바꿀 비밀번호"
-										placeholder="바꿀 비밀번호를 입력해주세요."></td>
-									</td>
+									<td><input type="password" id="new_pwd" name="password" title="바꿀 비밀번호" placeholder="바꿀 비밀번호를 입력해주세요."></td>
 								</tr>
 
 								<tr>
 									<th>비밀번호 확인</th>
-									<td><input type="password" id="pwd_check" title="비밀번호 확인"
-										placeholder="바꿀 비밀번호를 다시 한번 입력해주세요."></td>
-									</td>
+									<td><input type="password" id="pwd_check" title="비밀번호 확인" placeholder="바꿀 비밀번호를  재입력해주세요."></td>
 								</tr>
 								
 								<tr>	
 									<th>전화번호</th>
-									<td><input type="text" id="tel-input" title="전화번호 입력"
-										placeholder="'-'을 제외하고 입력해주세요." value = "${ user.phone}"></td>
+									<td><input type="text" id="tel-input" value = "${user.phone}"></td>
 									<td>
-										<input class="my-btn black-white" onClick="location.href='#open_phone'" type="button" value="본인 인증">
-									</td>			
+										<input class="my-btn black-white" onClick="location.href='#open_phone'" type="button" value="번호 변경">
 										<div class="info_content input" id="open_phone">
 											<div>
 												<p class="section-discription tal">
-													변경할 휴대폰 번호를 입력해주세요.<br><br>
+													번호를 변경하기 위해서는 인증이 필요합니다. <br>변경할 휴대폰 번호를 입력해주세요.<br><br>
 													<input type="text" id="phone-input" placeholder="'-'이 자동으로 입력됩니다." maxlength="13">
 												</p><br>
 												<input type="button" class="my-btn yellow-black" onClick="do_certificate();" value="인증"/>
@@ -371,7 +312,6 @@
 												<input type="button" class="my-btn yellow-black" onClick="location.href='#close_key'" value="취소"/>
 											</div>
 										</div>			
-										<input type="hidden" value="1" name="is_phone_auth">
 									</td>
 								</tr>
 								

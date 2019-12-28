@@ -141,7 +141,7 @@ public class UserController {
 		return map;
 	}
 
-	//아이디 찾기
+	// 아이디 찾기
 	@RequestMapping("/user_find_phone_certificate.do")
 	@ResponseBody
 	public Map user_find_phone_certificate(String phone, String name ) {
@@ -153,9 +153,7 @@ public class UserController {
 		System.out.println("name:"+name);
 		
 		UserVO vo = userService.selectOne(phone, name);
-		
-		System.out.println("vo name: "+vo.getName());
-		
+
 		if(vo == null) {
 			map = new HashMap();
 			map.put("tempKey", "not_member");
@@ -344,10 +342,7 @@ public class UserController {
 	// 회원정보 페이지 이동
 	@RequestMapping("/user_myinfo_form.do")
 	public String user_myinfo_mod( ) {
-		
-//		UserVO user = userService.showUserDetail(idx);
-//
-//		model.addAttribute("user", user);
+
 		return Common.User.VIEW_PATH + "user_myinfo.jsp";
 	}
 
@@ -365,17 +360,25 @@ public class UserController {
 		return "user_myinfo.do?idx"+vo;
 	}
 	
-	
-	// 초기 비밀번호 전송 
+	// 이메일 - 이름 유효성 검사 ( 비밀번호 찾기 기능용 )
+	@RequestMapping("/email_name_check.do")
+	@ResponseBody
+	public String email_name_check( String email, String name) {
+		String res = userService.email_name_check(email, name);
+		
+		return res;
+	}
+
+	// 임시 비밀번호 전송 
 	@RequestMapping("/user_temp_pwd.do")
 	@ResponseBody
-	public int user_temp_pwd(int idx) {
+	public int user_temp_pwd(String email) {
 		
 		int res = 0;
+		
 		try {
-			res = userService.userTempPwd(idx);
+			res = userService.userTempPwd(email);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -383,15 +386,12 @@ public class UserController {
 		
 	}
 	
-	//회원탈퇴
-	
+	// 회원탈퇴
 	@RequestMapping("/user_del.do")
 	public String user_del(int idx) {
 		String res = userService.user_del(idx);
 		return "redirect:/index.do";
 
-	}
-		
-	
+	} 
 
 }

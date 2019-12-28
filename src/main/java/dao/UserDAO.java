@@ -113,15 +113,18 @@ public class UserDAO implements DAO {
 		return result;
 	}
 	
+	// 이메일 - 이름 확인 
+	public int email_name_check( Map map ) {
+		int res = sqlSession.selectOne("user.email_name_check", map);
+		return res;
+	}
 	
-	//초기 비밀번호 
+	// 임시 비밀번호 
 	public int update_user_TempPwd(Map map) {
 	
 		int res = sqlSession.update("user.update_user_TempPwd", map);
-		
-		
-		return res;
-		
+
+		return res;		
 	}
 	
 	

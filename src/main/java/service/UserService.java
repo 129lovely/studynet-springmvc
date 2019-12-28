@@ -163,22 +163,38 @@ public class UserService {
 		return vo;
 	}
 	
-	////회원정보수정
+	// 회원 정보 불러오기
 	public UserVO showUserDetail(int idx) {
 		UserVO vo=(UserVO) userDAO.selectOne(idx);
 		return vo;
 	}
 	
+	// 회원 정보 수정
 	public int userMyinfo(UserVO vo) throws Exception {
 		int res=userDAO.update_user(vo);
 		
 		return res;
-
 	}
 	
-	// 초기비밀번호 전송
-	
-	public int userTempPwd(int idx) throws Exception {
+	// 비밀번호 발송을 위한 이름 - 이메일 확인 
+	public String email_name_check( String email, String name ) {
+		Map map = new HashMap();
+		map.put("email", email);
+		map.put("name", name);
+		
+		int res = userDAO.email_name_check( map );
+		
+		String result = "no";
+		
+		if ( res != 0 ) {
+			result = "yes";
+		}
+		
+		return result;
+	}
+		
+	// 임시 비밀번호 전송
+	public int userTempPwd(String email) throws Exception {
 	
 		// temp키 를 가져와서 idx 랑 초기비밀 맵으로 묶고 그다음 dao로 보내고 원래비밀번호를 temp 비밀번호로  동시에 메일로
 		
@@ -186,10 +202,8 @@ public class UserService {
 		String tempPwd = TempPwdGenerator.randomPw();
 		
 		Map map = new HashMap();
-		map.put("idx", idx);
+		map.put("email", email);
 		map.put("tempPwd", tempPwd);
-		
-		UserVO vo=(UserVO) userDAO.selectOne(idx);
 		
 		int res = userDAO.update_user_TempPwd(map);
 		
@@ -198,8 +212,8 @@ public class UserService {
 			// 가입 축하 메일 발송
 			MailUtils mail = new MailUtils(mailSender);
 
-			mail.setSubject("[스터디넷] 초기비밀번호를 보내 드립니다.");
-			mail.setTo(vo.getEmail());
+			mail.setSubject("[스터디넷] 임시 비밀번호를 보내 드립니다.");
+			mail.setTo( email );
 			mail.setFrom("studynet2019web@gmail.com", "스터디넷");
 
 			mail.setText(new StringBuffer()
@@ -218,7 +232,6 @@ public class UserService {
 	}
 	
 	// 회원탈퇴
-	
 	public String user_del(int idx) {
 		
 		UserVO baseVO = (UserVO) userDAO.selectOne(idx);

@@ -9,56 +9,6 @@
 	<meta charset="UTF-8">
 	<title>아이디 / 비밀번호 찾기</title>
 	
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/httpRequest.js"></script>
-	
-	<script type="text/javascript">
-	// 하이픈 자동 입력 스크립트
-	var autoHypenPhone = function(str){
-      	str = str.replace(/[^0-9]/g, '');
-      	
-     	 	var tmp = '';
-     	 	
-      	if( str.length < 4){
-          	return str;
-          	
-      	} else if(str.length < 7){
-          	tmp += str.substr(0, 3);
-          	tmp += '-';
-          	tmp += str.substr(3);
-          	return tmp;
-          	
-      } else if(str.length < 11){
-          	tmp += str.substr(0, 3);
-          	tmp += '-';
-          	tmp += str.substr(3, 3);
-          	tmp += '-';
-          	tmp += str.substr(6);
-          	return tmp;
-          	
-      } else {              
-          	tmp += str.substr(0, 3);
-          	tmp += '-';
-          	tmp += str.substr(3, 4);
-          	tmp += '-';
-          	tmp += str.substr(7);
-          	return tmp;
-      }
-  
-      return str;
-}
-
-	// 적용
-	window.onload = function () {
-		
-		var phone = document.getElementById('phone');
-		
-		phone.onkeyup = function(){
-		  	console.log(this.value);
-		  	this.value = autoHypenPhone( this.value ) ;  
-		}
-	};
-	</script>
-	
 	<script type="text/javascript">
 	
 	// 아이디 찾기 - 정보 입력
@@ -169,7 +119,7 @@
 		}
 	}
 	
-	// 비번 찾기
+	// 비번 찾기 입력 > 유효성 검사
 	function find_pwd(f){
 		var name = f.name_p;
 		var email = f.email;
@@ -196,9 +146,43 @@
 		// 전화번호 인증 메서드 참고하세여 ( 문자 보내는 메서드 빼고 )
 		// 만약 일치하는 정보가 없다면 주석으로 회원 정보 없음 체크해놓고
 		// 있으면 회원 정보 있음 이라고 체크해두세요.
-
+		
+		var url = "email_name_check.do";
+		var param = "email=" + encodeURIComponent(email.value) + "&name=" + encodeURIComponent(name.value);
+		
+		sendRequest(url, param, send_temp_pwd, "get");
 	}
 	
+	// 임시 비밀번호 전송
+	function send_temp_pwd() {
+		if( xhr.readyState == 4 && xhr.status == 200 ){
+			var res = xhr.responseText;
+			
+			if ( res != null ) {
+				if ( res == "no" ){
+					alert("회원 정보가 올바르지 않습니다. ");
+					return;
+				} 
+				
+				var check = confirm("가입하신 이메일로 임시 비밀번호를 발송할까요?");
+				
+				if( !check ) {
+					return;
+				}
+				
+				var email = document.getElementById("email").value;
+				var url= "user_temp_pwd.do";
+				var param = "email=" + encodeURIComponent(email);
+				sendRequest(url, param, email_check, "get");
+			}
+		}
+	}
+	
+	function email_check() {
+		if ( xhr.readyState == 4 && xhr.status == 200 ) {
+			alert("임시 비밀번호가 발송되었습니다. 이메일을 확인해주세요.");	
+		}
+	}
 	
 	</script>
 	
@@ -209,6 +193,7 @@
 	<!-- 페이지-->
 	<div class="body-bgcolor-set">
 		<div class="user-find pt190"><br><br>
+		
 			<!-- id찾기 -->
 			<form class="contents-box inner-box" >
 				<p class="section-title blue">아이디 찾기</p> 
@@ -255,20 +240,21 @@
 			<!-- pw 찾기 -->
 			<form class="contents-box inner-box">
 				<p class="section-title blue">비밀번호 찾기</p> 
+				<p class="tal"> * 이메일로 임시 비밀번호가 발송됩니다.</p><br>
 				<div class="find-input line-bottom">
 					<div class="find-input-text">
 						<div>
-							<label>이 &nbsp; 름&nbsp; &nbsp; 
+							<label>이 &nbsp; 름&nbsp; &nbsp;
 								<input type="text" name="name_p" placeholder="이름을 입력해주세요.">
 							</label>
 						</div>
 						<div>
 							<label>이메일&nbsp; &nbsp;
-									<input type="text" name="email" placeholder="example@email.com">
+									<input type="text" name="email" id="email" placeholder="example@email.com">
 							</label>
 						</div>
 					</div>	
-					<input type="button" value="메일 인증" class="my-btn yellow-black" onClick="find_pwd(this.form);">
+					<input type="button" value="확인" class="my-btn yellow-black" onClick="find_pwd(this.form);">
 				</div>
 			</form>
 			<div class="inner-box"><br>
@@ -278,8 +264,59 @@
 				</div>
 			</div>
 		 </div>
-		</div>
+	</div>
+		
 	 <jsp:include page="../footer.jsp"></jsp:include>
+	 	
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/httpRequest.js"></script>
+	
+	<script type="text/javascript">
+	// 하이픈 자동 입력 스크립트
+	var autoHypenPhone = function(str){
+      	str = str.replace(/[^0-9]/g, '');
+      	
+     	 	var tmp = '';
+     	 	
+      	if( str.length < 4){
+          	return str;
+          	
+      	} else if(str.length < 7){
+          	tmp += str.substr(0, 3);
+          	tmp += '-';
+          	tmp += str.substr(3);
+          	return tmp;
+          	
+      } else if(str.length < 11){
+          	tmp += str.substr(0, 3);
+          	tmp += '-';
+          	tmp += str.substr(3, 3);
+          	tmp += '-';
+          	tmp += str.substr(6);
+          	return tmp;
+          	
+      } else {              
+          	tmp += str.substr(0, 3);
+          	tmp += '-';
+          	tmp += str.substr(3, 4);
+          	tmp += '-';
+          	tmp += str.substr(7);
+          	return tmp;
+      }
+  
+      return str;
+}
+
+	// 적용
+	window.onload = function () {
+		
+		var phone = document.getElementById('phone');
+		
+		phone.onkeyup = function(){
+		  	console.log(this.value);
+		  	this.value = autoHypenPhone( this.value ) ;  
+		}
+	};
+	</script>
 </body>
 
 </html>
