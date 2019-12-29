@@ -97,6 +97,7 @@ public class StudyService {
 		return vo;
 	}
 
+//	이부분 유저 스터디 리스트, 유저 스테이터스 등으로 바꾸는 게 좋을 것 같아여 
 	// study_myinfo에서 study_member의 status가져오기
 	public StudyMemberVO studyMemStatus(int user_idx) {
 		StudyMemberVO vo = studyDAO.study_member_status(user_idx);
@@ -109,4 +110,9 @@ public class StudyService {
 		return list;
 	}
 	
+	// 스터디에 참여 / 신청 중인 멤버 리스트 가져오기
+	public List<StudyMemberVO> member_list( int study_idx ) {
+		List<StudyMemberVO> member = studyDAO.member_list(study_idx);
+		return member;
+	}
 }

@@ -137,5 +137,9 @@ public class StudyDAO implements DAO {
 		return list;
 	}
 	
-	
+	// 스터디에 참여/신청 중인 멤버 리스트 가져오기
+	public List<StudyMemberVO> member_list( int study_idx ) {
+		List<StudyMemberVO> member = sqlSession.selectList("study.member_list", study_idx);
+		return member;
+	}
 }

@@ -329,7 +329,18 @@ public class StudyController {
 	
 	// 스터디 룸 개별 페이지 : 관리자
 	@RequestMapping("/study_room_manage.do")
-	public String study_room_manage () {
+	public String study_room_manage ( int study_idx, Model model ) {
+		// 스터디 정보 가져오기
+		StudyVO study = studyService.showStudyDetail(study_idx);
+		model.addAttribute("study", study);
+		
+		// 스터디 멤버 정보 가져오기
+		List<StudyMemberVO> member = studyService.member_list(study_idx);
+		model.addAttribute("member", member);
+		
+		// 스터디 관리자 정보 가져오기
+		// 리스트로 받아와야 함 ( 공동 관리자 때문에 )
+		
 		return Common.Study.VIEW_PATH + "study_room_manage.jsp";
 	}
 }

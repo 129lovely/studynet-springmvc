@@ -139,6 +139,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from study where idx=#{study_idx}
 	</select>
 		
+	<select id="member_list" parameterType="int" resultType="studyMember">
+		SELECT m.*, u.name, u.email, u.phone, u.region, u.job 
+		FROM study_member m
+		LEFT OUTER JOIN user u
+		ON u.idx = m.user_idx
+		WHERE study_idx = #{study_idx}
+	</select>
 </mapper>
 
 
