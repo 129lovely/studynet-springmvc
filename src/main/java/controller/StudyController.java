@@ -321,10 +321,10 @@ public class StudyController {
 		
 	// 공동 관리자 추가
 	@RequestMapping("/add_admin.do")
-	public String add_admin( int idx ) { 
+	public String add_admin( int idx, Model model ) { 
 		
 		int res = studyService.add_admin( idx );
 		
-		return null;
+		return Common.Study.VIEW_PATH + "add_admin_complete.jsp";
 	}
 }
