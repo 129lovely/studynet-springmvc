@@ -2,7 +2,7 @@ package vo;
 
 public class StudyMemberVO {
 	private int idx, user_idx, study_idx, is_admin;
-	String introduce, status;
+	String introduce, mem_status, name, email, region, phone, job;
 	
 	public int getIdx() {
 		return idx;
@@ -34,11 +34,41 @@ public class StudyMemberVO {
 	public void setIntroduce(String introduce) {
 		this.introduce = introduce;
 	}
-	public String getStatus() {
-		return status;
+	public String getMem_status() {
+		return mem_status;
 	}
-	public void setStatus(String status) {
-		this.status = status;
+	public void setMem_status(String mem_status) {
+		this.mem_status = mem_status;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getRegion() {
+		return region;
+	}
+	public void setRegion(String region) {
+		this.region = region;
+	}
+	public String getPhone() {
+		return phone;
+	}
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	public String getJob() {
+		return job;
+	}
+	public void setJob(String job) {
+		this.job = job;
 	}
 	
 	

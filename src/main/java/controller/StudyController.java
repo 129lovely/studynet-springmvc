@@ -69,12 +69,12 @@ public class StudyController {
 		HttpSession session = request.getSession();
 		UserVO user = (UserVO) session.getAttribute("user");
 		
-		StudyMemberVO member=studyService.studyMemStatus(user.getIdx());
-		List<StudyVO> list=(ArrayList<StudyVO>)studyService.studyMemList(member.getStudy_idx());
+//		StudyMemberVO member=studyService.studyMemStatus(user.getIdx());
+//		List<StudyVO> list=(ArrayList<StudyVO>)studyService.studyMemList(member.getStudy_idx());
 		
-		model.addAttribute("member", member);
+//		model.addAttribute("member", member);
 		model.addAttribute("user", user);
-		model.addAttribute("list", list);
+//		model.addAttribute("list", list);
 		
 		return Common.Study.VIEW_PATH + "study_myinfo.jsp";
 	}
@@ -143,7 +143,7 @@ public class StudyController {
 
 		vo.setPhoto(photo);
 
-		studyService.insert( vo );	
+		int res = studyService.insert( vo );	
 
 		return "redirect:study_list.do";
 	}
@@ -193,6 +193,7 @@ public class StudyController {
 		model.addAttribute("row_total", row_total);
 
 		return Common.Study.VIEW_PATH + "study_list.jsp";
+
 	}
 
 	//스터디 상세 페이지
@@ -218,6 +219,7 @@ public class StudyController {
 	@RequestMapping("/study_create_modify_form.do")
 	public String study_create_mod(Model model, int idx) {
 		StudyVO study = studyService.showStudyDetail(idx);
+
 		model.addAttribute("study", study);
 		return Common.Study.VIEW_PATH + "study_create_modify.jsp";
 	}
@@ -225,7 +227,8 @@ public class StudyController {
 	// 스터디 수정하기
 	@RequestMapping("/study_create_modify.do")
 	public String study_create_modify(int idx) {
-		studyService.studyModify(idx);
+		int res = studyService.studyModify(idx);
+
 		return "study_list_detail.do?idx=" + idx;
 	}
 
@@ -234,21 +237,14 @@ public class StudyController {
 	public String study_apply(String introduce, int study_idx, HttpServletRequest request){
 
 		UserVO user = (UserVO) request.getSession().getAttribute("user");
-		Map<String, Object> map = new HashMap<String, Object>();
+		Map map = new HashMap();
 		map.put("user_idx", user.getIdx());
 		map.put("study_idx", study_idx);
 		map.put("introduce", introduce);
 
-		studyService.study_apply(map);
+		int res = studyService.study_apply(map);
 		return "redirect:study_list_detail.do?idx=" + study_idx; 
 
-	}
-
-	// 아이디 비번 찾기 페이지로 이동
-	@RequestMapping("/user_find.do")
-	public String user_find(HttpServletRequest request ) {
-
-		return Common.User.VIEW_PATH + "user_find.jsp";
 	}
 
 	// 스터디 중복 체크
@@ -277,7 +273,18 @@ public class StudyController {
 	
 	// 스터디 룸 개별 페이지 : 관리자
 	@RequestMapping("/study_room_manage.do")
-	public String study_room_manage () {
+	public String study_room_manage ( int study_idx, Model model ) {
+		// 스터디 정보 가져오기
+		StudyVO study = studyService.showStudyDetail(study_idx);
+		model.addAttribute("study", study);
+		
+		// 스터디 멤버 정보 가져오기
+		List<StudyMemberVO> member = studyService.member_list(study_idx);
+		model.addAttribute("member", member);
+		
+		// 스터디 관리자 정보 가져오기
+		// 리스트로 받아와야 함 ( 공동 관리자 때문에 )
+		
 		return Common.Study.VIEW_PATH + "study_room_manage.jsp";
 	}
 }

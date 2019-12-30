@@ -141,6 +141,36 @@ public class UserController {
 		return map;
 	}
 
+	// 아이디 찾기
+	@RequestMapping("/user_find_phone_certificate.do")
+	@ResponseBody
+	public Map user_find_phone_certificate(String phone, String name ) {
+		Map map = null;
+		
+		CertificationKeyGenerator keyGen = CertificationKeyGenerator.newInstance();
+		
+		System.out.println("phone:"+phone);
+		System.out.println("name:"+name);
+		
+		UserVO vo = userService.selectOne(phone, name);
+
+		if(vo == null) {
+			map = new HashMap();
+			map.put("tempKey", "not_member");
+			
+			return map;
+		}
+		
+		try {
+			map = keyGen.tempKeyGenerator(phone);
+			map.put("email", vo.getEmail());
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return map;
+	}
 	// 네이버 로그인1
 	@RequestMapping("/nlogin.do")
 	public ModelAndView nlogin(HttpServletRequest request) {		
@@ -301,6 +331,67 @@ public class UserController {
 		
 		return res = "success";
 	}
+	
+	// 아이디 비번 찾기 페이지로 이동
+	@RequestMapping("/user_find.do")
+	public String user_find(HttpServletRequest request ) {
 
+		return Common.User.VIEW_PATH + "user_find.jsp";
+	}
+
+	// 회원정보 페이지 이동
+	@RequestMapping("/user_myinfo_form.do")
+	public String user_myinfo_mod( ) {
+
+		return Common.User.VIEW_PATH + "user_myinfo.jsp";
+	}
+
+	// 회원정보 수정하기
+	@RequestMapping("/user_update.do")
+	public String user_myinfo(UserVO vo) {
+		
+		try {
+			int res = userService.userMyinfo(vo);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "user_myinfo.do?idx"+vo;
+	}
+	
+	// 이메일 - 이름 유효성 검사 ( 비밀번호 찾기 기능용 )
+	@RequestMapping("/email_name_check.do")
+	@ResponseBody
+	public String email_name_check( String email, String name) {
+		String res = userService.email_name_check(email, name);
+		
+		return res;
+	}
+
+	// 임시 비밀번호 전송 
+	@RequestMapping("/user_temp_pwd.do")
+	@ResponseBody
+	public int user_temp_pwd(String email) {
+		
+		int res = 0;
+		
+		try {
+			res = userService.userTempPwd(email);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return res;
+		
+	}
+	
+	// 회원탈퇴
+	@RequestMapping("/user_del.do")
+	public String user_del(int idx) {
+		String res = userService.user_del(idx);
+		return "redirect:/index.do";
+
+	} 
 
 }

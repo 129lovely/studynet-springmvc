@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.springframework.mail.javamail.JavaMailSender;
 
 import common.MailUtils;
+import common.TempPwdGenerator;
 import dao.BoardDAO;
 import dao.StudyDAO;
 import dao.UserDAO;
@@ -149,15 +150,109 @@ public class UserService {
 		UserVO vo = (UserVO) userDAO.selectOne(user_idx);
 		return vo;
 	}
+	
 	// 전화번호 + 이름 확인
-		public int selectOne( String phone, String name ) {
-			
-			Map map = new HashMap();
-			map.put("phone", phone);
-			map.put("name", name);
-			
-			int res = userDAO.selectEmail(map);
-			
-			return res;
+	public UserVO selectOne( String phone, String name ) {
+		
+		Map map = new HashMap();
+		map.put("phone", phone);
+		map.put("name", name);
+		
+		UserVO vo = userDAO.selectEmail(map);
+		
+		return vo;
+	}
+	
+	// 회원 정보 불러오기
+	public UserVO showUserDetail(int idx) {
+		UserVO vo=(UserVO) userDAO.selectOne(idx);
+		return vo;
+	}
+	
+	// 회원 정보 수정
+	public int userMyinfo(UserVO vo) throws Exception {
+		int res=userDAO.update_user(vo);
+		
+		return res;
+	}
+	
+	// 비밀번호 발송을 위한 이름 - 이메일 확인 
+	public String email_name_check( String email, String name ) {
+		Map map = new HashMap();
+		map.put("email", email);
+		map.put("name", name);
+		
+		int res = userDAO.email_name_check( map );
+		
+		String result = "no";
+		
+		if ( res != 0 ) {
+			result = "yes";
 		}
+		
+		return result;
+	}
+		
+	// 임시 비밀번호 전송
+	public int userTempPwd(String email) throws Exception {
+	
+		// temp키 를 가져와서 idx 랑 초기비밀 맵으로 묶고 그다음 dao로 보내고 원래비밀번호를 temp 비밀번호로  동시에 메일로
+		
+		new TempPwdGenerator();
+		String tempPwd = TempPwdGenerator.randomPw();
+		
+		Map map = new HashMap();
+		map.put("email", email);
+		map.put("tempPwd", tempPwd);
+		
+		int res = userDAO.update_user_TempPwd(map);
+		
+		if ( res != 0 ) {
+
+			// 가입 축하 메일 발송
+			MailUtils mail = new MailUtils(mailSender);
+
+			mail.setSubject("[스터디넷] 임시 비밀번호를 보내 드립니다.");
+			mail.setTo( email );
+			mail.setFrom("studynet2019web@gmail.com", "스터디넷");
+
+			mail.setText(new StringBuffer()
+					.append("<body><div><table align=\"center\"><tr><td style=\"border-bottom: 1px solid gray; padding: 10px;\"><img src=\"https://i.imgur.com/ATMKhlq.png\" style=\"width:150px; margin: 0 auto; \"><br></td></tr><tr><td style=\"border-bottom: 1px solid gray; padding: 10px; text-align: center;\"><h2 style=\"color: steelblue;\">요청하신 임시 비밀번호입니다.</h2><p style=\"background: steelblue; color: white; font-weight: bold;padding: 10px;width: 200px;text-align: center;border-radius: 10px;margin: 0 auto;\">")
+					.append(tempPwd)
+					.append("</p><br><a href=\\'http://localhost:9090/web/user_login_form.do\\' style=\\\"font-weight: bold;\\\">로그인 하러 가기</a><br><br><small style=\\\"color: steelblue;\\\">만약 스터디넷에 가입한 적이 없으시다면 이 메일을 무시해주세요.</small><br><br></td></tr><tr><td><small style=\\\"color: gray; margin-top: 30px;\\\">(주)스터디넷 | 서울특별시 마포구 서강로 136 아이비 타워 2층 | 02-1111-3333 | studynet2019web@gmail.com </small></td></tr></table></div></body>")
+					.toString());
+
+			mail.send();
+
+		}
+		
+		
+		
+		return res;
+	}
+	
+	// 회원탈퇴
+	public String user_del(int idx) {
+		
+		UserVO baseVO = (UserVO) userDAO.selectOne(idx);
+
+		String result = "no";
+
+		if( baseVO == null ) {
+			return result;
+		}
+
+		int res = userDAO.user_del_update( baseVO );
+
+		if( res == 1 ) {
+			result = "yes";
+		}
+
+		return result;
+	}
+		
+	
+	
+
+
 }
