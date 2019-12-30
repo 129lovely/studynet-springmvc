@@ -115,4 +115,42 @@ public class StudyService {
 		List<StudyMemberVO> member = studyDAO.member_list(study_idx);
 		return member;
 	}
+	
+	// 선택한 멤버 승인
+	public int mem_approve( String[] idx_arr ) {
+		
+		int result = 0;
+		
+		for(int i = 0; i < idx_arr.length ; i++ ) {
+			int idx = Integer.parseInt(idx_arr[i]);
+			int res = studyDAO.mem_approve( idx );
+			
+			if( res == 0 ) {
+				result += 0;
+			} else {
+				result += 1;
+			}
+		}
+		
+		return result;
+	}
+	
+	// 선택한 멤버 거부
+	public int mem_reject( String[] idx_arr ) {
+		
+		int result = 0;
+		
+		for(int i = 0; i < idx_arr.length ; i++ ) {
+			int idx = Integer.parseInt(idx_arr[i]);
+			int res = studyDAO.mem_reject( idx );
+			
+			if( res == 0 ) {
+				result += 0;
+			} else {
+				result += 1;
+			}
+		}
+		
+		return result;
+	}
 }

@@ -14,6 +14,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from study
 		order by idx desc limit 8
 	</select>
+	
 	<!-- 스터디 생성 -->
 	<insert id="insert" parameterType="study">
 		INSERT INTO study (title, create_user_idx, 
@@ -139,6 +140,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from study where idx=#{study_idx}
 	</select>
 		
+	<!-- 스터디 멤버 목록 가져오기 -->
 	<select id="member_list" parameterType="int" resultType="studyMember">
 		SELECT m.*, u.name, u.email, u.phone, u.region, u.job 
 		FROM study_member m
@@ -146,6 +148,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ON u.idx = m.user_idx
 		WHERE study_idx = #{study_idx}
 	</select>
+	
+	<!-- 선택 멤버 승인 -->
+	<update id="mem_approve" parameterType="int">
+		UPDATE study_member 
+		SET mem_status = '승인'
+		WHERE idx = #{idx}	
+	</update>
+	
+	<!-- 선택 멤버 거부 -->
+	<update id="mem_reject" parameterType="int">
+		UPDATE study_member 
+		SET mem_status = '승인거부'
+		WHERE idx = #{idx}
+	</update>
 </mapper>
 
 

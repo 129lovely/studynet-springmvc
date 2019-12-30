@@ -343,4 +343,24 @@ public class StudyController {
 		
 		return Common.Study.VIEW_PATH + "study_room_manage.jsp";
 	}
+	
+	// 선택 인원 승인
+	@RequestMapping("/mem_approve.do")
+	@ResponseBody
+	public int mem_approve( String[] idx ) {
+		
+		int res = studyService.mem_approve( idx );
+			
+		return res;
+	}
+	
+	// 선택 인원 거부
+		@RequestMapping("/mem_reject.do")
+		@ResponseBody
+		public int mem_reject( String[] idx ) {
+			
+			int res = studyService.mem_reject( idx );
+				
+			return res;
+		}
 }

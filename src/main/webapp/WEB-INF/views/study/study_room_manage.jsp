@@ -134,7 +134,7 @@
                                                 </div>
 
                                                 <div class="manage-button">
-                                                    <input type="button" class="my-btn yellow-black" value="선택 인원  강퇴">
+                                                    <input type="button" class="my-btn yellow-black" value="선택 인원  강퇴" onClick="">
                                                 </div>
                                             </form>
                                        </div>
@@ -157,7 +157,7 @@
                                                         <c:forEach var="mem" items="${member}">
 	                                                       	<c:if test="${mem.mem_status eq '승인대기'}">
 	                                                        	<tr>
-	                                                            <td><input type="checkbox" name="approve_member" value="${mem.idx}"></td>
+	                                                            <td><input type="checkbox" name="apply_member" value="${mem.idx}"></td>
 	                                                            <td>${mem.name}</td>
 	                                                            <td>${mem.job}</td>
 	                                                            <td>${mem.region}</td>
@@ -169,8 +169,8 @@
                                                 </div>
 
                                                 <div class="manage-button">
-                                                    <input type="button" class="my-btn yellow-black" value="선택 인원 승인">
-                                                    <input type="button" class="my-btn yellow-black" value="선택 인원 거부">
+                                                    <input type="button" class="my-btn yellow-black" value="선택 인원 승인" onClick="mem_approve( );">
+                                                    <input type="button" class="my-btn yellow-black" value="선택 인원 거부" onClick="mem_reject( );">
                                                 </div>
                                             </form>
                                         </div>
@@ -296,6 +296,8 @@
 		<jsp:include page="../footer.jsp"></jsp:include>
 		
 		<script src="https://kit.fontawesome.com/95d80c99dc.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/httpRequest.js"></script>
+		
         <script>
             var flag = false;
 
@@ -341,6 +343,92 @@
 
 
             }
+        </script>
+        
+        
+        <script type="text/javascript">
+        
+        	// 선택 인원 승인 버튼
+        	function mem_approve( ) {
+        		
+				var check = confirm("선택한 인원을 승인할까요?");
+        		
+        		if ( ! check ) {
+        			return;
+        		}
+        		
+        		var param = "";
+        		var cnt = 0;
+        		
+        		// 선택한 인원 파라미터로 설정
+        		$("input[name=apply_member]:checked").each(function() {
+        			  var test = $(this).val(); 
+        			  
+        			  if( cnt != 0 ){
+        				  param += "&";
+        			  }
+        			  
+        			  cnt++
+        			  
+					  param += ( "idx=" + test );
+
+        		});
+        		
+        		var url = "mem_approve.do";
+        		
+        		sendRequest(url, param, mem_approve_res, "get");
+        		
+        	}
+        	
+        	// 선택 인원 승인 완료
+        	function mem_approve_res () {	
+        		if ( xhr.readyState == 4 && xhr.status == 200 ) {
+        			var result = xhr.responseText;     			
+        			alert(result + "명의 승인에 성공했습니다.");
+        			location.reload();
+        		}
+        	}
+     		
+        	// 선택 인원 거부 버튼
+        	function mem_reject( ) {
+        		
+        		var check = confirm("선택한 인원의 승인을 거부할까요?");
+        		
+        		if ( ! check ) {
+        			return;
+        		}
+        		
+        		var param = "";
+        		var cnt = 0;
+        		
+        		// 선택한 인원 파라미터로 설정
+        		$("input[name=apply_member]:checked").each(function() {
+        			  var test = $(this).val(); 
+        			  
+        			  if( cnt != 0 ){
+        				  param += "&";
+        			  }
+        			  
+        			  cnt++
+        			  
+					  param += ( "idx=" + test );
+
+        		});
+        		
+        		var url = "mem_reject.do";
+        		
+        		sendRequest(url, param, mem_reject_res, "get");
+        		
+        	}
+        	
+        	// 선택 인원 거부 완료
+        	function mem_reject_res () {	
+        		if ( xhr.readyState == 4 && xhr.status == 200 ) {
+        			var result = xhr.responseText;     			
+        			alert(result + "명의 승인 거부에 성공했습니다.");
+        			location.reload();
+        		}
+        	}
         
         </script>
 	</body>
