@@ -1,7 +1,6 @@
 ﻿package controller;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +23,6 @@ import dao.StudyDAO;
 import service.BoardService;
 import service.StudyService;
 import service.UserService;
-import vo.BoardVO;
 import vo.StudyMemberVO;
 import vo.StudyVO;
 import vo.UserVO;
@@ -355,12 +353,34 @@ public class StudyController {
 	}
 	
 	// 선택 인원 거부
-		@RequestMapping("/mem_reject.do")
-		@ResponseBody
-		public int mem_reject( String[] idx ) {
+	@RequestMapping("/mem_reject.do")
+	@ResponseBody
+	public int mem_reject( String[] idx ) {
+		
+		int res = studyService.mem_reject( idx );
 			
-			int res = studyService.mem_reject( idx );
-				
-			return res;
+		return res;
+	}
+		
+	// 관리자 추가 요청 메일
+	@RequestMapping("/add_study_admin_mail.do")
+	@ResponseBody
+	public void add_study_admin_mail( int idx, int study_idx, String email ) {
+		
+		try {
+			studyService.add_study_admin_mail( idx, study_idx, email );
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
+	}
+		
+	// 공동 관리자 추가
+	@RequestMapping("/add_admin.do")
+	public String add_admin( int idx ) { 
+		
+		int res = studyService.add_admin( idx );
+		
+		return null;
+	}
 }

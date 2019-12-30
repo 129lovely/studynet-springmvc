@@ -154,4 +154,10 @@ public class StudyDAO implements DAO {
 		int res = sqlSession.update("study.mem_reject", idx);
 		return res;
 	}
+	
+	// 스터디 관리자 추가
+	public int add_admin ( int idx ) {
+		int res = sqlSession.update("study.add_admin", idx);
+		return res;
+	}
 }

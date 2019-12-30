@@ -162,6 +162,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET mem_status = '승인거부'
 		WHERE idx = #{idx}
 	</update>
+	
+	<!-- 스터디 관리자 추가 -->
+	<update id="add_admin" parameterType="int">
+		UPDATE study_member
+		SET mem_status = 'admin', is_admin = 1
+		WHERE idx = #{idx}
+	</update>
 </mapper>
 
 

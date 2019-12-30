@@ -5,6 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.MessagingException;
+
+import org.springframework.mail.javamail.JavaMailSender;
+
+import common.MailUtils;
 import dao.BoardDAO;
 import dao.StudyDAO;
 import dao.UserDAO;
@@ -16,6 +21,8 @@ public class StudyService {
 	StudyDAO studyDAO;
 	UserDAO userDAO;
 	
+	JavaMailSender mailSender;
+	
 	public void setBoardDAO(BoardDAO boardDAO) {
 		this.boardDAO = boardDAO;
 	}
@@ -24,6 +31,10 @@ public class StudyService {
 	}
 	public void setUserDAO(UserDAO userDAO) {
 		this.userDAO = userDAO;
+	}
+	
+	public void setMailSender(JavaMailSender mailSender) {
+		this.mailSender = mailSender;
 	}
 	
 	//index.jsp에서 스터디 목록나오게하기
@@ -152,5 +163,43 @@ public class StudyService {
 		}
 		
 		return result;
+	}
+	
+	// 공동 관리자 요청 메일 전송
+	public void add_study_admin_mail( int idx, int study_idx, String email ) throws Exception {
+
+		System.out.println("email: " + email);
+		System.out.println("idx: " + idx);
+		System.out.println("study_idx: " + study_idx);
+		
+		// 메일 발송
+		MailUtils mail = new MailUtils(mailSender);
+		
+		mail.setSubject("[스터디넷] 스터디 공동 관리자 추가 요청입니다.");
+		mail.setTo(email);
+		mail.setFrom("studynet2019web@gmail.com", "스터디넷");
+		
+
+		
+		mail.setText(new StringBuffer()
+				.append("<body><div><table align=\"center\"><tr><td style=\"border-bottom: 1px solid gray; padding: 10px;\"><img src=\"https://i.imgur.com/ATMKhlq.png\" style=\"width:150px; margin: 0 auto; \"><br></td></tr><tr><td style=\"border-bottom: 1px solid gray; padding: 10px; text-align: center;\"><h2 style=\"color: steelblue;\">스터디 공동 관리자 추가 요청입니다.</h2><p>스터디 개설자가 회원님을 공동 관리자로 추가하길 원합니다. <br>공동 관리자 요청을 승인하고 스터디를 관리하시려면<br>아래의 승인하기 버튼을 눌러주세요.</p><p>공동 관리자는 기존 관리자와 같은 권한을 가지며<br>자신을 제외한 공동 관리자가 없을 경우 스터디 탈퇴가 불가능합니다.</p><br>")
+				.append("<a href=\"http://localhost:9090/web/study_list_detail.do?idx=")
+				.append(study_idx + "\"")
+				.append(" style=\"background: steelblue; color: white; font-weight: bold;padding: 10px;width: 200px;text-align: center;border-radius: 10px;margin: 0 auto; text-decoration: none;\">스터디 모집글 확인하기</a><br><br><br>")
+				.append("<a href=\"http://localhost:9090/web/add_admin.do?idx=")
+				.append(idx + "\"")
+				.append(" style=\"background: steelblue; color: white; font-weight: bold;padding: 10px;width: 200px;text-align: center;border-radius: 10px;margin: 0 auto; text-decoration: none;\">요청 승인하기</a><br><br>")
+				.append("<small style=\"color: steelblue;\">만약 스터디넷에 가입한 적이 없으시다면 이 메일을 무시해주세요.</small><br><br> </td></tr><tr><td><small style=\"color: gray; margin-top: 30px;\">(주)스터디넷 | 서울특별시 마포구 서강로 136 아이비 타워 2층 | 02-1111-3333 | studynet2019web@gmail.com </small></td></tr></table></div></body>")
+				.toString());
+		
+		mail.send();
+
+	}
+	
+	// 공동 관리자 추가
+	public int add_admin( int idx ) {
+		int res = studyDAO.add_admin( idx );
+		
+		return res;
 	}
 }
