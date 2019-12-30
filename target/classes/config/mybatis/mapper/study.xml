@@ -171,6 +171,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE idx = #{idx}
 	</update>
 	
+	<!-- 선택 멤버 강퇴 -->
+	<update id="mem_kick" parameterType="int">
+		UPDATE study_member 
+		SET mem_status = '강제탈퇴'
+		WHERE idx = #{idx}
+	</update>
+	
 	<!-- 스터디 관리자 추가 -->
 	<update id="add_admin" parameterType="int">
 		UPDATE study_member

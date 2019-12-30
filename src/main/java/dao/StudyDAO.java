@@ -149,7 +149,7 @@ public class StudyDAO implements DAO {
 		return res;
 	}
 	
-	// 선택한 스터디 멤버 승인
+	// 선택한 스터디 멤버 거절
 	public int mem_reject ( int idx ) {
 		int res = sqlSession.update("study.mem_reject", idx);
 		return res;
@@ -160,4 +160,11 @@ public class StudyDAO implements DAO {
 		int res = sqlSession.update("study.add_admin", idx);
 		return res;
 	}
+	
+	// 선택한 스터디 멤버 강퇴
+		public int mem_kick ( int idx ) {
+			int res = sqlSession.update("study.mem_kick", idx);
+			return res;
+		}
+	
 }

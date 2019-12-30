@@ -306,6 +306,16 @@ public class StudyController {
 		return res;
 	}
 		
+	// 선택 인원 추방
+	@RequestMapping("/mem_kick.do")
+	@ResponseBody
+	public int mem_kick( String[] idx ) {
+		
+		int res = studyService.mem_kick( idx );
+			
+		return res;
+	}
+	
 	// 관리자 추가 요청 메일
 	@RequestMapping("/add_study_admin_mail.do")
 	@ResponseBody

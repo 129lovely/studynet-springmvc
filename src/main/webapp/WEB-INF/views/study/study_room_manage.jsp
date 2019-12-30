@@ -145,7 +145,7 @@
                                                 </div>
 
                                                 <div class="manage-button">
-                                                    <input type="button" class="my-btn yellow-black" value="선택 인원  강퇴" onClick="">
+                                                    <input type="button" class="my-btn yellow-black" value="선택 인원  강퇴" onClick="mem_kick();">
                                                 </div>
                                             </form>
                                        </div>
@@ -505,7 +505,42 @@
         	}
         
         	// 선택한 인원 강퇴
+        	function mem_kick () {
+				var check = confirm("선택한 인원을 추방할까요?");
+        		
+        		if ( ! check ) {
+        			return;
+        		}
+        		
+        		var param = "";
+        		var cnt = 0;
+        		
+        		// 선택한 인원 파라미터로 설정
+        		$("input[name=approve_member]:checked").each(function() {
+        			  var test = $(this).val(); 
+        			  
+        			  if( cnt != 0 ){
+        				  param += "&";
+        			  }
+        			  
+        			  cnt++
+        			  
+					  param += ( "idx=" + test );
+
+        		});
+        		
+        		var url = "mem_kick.do";
+        		
+        		sendRequest(url, param, mem_kick_res, "get");
+        	}
         	
+        	function mem_kick_res () {
+        		if ( xhr.readyState == 4 && xhr.status == 200 ) {
+        			var result = xhr.responseText;     			
+        			alert(result + "명의 강제 탈퇴에 성공했습니다.");
+        			location.reload();
+        		}
+        	}
         </script>
 	</body>
 </html>

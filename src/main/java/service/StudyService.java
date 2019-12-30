@@ -165,6 +165,25 @@ public class StudyService {
 		return result;
 	}
 	
+	// 선택한 멤버 강퇴
+	public int mem_kick( String[] idx_arr ) {
+		
+		int result = 0;
+		
+		for(int i = 0; i < idx_arr.length ; i++ ) {
+			int idx = Integer.parseInt(idx_arr[i]);
+			int res = studyDAO.mem_kick( idx );
+			
+			if( res == 0 ) {
+				result += 0;
+			} else {
+				result += 1;
+			}
+		}
+		
+		return result;
+	}
+		
 	// 공동 관리자 요청 메일 전송
 	public void add_study_admin_mail( int idx, int study_idx, String email ) throws Exception {
 
