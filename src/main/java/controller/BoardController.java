@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import common.Common;
 import common.Paging;
+import common.PagingOption;
 import dao.BoardDAO;
 import service.BoardService;
 import vo.BoardCommentVO;
@@ -45,13 +46,10 @@ public class BoardController {
 		//1페이지라면 1 ~ 10번 게시물까지만 보여줘야 한다.
 		//2페이지라면 11 ~ 20번 게시물까지만 보여줘야한다.
 		int start = (nowPage -1) * Common.BoardPaging.BLOCKLIST + 1;
-		int end = start + Common.BoardPaging.BLOCKLIST - 1;
 
 		//start와 end를 map에 저장
-		Map map = new HashMap();
-		map.put("start", start);
-		map.put("end", end);
-
+		HashMap<String, Object> map = PagingOption.getPagingOption(start, Common.BoardPaging.BLOCKLIST );
+		
 		//게시글 전체목록 가져오기
 		List<BoardVO> list = null;
 		list = boardDAO.selectList( map );	
@@ -89,14 +87,9 @@ public class BoardController {
 		//1페이지라면 1 ~ 10번 게시물까지만 보여줘야 한다.
 		//2페이지라면 11 ~ 20번 게시물까지만 보여줘야한다.
 		int start = (nowPage -1) * Common.BoardPaging.BLOCKLIST + 1;
-		int end = start + Common.BoardPaging.BLOCKLIST - 1;
 
 		//start와 end를 map에 저장
-		Map map = new HashMap();
-		map.put("start", start);
-		map.put("end", end);
-
-		map.put("search", search);
+		HashMap<String, Object> map = PagingOption.getPagingOption(start, search, Common.BoardPaging.BLOCKLIST);
 
 		//게시글 전체목록 가져오기
 		List<BoardVO> list = null;
@@ -140,7 +133,7 @@ public class BoardController {
 	// 커뮤니티 게시글 삭제
 	@RequestMapping("/del.do")
 	public String board_del(int idx) {
-		int res = boardService.board_del(idx);
+		boardService.board_del(idx);
 		return "redirect:community_list.do";
 
 	}
@@ -157,7 +150,7 @@ public class BoardController {
 	@RequestMapping("/community_write_update.do")
 	public String community_write_update(BoardVO vo) {
 		int res=boardService.updateCommunity(vo);
-		return "community_list_detail.do?idx="+vo.getIdx();
+		return "community_list_detail.do?idx=" + vo.getIdx();
 	}
 
 	// 커뮤니티 게시글 상세보기

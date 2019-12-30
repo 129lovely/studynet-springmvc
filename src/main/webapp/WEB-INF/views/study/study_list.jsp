@@ -10,13 +10,21 @@
 	<meta charset="UTF-8">
 	<title>스터디 찾아보기</title>
 	<script type="text/javascript">
-	function send(f){	
-		if( $("input:checkbox[name='purpose']:checked").length == 0 ){
-			alert("스터디 목적을 1개 이상 선택해주세요.");
-			return;
+	function send(f){
+		var purpose = "";
+		var purposeList = $("input[type='checkbox']:checked");
+		
+		if( purposeList.length > 0 ){
+			$("input[type='checkbox']:checked").each(function() {
+				 purpose += $(this).val() + ",";
+			});
+			
+			purpose = purpose.substring( 0, purpose.length - 1);			
 		}
 		
-		f.action = "study_list_search.do";
+		$("input[name='purpose']").val(purpose);
+		
+		f.action = "study_list.do";
 		f.method = "get";
 		f.submit();
 	}
@@ -27,29 +35,31 @@
 	<div class="study-search-page">
 		<!-- 원하는 스터디 검색하기 -->
 		<form class="search-box mb20"  >
+			<input type="hidden" value="" name="purpose"/>
+			
 			<div class="flex-box pt190">
 				<h2 class="section-title">원하는 스터디 검색하기</h2>
 				<p class="mb10">step 1. 스터디 목적 선택하기 (복수 선택 가능)</p>
 				<div class="btn-box mb10">
 					<ul class="flex-box">
 						<li>
-							<input type="checkbox" name="purpose" value="공모전" id="purp_1"/>
+							<input type="checkbox" value="공모전" id="purp_1"/>
 							<label class="my-btn select black-white" for="purp_1">공모전</label>
 						</li>
 						<li>
-							<input type="checkbox" name="purpose" value="취업준비" id="purp_2"/>
+							<input type="checkbox" value="취업준비" id="purp_2"/>
 							<label class="my-btn select black-white" for="purp_2">취업준비</label>
 						</li>
 						<li>
-							<input type="checkbox" name="purpose" value="기상습관" id="purp_3"/>
+							<input type="checkbox" value="기상습관" id="purp_3"/>
 							<label class="my-btn select black-white" for="purp_3">기상/습관</label>
 						</li>
 						<li>
-							<input type="checkbox" name="purpose" value="공부" id="purp_4"/>
+							<input type="checkbox" value="공부" id="purp_4"/>
 							<label class="my-btn select black-white" for="purp_4">공부</label>
 						</li>
 						<li>
-							<input type="checkbox" name="purpose" value="기타" id="purp_5"/>
+							<input type="checkbox" value="기타" id="purp_5"/>
 							<label class="my-btn select black-white" for="purp_5">기타</label>
 						</li>
 					</ul>

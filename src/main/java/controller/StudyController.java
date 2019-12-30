@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -13,11 +14,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import common.Common;
 import common.Paging;
+import common.PagingOption;
 import common.Paging_study;
 import dao.BoardDAO;
 import dao.StudyDAO;
@@ -133,123 +136,63 @@ public class StudyController {
 				e.printStackTrace();
 			} 
 
-
 		} else {
-			// 지정된 파일이 없을 경우 샘플에서 가져온다. 
-			if( vo.getPurpose().equals("공모전") ) {
-				photo = "preview01.jpg";
-			} else if( vo.getPurpose().equals("취업준비") ) {
-				photo = "preview02.jpg";
-			} else if( vo.getPurpose().equals("기상/습관") ) {
-				photo = "preview03.jpg";
-			} else {
-				photo = "preview04.jpg";
-			}
+			// 지정된 파일이 없을 경우 랜덤하게 샘플에서 가져온다.
+			photo = "preview0" + new Random().nextInt(3) + 1;
 		}
 
 		vo.setPhoto(photo);
 
-		int res = studyService.insert( vo );	
+		studyService.insert( vo );	
 
 		return "redirect:study_list.do";
 	}
 
 	// 스터디 찾기 페이지 목록
 	@RequestMapping("/study_list.do")
-	public String study_list(Model model, Integer page, HttpServletRequest request ) {
-		int nowPage = 1;
-
-		if( page != null ) {
-			nowPage = page; // ~.do?page=3 처럼 입력할 경우
-		}
-
-		//		System.out.println(nowPage + ": now page");
-		//		System.out.println(page + ": page");
-
-		//한페이지에서 표시되는 게시물의 시작과 끝번호를 계산
-		//1페이지라면 1 ~ 5번 게시물까지만 보여줘야 한다.
-		//2페이지라면 6 ~ 10번 게시물까지만 보여줘야한다.
-		int start = (nowPage -1) * Common.StudyPaging.BLOCKLIST + 1;
-		int end = start + Common.StudyPaging.BLOCKLIST - 1;
-
-		//start와 end를 map에 저장
-		Map map = new HashMap();
-		map.put("start", start);
-		map.put("end", end);
-
-		//게시글 전체목록 가져오기
-		List<StudyVO> list = null;
-		list = studyDAO.selectList( map );	
-
-		//전체 게시물 수 구하기
-		int row_total = studyDAO.getRowTotal();
-
-		//페이지 메뉴 생성하기
-		//ㄴ ◀1 2 3 4 5▶
-		String pageMenu = Paging.getPaging(
-				"study_list.do", nowPage, row_total, Common.StudyPaging.BLOCKLIST, 
-				Common.StudyPaging.BLOCKPAGE, null);
-
-		//request영역에 list바인딩
-		model.addAttribute("list", list);
-		model.addAttribute("pageMenu", pageMenu);
-		model.addAttribute("row_total", row_total);
-
-		//세션에 등록되어 있던 show정보를 없앤다
-		request.getSession().removeAttribute("show");
-
-		return Common.Study.VIEW_PATH + "study_list.jsp";
-	}
-
-
-	// 스터디 찾기에서 검색기능 and 검색결과 레코드 개수 (페이징 적용)
-	@RequestMapping("/study_list_search.do")
-	public String study_list_search( Model model, Integer page, HttpServletRequest request, 
-			String search, int search_option, String[] purpose ) {
-		int nowPage = 1;
-
-		if( page != null ) {
-			nowPage = page; // ~.do?page=3 처럼 입력할 경우
-		}
-
-		//한페이지에서 표시되는 게시물의 시작과 끝번호를 계산
-		//1페이지라면 1 ~ 10번 게시물까지만 보여줘야 한다.
-		//2페이지라면 11 ~ 20번 게시물까지만 보여줘야한다.
-		int start = (nowPage -1) * Common.StudyPaging.BLOCKLIST + 1;
-		int end = start + Common.StudyPaging.BLOCKLIST - 1;
-
-		//start와 end를 map에 저장
-		Map map = new HashMap();
-		map.put("start", start);
-		map.put("end", end);
+	public String study_list(Model model, HttpServletRequest request,
+			@RequestParam HashMap<String, Object> params) {
 		
-		List<StudyVO> list = null; // 전체 리스트 데이터 저장
-		int row_total = 0; // 전체 리스트 갯수 저장
+		int nowPage = 1;
+		if( params.get("page") != null ) {
+			nowPage = Integer.parseInt( params.get("page").toString() );
+		}
 		
-		map.put("search_option", search_option);
-		map.put("search", search);
-		map.put("array", purpose);
+		List<StudyVO> list = null; // 게시글 전체 목록
+		int row_total = 0; // 전체 게시물 수
+		
+		String purpose = null;
+		
+		if( params.get("purpose") != null ) {
+			purpose = params.get("purpose").toString();
+		
+			if( purpose.isEmpty() == false ) {
+				String[] purposeArr = params.get("purpose").toString().split(",");
+				params.put("array", purposeArr);
+			}
+		}
+		
+		if( params.get("search_option") == null ) {
+			params.put("search_option", 3);
+		}
+		
+		// start, end값 셋팅
+		params = PagingOption.setPage(params, nowPage, Common.StudyPaging.BLOCKLIST);
+				
+		list = (List<StudyVO>) studyService.search_list_condition(params).get("list");
+		row_total = (int) studyService.search_list_condition(params).get("cnt");
 
-		//게시글 전체목록 가져오기
-		list = (List<StudyVO>) studyService.search_list_condition(map).get("list");
-		//전체 게시물 수 구하기
-		row_total = (int) studyService.search_list_condition(map).get("cnt");
-
-		//페이지 메뉴 생성하기
-		//ㄴ ◀1 2 3 4 5▶
+		// view 하단 페이지 메뉴 생성
 		String pageMenu = Paging_study.getPaging(
-				"study_list_search.do" , nowPage, row_total,
-				Common.StudyPaging.BLOCKLIST, Common.StudyPaging.BLOCKPAGE,
-				search, purpose, search_option);
+				"study_list.do", nowPage, row_total, Common.StudyPaging.BLOCKLIST, 
+				Common.StudyPaging.BLOCKPAGE, params);
 
-		//request영역에 list바인딩
+		// request영역에 list 바인딩
 		model.addAttribute("list", list);
-
 		model.addAttribute("pageMenu", pageMenu);
 		model.addAttribute("row_total", row_total);
 
 		return Common.Study.VIEW_PATH + "study_list.jsp";
-
 	}
 
 	//스터디 상세 페이지
@@ -275,7 +218,6 @@ public class StudyController {
 	@RequestMapping("/study_create_modify_form.do")
 	public String study_create_mod(Model model, int idx) {
 		StudyVO study = studyService.showStudyDetail(idx);
-
 		model.addAttribute("study", study);
 		return Common.Study.VIEW_PATH + "study_create_modify.jsp";
 	}
@@ -283,8 +225,7 @@ public class StudyController {
 	// 스터디 수정하기
 	@RequestMapping("/study_create_modify.do")
 	public String study_create_modify(int idx) {
-		int res = studyService.studyModify(idx);
-
+		studyService.studyModify(idx);
 		return "study_list_detail.do?idx=" + idx;
 	}
 
@@ -293,12 +234,12 @@ public class StudyController {
 	public String study_apply(String introduce, int study_idx, HttpServletRequest request){
 
 		UserVO user = (UserVO) request.getSession().getAttribute("user");
-		Map map = new HashMap();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("user_idx", user.getIdx());
 		map.put("study_idx", study_idx);
 		map.put("introduce", introduce);
 
-		int res = studyService.study_apply(map);
+		studyService.study_apply(map);
 		return "redirect:study_list_detail.do?idx=" + study_idx; 
 
 	}
@@ -335,8 +276,8 @@ public class StudyController {
 	}
 	
 	// 스터디 룸 개별 페이지 : 관리자
-		@RequestMapping("/study_room_manage.do")
-		public String study_room_manage () {
-			return Common.Study.VIEW_PATH + "study_room_manage.jsp";
-		}
+	@RequestMapping("/study_room_manage.do")
+	public String study_room_manage () {
+		return Common.Study.VIEW_PATH + "study_room_manage.jsp";
+	}
 }

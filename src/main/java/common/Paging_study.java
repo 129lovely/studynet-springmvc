@@ -1,4 +1,7 @@
 package common;
+
+import java.util.HashMap;
+
 /*
         nowPage:현재페이지
         rowTotal:전체데이터갯수
@@ -7,17 +10,22 @@ package common;
  */
 public class Paging_study {
 	public static String getPaging(String pageURL,int nowPage, int rowTotal,
-			int blockList, int blockPage, String search, String[] purpose, int search_option){
-		
+			int blockList, int blockPage, HashMap<String, Object> params){
 		// 덧붙일 쿼리스트링 생성
-		String appendStr = "&search=" + search;
-		appendStr += "&search_option=" + search_option;
-		if(purpose!=null) {//스터디 목적이 있을경우 실행한다.
-			for( int i = 0; i < purpose.length; i++ ) {
-				appendStr += "&purpose=";
-				appendStr += purpose[i];
-			}
+		String appendStr = "";
+		
+		if( params.get("search") != null ) {
+			String search = params.get("search").toString();
+			appendStr = "&search=" + search;
 		}
+		
+		if( params.get("purpose") != null ) {
+			String purpose = params.get("purpose").toString();
+			appendStr += "&purpose=" + purpose;
+		}
+		
+		int search_option = Integer.parseInt( params.get("search_option" ).toString() );
+		appendStr += "&search_option=" + search_option;
 		
 		int totalPage/*전체페이지수*/,
 		startPage/*시작페이지번호*/,
