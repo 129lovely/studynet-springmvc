@@ -86,37 +86,45 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 온오프 조건별 검색 -->
 	<select resultType="study" id="search_list_condition" parameterType="java.util.Map">
 		select * from (SELECT rank() over(order by idx desc) AS no, b.*
-		FROM (select * from study where
-		<foreach collection="array" item="item" open="(" close=")" separator="or">
-			purpose=#{item}
-		</foreach>
-		<if test="search != null and search_option != '3'.toString()">
-			and is_online=#{search_option} AND title like CONCAT('%',#{search},'%')
-		</if>
-		<if test="search == null and search_option != '3'.toString()">
-			and is_online=#{search_option}
-		</if>
-		<if test="search != null and search_option == '3'.toString()">
-			and title like CONCAT('%',#{search},'%')
-		</if>
+		FROM (select * from study
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="array != null">
+				<foreach collection="array" item="item" open="(" close=")" separator="or">
+					purpose=#{item}
+				</foreach>
+			</if>
+			<if test="search != null and search_option != '3'.toString()">
+				and is_online=#{search_option} AND title like CONCAT('%',#{search},'%')
+			</if>
+			<if test="search == null and search_option != '3'.toString()">
+				and is_online=#{search_option}
+			</if>
+			<if test="search != null and search_option == '3'.toString()">
+				and title like CONCAT('%',#{search},'%')
+			</if>
+		</trim>
 		) AS b ) AS list
 		where no between #{start} AND #{end}
 	</select>
 	
 	<select resultType="int" id="search_count_condition" parameterType="java.util.Map">
-		select count(*) from study where
-		<foreach collection="array" item="item" open="(" close=")" separator="or">
-			purpose=#{item}
-		</foreach>
-		<if test="search != null and search_option != '3'.toString()">
-			and is_online=#{search_option} AND title like CONCAT('%',#{search},'%')
-		</if>
-		<if test="search == null and search_option != '3'.toString()">
-			and is_online=#{search_option}
-		</if>
-		<if test="search != null and search_option == '3'.toString()">
-			and title like CONCAT('%',#{search},'%')
-		</if>
+		select count(*) from study
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="array != null">
+				<foreach collection="array" item="item" open="(" close=")" separator="or">
+					purpose=#{item}
+				</foreach>
+			</if>
+			<if test="search != null and search_option != '3'.toString()">
+				and is_online=#{search_option} AND title like CONCAT('%',#{search},'%')
+			</if>
+			<if test="search == null and search_option != '3'.toString()">
+				and is_online=#{search_option}
+			</if>
+			<if test="search != null and search_option == '3'.toString()">
+				and title like CONCAT('%',#{search},'%')
+			</if>
+		</trim>
 	</select>
 	
 	<!-- 스터디 중복 확인 -->

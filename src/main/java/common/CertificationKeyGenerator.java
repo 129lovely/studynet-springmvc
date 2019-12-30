@@ -27,7 +27,7 @@ public class CertificationKeyGenerator {
 		
 		if(numberArray[2].charAt(0) == '0'){
 			lastNumberString = "1"+numberArray[2].substring(1, numberArray[2].length());
-		}else{
+		} else {
 			lastNumberString = numberArray[2];
 		}
 		
@@ -40,13 +40,13 @@ public class CertificationKeyGenerator {
 	 * @param thamesMemberDAO
 	 * @param phone
 	 */
-	public HashMap tempKeyGenerator( String phone ) throws Exception{
+	public HashMap<String, String> tempKeyGenerator( String phone ) throws Exception{
 		//인증키 생성
 		String tempKey = tempKeyGenarator(phone);
 		System.out.println("암호화키 : "+tempKey);
 
 		//인증키및 전화번호 파라미터화
-		HashMap<Object, Object> param = new HashMap<Object, Object> ();
+		HashMap<String, String> param = new HashMap<String, String> ();
 		param.put("tempKey", tempKey);
 		param.put("phone", phone);
 		

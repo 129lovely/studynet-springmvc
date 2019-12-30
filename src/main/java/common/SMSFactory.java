@@ -4,10 +4,13 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.net.InetAddress;
+// import java.net.InetAddress;
 import java.net.Socket;
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.Base64.Decoder;
+import java.util.Base64.Encoder;
 import java.util.Random;
 
 /**
@@ -50,21 +53,21 @@ public final class SMSFactory {
 		sms_url = "http://sslsms.cafe24.com/sms_sender.php";
 		user_id = base64Encode("studynet2019");	//아이디
 		secure = base64Encode("3a405c4a281dde612d10f162387d2f6a");// 인증키
-		msg = base64Encode(nullcheck(setMessage(tempKey), ""));
-		receive_phone_number = base64Encode(nullcheck(phone, ""));
-		first_phone_number = base64Encode(nullcheck("010", ""));
-		second_phone_number = base64Encode(nullcheck("2284", ""));
-		third_phone_number = base64Encode(nullcheck("7142", ""));
-		rDate = base64Encode(nullcheck(rDate, ""));
-		rTime = base64Encode(nullcheck(rTime, ""));
+		msg = base64Encode(nullCheck(setMessage(tempKey), ""));
+		receive_phone_number = base64Encode(nullCheck(phone, ""));
+		first_phone_number = base64Encode(nullCheck("010", ""));
+		second_phone_number = base64Encode(nullCheck("2284", ""));
+		third_phone_number = base64Encode(nullCheck("7142", ""));
+		rDate = base64Encode(nullCheck(rDate, ""));
+		rTime = base64Encode(nullCheck(rTime, ""));
 		mode = base64Encode("1");
-		testFlag = base64Encode(nullcheck(testFlag, "Y"));
-		destination = base64Encode(nullcheck(destination, ""));
-		repeatFlag = base64Encode(nullcheck(repeatFlag, ""));
-		repeatNum = base64Encode(nullcheck(repeatNum, ""));
-		repeatTime = base64Encode(nullcheck(repeatTime, ""));
-		returnUrl = base64Encode(nullcheck(returnUrl, ""));
-		noInteractive = nullcheck(noInteractive, "");
+		testFlag = base64Encode(nullCheck(testFlag, "Y"));
+		destination = base64Encode(nullCheck(destination, ""));
+		repeatFlag = base64Encode(nullCheck(repeatFlag, ""));
+		repeatNum = base64Encode(nullCheck(repeatNum, ""));
+		repeatTime = base64Encode(nullCheck(repeatTime, ""));
+		returnUrl = base64Encode(nullCheck(returnUrl, ""));
+		noInteractive = nullCheck(noInteractive, "");
 		System.out.println("sms공장 생성자 완료");
 	}
 
@@ -76,16 +79,18 @@ public final class SMSFactory {
 	 * @return
 	 * @throws Exception
 	 */
-	public String nullcheck(String str, String Defaultvalue) throws Exception {
-		String ReturnDefault = "";
+	public String nullCheck(String str, String Defaultvalue) throws Exception {
 		if (str == null) {
-			ReturnDefault = Defaultvalue;
-		} else if (str == "") {
-			ReturnDefault = Defaultvalue;
-		} else {
-			ReturnDefault = str;
+			str = Defaultvalue;
 		}
-		return ReturnDefault;
+		
+		str = str.trim();
+		
+		if (str.length() == 0) {
+			str = Defaultvalue;
+		}
+		
+		return str;
 	}
 
 	/**
@@ -96,10 +101,9 @@ public final class SMSFactory {
 	 * @throws java.io.IOException
 	 */
 	public String base64Encode(String str) throws java.io.IOException {
-		sun.misc.BASE64Encoder encoder = new sun.misc.BASE64Encoder();
-		byte[] strByte = str.getBytes();
-		String result = encoder.encode(strByte);
-		return result;
+		Encoder encoder = Base64.getEncoder();
+		byte[] encodeStr= encoder.encode(str.getBytes());
+		return new String(encodeStr);
 	}
 
 	/**
@@ -110,10 +114,11 @@ public final class SMSFactory {
 	 * @throws java.io.IOException
 	 */
 	public String base64Decode(String str) throws java.io.IOException {
-		sun.misc.BASE64Decoder decoder = new sun.misc.BASE64Decoder();
-		byte[] strByte = decoder.decodeBuffer(str);
-		String result = new String(strByte);
-		return result;
+		Decoder decoder = Base64.getDecoder();
+		byte[] strByte = str.getBytes();
+		byte[] decodeByte = decoder.decode(strByte);
+		
+		return new String(decodeByte);
 	}
 	
 	/**
@@ -178,7 +183,7 @@ public final class SMSFactory {
 
 	    //out.println(data);
 
-	    InetAddress addr = InetAddress.getByName(host);
+	    // InetAddress addr = InetAddress.getByName(host);
 	    Socket socket = new Socket(host, port);
 	    
 	    // 헤더 전송
@@ -196,12 +201,14 @@ public final class SMSFactory {
 	    BufferedReader rd = new BufferedReader(new InputStreamReader(socket.getInputStream(),charsetType));
 	    String line;
 	    String alert = "";
-	    ArrayList tmpArr = new ArrayList();
+	    ArrayList<String> tmpArr = new ArrayList<String>();
 	    while ((line = rd.readLine()) != null) {
 	        tmpArr.add(line);
 	    }
 	    wr.close();
 	    rd.close();
+	    
+	    socket.close();
 
 	    String tmpMsg = (String)tmpArr.get(tmpArr.size()-1);
 	    String[] rMsg = tmpMsg.split(",");

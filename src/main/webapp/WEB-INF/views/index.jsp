@@ -12,7 +12,7 @@
 	
 	<script type="text/javascript">
 	function send1(f){
-		f.action = "study_list_search.do";
+		f.action = "study_list.do";
 		f.method = "get";
 		f.submit();
 	}
@@ -26,12 +26,6 @@
     	<div class="inner-box">
     		<form class="search-box flex-box">
     		
-    			<input type="hidden" name="purpose" value="공모전"/>
-    			<input type="hidden" name="purpose" value="취업준비"/>
-    			<input type="hidden" name="purpose" value="기상습관"/>
-    			<input type="hidden" name="purpose" value="공부"/>
-    			<input type="hidden" name="purpose" value="기타"/>		
-    			
     			<h2 class="section-title tac">
     				당신에게 <span class="section-title">딱</span> 맞는 스터디,<br />찾아보실래요?
     			</h2>
