@@ -166,5 +166,10 @@ public class StudyDAO implements DAO {
 			int res = sqlSession.update("study.mem_kick", idx);
 			return res;
 		}
+
+		public List<StudyVO> study_myinfo(int user_idx) {
+			List<StudyVO> list = sqlSession.selectList("study.study_myinfo", user_idx);
+			return list;
+		}
 	
 }
