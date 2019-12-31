@@ -142,4 +142,29 @@ public class StudyDAO implements DAO {
 		List<StudyMemberVO> member = sqlSession.selectList("study.member_list", study_idx);
 		return member;
 	}
+	
+	// 선택한 스터디 멤버 승인
+	public int mem_approve ( int idx ) {
+		int res = sqlSession.update("study.mem_approve", idx);
+		return res;
+	}
+	
+	// 선택한 스터디 멤버 거절
+	public int mem_reject ( int idx ) {
+		int res = sqlSession.update("study.mem_reject", idx);
+		return res;
+	}
+	
+	// 스터디 관리자 추가
+	public int add_admin ( int idx ) {
+		int res = sqlSession.update("study.add_admin", idx);
+		return res;
+	}
+	
+	// 선택한 스터디 멤버 강퇴
+		public int mem_kick ( int idx ) {
+			int res = sqlSession.update("study.mem_kick", idx);
+			return res;
+		}
+	
 }

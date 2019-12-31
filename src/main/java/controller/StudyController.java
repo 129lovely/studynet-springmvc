@@ -1,7 +1,6 @@
 ﻿package controller;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +26,6 @@ import dao.StudyDAO;
 import service.BoardService;
 import service.StudyService;
 import service.UserService;
-import vo.BoardVO;
 import vo.StudyMemberVO;
 import vo.StudyVO;
 import vo.UserVO;
@@ -293,5 +291,57 @@ public class StudyController {
 		// 리스트로 받아와야 함 ( 공동 관리자 때문에 )
 		
 		return Common.Study.VIEW_PATH + "study_room_manage.jsp";
+	}
+	
+	// 선택 인원 승인
+	@RequestMapping("/mem_approve.do")
+	@ResponseBody
+	public int mem_approve( String[] idx ) {
+		
+		int res = studyService.mem_approve( idx );
+			
+		return res;
+	}
+	
+	// 선택 인원 거부
+	@RequestMapping("/mem_reject.do")
+	@ResponseBody
+	public int mem_reject( String[] idx ) {
+		
+		int res = studyService.mem_reject( idx );
+			
+		return res;
+	}
+		
+	// 선택 인원 추방
+	@RequestMapping("/mem_kick.do")
+	@ResponseBody
+	public int mem_kick( String[] idx ) {
+		
+		int res = studyService.mem_kick( idx );
+			
+		return res;
+	}
+	
+	// 관리자 추가 요청 메일
+	@RequestMapping("/add_study_admin_mail.do")
+	@ResponseBody
+	public void add_study_admin_mail( int idx, int study_idx, String email ) {
+		
+		try {
+			studyService.add_study_admin_mail( idx, study_idx, email );
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+		
+	// 공동 관리자 추가
+	@RequestMapping("/add_admin.do")
+	public String add_admin( int idx, Model model ) { 
+		
+		int res = studyService.add_admin( idx );
+		
+		return Common.Study.VIEW_PATH + "add_admin_complete.jsp";
 	}
 }

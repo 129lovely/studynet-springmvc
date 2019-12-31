@@ -14,6 +14,7 @@
 		<property ref="boardDAO" name="boardDAO"/>
 		<property ref="studyDAO" name="studyDAO"/>
 		<property ref="userDAO" name="userDAO"/>
+		<property ref="mailSender" name="mailSender"/>
 	</bean>
 	
 	<bean class="service.UserService" id="userService">

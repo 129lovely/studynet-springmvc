@@ -9,11 +9,11 @@
 	</settings>
 	
 	<typeAliases>
-		<typeAlias type="vo.BoardCommentVO" alias="boardComment"/>
 		<typeAlias type="vo.BoardVO" alias="board"/>
 		<typeAlias type="vo.UserVO" alias="user"/>
 		<typeAlias type="vo.StudyVO" alias="study"/>
 		<typeAlias type="vo.StudyMemberVO" alias="studyMember"/>
+		<typeAlias type="vo.BoardCommentVO" alias="boardComment"/>
 	</typeAliases>
 	
 	<mappers>

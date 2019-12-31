@@ -42,7 +42,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select resultType="board" id="select_community_list">
 		select *
 		from board b left outer join user u
-		on u.idx = b.user_idx </select>
+		on u.idx = b.user_idx
+	</select>
 
 	<!-- 작성자 idx이용해서 idx값이아닌 이름나오게하기 -->
 	<select id="select_community_list_name" parameterType="int"
@@ -81,7 +82,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 	
 	<!-- 전체 게시물 조회 -->
-	<select resultType="board" id="list_page">select * from board order by ref
+	<select resultType="board" id="list_page">
+		select * from board order by ref
 		desc, step asc
 	</select>
 

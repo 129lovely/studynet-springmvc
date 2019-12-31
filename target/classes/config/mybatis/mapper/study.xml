@@ -9,6 +9,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select count(*) from study
 	</select>
 
+	<!-- index.jsp에서 스터디목록들 나오게하기(스터디 페이지로 안넘어감) -->
+	<select id="index_study_list" resultType="study" >
+		select * from study
+		order by idx desc limit 8
+	</select>
+	
 	<!-- 스터디 생성 -->
 	<insert id="insert" parameterType="study">
 		INSERT INTO study (title, create_user_idx, 
@@ -80,37 +86,45 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 온오프 조건별 검색 -->
 	<select resultType="study" id="search_list_condition" parameterType="java.util.Map">
 		select * from (SELECT rank() over(order by idx desc) AS no, b.*
-		FROM (select * from study where
-		<foreach collection="array" item="item" open="(" close=")" separator="or">
-			purpose=#{item}
-		</foreach>
-		<if test="search != null and search_option != '3'.toString()">
-			and is_online=#{search_option} AND title like CONCAT('%',#{search},'%')
-		</if>
-		<if test="search == null and search_option != '3'.toString()">
-			and is_online=#{search_option}
-		</if>
-		<if test="search != null and search_option == '3'.toString()">
-			and title like CONCAT('%',#{search},'%')
-		</if>
+		FROM (select * from study
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="array != null">
+				<foreach collection="array" item="item" open="(" close=")" separator="or">
+					purpose=#{item}
+				</foreach>
+			</if>
+			<if test="search != null and search_option != '3'.toString()">
+				and is_online=#{search_option} AND title like CONCAT('%',#{search},'%')
+			</if>
+			<if test="search == null and search_option != '3'.toString()">
+				and is_online=#{search_option}
+			</if>
+			<if test="search != null and search_option == '3'.toString()">
+				and title like CONCAT('%',#{search},'%')
+			</if>
+		</trim>
 		) AS b ) AS list
 		where no between #{start} AND #{end}
 	</select>
 	
 	<select resultType="int" id="search_count_condition" parameterType="java.util.Map">
-		select count(*) from study where
-		<foreach collection="array" item="item" open="(" close=")" separator="or">
-			purpose=#{item}
-		</foreach>
-		<if test="search != null and search_option != '3'.toString()">
-			and is_online=#{search_option} AND title like CONCAT('%',#{search},'%')
-		</if>
-		<if test="search == null and search_option != '3'.toString()">
-			and is_online=#{search_option}
-		</if>
-		<if test="search != null and search_option == '3'.toString()">
-			and title like CONCAT('%',#{search},'%')
-		</if>
+		select count(*) from study
+		<trim prefix="where" prefixOverrides="and|or">
+			<if test="array != null">
+				<foreach collection="array" item="item" open="(" close=")" separator="or">
+					purpose=#{item}
+				</foreach>
+			</if>
+			<if test="search != null and search_option != '3'.toString()">
+				and is_online=#{search_option} AND title like CONCAT('%',#{search},'%')
+			</if>
+			<if test="search == null and search_option != '3'.toString()">
+				and is_online=#{search_option}
+			</if>
+			<if test="search != null and search_option == '3'.toString()">
+				and title like CONCAT('%',#{search},'%')
+			</if>
+		</trim>
 	</select>
 	
 	<!-- 스터디 중복 확인 -->
@@ -125,6 +139,51 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values (#{user_idx}, #{idx}, 1, 'admin')
 	</insert>
 	
+	<!-- user의 idx로 study_member의 status가져오기 -->	
+	<select id="study_mem_status" parameterType="int" resultType="studyMember">
+		select * from study_member where user_idx=#{user_idx}
+	</select>
+	
+	<select id="study_mem_list" parameterType="int" resultType="study">
+		select * from study where idx=#{study_idx}
+	</select>
+		
+	<!-- 스터디 멤버 목록 가져오기 -->
+	<select id="member_list" parameterType="int" resultType="studyMember">
+		SELECT m.*, u.name, u.email, u.phone, u.region, u.job 
+		FROM study_member m
+		LEFT OUTER JOIN user u
+		ON u.idx = m.user_idx
+		WHERE study_idx = #{study_idx}
+	</select>
+	
+	<!-- 선택 멤버 승인 -->
+	<update id="mem_approve" parameterType="int">
+		UPDATE study_member 
+		SET mem_status = '승인'
+		WHERE idx = #{idx}	
+	</update>
+	
+	<!-- 선택 멤버 거부 -->
+	<update id="mem_reject" parameterType="int">
+		UPDATE study_member 
+		SET mem_status = '승인거부'
+		WHERE idx = #{idx}
+	</update>
+	
+	<!-- 선택 멤버 강퇴 -->
+	<update id="mem_kick" parameterType="int">
+		UPDATE study_member 
+		SET mem_status = '강제탈퇴'
+		WHERE idx = #{idx}
+	</update>
+	
+	<!-- 스터디 관리자 추가 -->
+	<update id="add_admin" parameterType="int">
+		UPDATE study_member
+		SET mem_status = 'admin', is_admin = 1
+		WHERE idx = #{idx}
+	</update>
 </mapper>
 
 

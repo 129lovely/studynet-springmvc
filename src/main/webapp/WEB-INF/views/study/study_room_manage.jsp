@@ -68,12 +68,14 @@
                                             <div>
                                                 <!-- 이름 누르면 복사되면 좋겟지만... 일단 툴팁으로 대체... -->
                                                 <span class="section-discription tal">현재 스터디 관리자: 
-                                                    <span class="section-discription tal" title="010-9999-2222"> 김꽁치</span>
+                                                	<c:forEach var="mem" items="${member}">
+                                                		<c:if test="${ mem.mem_status eq 'admin' }">
+                                                			<span class="section-discription tal" title="${mem.phone}"> ${mem.name} </span>
+                                                		</c:if>
+                                                	</c:forEach>         
                                                 </span>
                                                 
-                                                <a href="#open-add-crown" class="section-discription"> 
-                                                    <!--  -->
-                                                <i class="fas fa-crown"></i> 공동 관리자 추가</a>
+                                                <a href="#open-add-crown" class="section-discription"><i class="fas fa-crown"></i> 공동 관리자 추가</a>
                                             </div>
                                         </div>
 
@@ -84,17 +86,18 @@
 							                                                    공동 관리자는 개설자와 똑같은 권한을 가집니다.
 							                                                    공동 관리자는 최대 3명까지 설정 가능하며, 공동 관리자로 추가된 멤버가
 							                                                    메일을 통해 요청을 승인하기 전까진 관리자로 인정되지 않습니다.
-							                                                </p>
-							                                                <p>
+							                                                    일방적으로 권한을 제거할 수 없으니 신중히 지정하시기 바랍니다.
+                                                </p>
+                                                <form>
 							                                                    공통 관리자로 추가할 멤버의 이름과 이메일을 입력해주세요.
-                                                    <div class="input-box"> 
-                                                        <input type="text" placeholder="이름을 입력해주세요."><br>
-                                                        <input type="text" placeholder="이메일을 입력해주세요.">
-                                                    </div><br>
-                                                    <input type="button" value="공동 관리자로 설정" class="my-btn yellow-black">
+                                                    <p class="input-box"> 
+                                                        <input type="text" placeholder="이름을 입력해주세요." name="ad_name"><br>
+                                                        <input type="text" placeholder="이메일을 입력해주세요." name="ad_email">
+                                                    </p><br>
+                                                    <input type="button" value="공동 관리자로 설정" class="my-btn yellow-black" onClick="add_admin( this.form );">
                                                     <br><br>
                                                     <a class="my-btn yellow-black" href="#close-add-crown">취소</a>
-                                                </p>
+                                                </form>
                                             </div>
                                         </div>
                                     </div>
@@ -113,9 +116,17 @@
                                                         </tr>
                                                        
                                                         <c:forEach var="mem" items="${member}">
-	                                                       	<c:if test="${mem.mem_status eq '승인'}">
+	                                                       	<c:if test="${mem.mem_status eq '승인' }">
 	                                                        	<tr>
 	                                                            <td><input type="checkbox" name="approve_member" value="${mem.idx}"></td>
+	                                                            <td>${mem.name}</td>
+	                                                            <td>${mem.email}</td>
+	                                                            <td>${mem.phone}</td>
+	                                                        	</tr>
+	                                                        </c:if>
+	                                                        <c:if test="${ mem.mem_status eq 'admin' }">
+	                                                        	<tr>
+	                                                            <td></td>
 	                                                            <td>${mem.name}</td>
 	                                                            <td>${mem.email}</td>
 	                                                            <td>${mem.phone}</td>
@@ -134,7 +145,7 @@
                                                 </div>
 
                                                 <div class="manage-button">
-                                                    <input type="button" class="my-btn yellow-black" value="선택 인원  강퇴">
+                                                    <input type="button" class="my-btn yellow-black" value="선택 인원  강퇴" onClick="mem_kick();">
                                                 </div>
                                             </form>
                                        </div>
@@ -157,7 +168,7 @@
                                                         <c:forEach var="mem" items="${member}">
 	                                                       	<c:if test="${mem.mem_status eq '승인대기'}">
 	                                                        	<tr>
-	                                                            <td><input type="checkbox" name="approve_member" value="${mem.idx}"></td>
+	                                                            <td><input type="checkbox" name="apply_member" value="${mem.idx}"></td>
 	                                                            <td>${mem.name}</td>
 	                                                            <td>${mem.job}</td>
 	                                                            <td>${mem.region}</td>
@@ -169,8 +180,8 @@
                                                 </div>
 
                                                 <div class="manage-button">
-                                                    <input type="button" class="my-btn yellow-black" value="선택 인원 승인">
-                                                    <input type="button" class="my-btn yellow-black" value="선택 인원 거부">
+                                                    <input type="button" class="my-btn yellow-black" value="선택 인원 승인" onClick="mem_approve( );">
+                                                    <input type="button" class="my-btn yellow-black" value="선택 인원 거부" onClick="mem_reject( );">
                                                 </div>
                                             </form>
                                         </div>
@@ -296,6 +307,8 @@
 		<jsp:include page="../footer.jsp"></jsp:include>
 		
 		<script src="https://kit.fontawesome.com/95d80c99dc.js"></script>
+		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/httpRequest.js"></script>
+		
         <script>
             var flag = false;
 
@@ -341,7 +354,193 @@
 
 
             }
+        </script>
         
+        
+        <script type="text/javascript">
+        
+        	// 공동 관리자 추가 
+        	function add_admin ( f ) {
+        		
+        		var input_name = f.ad_name.value;
+        		var input_email = f.ad_email.value;
+        		var check = false; 
+        		var cnt = 0;
+        		
+        		// 파라미터로 넘길 정보
+        		var idx;
+        		var name;
+        		var study_idx;
+        		
+        		// 스터디 관리자가 이미 3명인지 확인
+        		<c:forEach var="mem" items="${member}">
+        			
+        			if ( "${mem.mem_status}" == "admin"){
+        				cnt ++;
+        			}
+        			
+        		</c:forEach>
+        		
+        		if ( cnt == 3 ) {
+        			alert("이미 3명의 스터디 관리자가 존재합니다.");
+        			return;
+        		}
+        			
+    			// 입력한 정보의 멤버가 승인된 스터디 멤버에 포함되는지 확인
+        		<c:forEach var="mem" items="${member}">
+        		
+        			if ( "${mem.name}" != input_name || "${mem.email}" != input_email || "${mem.mem_status}" != "승인") {
+        				
+        			} else {
+        				// 만약 조건이 올바르다면 ajax로 메일 전송
+            			idx = "${mem.idx}";
+            			email = "${mem.email}";
+            			study_idx = "${mem.study_idx}";
+            			
+            			check = true;
+            			
+            			var url = "add_study_admin_mail.do";
+            			var param = "idx=" + idx + "&email=" + email + "&study_idx=" + study_idx;
+            			
+            			sendRequest(url, param, add_admin_res, "get");
+        			} 
+
+        		</c:forEach>
+        		
+        		// 일치하는 정보가 없다면
+       			if ( check == false ){
+       				alert("정보가 올바르지 않습니다. 입력하신 멤버의 정보를 다시 확인해주세요.");
+       			}
+        	}
+        	
+        	// 관리자 추가 result
+        	function add_admin_res ( ) {
+        		if ( xhr.readyState == 4 && xhr.status == 200 ) {			
+        			alert("관리자 추가 요청 메일을 전송했습니다.");
+        			location.href="#close-add-crown"
+        		}
+        	}
+        	
+        	
+        	// 선택 인원 승인 버튼
+        	function mem_approve( ) {
+        		
+				var check = confirm("선택한 인원을 승인할까요?");
+        		
+        		if ( ! check ) {
+        			return;
+        		}
+        		
+        		var param = "";
+        		var cnt = 0;
+        		
+        		// 선택한 인원 파라미터로 설정
+        		$("input[name=apply_member]:checked").each(function() {
+        			  var test = $(this).val(); 
+        			  
+        			  if( cnt != 0 ){
+        				  param += "&";
+        			  }
+        			  
+        			  cnt++
+        			  
+					  param += ( "idx=" + test );
+
+        		});
+        		
+        		var url = "mem_approve.do";
+        		
+        		sendRequest(url, param, mem_approve_res, "get");
+        		
+        	}
+        	
+        	// 선택 인원 승인 완료
+        	function mem_approve_res () {	
+        		if ( xhr.readyState == 4 && xhr.status == 200 ) {
+        			var result = xhr.responseText;     			
+        			alert(result + "명의 승인에 성공했습니다.");
+        			location.reload();
+        		}
+        	}
+     		
+        	// 선택 인원 거부 버튼
+        	function mem_reject( ) {
+        		
+        		var check = confirm("선택한 인원의 승인을 거부할까요?");
+        		
+        		if ( ! check ) {
+        			return;
+        		}
+        		
+        		var param = "";
+        		var cnt = 0;
+        		
+        		// 선택한 인원 파라미터로 설정
+        		$("input[name=apply_member]:checked").each(function() {
+        			  var test = $(this).val(); 
+        			  
+        			  if( cnt != 0 ){
+        				  param += "&";
+        			  }
+        			  
+        			  cnt++
+        			  
+					  param += ( "idx=" + test );
+
+        		});
+        		
+        		var url = "mem_reject.do";
+        		
+        		sendRequest(url, param, mem_reject_res, "get");
+        		
+        	}
+        	
+        	// 선택 인원 거부 완료
+        	function mem_reject_res () {	
+        		if ( xhr.readyState == 4 && xhr.status == 200 ) {
+        			var result = xhr.responseText;     			
+        			alert(result + "명의 승인 거부에 성공했습니다.");
+        			location.reload();
+        		}
+        	}
+        
+        	// 선택한 인원 강퇴
+        	function mem_kick () {
+				var check = confirm("선택한 인원을 추방할까요?");
+        		
+        		if ( ! check ) {
+        			return;
+        		}
+        		
+        		var param = "";
+        		var cnt = 0;
+        		
+        		// 선택한 인원 파라미터로 설정
+        		$("input[name=approve_member]:checked").each(function() {
+        			  var test = $(this).val(); 
+        			  
+        			  if( cnt != 0 ){
+        				  param += "&";
+        			  }
+        			  
+        			  cnt++
+        			  
+					  param += ( "idx=" + test );
+
+        		});
+        		
+        		var url = "mem_kick.do";
+        		
+        		sendRequest(url, param, mem_kick_res, "get");
+        	}
+        	
+        	function mem_kick_res () {
+        		if ( xhr.readyState == 4 && xhr.status == 200 ) {
+        			var result = xhr.responseText;     			
+        			alert(result + "명의 강제 탈퇴에 성공했습니다.");
+        			location.reload();
+        		}
+        	}
         </script>
 	</body>
 </html>

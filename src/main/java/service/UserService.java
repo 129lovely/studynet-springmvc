@@ -219,7 +219,7 @@ public class UserService {
 			mail.setText(new StringBuffer()
 					.append("<body><div><table align=\"center\"><tr><td style=\"border-bottom: 1px solid gray; padding: 10px;\"><img src=\"https://i.imgur.com/ATMKhlq.png\" style=\"width:150px; margin: 0 auto; \"><br></td></tr><tr><td style=\"border-bottom: 1px solid gray; padding: 10px; text-align: center;\"><h2 style=\"color: steelblue;\">요청하신 임시 비밀번호입니다.</h2><p style=\"background: steelblue; color: white; font-weight: bold;padding: 10px;width: 200px;text-align: center;border-radius: 10px;margin: 0 auto;\">")
 					.append(tempPwd)
-					.append("</p><br><a href=\\'http://localhost:9090/web/user_login_form.do\\' style=\\\"font-weight: bold;\\\">로그인 하러 가기</a><br><br><small style=\\\"color: steelblue;\\\">만약 스터디넷에 가입한 적이 없으시다면 이 메일을 무시해주세요.</small><br><br></td></tr><tr><td><small style=\\\"color: gray; margin-top: 30px;\\\">(주)스터디넷 | 서울특별시 마포구 서강로 136 아이비 타워 2층 | 02-1111-3333 | studynet2019web@gmail.com </small></td></tr></table></div></body>")
+					.append("</p><br><a href=\'http://localhost:9090/web/user_login_form.do\' style=\"font-weight: bold;\">로그인 하러 가기</a><br><br><small style=\"color: steelblue;\">만약 스터디넷에 가입한 적이 없으시다면 이 메일을 무시해주세요.</small><br><br></td></tr><tr><td><small style=\\\"color: gray; margin-top: 30px;\\\">(주)스터디넷 | 서울특별시 마포구 서강로 136 아이비 타워 2층 | 02-1111-3333 | studynet2019web@gmail.com </small></td></tr></table></div></body>")
 					.toString());
 
 			mail.send();
