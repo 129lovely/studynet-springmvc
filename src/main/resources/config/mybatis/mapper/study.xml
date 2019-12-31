@@ -138,22 +138,17 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		values (#{user_idx}, #{idx}, 1, 'admin')
 	</insert>
 	
-	<!-- user의 idx로 study_member의 status가져오기 -->	
-	<select id="study_mem_status" parameterType="int" resultType="studyMember">
-		select * from study_member where user_idx=#{user_idx}
-	</select>
+	<!-- study_member의 status네 따른 study내용 뿌려주기 -->
+	<select id="study_mem_list" resultType="study" parameterType="int">
+		SELECT s.*, u.name as create_name, m.`status` as mem_status, m.is_admin as mem_admin
+		From study_member m
+		inner JOIN study s
+		ON s.idx = m.study_idx
+		inner JOIN user u
+		ON u.idx = s.create_user_idx
+		WHERE m.user_idx=#{user_idx}
+	</select>	
 	
-	<select id="study_mem_list" parameterType="int" resultType="study">
-		select * from study where idx=#{study_idx}
-	</select>
-		
-	<select id="member_list" parameterType="int" resultType="studyMember">
-		SELECT m.*, u.name, u.email, u.phone, u.region, u.job 
-		FROM study_member m
-		LEFT OUTER JOIN user u
-		ON u.idx = m.user_idx
-		WHERE study_idx = #{study_idx}
-	</select>
 </mapper>
 
 
