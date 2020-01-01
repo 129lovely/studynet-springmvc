@@ -345,6 +345,7 @@ public class StudyController {
 		return res;
 	}
 
+	// 스터디 공지 수정
 	@RequestMapping("/notice_update.do")
 	@ResponseBody
 	public String notice_update(@RequestParam HashMap<String, Object> params, Model model) {
@@ -354,5 +355,15 @@ public class StudyController {
 			resStr = "success";
 		}
 		return resStr;
+	}
+	
+	// 내 스터디 룸에서 스터디 삭제
+	@RequestMapping("/del_study.do")
+	@ResponseBody
+	public String del_study(@RequestParam HashMap<String, Object> params) {
+		
+		String res = studyService.del_study(params);
+		
+		return res;
 	}
 }

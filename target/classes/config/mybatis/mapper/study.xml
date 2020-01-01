@@ -197,7 +197,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 스터디 모집 취소 / 개설 취소 -->
 	<update id="recruit_cancel" parameterType="int">
 		UPDATE study
-		SET study_status = '개설취소'
+		SET study_status = '개설취소',
+		deleted_at = current_timestamp()
 		WHERE idx = #{idx}
 	</update>
 	
@@ -207,6 +208,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET notice=#{notice}
 		WHERE idx=#{study_idx}
 	</update>
+	
+	<!-- 스터디 멤버 정보 삭제 -->
+	<delete id="del_study_member">
+		DELETE FROM study_member
+		WHERE idx=#{idx}
+	</delete>
 
 </mapper>
 

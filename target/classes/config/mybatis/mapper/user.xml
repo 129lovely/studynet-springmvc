@@ -59,10 +59,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from user WHERE phone = #{phone} and name = #{name}
 	</select>
 	
+	<!-- 유저 스터디 개수 증가 -->
 	<update id="update_study_cnt" parameterType="int">
 		update user
 		set study=study+1
 		where idx=#{create_user_idx}
+	</update>
+	
+	<!-- 유저 스터디 개수 감소 -->
+	<update id="decrease_study_cnt" parameterType="int">
+		update user
+		set study=study-1
+		where idx=#{user_idx}
 	</update>
 	
 	<!-- 회원정보 수정하기 -->

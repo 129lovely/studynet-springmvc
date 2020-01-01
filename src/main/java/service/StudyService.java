@@ -229,7 +229,7 @@ public class StudyService {
 	}
 	
 
-	// 스터디 모집 취소 ( 글 삭졔, 개설 취소 )
+	// 스터디 모집 취소 ( 글 삭졔 )
 	public int recruit_cancel( int idx ) {
 		int res = studyDAO.recruit_cancel( idx );
 		return res;
@@ -239,5 +239,18 @@ public class StudyService {
 	public int update_notice(HashMap<String, Object> params) {
 		int res = studyDAO.update_notice(params);
 		return res;
+	}
+	
+	// 스터디 삭제
+	public String del_study(HashMap<String, Object> params) {
+		String result = "fail";
+		
+		int res1 = studyDAO.del_study_member(Integer.parseInt((String) params.get("idx")));
+		int res2 =  userDAO.decrease_study_cnt(Integer.parseInt((String) params.get("user_idx")));
+		
+		if ( res1 != 0 && res2 != 0 ) {
+			result = "success";
+		}
+		return result;
 	}
 }

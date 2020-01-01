@@ -15,7 +15,7 @@
 	<script type="text/javascript">
 		/* 스터디 모집  취소 ( 글 삭제 ) */
 		function cancel_recruit( idx ) {
-			var check = confirm("정말 모집을 취소하시겠습니까? 작성한 모집 글의 정보는 저장되지 않습니다.");
+			var check = confirm("정말 모집을 취소하시겠습니까? 작성한 모집 글의 정보는 다시 확인하실 수 없습니다.");
 			
 			if ( ! check ) {
 				return;
@@ -32,6 +32,8 @@
 			
 			if( xhr.readyState == 4 && xhr.status == 200 ){		
 				
+				var res = xhr.responseText;
+				
 				if ( res != 0 ) {
 					alert("모집 취소가 완료되었습니다.");
 				} else {
@@ -42,8 +44,36 @@
 			}	
 		}
 		
-		// 
+		// 스터디 삭제 
+		function del_study( mem_idx, user_idx ) {
+		var check = confirm("정말 내 스터디 룸 목록에서 해당 스터디를 삭제할까요?");
+			
+			if ( ! check ) {
+				return;
+			}
+			
+			var url = "del_study.do";
+			var param = "idx=" + mem_idx + "&user_idx=" + user_idx;
+			
+			sendRequest(url, param, study_deleted, "get");
+		}
 	
+		// 스터디 삭제 resultFn
+		function study_deleted() {
+			
+			if( xhr.readyState == 4 && xhr.status == 200 ){		
+				
+				var res = xhr.responseText;
+				
+				if ( res != "fail" ) {
+					alert("삭제가 완료되었습니다.");
+				} else {
+					alert("삭제 중 문제가 발생했습니다.");
+				}
+				
+				location.reload();	
+			}	
+		}
 	</script>
 </head>
 
@@ -148,7 +178,7 @@
 														<!-- 관리자일 때 -->
 														<c:if test="${study.is_admin eq 1}">
 															<c:if test="${ study.study_status eq '개설대기' and study.apply_count eq 0 and study.approve_count eq 1 }">
-															<input type="button" class="my-btn yellow-black" value="모집 취소" onclick="cancel_recruit(${study.idx});">
+															<input type="button" class="my-btn yellow-black" value="모집 취소" onclick="cancel_recruit(${study.study_idx});">
 															<input type="button" class="my-btn yellow-black" value="모집글 수정" onclick="location.href='study_create_modify_form.do?idx=${study.study_idx}'">
 															</c:if>
 															
@@ -180,7 +210,7 @@
 															</c:if>
 															
 															<c:if test="${ study.study_status eq '폐쇄' or study.study_status eq '종료' or study.study_status eq '개설취소'}">
-															<input type="button" class="my-btn yellow-black" value="삭제하기" onclick="">													
+															<input type="button" class="my-btn yellow-black" value="삭제하기" onclick="del_study( ${study.idx}, ${user.idx} );">													
 															</c:if>	
 														</c:if>
 														

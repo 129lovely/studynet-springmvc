@@ -83,9 +83,16 @@ public class UserDAO implements DAO {
 	// 가입한 스터디수 1 증가
 	public int update_study_cnt(int create_user_idx) {
 		int res = sqlSession.update("user.update_study_cnt", create_user_idx);
-		return 0;
+		return res;
 	}
 
+	// 가입한 스터디수 1 감소
+	public int decrease_study_cnt(int user_idx) {
+		int res = sqlSession.update("user.decrease_study_cnt", user_idx);
+		return res;
+	}
+
+	
 	//--------------------------------------------------------------------
 	//
 	// sns 로그인 처리 관련
