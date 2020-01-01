@@ -35,11 +35,11 @@
                     <div class="mb20">
                         <table class="tac">
                             <tr>
-                                <th>제목</th>
-                                <th>작성자</th>
-                                <th>작성일자</th>
-                                <th>조회수</th>
-                                <th>추천수</th>
+                                <th class="section-discription tal">제목</th>
+                                <th class="section-discription">작성자</th>
+                                <th class="section-discription">작성일자</th>
+                                <th class="section-discription">조회수</th>
+                                <th class="section-discription">추천수</th>
                             </tr>
                             
                             <c:forEach var="vo" items="${ list }">
@@ -49,13 +49,22 @@
 	                            	</c:if>
 	                            	
 	                            	<c:if test="${ vo.deleted_at == null }"> <!-- 일반 게시물 -->
+	                            	<c:if test="${vo.is_notice==1 }">
+	                            	<td><a href="community_list_detail.do?idx=${ vo.idx }">[공지] ${ vo.title }</a></td>	                            	
+	                                <td>${ vo.name }</td>
+	                                <td><fmt:formatDate value="${vo.created_at}" type="date" pattern="yyyy.MM.dd"/></td>
+	                                <td>${ vo.hit }</td>
+	                                <td>${ vo.recommend }</td>
+	                                </c:if>
+	                                
+	                                <c:if test="${vo.is_notice==0 }">
 	                            	<td><a href="community_list_detail.do?idx=${ vo.idx }">${ vo.title }</a></td>	                            	
 	                                <td>${ vo.name }</td>
 	                                <td><fmt:formatDate value="${vo.created_at}" type="date" pattern="yyyy.MM.dd"/></td>
 	                                <td>${ vo.hit }</td>
 	                                <td>${ vo.recommend }</td>
 	                            	</c:if>
-                       				
+	                            	</c:if>
                             	</tr>
                             </c:forEach>
          

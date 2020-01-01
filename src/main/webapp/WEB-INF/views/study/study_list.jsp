@@ -70,9 +70,9 @@
 						<form name="f">
 						<select name="search_option" id="search_option">
 							<option value="3">전체</option>
-							<option value="1">온라인</option>
-							<option value="0">오프라인</option>
-							<option value="2">복합</option>
+ 							<option value='1'><c:if test="${param.is_online eq 1 }">selected</c:if>온라인</option>
+							<option value='0'><c:if test="${param.is_online eq 0 }">selected</c:if>오프라인</option>
+							<option value='2' ><c:if test="${param.is_online eq 2 }">selected</c:if>복합</option>
 						</select>
 					
 						<input type="text" placeholder="검색어를 입력해주세요" name="search" id="search"/>
