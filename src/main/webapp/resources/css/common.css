@@ -1304,6 +1304,10 @@ textarea {
     margin-right: 5px;
 }
 
+.modify-comment-txtarea {
+	height: 100px;
+    margin-bottom: 10px;
+}
 
 /*
 //----------------------------------------------------------------------------------
