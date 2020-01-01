@@ -138,6 +138,52 @@
 /*
 //----------------------------------------------------------------------------------
 //
+// fullCalendar 스타일
+//
+//----------------------------------------------------------------------------------
+*/
+/* 지난달, 다음달 버튼 */
+button.fc-next-button.fc-button.fc-button-primary
+, button.fc-prev-button.fc-button.fc-button-primary {
+	background-color: #2E323C;
+	transition: all 0.25s;
+	border: none;
+}
+
+button.fc-next-button.fc-button.fc-button-primary span
+, button.fc-prev-button.fc-button.fc-button-primary span {
+	color: #DFE1E4;
+}
+
+button.fc-next-button.fc-button.fc-button-primary:hover
+, button.fc-prev-button.fc-button.fc-button-primary:hover {
+	background-color: #3B5BA2;
+	color: #EFF4FA;
+}
+
+/* today 버튼 */
+button.fc-today-button.fc-button.fc-button-primary {
+	background-color: #FEC46E;
+	color: #383B46;
+	border: none;
+	transition: all 0.25s;
+}
+button.fc-today-button.fc-button.fc-button-primary:hover {
+	background-color: #3B5BA2;
+	color: #EFF4FA;
+}
+.fc-button:disabled {
+	opacity: 1;
+}
+
+/* today 셀 */
+.fc-unthemed td.fc-today {
+	background: #eef3fa;
+}
+
+/*
+//----------------------------------------------------------------------------------
+//
 // swiper 스타일
 //
 //----------------------------------------------------------------------------------

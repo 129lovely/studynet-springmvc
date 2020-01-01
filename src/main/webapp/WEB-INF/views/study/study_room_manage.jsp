@@ -14,6 +14,7 @@
     	<script src="${ pageContext.request.contextPath }/resources/js/fullcalendar.main.js"></script>
     	<script src="${ pageContext.request.contextPath }/resources/js/interaction.main.js"></script>
     	<script src="${ pageContext.request.contextPath }/resources/js/daygrid.main.js"></script>
+    	<script src="${ pageContext.request.contextPath }/resources/js/fullcalendar.ko.js"></script>
 	</head>
 	
 	<body>
@@ -357,6 +358,31 @@
 				</div>
 			</form>
 		</div>
+		
+		<!-- 캘린더 일정 등록 모달 -->
+		<div class="modal fade" id="myModal3" role="dialog">
+			<form>
+				<div class="modal-dialog modal-sm">
+					<!-- Modal content-->
+					<div class="modal-content">
+						<!-- 제목 -->
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"></button>
+							<h4 class="modal-title tac" id="cal_date"></h4>
+						</div>
+						<!-- 내용 -->
+						<div class="modal-body">
+							<p id="cal_content" class=""></p>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" onclick="javascript:void(0);">삭제</button>
+							<button type="button" class="btn btn-default" onclick="javascript:void(0);">추가</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
 
 	<jsp:include page="../footer.jsp"></jsp:include>
 		
@@ -368,18 +394,28 @@
         	var calendarEl = document.getElementById('calendar');
 
             var calendar = new FullCalendar.Calendar(calendarEl, {
+            	locale: 'ko',
                 plugins: [ 'interaction', 'dayGrid' ],
+                contentHeight: 600,
+                eventClick: function(info) {
+                    alert('Event: ' + info.event.title);
+                },
                 selectable: true,
-                dateClick: function(info) {
-                    alert('clicked ' + info.dateStr);
-                  },
-                  select: function(info) {
-                    alert('selected ' + info.startStr + ' to ' + info.endStr);
-                  },
-               
+                dateClick: function(info) {     
+                	$("#cal_date").text(info.dateStr);
+            		$("#myModal3").modal('show');
+                },
+                select: function(info) {
+                	$("#cal_date").text(info.startStr + " ~ " + info.endStr);
+                	$("#myModal3").modal('show');
+                },
            		events: [
                 {
                   title: 'All Day Event',
+                  start: '2019-11-01'
+                },
+                {
+                  title: 'two Day Event',
                   start: '2019-11-01'
                 },
                 {
@@ -387,49 +423,11 @@
                   start: '2019-11-07',
                   end: '2019-11-10'
                 },
-                {
-                  groupId: '999',
-                  title: 'Repeating Event',
-                  start: '2019-11-09T16:00:00'
-                },
-                {
-                  groupId: '999',
-                  title: 'Repeating Event',
-                  start: '2019-11-16T16:00:00'
-                },
-                {
-                  title: 'Conference',
-                  start: '2019-11-11',
-                  end: '2019-11-13'
-                },
-                {
-                  title: 'Meeting',
-                  start: '2019-11-12T10:30:00',
-                  end: '2019-11-12T12:30:00'
-                },
-                {
-                  title: 'Lunch',
-                  start: '2019-11-12T12:00:00'
-                },
-                {
-                  title: 'Meeting',
-                  start: '2019-11-12T14:30:00'
-                },
-                {
-                  title: 'Birthdaykkkrty',
-                  start: '2019-11-13T07:00:00'
-                },
-                {
-                  title: 'Click for Google',
-                  url: 'http://google.com/',
-                  start: '2019-11-28'
-                }
               ]
             });
 
             calendar.render();
 		}
-        
         
 		// 게시판 모달 띄우기
 		// 게시글보기
@@ -504,16 +502,8 @@
 
 		function close_edit(btn) {
 			var text = $("#notice_input").val();
-			var study_idx = $
-			{
-				study.idx
-			}
-			;
-			var user_idx = $
-			{
-				user.idx
-			}
-			;
+			var study_idx = ${study.idx};
+			var user_idx = ${user.idx};
 
 			$.ajax({
 				url : "/web/notice_update.do",

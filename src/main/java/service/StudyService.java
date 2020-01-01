@@ -241,6 +241,18 @@ public class StudyService {
 		return res;
 	}
 	
+	// 스터디 게시판 리스트 가져오기 
+	public List<BoardVO> study_board_list(HashMap<String, Object> map) {
+		List<BoardVO> list = boardDAO.study_board_list(map);
+		return list;
+	}
+	public int study_board_list_cnt(HashMap<String, Object> map) {
+		int cnt = boardDAO.study_board_list_cnt(map);
+		return cnt;
+	}
+	public int study_board_write(HashMap<String, Object> params) {
+		int res = boardDAO.study_board_write(params);
+		return res;
 	// 스터디 삭제
 	public String del_study(HashMap<String, Object> params) {
 		String result = "fail";
