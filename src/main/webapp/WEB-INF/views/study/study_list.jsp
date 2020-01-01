@@ -42,24 +42,25 @@
 				<p class="mb10">step 1. 스터디 목적 선택하기 (복수 선택 가능)</p>
 				<div class="btn-box mb10">
 					<ul class="flex-box">
+						<!-- 이거 파라미터 여러개일 경우엔 어떻게 체크해야 되지 ?!! -->
 						<li>
-							<input type="checkbox" value="공모전" id="purp_1"/>
+							<input type="checkbox" value="공모전" id="purp_1" <c:if test="${param.purpose eq '공모전' }">checked</c:if> />
 							<label class="my-btn select black-white" for="purp_1">공모전</label>
 						</li>
 						<li>
-							<input type="checkbox" value="취업준비" id="purp_2"/>
+							<input type="checkbox" value="취업준비" id="purp_2" <c:if test="${param.purpose eq '취업준비' }">checked</c:if> />
 							<label class="my-btn select black-white" for="purp_2">취업준비</label>
 						</li>
 						<li>
-							<input type="checkbox" value="기상습관" id="purp_3"/>
+							<input type="checkbox" value="기상습관" id="purp_3" <c:if test="${param.purpose eq '기상습관' }">checked</c:if> />
 							<label class="my-btn select black-white" for="purp_3">기상/습관</label>
 						</li>
 						<li>
-							<input type="checkbox" value="공부" id="purp_4"/>
+							<input type="checkbox" value="공부" id="purp_4" <c:if test="${param.purpose eq '공부' }">checked</c:if> />
 							<label class="my-btn select black-white" for="purp_4">공부</label>
 						</li>
 						<li>
-							<input type="checkbox" value="기타" id="purp_5"/>
+							<input type="checkbox" value="기타" id="purp_5" <c:if test="${param.purpose eq '기타' }">checked</c:if> />
 							<label class="my-btn select black-white" for="purp_5">기타</label>
 						</li>
 					</ul>
@@ -69,13 +70,13 @@
 					<div class="flex-box">
 						<form name="f">
 						<select name="search_option" id="search_option">
-							<option value="3">전체</option>
-							<option value="1">온라인</option>
-							<option value="0">오프라인</option>
-							<option value="2">복합</option>
+							<option value="3" <c:if test="${param.search_option eq 3 }">selected</c:if>>전체</option>
+ 							<option value='1' <c:if test="${param.search_option eq 1 }">selected</c:if>>온라인</option>
+							<option value='0' <c:if test="${param.search_option eq 0 }">selected</c:if>>오프라인</option>
+							<option value='2' <c:if test="${param.search_option eq 2 }">selected</c:if>>복합</option>
 						</select>
 					
-						<input type="text" placeholder="검색어를 입력해주세요" name="search" id="search"/>
+						<input type="text" placeholder="검색어를 입력해주세요" name="search" id="search" <c:if test="${param.search ne ''}">value="${param.search}"</c:if> />
 					</div>
 					<input class="my-btn black-white" type="button" value="찾아보기" name="btnSearch" id="btnSearch"
 								onclick="send(this.form);" />
@@ -92,7 +93,7 @@
 				<div class="search-result">
 					<ul>
 						<c:forEach var="vo" items="${list }">
-						
+						<c:if test="${ vo.deleted_at == null }">
 							<li class="flex-box">
 							
 							<span><img src="resources/images/study_profile/${vo.photo}"/> </span>
@@ -132,6 +133,7 @@
 		              			</div>
 		              		</c:if>
 							</li>
+						</c:if>
 						</c:forEach>
 					</ul>
 				</div>

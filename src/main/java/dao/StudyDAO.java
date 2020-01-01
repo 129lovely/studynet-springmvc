@@ -163,19 +163,31 @@ public class StudyDAO implements DAO {
 	}
 	
 	// 선택한 스터디 멤버 강퇴
-		public int mem_kick ( int idx ) {
-			int res = sqlSession.update("study.mem_kick", idx);
-			return res;
-		}
+	public int mem_kick ( int idx ) {
+		int res = sqlSession.update("study.mem_kick", idx);
+		return res;
+	}
 
-		public List<StudyVO> study_myinfo(int user_idx) {
-			List<StudyVO> list = sqlSession.selectList("study.study_myinfo", user_idx);
-			return list;
-		}
-
-		public int update_notice(HashMap<String, Object> params) {
-			int res = sqlSession.update("study.update_notice", params);
-			return res;
-		}
+	public List<StudyVO> study_myinfo(int user_idx) {
+		List<StudyVO> list = sqlSession.selectList("study.study_myinfo", user_idx);
+		return list;
+	}
 	
+	// 스터디 공지 수정
+	public int update_notice(HashMap<String, Object> params) {
+		int res = sqlSession.update("study.update_notice", params);
+		return res;
+	}
+
+	// 스터디 모집 취소
+	public int recruit_cancel( int idx ) {
+		int res = sqlSession.update("study.recruit_cancel", idx);
+		return res;
+	}
+	
+	// 스터디 삭제
+	public int del_study_member( int idx ) {
+		int res = sqlSession.delete("study.del_study_member", idx);
+		return res;
+	}
 }

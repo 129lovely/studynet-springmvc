@@ -89,7 +89,10 @@
 .tac {
     text-align: center;
 }
-
+<!--커뮤니티 페이지에서 제목부분 왼쪽정렬 -->
+.tac_title{
+	text-align:left;
+}
 .tar {
     text-align: right;
 }

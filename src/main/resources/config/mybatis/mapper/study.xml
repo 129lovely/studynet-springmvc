@@ -25,7 +25,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		VALUES (#{title}, #{create_user_idx}, #{min_count}, #{max_count},
 				#{deadline}, #{start_date}, #{end_date}, #{open_kakao},
  				#{purpose}, #{is_online},#{place}, #{extra_info}, #{apply_condition}, 
-		 		#{detail_info}, '모집중', #{photo})
+		 		#{detail_info}, '개설대기', #{photo})
 		<selectKey resultType="int" keyProperty="idx" order="AFTER">
 			SELECT LAST_INSERT_ID()
     	</selectKey> 
@@ -75,7 +75,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 스터디신청하기 -->
 	<insert id="apply" parameterType="java.util.Map">
 		insert into study_member (user_idx, study_idx, mem_status, is_admin, introduce)
-		values (#{user_idx}, #{study_idx}, "승인 대기", 0, #{introduce} )
+		values (#{user_idx}, #{study_idx}, "승인대기", 0, #{introduce} )
 	</insert>
 	<update id="add_member" parameterType="java.util.Map">
 		update study
@@ -194,12 +194,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE m.user_idx = #{user_idx}
 	</select>
 	
+	<!-- 스터디 모집 취소 / 개설 취소 -->
+	<update id="recruit_cancel" parameterType="int">
+		UPDATE study
+		SET study_status = '개설취소',
+		deleted_at = current_timestamp()
+		WHERE idx = #{idx}
+	</update>
+	
 	<!-- 마이페이지 공지 수정 -->
 	<update id="update_notice" parameterType="java.util.Map">
 		UPDATE study
 		SET notice=#{notice}
 		WHERE idx=#{study_idx}
 	</update>
+	
+	<!-- 스터디 멤버 정보 삭제 -->
+	<delete id="del_study_member">
+		DELETE FROM study_member
+		WHERE idx=#{idx}
+	</delete>
+
 </mapper>
 
 
