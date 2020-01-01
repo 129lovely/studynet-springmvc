@@ -9,6 +9,11 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>스터디 룸 - 스터디 제목 출력 </title>
+		<link type="text/css" rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/fullcalendar.main.css">
+		<link type="text/css" rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/daygrid.main.css">
+    	<script src="${ pageContext.request.contextPath }/resources/js/fullcalendar.main.js"></script>
+    	<script src="${ pageContext.request.contextPath }/resources/js/interaction.main.js"></script>
+    	<script src="${ pageContext.request.contextPath }/resources/js/daygrid.main.js"></script>
 	</head>
 	
 	<body>
@@ -185,11 +190,7 @@
                             <div class="line-bottom">
                                 <div>
                                     <h1 class="sub-section-title tal"><i class="far fa-calendar-alt"></i> 일정 / 출석체크</h1>
-                                    <div>
-                                        <textarea readonly>
-                                            
-                                        </textarea>
-                                    </div>
+                                    <div id='calendar'></div>
                                 </div>
                                
                             </div>
@@ -363,6 +364,73 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/httpRequest.js"></script>
 		
         <script>        
+        window.onload = function name() {
+        	var calendarEl = document.getElementById('calendar');
+
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                plugins: [ 'interaction', 'dayGrid' ],
+                selectable: true,
+                dateClick: function(info) {
+                    alert('clicked ' + info.dateStr);
+                  },
+                  select: function(info) {
+                    alert('selected ' + info.startStr + ' to ' + info.endStr);
+                  },
+               
+           		events: [
+                {
+                  title: 'All Day Event',
+                  start: '2019-11-01'
+                },
+                {
+                  title: 'Long Event',
+                  start: '2019-11-07',
+                  end: '2019-11-10'
+                },
+                {
+                  groupId: '999',
+                  title: 'Repeating Event',
+                  start: '2019-11-09T16:00:00'
+                },
+                {
+                  groupId: '999',
+                  title: 'Repeating Event',
+                  start: '2019-11-16T16:00:00'
+                },
+                {
+                  title: 'Conference',
+                  start: '2019-11-11',
+                  end: '2019-11-13'
+                },
+                {
+                  title: 'Meeting',
+                  start: '2019-11-12T10:30:00',
+                  end: '2019-11-12T12:30:00'
+                },
+                {
+                  title: 'Lunch',
+                  start: '2019-11-12T12:00:00'
+                },
+                {
+                  title: 'Meeting',
+                  start: '2019-11-12T14:30:00'
+                },
+                {
+                  title: 'Birthdaykkkrty',
+                  start: '2019-11-13T07:00:00'
+                },
+                {
+                  title: 'Click for Google',
+                  url: 'http://google.com/',
+                  start: '2019-11-28'
+                }
+              ]
+            });
+
+            calendar.render();
+		}
+        
+        
 		// 게시판 모달 띄우기
 		// 게시글보기
 		function board_show(title, name, created_at, content) {
