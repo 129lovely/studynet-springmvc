@@ -114,7 +114,6 @@
 															<c:if test="${ study.study_status eq '개설대기' and study.apply_count eq 0 and study.approve_count eq 1 }">
 															<input type="button" class="my-btn yellow-black" value="개설 취소" onclick="">
 															<input type="button" class="my-btn yellow-black" value="모집글 수정" onclick="location.href='study_create_modify_form.do?study_idx=${study.idx}'">
-															<input type="button" class="my-btn yellow-black" value="모집글 삭제" onclick="">
 															</c:if>
 															
 															<c:if test="${ study.study_status eq '개설대기'}">
@@ -136,7 +135,7 @@
 																	<div>
 																		<h1 class="section-title blue line-bottom">동의 현황 확인</h1>
 																		<table>
-																			
+																			<!-- 내용 가져와야 함 -->
 																		
 																		</table>
 																		<a href="#open_agree" class="my-btn black-white">닫기</a>
@@ -161,7 +160,7 @@
 															</c:if>
 															
 															<c:if test="${ study.mem_status eq '승인' or study.study_status eq '진행중' }">
-															<input type="button" class="my-btn yellow-black" value="스터디 룸" onclick="location.href='study_room_manage.do?study_idx=${study.idx}'">
+															<input type="button" class="my-btn yellow-black" value="스터디 룸" onclick="location.href='study_room_detail.do?study_idx=${study.idx}'">
 															</c:if>
 															
 															<c:if test="${ study.study_status eq '폐쇄대기' }">
