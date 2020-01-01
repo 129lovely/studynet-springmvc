@@ -65,8 +65,8 @@
 							<div class="line-bottom flex-box">
 								<p class="section-discription">
 									생성된 스터디룸은  마이페이지에서 관리할 수 있습니다.
-									대기 중인 신청 인원이 있을 경우 글을 수정할 수 없고,
-									참여 인원이 0명일 경우에만 모집글을 삭제하실 수 있습니다.
+									대기 중인 신청 인원이 있거나 자신을 제외한 신청 인원이 있을 경우엔
+									모집글을 수정하거나 삭제하실 수 있습니다.
 								</p>
 								<div class="tg">
 									<input type="checkbox" id="cb1" class=tgl-skewed>

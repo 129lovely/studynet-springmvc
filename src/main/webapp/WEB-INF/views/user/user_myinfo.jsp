@@ -8,250 +8,6 @@
 	<meta charset="UTF-8">
 	<title>마이페이지 | 내 정보</title>		
 				
-</head>
-<body>
-	<jsp:include page="../header.jsp"></jsp:include>
-	<div class="body-bgcolor-set">
-		<div class="mypage-userinfo">
-			
-			<div class="inner-box pt190">
-				<div class="contents-box board">
-					<!-- 마이 페이지 메뉴 -->
-					<div class="flex-box">
-						<span class="icon icon-my-page tal"></span>
-						<h2 class="section-title">마이페이지</h2>
-					</div>
-
-					<div class="line-bottom">
-						<div class="menu-bar-box">
-							<div class="mypage-menu-box">
-								<a href="study_myinfo.do" class="menu room sub-section-title black tac" onmouseover="move_left();" onmouseout="move_right();">내 스터디룸</a>
-								<a href="#" class="menu info sub-section-title black tac" >회원 정보</a>
-							</div>
-							<div id="bar" class="right"></div>
-						</div>
-					</div>
-
-					<div class="line-bottom">
-						<h1 class="sub-section-title">정보 수정</h1>
-					</div>
-
-					<!-- 정보 수정 -->
-					<div class="table-indent ">
-						<form class="mypage-userinfo-form ">
-							<table>
-								<tr>
-									<th>이메일</th>
-									<td><input type="text" readonly id="email"
-										title="id" value ="${user.email}"></td>
-								</tr>
-									
-								<tr>	
-									<th>이름</th>
-									<td><input type="text" readonly id="name"
-										title="이름" value ="${user.name}"></td>
-								</tr>
-
-								<tr>	
-									<th>현재 비밀번호</th>
-									<td><input type="password" id="pwd" name="original_pwd" title="현재 비밀번호"
-										placeholder="특수기호 포함 영숫자 조합 8자 이상 "></td>
-								</tr>
-
-								<tr>	
-									<th></th>
-									<td><span class="section-discription">SNS 회원님의 경우 비밀번호 찾기를 통해 초기 비밀번호를 발급받아주세요.</span><br><br>
-									<input type="button" class="my-btn black-white" value="비밀번호 찾기" onClick="location.href='user_find.do'"></td>
-								</tr>
-								
-								<tr>
-									<th>바꿀 비밀번호</th>
-									<td><input type="password" id="new_pwd" name="password" title="바꿀 비밀번호" placeholder="바꿀 비밀번호를 입력해주세요."></td>
-								</tr>
-
-								<tr>
-									<th>비밀번호 확인</th>
-									<td><input type="password" id="pwd_check" title="비밀번호 확인" placeholder="바꿀 비밀번호를  재입력해주세요."></td>
-								</tr>
-								
-								<tr>	
-									<th>전화번호</th>
-									<td><input type="text" id="tel-input" value = "${user.phone}"></td>
-									<td>
-										<input class="my-btn black-white" onClick="location.href='#open_phone'" type="button" value="번호 변경">
-										<div class="info_content input" id="open_phone">
-											<div>
-												<p class="section-discription tal">
-													번호를 변경하기 위해서는 인증이 필요합니다. <br>변경할 휴대폰 번호를 입력해주세요.<br><br>
-													<input type="text" id="phone-input" placeholder="'-'이 자동으로 입력됩니다." maxlength="13">
-												</p><br>
-												<input type="button" class="my-btn yellow-black" onClick="do_certificate();" value="인증"/>
-												<input type="button" class="my-btn 0yellow-black" onClick="location.href='#close_phone'" value="취소"/>
-											</div>
-										</div>		
-										<div class="info_content input" id="open_key">
-											<div>
-												<p class="section-discription tal">
-													문자가 오지 않는다면 재전송 버튼을 눌러주세요.<br>재전송은 1회만 가능합니다. <br><br>
-													<input type="text" id="key-input" placeholder="SMS로 전송된 6자리 인증키를 입력해주세요.">
-												</p>
-												<input type="button" class="my-btn yellow-black" onClick="re_certificate();" value="재전송"/>
-												<input type="button" class="my-btn yellow-black" onClick="certificateBtn();" value="인증"/>
-												<input type="button" class="my-btn yellow-black" onClick="location.href='#close_key'" value="취소"/>
-											</div>
-										</div>			
-									</td>
-								</tr>
-								
-								<tr>	
-									<th>직업</th>
-									<td>	
-											<input type="radio" name="job" value="학생" id="student"
-											<c:if test="${ user.job eq '학생'}">checked</c:if>>
-											<label for="student">학생</label>
-										
-			
-											<input type="radio" name="job" value="취준생" id="job_seeker"
-											<c:if test="${ user.job eq '취준생'}">checked</c:if>>
-											<label for="job_seeker">취준생</label>
-						
-										
-											<input type="radio" name="job" value="직장인" id="office_worker"
-											<c:if test="${ user.job eq '직장인'}">checked</c:if>>
-											<label for="office_worker">직장인</label>
-							
-											<input type="radio" name="job" value="기타" id="job_etc"
-											<c:if test="${ user.job eq '기타'}">checked</c:if>>
-											<label for="job_etc">기타</label>
-
-									</td>
-								</tr>
-								
-								<tr>	
-									<th>지역</th>
-									<td class="select-region">
-										<div>
-											<select name="region" id="region">
-												<option value="" >지역 선택</option>
-												<option value="서울" >서울</option>
-												<option value="경기도" >경기도</option>
-												<option value="대전" >대전</option>
-												<option value="인천" >인천</option>
-												<option value="부산" >부산</option>
-												<option value="대구" >대구</option>
-												<option value="광주" >광주</option>
-												<option value="울산" >울산</option>
-												<option value="세종" >세종</option>
-												<option value="강원도" >강원도</option>
-												<option value="충청도" >충청도</option>
-												<option value="경상도" >경상도</option>
-												<option value="전라도" >전라도</option>
-												<option value="제주도" >제주도</option>
-												<option value="해외" >해외 거주</option>
-											</select>
-										</div>
-									</td>
-								</tr>
-								
-								<tr>
-									<td colspan="3" class="tac">
-									<input class="my-btn yellow-black mb20" type="button" value="수정하기" onClick="send(this.form);">
-										<input class="my-btn yellow-black mb20" type="button"
-										value="돌아가기" onClick="location.href='index.do'"></td>
-								</tr>
-							</table>	
-						</form>
-					</div>
-
-					<!-- 회원탈퇴 여부 -->
-					<div class="line-bottom"></div>
-					<div class="line-bottom">
-						<h1 class="sub-section-title">회원탈퇴</h1>
-					</div>
-					<input type="hidden" name="userId" value="${user.idx}">
-					<form class="get-out-form tac">
-						<p class="section-discription">
-							신청 / 참여 / 개설 중인 스터디들이 없어야 탈퇴가 가능합니다.<br> 회원을 탈퇴하시면 1년 후, 모든
-							정보가 사라집니다.<br> 정말 탈퇴를 진행하시려면 비밀번호를 재입력해주세요.
-						</p>
-
-						<input type="text" id="del_pwd" title="비밀번호 재입력" placeholder="현재 비밀번호를 입력해주세요."> 
-						<input type="button" class="my-btn black-white" title="회원 탈퇴" value="탈퇴" onclick="b_delete();">
-					</form>
-				</div>
-			</div>		
-		</div>
-	</div>
-	<jsp:include page="../footer.jsp"></jsp:include>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/httpRequest.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-	<script type="text/javascript">
-	
-		//마이페이지 메뉴 슬라이드 바
-		function move_right(){
-			var bar = document.getElementById("bar");
-			bar.classList.add("right");
-			bar.classList.remove("left");
-		}
-	
-		function move_left(){
-			var bar = document.getElementById("bar");
-			bar.classList.remove("right");
-			bar.classList.add("left");
-		}
-		
-		// 하이픈 자동 입력 스크립트
-		var autoHypenPhone = function(str){
-	      	str = str.replace(/[^0-9]/g, '');
-	      	
-	     	 	var tmp = '';
-	     	 	
-	      	if( str.length < 4){
-	          	return str;
-	          	
-	      	} else if(str.length < 7){
-	          	tmp += str.substr(0, 3);
-	          	tmp += '-';
-	          	tmp += str.substr(3);
-	          	return tmp;
-	          	
-	      } else if(str.length < 11){
-	          	tmp += str.substr(0, 3);
-	          	tmp += '-';
-	          	tmp += str.substr(3, 3);
-	          	tmp += '-';
-	          	tmp += str.substr(6);
-	          	return tmp;
-	          	
-	      } else {              
-	          	tmp += str.substr(0, 3);
-	          	tmp += '-';
-	          	tmp += str.substr(3, 4);
-	          	tmp += '-';
-	          	tmp += str.substr(7);
-	          	return tmp;
-	      }
-	  
-	      return str;
-	}
-	
-		// 적용
-		window.onload = function () {
-			
-			var phoneNum = document.getElementById('phone-input');
-			
-			phoneNum.onkeyup = function(){
-			  	console.log(this.value);
-			  	this.value = autoHypenPhone( this.value ) ;  
-			}
-			
-			// 셀렉트 태그 DB값 불러오기 
-			document.getElementById("region").value = "${user.region}";
-			
-		};
-	
-	</script>
-	
 	<script type="text/javascript">
 		// 핸드폰 본인 인증
 		function do_certificate() {
@@ -277,7 +33,6 @@
 			var url = "user_join_certificate.do";
 			var param = "phone=" + encodeURIComponent(input_phone.value)
 			sendRequest(url, param, certificate_result, "get");
-
 		}
 		
 		// 폰 인증 resultfn 
@@ -402,7 +157,7 @@
 			var pwd_check = document.getElementById("pwd_check")
 			var phone = f.phone;
 
-			if (password.value == "" ){
+			if (password.value != "" ){
 				
 				//현재 비밀번호 비교
 				if ("${user.password}"!= orginal_pwd.value ){
@@ -462,6 +217,249 @@
 			}
 		}
 
+	</script>
+</head>
+
+<body>
+	<jsp:include page="../header.jsp"></jsp:include>
+	<div class="body-bgcolor-set">
+		<div class="mypage-userinfo">
+			
+			<div class="inner-box pt190">
+				<div class="contents-box board">
+					<!-- 마이 페이지 메뉴 -->
+					<div class="flex-box">
+						<span class="icon icon-my-page tal"></span>
+						<h2 class="section-title">마이페이지</h2>
+					</div>
+
+					<div class="line-bottom">
+						<div class="menu-bar-box">
+							<div class="mypage-menu-box">
+								<a href="study_myinfo.do" class="menu room sub-section-title black tac" onmouseover="move_left();" onmouseout="move_right();">내 스터디룸</a>
+								<a href="#" class="menu info sub-section-title black tac" >회원 정보</a>
+							</div>
+							<div id="bar" class="right"></div>
+						</div>
+					</div>
+
+					<div class="line-bottom">
+						<h1 class="sub-section-title">정보 수정</h1>
+					</div>
+
+					<!-- 정보 수정 -->
+					<div class="table-indent ">
+						<form class="mypage-userinfo-form ">
+							<table>
+								<tr>
+									<th>이메일</th>
+									<td><input type="text" readonly id="email"
+										title="id" value ="${user.email}"></td>
+								</tr>
+									
+								<tr>	
+									<th>이름</th>
+									<td><input type="text" readonly id="name"
+										title="이름" value ="${user.name}"></td>
+								</tr>
+
+								<tr>	
+									<th>현재 비밀번호</th>
+									<td><input type="password" id="pwd" name="original_pwd" title="현재 비밀번호" placeholder="특수기호 포함 영숫자 조합 8자 이상 "></td>
+								</tr>
+
+								<tr>	
+									<th></th>
+									<td><span class="section-discription">SNS 회원님의 경우 비밀번호 찾기를 통해 초기 비밀번호를 발급받아주세요.</span><br><br>
+									<input type="button" class="my-btn black-white" value="비밀번호 찾기" onClick="location.href='user_find.do'"></td>
+								</tr>
+								
+								<tr>
+									<th>바꿀 비밀번호</th>
+									<td><input type="password" id="new_pwd" name="password" title="바꿀 비밀번호" placeholder="바꿀 비밀번호를 입력해주세요."></td>
+								</tr>
+
+								<tr>
+									<th>비밀번호 확인</th>
+									<td><input type="password" id="pwd_check" title="비밀번호 확인" placeholder="바꿀 비밀번호를  재입력해주세요."></td>
+								</tr>
+								
+								<tr>	
+									<th>전화번호</th>
+									<td><input type="text" id="tel-input" value = "${user.phone}"></td>
+									<td>
+										<input class="my-btn black-white" onClick="location.href='#open_phone'" type="button" value="번호 변경">
+										<div class="info_content input" id="open_phone">
+											<div>
+												<p class="section-discription tal">
+													번호를 변경하기 위해서는 인증이 필요합니다. <br>변경할 휴대폰 번호를 입력해주세요.<br><br>
+													<input type="text" id="phone-input" placeholder="'-'이 자동으로 입력됩니다." maxlength="13">
+												</p><br>
+												<input type="button" class="my-btn yellow-black" onClick="do_certificate();" value="인증"/>
+												<input type="button" class="my-btn 0yellow-black" onClick="location.href='#close_phone'" value="취소"/>
+											</div>
+										</div>		
+										<div class="info_content input" id="open_key">
+											<div>
+												<p class="section-discription tal">
+													문자가 오지 않는다면 재전송 버튼을 눌러주세요.<br>재전송은 1회만 가능합니다. <br><br>
+													<input type="text" id="key-input" placeholder="SMS로 전송된 6자리 인증키를 입력해주세요.">
+												</p>
+												<input type="button" class="my-btn yellow-black" onClick="re_certificate();" value="재전송"/>
+												<input type="button" class="my-btn yellow-black" onClick="certificateBtn();" value="인증"/>
+												<input type="button" class="my-btn yellow-black" onClick="location.href='#close_key'" value="취소"/>
+											</div>
+										</div>			
+									</td>
+								</tr>
+								
+								<tr>	
+									<th>직업</th>
+									<td>	
+											<input type="radio" name="job" value="학생" id="student"
+											<c:if test="${ user.job eq '학생'}">checked</c:if>>
+											<label for="student">학생</label>
+										
+			
+											<input type="radio" name="job" value="취준생" id="job_seeker"
+											<c:if test="${ user.job eq '취준생'}">checked</c:if>>
+											<label for="job_seeker">취준생</label>
+						
+										
+											<input type="radio" name="job" value="직장인" id="office_worker"
+											<c:if test="${ user.job eq '직장인'}">checked</c:if>>
+											<label for="office_worker">직장인</label>
+							
+											<input type="radio" name="job" value="기타" id="job_etc"
+											<c:if test="${ user.job eq '기타'}">checked</c:if>>
+											<label for="job_etc">기타</label>
+
+									</td>
+								</tr>
+								
+								<tr>	
+									<th>지역</th>
+									<td class="select-region">
+										<div>
+											<select name="region" id="region">
+												<option value="">지역 선택</option>
+												<option value="서울">서울</option>
+												<option value="경기도">경기도</option>
+												<option value="대전">대전</option>
+												<option value="인천">인천</option>
+												<option value="부산">부산</option>
+												<option value="대구">대구</option>
+												<option value="광주">광주</option>
+												<option value="울산">울산</option>
+												<option value="세종">세종</option>
+												<option value="강원도">강원도</option>
+												<option value="충청도">충청도</option>
+												<option value="경상도">경상도</option>
+												<option value="전라도">전라도</option>
+												<option value="제주도">제주도</option>
+												<option value="해외">해외 거주</option>
+											</select>
+										</div>
+									</td>
+								</tr>
+								
+								<tr>
+									<td colspan="3" class="tac">
+									<input class="my-btn yellow-black mb20" type="button" value="수정하기" onClick="send(this.form);">
+										<input class="my-btn yellow-black mb20" type="button"
+										value="돌아가기" onClick="location.href='index.do'"></td>
+								</tr>
+							</table>	
+						</form>
+					</div>
+
+					<!-- 회원탈퇴 여부 -->
+					<div class="line-bottom"></div>
+					<div class="line-bottom">
+						<h1 class="sub-section-title">회원탈퇴</h1>
+					</div>
+					<input type="hidden" name="userId" value="${user.idx}">
+					<form class="get-out-form tac">
+						<p class="section-discription">
+							신청 / 참여 / 개설 중인 스터디들이 없어야 탈퇴가 가능합니다.<br> 회원을 탈퇴하시면 1년 후, 모든
+							정보가 사라집니다.<br> 정말 탈퇴를 진행하시려면 비밀번호를 재입력해주세요.
+						</p>
+
+						<input type="text" id="del_pwd" title="비밀번호 재입력" placeholder="현재 비밀번호를 입력해주세요."> 
+						<input type="button" class="my-btn black-white" title="회원 탈퇴" value="탈퇴" onclick="b_delete();">
+					</form>
+				</div>
+			</div>		
+		</div>
+	</div>
+	<jsp:include page="../footer.jsp"></jsp:include>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/httpRequest.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+	<script type="text/javascript">
+	
+		//마이페이지 메뉴 슬라이드 바
+		function move_right(){
+			var bar = document.getElementById("bar");
+			bar.classList.add("right");
+			bar.classList.remove("left");
+		}
+	
+		function move_left(){
+			var bar = document.getElementById("bar");
+			bar.classList.remove("right");
+			bar.classList.add("left");
+		}
+		
+		// 하이픈 자동 입력 스크립트
+		var autoHypenPhone = function(str){
+	      	str = str.replace(/[^0-9]/g, '');
+	      	
+	     	 	var tmp = '';
+	     	 	
+	      	if( str.length < 4){
+	          	return str;
+	          	
+	      	} else if(str.length < 7){
+	          	tmp += str.substr(0, 3);
+	          	tmp += '-';
+	          	tmp += str.substr(3);
+	          	return tmp;
+	          	
+	      } else if(str.length < 11){
+	          	tmp += str.substr(0, 3);
+	          	tmp += '-';
+	          	tmp += str.substr(3, 3);
+	          	tmp += '-';
+	          	tmp += str.substr(6);
+	          	return tmp;
+	          	
+	      } else {              
+	          	tmp += str.substr(0, 3);
+	          	tmp += '-';
+	          	tmp += str.substr(3, 4);
+	          	tmp += '-';
+	          	tmp += str.substr(7);
+	          	return tmp;
+	      }
+	  
+	      return str;
+	}
+	
+		// 적용
+		window.onload = function () {
+			
+			var phoneNum = document.getElementById('phone-input');
+			
+			phoneNum.onkeyup = function(){
+			  	console.log(this.value);
+			  	this.value = autoHypenPhone( this.value );  
+			}
+			
+			// 셀렉트 태그 DB값 불러오기 
+			document.getElementById("region").value = "${user.region}";
+			
+		};
+	
 	</script>
 </body>
 
