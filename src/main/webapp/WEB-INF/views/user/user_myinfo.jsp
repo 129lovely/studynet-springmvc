@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -200,7 +201,7 @@
 		}
 		
 		
-		<!-- 회원탈퇴 -->
+		/* 회원탈퇴  */
 		function b_delete() {
 		
 			var del_pwd = document.getElementById("del_pwd");
@@ -216,8 +217,7 @@
 				location.href="user_del.do?idx=${ user.idx }";				
 			}
 		}
-		
-		
+
 </script>		
 				
 </head>
@@ -318,18 +318,22 @@
 								<tr>	
 									<th>직업</th>
 									<td>	
-											<input type="radio" name="job" value="학생" id="student">
+											<input type="radio" name="job" value="학생" id="student"
+											<c:if test="${ user.job eq '학생'}">checked</c:if>>
 											<label for="student">학생</label>
 										
 			
-											<input type="radio" name="job" value="취준생" id="job_seeker">
+											<input type="radio" name="job" value="취준생" id="job_seeker"
+											<c:if test="${ user.job eq '취준생'}">checked</c:if>>
 											<label for="job_seeker">취준생</label>
 						
 										
-											<input type="radio" name="job" value="직장인" id="office_worker">
+											<input type="radio" name="job" value="직장인" id="office_worker"
+											<c:if test="${ user.job eq '직장인'}">checked</c:if>>
 											<label for="office_worker">직장인</label>
 							
-											<input type="radio" name="job" value="기타" id="job_etc">
+											<input type="radio" name="job" value="기타" id="job_etc"
+											<c:if test="${ user.job eq '기타'}">checked</c:if>>
 											<label for="job_etc">기타</label>
 
 									</td>
@@ -339,7 +343,7 @@
 									<th>지역</th>
 									<td class="select-region">
 										<div>
-											<select name="region">
+											<select name="region" id="region">
 												<option value="" >지역 선택</option>
 												<option value="서울" >서울</option>
 												<option value="경기도" >경기도</option>
@@ -407,6 +411,58 @@
 			bar.classList.remove("right");
 			bar.classList.add("left");
 		}
+		
+		// 하이픈 자동 입력 스크립트
+		var autoHypenPhone = function(str){
+	      	str = str.replace(/[^0-9]/g, '');
+	      	
+	     	 	var tmp = '';
+	     	 	
+	      	if( str.length < 4){
+	          	return str;
+	          	
+	      	} else if(str.length < 7){
+	          	tmp += str.substr(0, 3);
+	          	tmp += '-';
+	          	tmp += str.substr(3);
+	          	return tmp;
+	          	
+	      } else if(str.length < 11){
+	          	tmp += str.substr(0, 3);
+	          	tmp += '-';
+	          	tmp += str.substr(3, 3);
+	          	tmp += '-';
+	          	tmp += str.substr(6);
+	          	return tmp;
+	          	
+	      } else {              
+	          	tmp += str.substr(0, 3);
+	          	tmp += '-';
+	          	tmp += str.substr(3, 4);
+	          	tmp += '-';
+	          	tmp += str.substr(7);
+	          	return tmp;
+	      }
+	  
+	      return str;
+	}
+	
+		// 적용
+		window.onload = function () {
+			
+			var phoneNum = document.getElementById('phone-input');
+			
+			phoneNum.onkeyup = function(){
+			  	console.log(this.value);
+			  	this.value = autoHypenPhone( this.value ) ;  
+			}
+			
+			// 셀렉트 태그 DB값 불러오기 
+			alert("${user.job}")
+			document.getElementById("region").value = "${user.region}";
+			
+			
+		};
 	
 	</script>
 </body>
