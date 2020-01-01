@@ -74,6 +74,37 @@
 				location.reload();	
 			}	
 		}
+		
+		// 신청 취소 기능
+		function cancel_apply( mem_idx, user_idx ) {
+		var check = confirm("정말 신청을 취소할까요? 내 스터디룸에서 해당 스터디가 사라지게 됩니다.");
+			
+			if ( ! check ) {
+				return;
+			}
+			
+			var url = "del_study.do";
+			var param = "idx=" + mem_idx + "&user_idx=" + user_idx;
+			
+			sendRequest(url, param, apply_canceled, "get");
+		}
+	
+		// 신청 취소 resultFn
+		function apply_canceled() {
+			
+			if( xhr.readyState == 4 && xhr.status == 200 ){		
+				
+				var res = xhr.responseText;
+				
+				if ( res != "fail" ) {
+					alert("취소가 완료되었습니다.");
+				} else {
+					alert("취소 중 문제가 발생했습니다.");
+				}
+				
+				location.reload();	
+			}	
+		}
 	</script>
 </head>
 
@@ -217,11 +248,11 @@
 														<!-- 관리자가 아닐때 -->
 														<c:if test="${study.is_admin eq 0}">
 															<c:if test="${ study.mem_status eq '승인대기'}">
-															<input type="button" class="my-btn yellow-black" value="신청 취소" onclick="">
+															<input type="button" class="my-btn yellow-black" value="신청 취소" onclick="cancel_apply( ${study.idx}, ${user.idx} );">
 															</c:if>
 															
 															<c:if test="${ study.mem_status eq '승인거부' or study.mem_status eq '강제탈퇴' or study.study_status eq '개설취소' or study.study_status eq '종료' }">
-															<input type="button" class="my-btn yellow-black" value="삭제하기" onclick="">
+															<input type="button" class="my-btn yellow-black" value="삭제하기" onclick="del_study( ${study.idx}, ${user.idx} );">
 															</c:if>
 															
 															<c:if test="${ study.mem_status eq '승인' or study.study_status eq '진행중' }">
