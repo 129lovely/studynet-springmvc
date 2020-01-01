@@ -191,16 +191,13 @@
 				}
 				
 			}			
+
+			alert("회원 정보가 수정되었습니다.");
 			
 			// 비밀번호를 변경하지 않았을 경우 기본값 넣어주기
 			if ( password.value == "" ) {
-				alert("password_input= " + password.value );
 				password.value = "${user.password}";
-				alert("password = " + "${user.password}");
-				alert("password_input= " + password.value );
 			}
-			
-			// SNS 유저라서 기본 정보가 없을 경우 모든 값을 넣어야 수정 가능
 			
 			f.action = "user_update.do";
 			f.method = "post";
@@ -409,7 +406,6 @@
 	</div>
 	<jsp:include page="../footer.jsp"></jsp:include>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/httpRequest.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 	<script type="text/javascript">
 	
 		//마이페이지 메뉴 슬라이드 바

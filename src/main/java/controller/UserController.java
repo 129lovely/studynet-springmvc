@@ -348,7 +348,7 @@ public class UserController {
 
 	// 회원정보 수정하기
 	@RequestMapping("/user_update.do")
-	public String user_myinfo(UserVO vo) {
+	public String user_myinfo(UserVO vo, HttpServletRequest request) {
 		
 		try {
 			int res = userService.userMyinfo(vo);
@@ -357,7 +357,13 @@ public class UserController {
 			e.printStackTrace();
 		}
 
-		return "user_myinfo.do?idx"+vo;
+		// 수정한 정보를 페이지에 바로 적용하기 위해 세션의 user 정보를 업데이트 한다.
+		HttpSession session = request.getSession();
+		session.removeAttribute("user");
+		UserVO new_user = userService.selectOne(vo.getIdx());
+		session.setAttribute("user", new_user);
+		
+		return "user_myinfo.do?idx";
 	}
 	
 	// 이메일 - 이름 유효성 검사 ( 비밀번호 찾기 기능용 )
