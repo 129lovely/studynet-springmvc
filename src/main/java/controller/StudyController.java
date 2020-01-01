@@ -337,14 +337,14 @@ public class StudyController {
 		return Common.Study.VIEW_PATH + "add_admin_complete.jsp";
 	}
 	
-<<<<<<< HEAD
 	// 스터디 모집 취소 ( 글 삭졔, 개설 취소 )
 	@RequestMapping("/recruit_cancel.do")
 	@ResponseBody
 	public int recruit_cancel( int idx ) {
 		int res = studyService.recruit_cancel( idx );
 		return res;
-=======
+	}
+
 	@RequestMapping("/notice_update.do")
 	@ResponseBody
 	public String notice_update(@RequestParam HashMap<String, Object> params, Model model) {
@@ -354,6 +354,5 @@ public class StudyController {
 			resStr = "success";
 		}
 		return resStr;
->>>>>>> 72d1462c1ad59a6f9a172618904d7a936668db07
 	}
 }

@@ -194,7 +194,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE m.user_idx = #{user_idx}
 	</select>
 	
-<<<<<<< HEAD
 	<!-- 스터디 모집 취소 / 개설 취소 -->
 	<update id="recruit_cancel" parameterType="int">
 		UPDATE study
@@ -202,14 +201,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE idx = #{idx}
 	</update>
 	
-=======
 	<!-- 마이페이지 공지 수정 -->
 	<update id="update_notice" parameterType="java.util.Map">
 		UPDATE study
 		SET notice=#{notice}
 		WHERE idx=#{study_idx}
 	</update>
->>>>>>> 72d1462c1ad59a6f9a172618904d7a936668db07
+
 </mapper>
 
 
