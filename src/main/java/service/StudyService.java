@@ -227,4 +227,10 @@ public class StudyService {
 		List<StudyVO> list = studyDAO.study_myinfo(user_idx);
 		return list;
 	}
+	
+	// 스터디 모집 취소 ( 글 삭졔, 개설 취소 )
+	public int recruit_cancel( int idx ) {
+		int res = studyDAO.recruit_cancel( idx );
+		return res;
+	}
 }

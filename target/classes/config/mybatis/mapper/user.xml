@@ -79,12 +79,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where email=#{email}
 	</update>
 	
-	<!-- 회원 탈퇴 부분 ( delete 타임만 추가 ) -->
+	<!-- 회원 탈퇴 부분 -->
 	<update id="user_del_update" parameterType="user">
-		UPDATE board
+		UPDATE user
 		SET
-		deleted_at = current_timestamp()
-		where idx=#{idx}
+		deleted_at = current_timestamp(),
+		phone = CONCAT('(del)', #{phone}),
+		email = CONCAT('(del)', #{email})
+		WHERE idx=#{idx}
 	</update>
 	
 	<!-- 이메일 - 이름 확인  -->

@@ -74,7 +74,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 스터디신청하기 -->
 	<insert id="apply" parameterType="java.util.Map">
-		insert into study_member (user_idx, study_idx, status, is_admin, introduce)
+		insert into study_member (user_idx, study_idx, mem_status, is_admin, introduce)
 		values (#{user_idx}, #{study_idx}, "승인 대기", 0, #{introduce} )
 	</insert>
 	<update id="add_member" parameterType="java.util.Map">
@@ -135,7 +135,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<!-- 스터디 관리자 멤버 추가 -->
 	<insert id="add_admin_member" parameterType="java.util.Map">
-		insert into study_member (user_idx, study_idx, is_admin, status)
+		insert into study_member (user_idx, study_idx, is_admin, mem_status)
 		values (#{user_idx}, #{idx}, 1, 'admin')
 	</insert>
 	
@@ -184,6 +184,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET mem_status = 'admin', is_admin = 1
 		WHERE idx = #{idx}
 	</update>
+	
+	<!-- 마이페이지 스터디룸 리스트 가져오기 -->
+	<select id="study_myinfo" resultType="study" parameterType="int">
+		SELECT *
+		FROM study_member m
+		LEFT OUTER JOIN study s
+		ON m.study_idx = s.idx
+		WHERE m.user_idx = #{user_idx}
+	</select>
+	
+	<!-- 스터디 모집 취소 / 개설 취소 -->
+	<update id="recruit_cancel" parameterType="int">
+		UPDATE study
+		SET study_status = '개설취소'
+		WHERE idx = #{idx}
+	</update>
+	
 </mapper>
 
 

@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import common.Common;
-import common.Paging;
 import common.PagingOption;
 import common.Paging_study;
 import dao.BoardDAO;
@@ -333,8 +332,16 @@ public class StudyController {
 	@RequestMapping("/add_admin.do")
 	public String add_admin( int idx, Model model ) { 
 		
-		int res = studyService.add_admin( idx );
+		studyService.add_admin( idx );
 		
 		return Common.Study.VIEW_PATH + "add_admin_complete.jsp";
+	}
+	
+	// 스터디 모집 취소 ( 글 삭졔, 개설 취소 )
+	@RequestMapping("/recruit_cancel.do")
+	@ResponseBody
+	public int recruit_cancel( int idx ) {
+		int res = studyService.recruit_cancel( idx );
+		return res;
 	}
 }

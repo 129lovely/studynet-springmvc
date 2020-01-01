@@ -92,7 +92,7 @@
 				<div class="search-result">
 					<ul>
 						<c:forEach var="vo" items="${list }">
-						
+						<c:if test="${ vo.deleted_at == null }">
 							<li class="flex-box">
 							
 							<span><img src="resources/images/study_profile/${vo.photo}"/> </span>
@@ -132,6 +132,7 @@
 		              			</div>
 		              		</c:if>
 							</li>
+						</c:if>
 						</c:forEach>
 					</ul>
 				</div>

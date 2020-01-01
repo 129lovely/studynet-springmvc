@@ -193,6 +193,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ON m.study_idx = s.idx
 		WHERE m.user_idx = #{user_idx}
 	</select>
+	
+	<!-- 스터디 모집 취소 / 개설 취소 -->
+	<update id="recruit_cancel" parameterType="int">
+		UPDATE study
+		SET study_status = '개설취소'
+		WHERE idx = #{idx}
+	</update>
+	
 </mapper>
 
 
