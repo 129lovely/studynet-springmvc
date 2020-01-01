@@ -6,219 +6,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>마이페이지 | 내 정보</title>
-	
-	<script type="text/javascript">
-		// 핸드폰 본인 인증
-		function do_certificate() {
-			var input_phone = document.getElementById("phone-input");
-			
-			// '-'이 바르게 들어갔는지 확인
-			if( input_phone.value == null  ) {
-				alert("전화번호를 입력해주세요.");
-				return;
-			}
-			
-			// 하이픈이 올바르게 들어갔는지 확인
-			var patt = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
-			
-			if ( ! patt.test(input_phone.value) ) {
-				alert("전화번호 형식이 올바르지 않습니다.");
-				return;
-			}
-			
-			location.href = "#close_phone";
-			location.href="#open_key";
-			
-			var url = "user_join_certificate.do";
-			var param = "phone=" + encodeURIComponent(input_phone.value)
-			sendRequest(url, param, certificate_result, "get");
-
-		}
-		
-		// 폰 인증 resultfn 
-		function certificate_result() {
-			if( xhr.readyState == 4 && xhr.status == 200 ){
-				
-				var phone = document.getElementById("phone");
-				
-				var res = JSON.parse(xhr.responseText);
-				
-				
-				if ( res.tempKey != null && res.phone != null ){
-					
-					if ( res.tempKey == "member" ) {
-						location.href="#close_key";
-						alert("이미 회원 정보가 있는 전화번호입니다. ");
-						return;
-					}
-					
-					alert("입력하신 전화번호로 인증키가 발송되었습니다. SMS를 확인해주세요. ");
-					
-					var key = res.tempKey;
-					var phoneNum = res.phone;
-					
-					// body 내부에 input hidden으로 결과값을 숨겨둔다.
-					  var key_tag = document.createElement("input");
-					  key_tag.setAttribute("type", "hidden");
-					  key_tag.setAttribute("id", "key");
-					  key_tag.setAttribute("value", key);
-				      document.forms[0].appendChild(key_tag);
-				      
-				      var phone_tag = document.createElement("input");
-				      phone_tag.setAttribute("type", "hidden");
-				      phone_tag.setAttribute("id", "phoneNum");
-				      phone_tag.setAttribute("value", phoneNum);
-				      document.forms[0].appendChild(phone_tag);
-					
-				} else {
-					alert("문제가 발생했습니다... 재시도해주십시오.");
-					return;
-				} 
-			}
-		}
-		
-		// 본인 인증 재전송 여부	
-		var re_certi = false;
-		
-		// 본인 인증키 재전송 
-		function re_certificate() {
-			
-			if ( re_certi == true ) {
-				alert("이미 인증키 재전송을 하셨습니다. ");
-			}
-			
-			re_certi = true;
-			
-			
-			var input_phone = document.getElementById("phone-input");
-			
-			var url = "user_join_certificate.do";
-			var param = "phone=" + encodeURIComponent(input_phone.value)
-			sendRequest(url, param, certificate_result2, "get");
-			
-		}
-		
-		// 본인 인증키 재전송 resultFn 
-		function certificate_result2() {
-			if( xhr.readyState == 4 && xhr.status == 200 ){
-
-				
-				var res = JSON.parse(xhr.responseText);
-				
-				if ( res.tempKey != null && res.phone != null ){
-					alert("인증키가 재전송되었습니다. SMS를 확인해주세요. ");
-					var key = res.tempKey;
-					var phoneNum = res.phone;
-					
-					// body 내부에 input hidden으로 숨겨뒀던 값을 새 키로 바꿔준다.
-					  var key_tag = document.getElementById("key");
-					  key_tag.setAttribute("value", key);
-					  
-				} else {
-					alert("문제가 발생했습니다... 재시도해주십시오.");
-					return;
-				} 
-			}
-		}
-		
-		
-		// 본인 인증키 인증 버튼
-		function certificateBtn( ) {
-			var key_input = document.getElementById("key-input");
-			
-			// hidden으로 숨겨둔 값들 불러오기
-			var key = document.getElementById("key").value;
-			var phoneNum = document.getElementById("phoneNum").value;
-			
-			if( key_input.value == "" ){
-				alert("인증키를 입력해주세요.");
-				return;
-			} 
-			
-			if ( key == key_input.value ) {
-				document.getElementById("phone").value = phoneNum;
-				alert("인증되었습니다.");
-				location.href="#close_key";
-				
-				return;
-				
-			} else {
-				alert("인증키가 올바르지 않습니다.");
-				return;
-			}
-		}			
-	
-		
-		// 회원 정보 수정 유효성 검사 
-		function send( f ) {
-			
-			var original_pwd = f.original_pwd;
-			var password = f.password;
-			var pwd_check = document.getElementById("pwd_check")
-			var phone = f.phone;
-
-			if (password.value == "" ){
-				
-				//현재 비밀번호 비교
-				if ("${user.password}"!= orginal_pwd.value ){
-					alert("비밀번호가 일치하지 않습니다.")
-					password.focus();
-					return;
-				}
-				
-				// 비밀번호
-				var pwd_patt = /^(?=.*[a-zA-Z0-9])(?=.*[^a-zA-Z0-9가-힣]).{8,}$/;
-							
-				if( ! pwd_patt.test(password.value)) {
-					alert("비밀번호 형식이 올바르지 않습니다. ");
-					password.focus();
-					return;
-				}
-				if (orginal_pwd.value == password.value){
-					alert("현재 비밀번호와 동일합니다 다시 입력해주세요. ");
-					password.focus();
-					return;
-				}
-				
-				// 비밀번호 확인
-				if ( ! pwd_check.value ) {
-					alert("비밀번호를 재입력해주세요.");
-					pwd_check.focus();
-					return;
-				} else if ( password.value != pwd_check.value ) {
-					alert("비밀번호가 일치하지 않습니다.")
-					pwd_check.focus();
-					return;
-				}
-				
-			}			
-			
-			f.action = "user_update.do";
-			f.method = "post";
-			f.submit();
-			
-		}
-		
-		
-		/* 회원탈퇴  */
-		function b_delete() {
-		
-			var del_pwd = document.getElementById("del_pwd");
-			var password = "${user.password}";
-			
-			if (del_pwd.value != password){
-				alert("비밀번호가 일치하지 않습니다.")
-				pwd_check.focus();
-				return;
-			}						
-			else {
-				confirm("정말 삭제하시겠습니까?")
-				location.href="user_del.do?idx=${ user.idx }";				
-			}
-		}
-
-</script>		
+	<title>마이페이지 | 내 정보</title>		
 				
 </head>
 <body>
@@ -458,12 +246,222 @@
 			}
 			
 			// 셀렉트 태그 DB값 불러오기 
-			alert("${user.job}")
 			document.getElementById("region").value = "${user.region}";
-			
 			
 		};
 	
+	</script>
+	
+	<script type="text/javascript">
+		// 핸드폰 본인 인증
+		function do_certificate() {
+			var input_phone = document.getElementById("phone-input");
+			
+			// '-'이 바르게 들어갔는지 확인
+			if( input_phone.value == null  ) {
+				alert("전화번호를 입력해주세요.");
+				return;
+			}
+			
+			// 하이픈이 올바르게 들어갔는지 확인
+			var patt = /^01(?:0|1|[6-9])-(?:\d{3}|\d{4})-\d{4}$/;
+			
+			if ( ! patt.test(input_phone.value) ) {
+				alert("전화번호 형식이 올바르지 않습니다.");
+				return;
+			}
+			
+			location.href = "#close_phone";
+			location.href="#open_key";
+			
+			var url = "user_join_certificate.do";
+			var param = "phone=" + encodeURIComponent(input_phone.value)
+			sendRequest(url, param, certificate_result, "get");
+
+		}
+		
+		// 폰 인증 resultfn 
+		function certificate_result() {
+			if( xhr.readyState == 4 && xhr.status == 200 ){
+				
+				var phone = document.getElementById("phone");
+				
+				var res = JSON.parse(xhr.responseText);
+				
+				
+				if ( res.tempKey != null && res.phone != null ){
+					
+					if ( res.tempKey == "member" ) {
+						location.href="#close_key";
+						alert("이미 회원 정보가 있는 전화번호입니다. ");
+						return;
+					}
+					
+					alert("입력하신 전화번호로 인증키가 발송되었습니다. SMS를 확인해주세요. ");
+					
+					var key = res.tempKey;
+					var phoneNum = res.phone;
+					
+					// body 내부에 input hidden으로 결과값을 숨겨둔다.
+					  var key_tag = document.createElement("input");
+					  key_tag.setAttribute("type", "hidden");
+					  key_tag.setAttribute("id", "key");
+					  key_tag.setAttribute("value", key);
+				      document.forms[0].appendChild(key_tag);
+				      
+				      var phone_tag = document.createElement("input");
+				      phone_tag.setAttribute("type", "hidden");
+				      phone_tag.setAttribute("id", "phoneNum");
+				      phone_tag.setAttribute("value", phoneNum);
+				      document.forms[0].appendChild(phone_tag);
+					
+				} else {
+					alert("문제가 발생했습니다... 재시도해주십시오.");
+					return;
+				} 
+			}
+		}
+		
+		// 본인 인증 재전송 여부	
+		var re_certi = false;
+		
+		// 본인 인증키 재전송 
+		function re_certificate() {
+			
+			if ( re_certi == true ) {
+				alert("이미 인증키 재전송을 하셨습니다. ");
+			}
+			
+			re_certi = true;
+			
+			
+			var input_phone = document.getElementById("phone-input");
+			
+			var url = "user_join_certificate.do";
+			var param = "phone=" + encodeURIComponent(input_phone.value)
+			sendRequest(url, param, certificate_result2, "get");
+			
+		}
+		
+		// 본인 인증키 재전송 resultFn 
+		function certificate_result2() {
+			if( xhr.readyState == 4 && xhr.status == 200 ){
+
+				
+				var res = JSON.parse(xhr.responseText);
+				
+				if ( res.tempKey != null && res.phone != null ){
+					alert("인증키가 재전송되었습니다. SMS를 확인해주세요. ");
+					var key = res.tempKey;
+					var phoneNum = res.phone;
+					
+					// body 내부에 input hidden으로 숨겨뒀던 값을 새 키로 바꿔준다.
+					  var key_tag = document.getElementById("key");
+					  key_tag.setAttribute("value", key);
+					  
+				} else {
+					alert("문제가 발생했습니다... 재시도해주십시오.");
+					return;
+				} 
+			}
+		}
+		
+		
+		// 본인 인증키 인증 버튼
+		function certificateBtn( ) {
+			var key_input = document.getElementById("key-input");
+			
+			// hidden으로 숨겨둔 값들 불러오기
+			var key = document.getElementById("key").value;
+			var phoneNum = document.getElementById("phoneNum").value;
+			
+			if( key_input.value == "" ){
+				alert("인증키를 입력해주세요.");
+				return;
+			} 
+			
+			if ( key == key_input.value ) {
+				document.getElementById("phone").value = phoneNum;
+				alert("인증되었습니다.");
+				location.href="#close_key";
+				
+				return;
+				
+			} else {
+				alert("인증키가 올바르지 않습니다.");
+				return;
+			}
+		}			
+	
+		
+		// 회원 정보 수정 유효성 검사 
+		function send( f ) {
+			
+			var original_pwd = f.original_pwd;
+			var password = f.password;
+			var pwd_check = document.getElementById("pwd_check")
+			var phone = f.phone;
+
+			if (password.value == "" ){
+				
+				//현재 비밀번호 비교
+				if ("${user.password}"!= orginal_pwd.value ){
+					alert("비밀번호가 일치하지 않습니다.")
+					password.focus();
+					return;
+				}
+				
+				// 비밀번호
+				var pwd_patt = /^(?=.*[a-zA-Z0-9])(?=.*[^a-zA-Z0-9가-힣]).{8,}$/;
+							
+				if( ! pwd_patt.test(password.value)) {
+					alert("비밀번호 형식이 올바르지 않습니다. ");
+					password.focus();
+					return;
+				}
+				if (orginal_pwd.value == password.value){
+					alert("현재 비밀번호와 동일합니다 다시 입력해주세요. ");
+					password.focus();
+					return;
+				}
+				
+				// 비밀번호 확인
+				if ( ! pwd_check.value ) {
+					alert("비밀번호를 재입력해주세요.");
+					pwd_check.focus();
+					return;
+				} else if ( password.value != pwd_check.value ) {
+					alert("비밀번호가 일치하지 않습니다.")
+					pwd_check.focus();
+					return;
+				}
+				
+			}			
+			
+			f.action = "user_update.do";
+			f.method = "post";
+			f.submit();
+			
+		}
+		
+		
+		/* 회원탈퇴  */
+		function b_delete() {
+		
+			var del_pwd = document.getElementById("del_pwd");
+			var password = "${user.password}";
+			
+			if (del_pwd.value != password){
+				alert("비밀번호가 일치하지 않습니다.")
+				pwd_check.focus();
+				return;
+			}						
+			else {
+				confirm("정말 삭제하시겠습니까?")
+				location.href="user_del.do?idx=${ user.idx }";				
+			}
+		}
+
 	</script>
 </body>
 
