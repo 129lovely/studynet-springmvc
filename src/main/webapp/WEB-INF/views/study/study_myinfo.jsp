@@ -83,9 +83,8 @@
 									
 											<!-- if status == 승인대기 -->
 											<div class="study-room ready-confirm">
-												<a class="study-name"
-													href="study_list_detail.do?idx=${study.idx}"> <span
-													class="status my-btn black-white">${ study.mem_status }</span>
+												<a class="study-name" href="study_list_detail.do?idx=${study.idx}">
+													<span class="status my-btn black-white">${ study.study_status }</span>
 													<c:if test="${study.is_online eq 0}">[오프라인]</c:if>
 													<c:if test="${study.is_online eq 1}">[온라인]</c:if>
 													<c:if test="${study.is_online eq 2}">[복합]</c:if>
@@ -93,6 +92,12 @@
 												</a>
 												<div class="accordion">
 													<table class="study-info">
+														<tr>
+															<th>내 상태</th>
+															<td>| 
+																  ${ study.mem_status }	 														
+															</td>
+														</tr>
 														<tr>
 															<th>스터디 기간</th>
 															<td>| 
@@ -122,33 +127,30 @@
 													<div class="room-btn-box">
 														<!-- 관리자일 때 -->
 														<c:if test="${study.is_admin eq 1}">
+															<c:if test="${ study.study_status eq '개설대기' and study.apply_count eq 0 and study.approve_count eq 1 }">
 															<input type="button" class="my-btn yellow-black" value="개설 취소" onclick="">
-															<input type="button" class="my-btn yellow-black" value="조기 마감" onclick="">
-															<input type="button" class="my-btn yellow-black" value="스터디 룸" onclick="location.href='study_room_manage.do?study_idx=${study.idx}'">
-															<input type="button" class="my-btn yellow-black" value="폐쇄 신청" onclick="">
-															<!--  
-															<c:if test="${ study.study_status eq '진행중'}">
-															<input type="button" class="my-btn yellow-black" value="스터디 룸" onclick="">
 															</c:if>
-															-->
+															
+															<c:if test="${ study.study_status eq '개설대기' and study.approve_count >= study.min_count }">
+															<input type="button" class="my-btn yellow-black" value="모집 마감" onclick="">
+															</c:if>
+															
+															<c:if test="${ study.study_status eq '진행중' or study.study_status eq '폐쇄대기' or study.study_status eq '종료' }">
+															<input type="button" class="my-btn yellow-black" value="스터디 룸" onclick="location.href='study_room_manage.do?study_idx=${study.idx}'">														
+															</c:if>
 														</c:if>
 														
 														<!-- 관리자가 아닐때 -->
 														<c:if test="${study.is_admin eq 0}">
-															<input type="button" class="my-btn yellow-black" value="신청 취소" onclick="">
-															<input type="button" class="my-btn yellow-black" value="탈퇴 신청" onclick="">
-															<input type="button" class="my-btn yellow-black" value="스터디 룸" onclick="location.href='study_room_detail.do?study_idx=${study.idx}'">
-															<input type="button" class="my-btn yellow-black" value="폐쇄 동의" onclick="">
-															
-															<c:if test="${ study.mem_status eq '승인대기'}">
+															<c:if test="${ study.mem_status eq '승인대기' }">
 															<input type="button" class="my-btn yellow-black" value="신청 취소" onclick="">
 															</c:if>
 															
-															<c:if test="${ study.study_status eq '진행중'}">
+															<c:if test="${ study.study_status eq '진행중' }">
 															<input type="button" class="my-btn yellow-black" value="스터디 룸" onclick="">
 															</c:if>
 															
-															<c:if test="${ study.study_status eq '폐쇄대기'}">
+															<c:if test="${ study.study_status eq '폐쇄대기' }">
 															<input type="button" class="my-btn yellow-black" value="폐쇄 동의" onclick="">
 															</c:if>														
 														</c:if>
