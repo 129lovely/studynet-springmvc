@@ -70,7 +70,6 @@ public class StudyController {
 		UserVO user = (UserVO) session.getAttribute("user");
 		
 		List<StudyVO> list=(List<StudyVO>)studyService.study_myinfo(user.getIdx());
-		System.out.println(list.size());
 				
 		model.addAttribute("user", user);
 		model.addAttribute("list", list);

@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class StudyVO {
 
-	private int idx, create_user_idx, min_count, max_count, apply_count, approve_count, is_online, is_admin;
+	private int idx, create_user_idx, min_count, max_count, apply_count, approve_count, is_online, is_admin, study_idx;
 	private String title, photo, open_kakao, purpose, place, extra_info, apply_condition, detail_info, study_status;
 
 	private String create_name, mem_status;
@@ -15,6 +15,14 @@ public class StudyVO {
 	private MultipartFile photo_file;
 	private String deadline, start_date, end_date;
 	private Date created_at, updated_at, deleted_at;
+
+	public int getStudy_idx() {
+		return study_idx;
+	}
+
+	public void setStudy_idx(int study_idx) {
+		this.study_idx = study_idx;
+	}
 
 	public int getIs_admin() {
 		return is_admin;

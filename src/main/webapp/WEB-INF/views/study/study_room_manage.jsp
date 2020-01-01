@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>   
-    
+<%@ include file="../login_check.jsp" %>
 <!DOCTYPE html>
 <html>
 
@@ -23,7 +23,7 @@
                         <div class="room-header">
                             <div class="flex-box title">
                                 <h1 class="section-title">흠냐륑 여긴 스터디 제목 칸</h1>
-                                <a class="my-btn yellow-black">모집글 보기</a>
+                                <a class="my-btn yellow-black" href="study_list_detail.do?idx=${ study.idx }">모집글 보기</a>
                             </div>
                             <p class="line-bottom section-discription tal">
                                 [관리자] 공지, 일정 등록 | 출석 체크 | 게시판 | 인원 관리 등의 기능을 이용하실 수 있습니다. 

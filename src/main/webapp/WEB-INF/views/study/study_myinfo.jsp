@@ -83,7 +83,7 @@
 									
 											<!-- if status == 승인대기 -->
 											<div class="study-room ready-confirm">
-												<a class="study-name" href="study_list_detail.do?idx=${study.idx}">
+												<a class="study-name" href="study_list_detail.do?idx=${study.study_idx}">
 													<span class="status my-btn black-white">${ study.study_status }</span>
 													<c:if test="${study.is_online eq 0}">[오프라인]</c:if>
 													<c:if test="${study.is_online eq 1}">[온라인]</c:if>
@@ -136,7 +136,7 @@
 															</c:if>
 															
 															<c:if test="${ study.study_status eq '진행중' or study.study_status eq '폐쇄대기' or study.study_status eq '종료' }">
-															<input type="button" class="my-btn yellow-black" value="스터디 룸" onclick="location.href='study_room_manage.do?study_idx=${study.idx}'">														
+															<input type="button" class="my-btn yellow-black" value="스터디 룸" onclick="location.href='study_room_manage.do?study_idx=${study.study_idx}'">														
 															</c:if>
 														</c:if>
 														
@@ -147,7 +147,7 @@
 															</c:if>
 															
 															<c:if test="${ study.study_status eq '진행중' }">
-															<input type="button" class="my-btn yellow-black" value="스터디 룸" onclick="">
+															<input type="button" class="my-btn yellow-black" value="스터디 룸" onclick="location.href='study_room_detail.do?study_idx=${study.study_idx}'">
 															</c:if>
 															
 															<c:if test="${ study.study_status eq '폐쇄대기' }">
