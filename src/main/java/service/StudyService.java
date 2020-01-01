@@ -221,4 +221,10 @@ public class StudyService {
 		
 		return res;
 	}
+	
+	// 마이페이지 - 내스터디룸 전체 리스트 가져오기
+	public List<StudyVO> study_myinfo(int user_idx) {
+		List<StudyVO> list = studyDAO.study_myinfo(user_idx);
+		return list;
+	}
 }

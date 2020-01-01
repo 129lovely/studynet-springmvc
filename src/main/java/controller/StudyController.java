@@ -33,6 +33,8 @@ import vo.UserVO;
 @Controller
 public class StudyController {
 
+	private static final int ArrayList = 0;
+	private static final int StudyMemberVO = 0;
 	StudyService studyService;
 	UserService userService;
 	BoardService boardService;
@@ -67,12 +69,11 @@ public class StudyController {
 		HttpSession session = request.getSession();
 		UserVO user = (UserVO) session.getAttribute("user");
 		
-//		StudyMemberVO member=studyService.studyMemStatus(user.getIdx());
-//		List<StudyVO> list=(ArrayList<StudyVO>)studyService.studyMemList(member.getStudy_idx());
-		
-//		model.addAttribute("member", member);
+		List<StudyVO> list=(List<StudyVO>)studyService.study_myinfo(user.getIdx());
+		System.out.println(list.size());
+				
 		model.addAttribute("user", user);
-//		model.addAttribute("list", list);
+		model.addAttribute("list", list);
 		
 		return Common.Study.VIEW_PATH + "study_myinfo.jsp";
 	}
