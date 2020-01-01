@@ -1,6 +1,7 @@
 ﻿package dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -162,6 +163,7 @@ public class StudyDAO implements DAO {
 	}
 	
 	// 선택한 스터디 멤버 강퇴
+<<<<<<< HEAD
 	public int mem_kick ( int idx ) {
 		int res = sqlSession.update("study.mem_kick", idx);
 		return res;
@@ -171,6 +173,22 @@ public class StudyDAO implements DAO {
 		List<StudyVO> list = sqlSession.selectList("study.study_myinfo", user_idx);
 		return list;
 	}
+=======
+		public int mem_kick ( int idx ) {
+			int res = sqlSession.update("study.mem_kick", idx);
+			return res;
+		}
+
+		public List<StudyVO> study_myinfo(int user_idx) {
+			List<StudyVO> list = sqlSession.selectList("study.study_myinfo", user_idx);
+			return list;
+		}
+
+		public int update_notice(HashMap<String, Object> params) {
+			int res = sqlSession.update("study.update_notice", params);
+			return res;
+		}
+>>>>>>> 72d1462c1ad59a6f9a172618904d7a936668db07
 	
 	// 스터디 모집 취소 / 개설 취소
 	public int recruit_cancel( int idx ) {

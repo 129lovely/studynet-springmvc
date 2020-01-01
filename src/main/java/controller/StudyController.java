@@ -135,7 +135,7 @@ public class StudyController {
 
 		} else {
 			// 지정된 파일이 없을 경우 랜덤하게 샘플에서 가져온다.
-			photo = "preview0" + new Random().nextInt(3) + 1;
+			photo = "preview0" + (new Random().nextInt(3) + 1) + ".jpg";
 		}
 
 		vo.setPhoto(photo);
@@ -337,11 +337,23 @@ public class StudyController {
 		return Common.Study.VIEW_PATH + "add_admin_complete.jsp";
 	}
 	
+<<<<<<< HEAD
 	// 스터디 모집 취소 ( 글 삭졔, 개설 취소 )
 	@RequestMapping("/recruit_cancel.do")
 	@ResponseBody
 	public int recruit_cancel( int idx ) {
 		int res = studyService.recruit_cancel( idx );
 		return res;
+=======
+	@RequestMapping("/notice_update.do")
+	@ResponseBody
+	public String notice_update(@RequestParam HashMap<String, Object> params, Model model) {
+		String resStr = "fail";
+		int res = studyService.update_notice(params);
+		if( res != 0 ) {
+			resStr = "success";
+		}
+		return resStr;
+>>>>>>> 72d1462c1ad59a6f9a172618904d7a936668db07
 	}
 }

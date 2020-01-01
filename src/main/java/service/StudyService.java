@@ -228,9 +228,15 @@ public class StudyService {
 		return list;
 	}
 	
+<<<<<<< HEAD
 	// 스터디 모집 취소 ( 글 삭졔, 개설 취소 )
 	public int recruit_cancel( int idx ) {
 		int res = studyDAO.recruit_cancel( idx );
+=======
+	// 스터디룸 공지 수정
+	public int update_notice(HashMap<String, Object> params) {
+		int res = studyDAO.update_notice(params);
+>>>>>>> 72d1462c1ad59a6f9a172618904d7a936668db07
 		return res;
 	}
 }

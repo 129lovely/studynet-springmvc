@@ -22,7 +22,7 @@
                         <!-- 페이지 제목 -->
                         <div class="room-header">
                             <div class="flex-box title">
-                                <h1 class="section-title">흠냐륑 여긴 스터디 제목 칸</h1>
+                                <h1 class="section-title">${ study.title }</h1>
                                 <a class="my-btn yellow-black" href="study_list_detail.do?idx=${ study.idx }">모집글 보기</a>
                             </div>
                             <p class="line-bottom section-discription tal">
@@ -37,23 +37,11 @@
                                     <div class="flex-box notice">
                                         <h1 class="sub-section-title tal"><i class="fas fa-bullhorn"></i> 필독 공지사항</h1>
                                         <div>
-                                            <a class="my-btn yellow-black" href="javascript:void(0);" id="apply_notice" onClick="edit_apply( )">적용</a>
-                                            <a class="my-btn black-white" href="javascript:void(0);" id="edit_notice" onClick="open_edit();">수정</a>
+                                            <a class="my-btn black-white" href="javascript:void(0);" id="edit_notice" onClick="btn_click(this);">수정</a>
                                         </div>
-                                        
                                     </div>
-                                    <div class="section-discription tal" id="notice_text">
-					                                        원래 공지사항 출력되는 부분 ~~  <br>
-					                                        일단은 보이게 !! <br>
-					                                        웅냥냐야냔냥ㄴ냥
-                                    </div>
-                                    <!-- 수정하기 누르면 textarea 튀어나오게 스크립트 처리해야 함 -->
-                                    <textarea name="notice" id="notice_input">
-                                        
-                                    </textarea name="notice">
-                                    <!-- 원래 내용 담아두기 -->
-                                    <input type="hidden" value="" id="original"> 
-                                </form> 
+                                    <div class="section-discription tal" id="notice_text">${ study.notice }</div>
+                            	</form> 
                             </div>
                         </div>
 
@@ -310,56 +298,61 @@
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/httpRequest.js"></script>
 		
         <script>
-            var flag = false;
+			// 공지사항 수정
+			var flag = false;
+			var notice_text = "";
+			
+			function btn_click(btn) {
+				if( flag == false ){ // 수정 -> 적용
+					$(btn).text("적용");
+					$(btn).addClass("yellow-black");
+					open_edit();
+										
+					return flag = true;
+				}
+				
+				if( flag == true ){ // 적용 -> 수정
+					$(btn).text("수정");
+					$(btn).removeClass("yellow-black");
+					close_edit();
+					
+					return flag = false;
+				}
+			}
+			
+			function open_edit(){
+				notice_text = $("#notice_text").text();
+				$("#notice_text").parent().append("<textarea id='notice_input'>" + notice_text + "</textarea>");
+				$("#notice_text").remove();
+			}
+			
+			function close_edit(btn){
+				var text = $("#notice_input").val();
+				var study_idx = ${study.idx};
+				var user_idx = ${user.idx};
+				
+				$.ajax({
+					url: "/web/notice_update.do"
+					, type: "get"
+					, data: { "study_idx": study_idx, "user_idx": user_idx, "notice": text }
+					, dataType: "text"
+					, success: function(response){
+						var data = response;
 
-            notice_input = document.getElementById("notice_input");
-            notice_text = document.getElementById("notice_text");
-
-            edit_button = document.getElementById("edit_notice");
-            apply_button = document.getElementById("apply_notice");
-
-            notice_input.style.display="none";
-            apply_button.style.display="none";
-
-            function open_edit() {
-                flag = !flag;
-
-                if ( flag == false ){
-                    notice_input.style.display="none";
-                    apply_button.style.display="none";
-                    notice_text.style.display="block";
-                    edit_button.style.display="block";
-                } else {
-                    notice_input.style.display="block";
-                    apply_button.style.display="inline";
-                    notice_text.style.display="none";
-                    edit_button.style.display="none";
-                }
-            }
-
-            function edit_apply( ) {
-                var original = document.getElementById("original");
-
-                notice_input.style.display="none";
-                apply_button.style.display="none";
-                notice_text.style.display="block";
-                edit_button.style.display="block";
-                
-                if ( notice_input.value == original.value ) {
-                    // 변경 사항 없음
-                    return;
-                }
-
-                // 에이젝스로 보내기
-
-
-            }
-        </script>
+						if( data == "fail" ){
+							alert("공지 수정 실패");
+							text = notice_text;
+						}else if( data == "success" ){
+							alert("공지 수정 완료");
+						}
+					}
+				});
+				
+				$("#notice_input").parent().append("<div class='section-discription tal' id='notice_text'>" + text + "</div>");
+				$("#notice_input").remove();
+			}
         
-        
-        <script type="text/javascript">
-        
-        	// 공동 관리자 추가 
+        	// 공동 관리자 추가
         	function add_admin ( f ) {
         		
         		var input_name = f.ad_name.value;
