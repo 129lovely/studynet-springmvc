@@ -74,7 +74,7 @@
                     <!-- 버튼 -->
                     <div class="flex-box btn-box mb40">
                         <div class="flex-box">
-                            <input type="text" id="search-content" placeholder="검색할 제목 키워드 입력" class="tac"/>
+                            <input type="text" id="search-content" placeholder="검색할 제목 키워드 입력" class="tac" <c:if test="${param.search ne ''}">value="${param.search}"</c:if> />
                            	<a href="javascript:send();" class="my-btn black-white">검색</a>
                         </div>
                         <div>
@@ -113,7 +113,7 @@
     	
     	(컨트롤러 -> 서비스(검색내용) 보내주고 -> dao(검색내용, 즉 파라미터는 string 한개) -> 매퍼에서
     	
-    			반환하는 resultType=board
+    	반환하는 resultType=board
     	select *
     	from board
     	where like 사용해서 제목에 검색내용이 있는 것들 다 가져오기 )
