@@ -149,7 +149,7 @@
 														<c:if test="${study.is_admin eq 1}">
 															<c:if test="${ study.study_status eq '개설대기' and study.apply_count eq 0 and study.approve_count eq 1 }">
 															<input type="button" class="my-btn yellow-black" value="모집 취소" onclick="cancel_recruit(${study.idx});">
-															<input type="button" class="my-btn yellow-black" value="모집글 수정" onclick="location.href='study_create_modify_form.do?study_idx=${study.study_idx}'">
+															<input type="button" class="my-btn yellow-black" value="모집글 수정" onclick="location.href='study_create_modify_form.do?idx=${study.study_idx}'">
 															</c:if>
 															
 															<c:if test="${ study.study_status eq '개설대기'}">
