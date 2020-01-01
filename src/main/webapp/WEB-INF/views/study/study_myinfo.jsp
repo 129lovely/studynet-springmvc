@@ -10,21 +10,6 @@
 	<meta charset="UTF-8">
 	<title>마이 페이지 | 내 스터디 룸</title>
 	
-	<script type="text/javascript">
-		//마이페이지 메뉴 슬라이드 바
-		function move_right(){
-		    var bar = document.getElementById("bar");
-		    bar.classList.add("right");
-		    bar.classList.remove("left");
-		}
-	
-		function move_left(){
-		    var bar = document.getElementById("bar");
-		    bar.classList.remove("right");
-		    bar.classList.add("left");
-		}
-	
-	</script>
 </head>
 
 <body>
@@ -79,8 +64,7 @@
 							<c:forEach var="study" items="${list}">
 								<div class="study-room-box ">
 									<div>
-										
-									
+												
 											<!-- if status == 승인대기 -->
 											<div class="study-room ready-confirm">
 												<a class="study-name" href="study_list_detail.do?idx=${study.idx}">
@@ -129,30 +113,94 @@
 														<c:if test="${study.is_admin eq 1}">
 															<c:if test="${ study.study_status eq '개설대기' and study.apply_count eq 0 and study.approve_count eq 1 }">
 															<input type="button" class="my-btn yellow-black" value="개설 취소" onclick="">
+															<input type="button" class="my-btn yellow-black" value="모집글 수정" onclick="location.href='study_create_modify_form.do?study_idx=${study.idx}'">
+															<input type="button" class="my-btn yellow-black" value="모집글 삭제" onclick="">
+															</c:if>
+															
+															<c:if test="${ study.study_status eq '개설대기'}">
+															<input type="button" class="my-btn yellow-black" value="스터디 룸" onclick="location.href='study_room_manage.do?study_idx=${study.idx}'">
 															</c:if>
 															
 															<c:if test="${ study.study_status eq '개설대기' and study.approve_count >= study.min_count }">
 															<input type="button" class="my-btn yellow-black" value="모집 마감" onclick="">
 															</c:if>
 															
-															<c:if test="${ study.study_status eq '진행중' or study.study_status eq '폐쇄대기' or study.study_status eq '종료' }">
+															<c:if test="${ study.study_status eq '진행중' or study.study_status eq '종료' or study.study_status eq '폐쇄'}">
 															<input type="button" class="my-btn yellow-black" value="스터디 룸" onclick="location.href='study_room_manage.do?study_idx=${study.idx}'">														
 															</c:if>
+															
+															<c:if test="${ study.study_status eq '폐쇄대기'}">
+															<input type="button" class="my-btn yellow-black" value="동의 현황" onclick="location.href='#open_agree'">														
+																<!-- 폐쇄 동의 인원 확인 -->
+																<div class="info_content agree_close list" id="open_list">
+																	<div>
+																		<h1 class="section-title blue line-bottom">동의 현황 확인</h1>
+																		<table>
+																			
+																		
+																		</table>
+																		<a href="#open_agree" class="my-btn black-white">닫기</a>
+																	</div>
+																</div>
+															</c:if>
+															
+															<c:if test="${ study.study_status eq '폐쇄' }">
+															<input type="button" class="my-btn yellow-black" value="스터디 룸" onclick="location.href='study_room_manage.do?study_idx=${study.idx}'">
+															<input type="button" class="my-btn yellow-black" value="삭제하기" onclick="">													
+															</c:if>	
 														</c:if>
 														
 														<!-- 관리자가 아닐때 -->
 														<c:if test="${study.is_admin eq 0}">
-															<c:if test="${ study.mem_status eq '승인대기' }">
+															<c:if test="${ study.mem_status eq '승인대기'}">
 															<input type="button" class="my-btn yellow-black" value="신청 취소" onclick="">
 															</c:if>
 															
-															<c:if test="${ study.study_status eq '진행중' }">
-															<input type="button" class="my-btn yellow-black" value="스터디 룸" onclick="">
+															<c:if test="${ study.mem_status eq '승인거부' or study.study_status eq '개설취소' or study.study_status eq '종료' or study.study_status eq '폐쇄'}">
+															<input type="button" class="my-btn yellow-black" value="삭제하기" onclick="">
+															</c:if>
+															
+															<c:if test="${ study.mem_status eq '승인' or study.study_status eq '진행중' }">
+															<input type="button" class="my-btn yellow-black" value="스터디 룸" onclick="location.href='study_room_manage.do?study_idx=${study.idx}'">
 															</c:if>
 															
 															<c:if test="${ study.study_status eq '폐쇄대기' }">
-															<input type="button" class="my-btn yellow-black" value="폐쇄 동의" onclick="">
-															</c:if>														
+																<input type="button" class="my-btn yellow-black" value="폐쇄 동의" onclick="location.href='#open_agree'">
+																
+																<!-- 폐쇄 동의 모달창 -->
+																<div class="info_content agree_close" id="open_agree">
+																	<div>
+																		<h1 class="section-title blue line-bottom">스터디 폐쇄 진행 안내</h1>
+																		<!-- 폐쇄 사유 -->
+																		<h4 class="sub-section-title black">폐쇄 사유</h4>
+																		<p class="section-discription">
+																			어쩌구 저저구 폐쇄 사유입니당 <br>
+																			흑흑ㅎ그흑흑 죄송함니다
+																		</p>
+																		
+																		<!-- 동의 현황 -->
+																		<br>
+																		<h4 class="sub-section-title black">동의 현황</h4>
+																		<p class="section-discription">
+																			3 / 15 명 동의 ( 20% ) 	
+																		</p>
+																		
+																		<!-- 폐쇄 안내 -->
+																		<p class="section-discription">
+																			폐쇄에 동의하기 위해서는 아래의 폐쇄 동의 버튼을 누르시면 됩니다. <br>
+																			한 번 동의하면 되돌릴 수 없으니 신중히 동의해주시기 바랍니다. <br>
+																			전체 인원의 80% 이상이 동의하면 폐쇄되며, 스터디 룸에서 삭제하실 수 있습니다. 
+																		</p>
+																		
+																		<!-- 버튼 -->
+																		<a href="javascript:void(0)" class="my-btn black-white">동의</a>
+																		<a href="#close_agree" class="my-btn black-white">취소</a>
+																	</div>
+																</div>
+																
+															
+															</c:if>												
+																				
 														</c:if>
 														
 														
@@ -184,6 +232,22 @@
 		</div>
 	</div>
 	<jsp:include page="../footer.jsp"></jsp:include>
+
+	<script type="text/javascript">
+		//마이페이지 메뉴 슬라이드 바
+		function move_right(){
+		    var bar = document.getElementById("bar");
+		    bar.classList.add("right");
+		    bar.classList.remove("left");
+		}
+	
+		function move_left(){
+		    var bar = document.getElementById("bar");
+		    bar.classList.remove("right");
+		    bar.classList.add("left");
+		}
+	
+	</script>
 
 </body>
 
