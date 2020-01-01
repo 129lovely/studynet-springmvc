@@ -334,7 +334,7 @@ public class UserController {
 	
 	// 아이디 비번 찾기 페이지로 이동
 	@RequestMapping("/user_find.do")
-	public String user_find(HttpServletRequest request ) {
+	public String user_find() {
 
 		return Common.User.VIEW_PATH + "user_find.jsp";
 	}
@@ -394,9 +394,13 @@ public class UserController {
 	
 	// 회원탈퇴
 	@RequestMapping("/user_del.do")
-	public String user_del(int idx) {
-		String res = userService.user_del(idx);
-		return "redirect:/index.do";
+	public String user_del(int idx, HttpServletRequest request ) {
+		HttpSession session = request.getSession();
+		session.removeAttribute("user");
+		
+		userService.user_del(idx);
+		
+		return "redirect:index.do";
 
 	} 
 

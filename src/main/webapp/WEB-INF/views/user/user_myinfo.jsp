@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%@ include file="../login_check.jsp" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -397,7 +399,7 @@
 							정보가 사라집니다.<br> 정말 탈퇴를 진행하시려면 비밀번호를 재입력해주세요.
 						</p>
 
-						<input type="text" id="del_pwd" title="비밀번호 재입력" placeholder="현재 비밀번호를 입력해주세요."> 
+						<input type="password" id="del_pwd" title="비밀번호 재입력" placeholder="현재 비밀번호를 입력해주세요."> 
 						<input type="button" class="my-btn black-white" title="회원 탈퇴" value="탈퇴" onclick="b_delete();">
 					</form>
 				</div>
