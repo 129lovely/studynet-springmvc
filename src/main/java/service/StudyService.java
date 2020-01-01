@@ -13,6 +13,7 @@ import common.MailUtils;
 import dao.BoardDAO;
 import dao.StudyDAO;
 import dao.UserDAO;
+import vo.BoardVO;
 import vo.StudyMemberVO;
 import vo.StudyVO;
 
@@ -253,6 +254,8 @@ public class StudyService {
 	public int study_board_write(HashMap<String, Object> params) {
 		int res = boardDAO.study_board_write(params);
 		return res;
+	}
+	
 	// 스터디 삭제
 	public String del_study(HashMap<String, Object> params) {
 		String result = "fail";

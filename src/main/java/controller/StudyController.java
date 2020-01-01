@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import common.Common;
+import common.Paging;
 import common.PagingOption;
 import common.Paging_study;
 import dao.BoardDAO;
@@ -25,6 +26,7 @@ import dao.StudyDAO;
 import service.BoardService;
 import service.StudyService;
 import service.UserService;
+import vo.BoardVO;
 import vo.StudyMemberVO;
 import vo.StudyVO;
 import vo.UserVO;
@@ -270,7 +272,7 @@ public class StudyController {
 	
 	// 스터디 룸 개별 페이지 : 관리자
 	@RequestMapping("/study_room_manage.do")
-	public String study_room_manage ( int study_idx, Model model ) {
+	public String study_room_manage ( int study_idx, Model model, Integer page ) {
 		// 스터디 정보 가져오기
 		StudyVO study = studyService.showStudyDetail(study_idx);
 		model.addAttribute("study", study);
@@ -393,15 +395,17 @@ public class StudyController {
 		if( params.get("is_notice") == null ) {
 			params.put("is_notice", 0);
 		}
+		
+		int res = studyService.study_board_write(params);
+		return "redirect:study_room_manage.do?study_idx=" + params.get("study_idx") + "#study_board_tb";
+	}
+	
 	// 내 스터디 룸에서 스터디 삭제
 	@RequestMapping("/del_study.do")
 	@ResponseBody
 	public String del_study(@RequestParam HashMap<String, Object> params) {
-		
-		int res = studyService.study_board_write(params);
 		String res = studyService.del_study(params);
 		
-		return "redirect:study_room_manage.do?study_idx=" + params.get("study_idx") + "#study_board_tb";
 		return res;
 	}
 }
