@@ -25,7 +25,7 @@
                     <!--제목-->
                     <div class="line-bottom flex-box">
                         <label for="board-title">제목</label>
-                        <input name="title" id="board-title" type="text" placeholder="제목을 입력해주세요." value="${ vo.title }" />
+                        <input name="title" id="board-title" type="text" placeholder="제목을 입력해주세요." value="${ vo.title }" maxlength="40"/>
                     </div>
                     
                     <!--텍스트-->

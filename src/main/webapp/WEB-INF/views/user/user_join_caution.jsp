@@ -121,6 +121,13 @@
 				document.getElementById("caution" + (i+1)).innerHTML = text;
 			}
 			
+			// onload 시에 로그인 세션 확인 ( 로그인 유저가 접근 시 차단 )
+			if ( ${ ! empty sessionScope.user.idx } ) {
+				alert("잘못된 접근입니다.");
+				location.href = "index.do";
+				return;
+			}	
+			
 		}
 		
 		function join_form(){

@@ -1192,6 +1192,7 @@ textarea {
 
 .study-search-page .search-result-box img {
 	width: 100%;
+	height: 100px;
 	object-fit: cover;
 }
 
@@ -1303,6 +1304,10 @@ textarea {
     margin-right: 5px;
 }
 
+.modify-comment-txtarea {
+	height: 100px;
+    margin-bottom: 10px;
+}
 
 /*
 //----------------------------------------------------------------------------------

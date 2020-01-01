@@ -33,7 +33,7 @@
 					// 누락된 회원 정보가 있는 경우
 					if( data == "fail" ){
 						alert("연락처, 직업, 지역 등의 회원 정보를 모두 입력해야 스터디 가입 신청이 가능합니다.");
-						location.href = "user_modify.do";
+						location.href = "user_myinfo_form.do";
 						return;
 					}
 					
