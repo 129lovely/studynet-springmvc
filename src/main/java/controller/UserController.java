@@ -334,7 +334,7 @@ public class UserController {
 	
 	// 아이디 비번 찾기 페이지로 이동
 	@RequestMapping("/user_find.do")
-	public String user_find(HttpServletRequest request ) {
+	public String user_find() {
 
 		return Common.User.VIEW_PATH + "user_find.jsp";
 	}
@@ -348,7 +348,7 @@ public class UserController {
 
 	// 회원정보 수정하기
 	@RequestMapping("/user_update.do")
-	public String user_myinfo(UserVO vo) {
+	public String user_myinfo(UserVO vo, HttpServletRequest request) {
 		
 		try {
 			int res = userService.userMyinfo(vo);
@@ -357,7 +357,13 @@ public class UserController {
 			e.printStackTrace();
 		}
 
-		return "user_myinfo.do?idx"+vo;
+		// 수정한 정보를 페이지에 바로 적용하기 위해 세션의 user 정보를 업데이트 한다.
+		HttpSession session = request.getSession();
+		session.removeAttribute("user");
+		UserVO new_user = userService.selectOne(vo.getIdx());
+		session.setAttribute("user", new_user);
+		
+		return "user_myinfo.do?idx";
 	}
 	
 	// 이메일 - 이름 유효성 검사 ( 비밀번호 찾기 기능용 )
@@ -388,9 +394,13 @@ public class UserController {
 	
 	// 회원탈퇴
 	@RequestMapping("/user_del.do")
-	public String user_del(int idx) {
-		String res = userService.user_del(idx);
-		return "redirect:/index.do";
+	public String user_del(int idx, HttpServletRequest request ) {
+		HttpSession session = request.getSession();
+		session.removeAttribute("user");
+		
+		userService.user_del(idx);
+		
+		return "redirect:index.do";
 
 	} 
 

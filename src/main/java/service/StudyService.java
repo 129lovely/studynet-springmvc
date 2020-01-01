@@ -99,6 +99,7 @@ public class StudyService {
 	public int study_apply(Map map) {
 		int res = studyDAO.study_apply(map);
 		res = studyDAO.study_add_member(map); // 신청수 1증가
+		userDAO.update_study_cnt( (int) map.get("user_idx") ); // 유저의 스터디 수 하나 추가
 		return res;
 	}
 
@@ -108,7 +109,6 @@ public class StudyService {
 		return vo;
 	}
 
-//	이부분 유저 스터디 리스트, 유저 스테이터스 등으로 바꾸는 게 좋을 것 같아여 
 	// study_myinfo에서 study_member의 status가져오기
 	public StudyMemberVO studyMemStatus(int user_idx) {
 		StudyMemberVO vo = studyDAO.study_member_status(user_idx);
