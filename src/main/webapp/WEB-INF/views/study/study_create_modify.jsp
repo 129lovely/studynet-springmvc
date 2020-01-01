@@ -262,37 +262,6 @@
 	<script type="text/javascript" src="${ pageContext.request.contextPath }/resources/js/summernote.js"></script>
 	<script type="text/javascript" src="${ pageContext.request.contextPath }/resources/js/summernote-ko-KR.js"></script>
 	<script type="text/javascript" src="${ pageContext.request.contextPath }/resources/js/study_modify.js"></script>
-	
-	<script>
-		window.onload = function () {
-			init_summernote();
-			init_option();
-			init_flatpicker();
-		
-			// DB라디오들 체크하기
-			$("#myIs_online input:radio[name='is_online']:input[value='${study.is_online}']").attr('checked',true);
-			$("#myPurpose input:radio[name='purpose']:input[value='${study.purpose}']").attr('checked',true);
-			
-			var purp=document.getElementsByName("purpose");
-		
-		 	for ( var i = 0; i < purp.length; i++) {
-		 		
-		 		var design = document.getElementById("op_" + (i+1));
-		 		
-		 		if(purp[i].value==$("input[name='purpose']:checked").val()){
-				
-				design.style.display = "";
-				
-				var td=$(design).children("td").children("input");
-				td.val("${study.extra_info}");
-				// 값넣어주기
-	 		 }
-		 		else{
-		 			design.style.display="none";
-		 		}
-			 }  
-		}
-	</script>
 </body>
 	
 

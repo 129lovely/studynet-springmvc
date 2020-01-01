@@ -261,7 +261,7 @@ function modify( f ) {
 		return;
 	}
 	
-	f.action = "study_create_modify.do?idx="+idx;
+	f.action = "study_create_modify.do?idx="+ "${study.idx}";
 	f.method = "post";
 	
 	f.submit();
