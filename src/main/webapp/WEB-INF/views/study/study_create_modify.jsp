@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<!--  include file="../login_check.jsp" %> --> 
+<%@ include file="../login_check.jsp" %>
 
 <!DOCTYPE html>
 
