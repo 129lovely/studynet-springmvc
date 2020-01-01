@@ -68,7 +68,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 회원정보 수정하기 -->
 	<update id="update_user" parameterType="user">
 		UPDATE user SET
-		phone=#{phone}, job=#{job}, region = #{region} password = #{password}
+		phone=#{phone}, job=#{job}, region = #{region}, password = #{password}
 		where idx=#{idx}
 	</update>
 

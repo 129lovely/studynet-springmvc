@@ -152,17 +152,16 @@
 		// 회원 정보 수정 유효성 검사 
 		function send( f ) {
 			
-			var original_pwd = f.original_pwd;
+			var original_pwd = document.getElementById("original_pwd");
 			var password = f.password;
-			var pwd_check = document.getElementById("pwd_check")
-			var phone = f.phone;
+			var pwd_check = document.getElementById("pwd_check");
 
 			if (password.value != "" ){
 				
 				//현재 비밀번호 비교
-				if ("${user.password}"!= orginal_pwd.value ){
+				if ("${user.password}" != original_pwd.value ){
 					alert("비밀번호가 일치하지 않습니다.")
-					password.focus();
+					original_pwd.focus();
 					return;
 				}
 				
@@ -174,7 +173,7 @@
 					password.focus();
 					return;
 				}
-				if (orginal_pwd.value == password.value){
+				if (original_pwd.value == password.value){
 					alert("현재 비밀번호와 동일합니다 다시 입력해주세요. ");
 					password.focus();
 					return;
@@ -192,6 +191,16 @@
 				}
 				
 			}			
+			
+			// 비밀번호를 변경하지 않았을 경우 기본값 넣어주기
+			if ( password.value == "" ) {
+				alert("password_input= " + password.value );
+				password.value = "${user.password}";
+				alert("password = " + "${user.password}");
+				alert("password_input= " + password.value );
+			}
+			
+			// SNS 유저라서 기본 정보가 없을 경우 모든 값을 넣어야 수정 가능
 			
 			f.action = "user_update.do";
 			f.method = "post";
@@ -212,7 +221,12 @@
 				return;
 			}						
 			else {
-				confirm("정말 삭제하시겠습니까?")
+				var check = confirm("정말 탈퇴하시겠습니까?");
+				
+				if ( ! check ) {
+					return;
+				}
+				
 				location.href="user_del.do?idx=${ user.idx }";				
 			}
 		}
@@ -250,6 +264,7 @@
 					<!-- 정보 수정 -->
 					<div class="table-indent ">
 						<form class="mypage-userinfo-form ">
+							<input type="hidden" name="idx" value="${user.idx}">
 							<table>
 								<tr>
 									<th>이메일</th>
@@ -265,7 +280,7 @@
 
 								<tr>	
 									<th>현재 비밀번호</th>
-									<td><input type="password" id="pwd" name="original_pwd" title="현재 비밀번호" placeholder="특수기호 포함 영숫자 조합 8자 이상 "></td>
+									<td><input type="password" id="original_pwd" title="현재 비밀번호" placeholder="특수기호 포함 영숫자 조합 8자 이상 "></td>
 								</tr>
 
 								<tr>	
@@ -276,7 +291,7 @@
 								
 								<tr>
 									<th>바꿀 비밀번호</th>
-									<td><input type="password" id="new_pwd" name="password" title="바꿀 비밀번호" placeholder="바꿀 비밀번호를 입력해주세요."></td>
+									<td><input type="password" name="password" title="바꿀 비밀번호" placeholder="바꿀 비밀번호를 입력해주세요."></td>
 								</tr>
 
 								<tr>
@@ -286,7 +301,7 @@
 								
 								<tr>	
 									<th>전화번호</th>
-									<td><input type="text" id="tel-input" value = "${user.phone}"></td>
+									<td><input type="text" id="tel-input" name="phone" value = "${user.phone}"></td>
 									<td>
 										<input class="my-btn black-white" onClick="location.href='#open_phone'" type="button" value="번호 변경">
 										<div class="info_content input" id="open_phone">
