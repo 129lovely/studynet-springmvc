@@ -12,14 +12,6 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/httpRequest.js"></script>
 	
 		<script type="text/javascript">
-		// 로그인 유저가 접근 시 차단
-		window.onload = function () {
-			if ( ${! empty sessionScope.user } ) {
-				alert("잘못된 접근입니다.");
-				location.href = "index.do";
-				return;
-			}	
-		}
 		
 		// 하이픈 자동 입력 스크립트
 		var autoHypenPhone = function(str){
@@ -65,6 +57,7 @@
 			  	console.log(this.value);
 			  	this.value = autoHypenPhone( this.value ) ;  
 			}
+			
 		};
 		
 	</script>
@@ -148,7 +141,6 @@
 				var phone = document.getElementById("phone");
 				
 				var res = JSON.parse(xhr.responseText);
-				
 				
 				if ( res.tempKey != null && res.phone != null ){
 					
@@ -270,12 +262,11 @@
 			}
 			
 			// 혹시라도 전화번호가 비어있는지 확인
-			// 여기 나중에 주석 해제 부탁합니다
-			/* if ( !phone.value ) {
+			if ( !phone.value ) {
 				alert("전화번호를 확인해주세요.");
 				phone.focus();
 				return;
-			} */
+			}
 			
 			
 			// 이름 입력했는지 확인
@@ -327,7 +318,7 @@
 			}
 			
 			f.action = "user_insert.do";
-			//f.method = "post";
+			f.method = "post";
 			f.submit();
 			
 		}
