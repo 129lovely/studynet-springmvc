@@ -125,6 +125,29 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		where idx=#{idx}
 	</update>
 	
+	<!-- 스터디 게시판 리스트 -->
+	<select id="study_board_list" parameterType="java.util.Map" resultType="board">
+		select *, user.name
+		from (SELECT rank() over(order by is_notice desc, idx desc) AS no, b.* FROM (select * from board where study_idx = #{study_idx}) AS b ) AS list
+		left outer join user
+		on user.idx = list.user_idx
+		where no between #{start} AND #{end}
+	</select>
+	<select id="study_board_list_cnt" parameterType="java.util.Map" resultType="int">
+		SELECT COUNT(*)
+		FROM board
+		WHERE study_idx=#{study_idx}
+	</select>
+	
+	
+	<!-- 스터디 게시판 게시물 작성 -->
+	<insert id="study_board_write" parameterType="java.util.Map">
+		INSERT INTO board
+		(study_idx, title, user_idx, content, is_notice)
+		VALUES (#{study_idx}, #{title}, #{user_idx}, #{content}, #{is_notice})
+	</insert>
+	
+	
 </mapper>
 
 

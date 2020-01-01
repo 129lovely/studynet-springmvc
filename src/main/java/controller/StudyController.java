@@ -26,6 +26,7 @@ import dao.StudyDAO;
 import service.BoardService;
 import service.StudyService;
 import service.UserService;
+import vo.BoardVO;
 import vo.StudyMemberVO;
 import vo.StudyVO;
 import vo.UserVO;
@@ -271,7 +272,7 @@ public class StudyController {
 	
 	// 스터디 룸 개별 페이지 : 관리자
 	@RequestMapping("/study_room_manage.do")
-	public String study_room_manage ( int study_idx, Model model ) {
+	public String study_room_manage ( int study_idx, Model model, Integer page ) {
 		// 스터디 정보 가져오기
 		StudyVO study = studyService.showStudyDetail(study_idx);
 		model.addAttribute("study", study);
@@ -280,8 +281,35 @@ public class StudyController {
 		List<StudyMemberVO> member = studyService.member_list(study_idx);
 		model.addAttribute("member", member);
 		
-		// 스터디 관리자 정보 가져오기
-		// 리스트로 받아와야 함 ( 공동 관리자 때문에 )
+		// 스터디 게시판 정보 가져오기		
+		int nowPage = 1;
+		if( page != null ) {
+			nowPage = page;
+		}
+
+		int start = (nowPage -1) * Common.BoardPaging.BLOCKLIST + 1;
+
+		//start와 end를 map에 저장
+		HashMap<String, Object> map = PagingOption.getPagingOption(start, Common.BoardPaging.BLOCKLIST );
+		map.put("study_idx", study_idx);
+		
+		//게시글 전체목록 가져오기
+		List<BoardVO> list = null;
+		list = studyService.study_board_list(map);
+
+		//전체 게시물 수 구하기
+		int row_total = studyService.study_board_list_cnt(map);
+
+		//페이지 메뉴 생성하기
+		//ㄴ ◀1 2 3 4 5▶
+		String pageMenu = Paging.getPaging(
+				"study_room_manage.do", nowPage, row_total, Common.BoardPaging.BLOCKLIST, 
+				Common.BoardPaging.BLOCKPAGE, null, study_idx);
+
+		//request영역에 list바인딩
+		model.addAttribute("board", list);
+		model.addAttribute("pageMenu", pageMenu);
+		model.addAttribute("row_total", row_total);
 		
 		return Common.Study.VIEW_PATH + "study_room_manage.jsp";
 	}
@@ -347,5 +375,20 @@ public class StudyController {
 			resStr = "success";
 		}
 		return resStr;
+	}
+	
+	// 스터디 게시판 글쓰기
+	@RequestMapping("/study_board_write.do")
+	public String study_board_write(@RequestParam HashMap<String, Object> params, HttpServletRequest request) {
+		UserVO user = (UserVO) request.getSession().getAttribute("user");	
+		params.put("user_idx", user.getIdx());
+		
+		if( params.get("is_notice") == null ) {
+			params.put("is_notice", 0);
+		}
+		
+		int res = studyService.study_board_write(params);
+		
+		return "redirect:study_room_manage.do?study_idx=" + params.get("study_idx") + "#study_board_tb";
 	}
 }

@@ -61,7 +61,7 @@ public class BoardController {
 		//ㄴ ◀1 2 3 4 5▶
 		String pageMenu = Paging.getPaging(
 				"community_list.do", nowPage, row_total, Common.BoardPaging.BLOCKLIST, 
-				Common.BoardPaging.BLOCKPAGE, null);
+				Common.BoardPaging.BLOCKPAGE, null, 0);
 
 		//request영역에 list바인딩
 		model.addAttribute("list", list);
@@ -103,7 +103,7 @@ public class BoardController {
 		String pageMenu = Paging.getPaging(
 				"community_list_search.do" , nowPage, row_total,
 				Common.BoardPaging.BLOCKLIST, Common.BoardPaging.BLOCKPAGE,
-				search);
+				search, 0);
 
 		//request영역에 list바인딩
 		model.addAttribute("list", list);

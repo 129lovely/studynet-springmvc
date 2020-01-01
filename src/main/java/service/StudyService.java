@@ -13,6 +13,7 @@ import common.MailUtils;
 import dao.BoardDAO;
 import dao.StudyDAO;
 import dao.UserDAO;
+import vo.BoardVO;
 import vo.StudyMemberVO;
 import vo.StudyVO;
 
@@ -231,6 +232,20 @@ public class StudyService {
 	// 스터디룸 공지 수정
 	public int update_notice(HashMap<String, Object> params) {
 		int res = studyDAO.update_notice(params);
+		return res;
+	}
+	
+	// 스터디 게시판 리스트 가져오기 
+	public List<BoardVO> study_board_list(HashMap<String, Object> map) {
+		List<BoardVO> list = boardDAO.study_board_list(map);
+		return list;
+	}
+	public int study_board_list_cnt(HashMap<String, Object> map) {
+		int cnt = boardDAO.study_board_list_cnt(map);
+		return cnt;
+	}
+	public int study_board_write(HashMap<String, Object> params) {
+		int res = boardDAO.study_board_write(params);
 		return res;
 	}
 }

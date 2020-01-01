@@ -7,7 +7,7 @@ package common;
  */
 public class Paging {
 	public static String getPaging(String pageURL,int nowPage, int rowTotal,
-			int blockList, int blockPage, String search){
+			int blockList, int blockPage, String search, int study_idx){
 
 		int totalPage/*전체페이지수*/,
 		startPage/*시작페이지번호*/,
@@ -51,6 +51,9 @@ public class Paging {
 			if( search != null ) {
 				sb.append( "&search=" + search );
 			}
+			if( study_idx != 0 ) {
+				sb.append( "&study_idx=" + study_idx + "#study_board_tb" );
+			}
 			sb.append("'>◀</a>");
 		}
 		else
@@ -72,6 +75,9 @@ public class Paging {
 				if( search != null ) {
 					sb.append( "&search=" + search );
 				}
+				if( study_idx != 0 ) {
+					sb.append( "&study_idx=" + study_idx + "#study_board_tb" );
+				}
 				sb.append("'>");
 				sb.append(i);
 				sb.append("</a>&nbsp;");
@@ -89,6 +95,9 @@ public class Paging {
 			sb.append(nowPage);*/
 			if( search != null ) {
 				sb.append( "&search=" + search );
+			}
+			if( study_idx != 0 ) {
+				sb.append( "&study_idx=" + study_idx + "#study_board_tb" );
 			}
 			sb.append("'>▶</a>");
 		}

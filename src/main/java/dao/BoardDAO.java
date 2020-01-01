@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -203,6 +204,19 @@ public class BoardDAO implements DAO {
 		return res;
 	}
 
+	public List<BoardVO> study_board_list(HashMap<String, Object> map) {
+		List<BoardVO> list = sqlSession.selectList("board.study_board_list", map);
+		return list;
+	}
 
+	public int study_board_list_cnt(HashMap<String, Object> map) {
+		int cnt = sqlSession.selectOne("board.study_board_list_cnt", map);
+		return cnt;
+	}
+
+	public int study_board_write(HashMap<String, Object> params) {
+		int res = sqlSession.insert("board.study_board_write", params);
+		return res;
+	}
 
 }
