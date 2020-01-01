@@ -205,10 +205,11 @@
 	// 댓글 수정 취소 -> 다시 p 태그로
 	function cancelModifyComment(content){
 		$(p_div).empty(); // textarea, a태그 삭제
-		var p = $("<p>" + content + "</p>").attr({
+		var p = $("<p>" + p_content + "</p>").attr({
 			"class" : "comment-standard"
 		});
 		$(p_div).append(p); // p태그 넣기
+		p_div = null;
 	}
 
 	// 댓글 수정 완료 -> db작업 & 다시 p태그로
