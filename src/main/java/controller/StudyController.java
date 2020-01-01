@@ -136,7 +136,7 @@ public class StudyController {
 
 		} else {
 			// 지정된 파일이 없을 경우 랜덤하게 샘플에서 가져온다.
-			photo = "preview0" + new Random().nextInt(3) + 1;
+			photo = "preview0" + (new Random().nextInt(3) + 1) + ".jpg";
 		}
 
 		vo.setPhoto(photo);
@@ -336,5 +336,16 @@ public class StudyController {
 		int res = studyService.add_admin( idx );
 		
 		return Common.Study.VIEW_PATH + "add_admin_complete.jsp";
+	}
+	
+	@RequestMapping("/notice_update.do")
+	@ResponseBody
+	public String notice_update(@RequestParam HashMap<String, Object> params, Model model) {
+		String resStr = "fail";
+		int res = studyService.update_notice(params);
+		if( res != 0 ) {
+			resStr = "success";
+		}
+		return resStr;
 	}
 }

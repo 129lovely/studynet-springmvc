@@ -193,6 +193,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ON m.study_idx = s.idx
 		WHERE m.user_idx = #{user_idx}
 	</select>
+	
+	<!-- 마이페이지 공지 수정 -->
+	<update id="update_notice" parameterType="java.util.Map">
+		UPDATE study
+		SET notice=#{notice}
+		WHERE idx=#{study_idx}
+	</update>
 </mapper>
 
 

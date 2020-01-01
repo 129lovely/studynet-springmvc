@@ -227,4 +227,10 @@ public class StudyService {
 		List<StudyVO> list = studyDAO.study_myinfo(user_idx);
 		return list;
 	}
+	
+	// 스터디룸 공지 수정
+	public int update_notice(HashMap<String, Object> params) {
+		int res = studyDAO.update_notice(params);
+		return res;
+	}
 }
