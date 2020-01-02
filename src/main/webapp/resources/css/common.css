@@ -1282,6 +1282,57 @@ textarea {
     text-decoration: underline;
 }
 
+
+// 스터디 모집정보
+
+.addinfo  {
+	display : inline-block;
+	width : 80px;
+	/* text-align : right; */
+
+	
+}
+	
+.addinfo1 {
+	display : inline-block;
+	width : 83px;
+	/* text-align : right; */
+
+	
+}
+.addinfo2 {
+	display : inline-block;
+	width : 153px;
+	font-weight: bold;
+	/* text-align : right; */
+
+	
+}
+
+.addinfo3 {
+	display : inline-block;
+	width : 80px;
+	font-weight: bold;
+	/* text-align : right; */
+
+	
+}
+
+
+
+.addinfo_back{
+	display : inline-block;
+	width : 80px;
+/* 	text-align : left;  */
+}
+
+.addinfo_back1{
+	display : inline-block;
+	width : 150px;
+/* 	text-align : left;  */
+}
+
+
 /*
 //----------------------------------------------------------------------------------
 //

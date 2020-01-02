@@ -177,6 +177,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET mem_status = '승인'
 		WHERE idx = #{idx}	
 	</update>
+	<update id="in_member" parameterType="int">
+		update study
+		set apply_count = apply_count - 1,
+		approve_count = approve_count + 1
+		where idx=#{study_idx}
+	</update>
 	
 	<!-- 선택 멤버 거부 -->
 	<update id="mem_reject" parameterType="int">
@@ -190,6 +196,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE study_member 
 		SET mem_status = '강제탈퇴'
 		WHERE idx = #{idx}
+	</update>
+	<update id="out_member" parameterType="int">
+		update study
+		set approve_count = approve_count - 1
+		where idx=#{study_idx}
 	</update>
 	
 	<!-- 스터디 관리자 추가 -->
@@ -208,7 +219,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE m.user_idx = #{user_idx}
 	</select>
 	
-	<!-- 스터디 모집 취소 / 개설 취소 -->
+	<!-- 스터디 모집 취소  -->
 	<update id="recruit_cancel" parameterType="int">
 		UPDATE study
 		SET study_status = '개설취소',
@@ -229,6 +240,53 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE idx=#{idx}
 	</delete>
 
+	<!-- 스터디 마감 -->
+	<update id="apply_close" parameterType="int">
+		UPDATE study
+		SET study_status= '진행중'
+		WHERE idx=#{study_idx}
+	</update>
+	
+	<!-- 스터디 종료 -->
+	<update id="study_close" parameterType="int">
+		UPDATE study
+		SET study_status= '종료'
+		WHERE idx=#{study_idx}
+	</update>
+	
+	<!-- 모집 자동 마감을 위한 모든 study 조회 -->
+	<select id="auto_apply_close" resultType="study">
+		SELECT * FROM study
+		WHERE date( deadline ) = date( now() )
+	</select>
+	
+	<!-- 모집 자동 마감을 위한 모든 study 조회 -->
+	<select id="auto_study_close" resultType="study">
+		SELECT * FROM study
+		WHERE date( end_date ) = date( now() )
+	</select>
+	
+	<!-- 스터디 개설 취소  -->
+	<update id="open_cancel" parameterType="int">
+		UPDATE study
+		SET study_status = '개설취소'
+		WHERE idx = #{idx}
+	</update>
+	
+	<!-- 스터디 모집 마감일 연장 -->
+	<update id="apply_extend" parameterType="int">
+		UPDATE study
+		SET deadline = deadline + INTERVAL 7 DAY
+		WHERE idx = #{idx}
+	</update>
+	
+	<!-- 스터디 기간 연장 -->
+	<update id="study_extend" parameterType="int">
+		UPDATE study
+		SET end_date = end_date + INTERVAL 7 DAY
+		WHERE idx = #{idx}
+	</update>
+	
 </mapper>
 
 

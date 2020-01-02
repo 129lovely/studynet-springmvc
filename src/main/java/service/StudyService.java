@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.mail.MessagingException;
 
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import common.MailUtils;
 import dao.BoardDAO;
@@ -15,7 +16,6 @@ import dao.StudyDAO;
 import dao.UserDAO;
 import vo.BoardVO;
 import vo.StudyMemberVO;
-import vo.StudyScheduleVO;
 import vo.StudyVO;
 
 public class StudyService {
@@ -130,7 +130,7 @@ public class StudyService {
 	}
 	
 	// 선택한 멤버 승인
-	public int mem_approve( String[] idx_arr ) {
+	public int mem_approve( String[] idx_arr, int study_idx ) {
 		
 		int result = 0;
 		
@@ -145,11 +145,13 @@ public class StudyService {
 			}
 		}
 		
+		studyDAO.in_member(study_idx);
+		
 		return result;
 	}
 	
 	// 선택한 멤버 거부
-	public int mem_reject( String[] idx_arr ) {
+	public int mem_reject( String[] idx_arr, int study_idx ) {
 		
 		int result = 0;
 		
@@ -164,11 +166,14 @@ public class StudyService {
 			}
 		}
 		
+		studyDAO.in_member(study_idx);
+		studyDAO.out_member(study_idx);
+		
 		return result;
 	}
 	
 	// 선택한 멤버 강퇴
-	public int mem_kick( String[] idx_arr ) {
+	public int mem_kick( String[] idx_arr , int study_idx ) {
 		
 		int result = 0;
 		
@@ -182,6 +187,8 @@ public class StudyService {
 				result += 1;
 			}
 		}
+		
+		studyDAO.out_member(study_idx);
 		
 		return result;
 	}
@@ -270,15 +277,86 @@ public class StudyService {
 		return result;
 	}
 	
-	// 캘린더 일정 추가
-	public int insert_cal(HashMap<String, Object> params) {
-		int res = studyDAO.insert_cal(params);
-		return res;
+	// 스터디 조기 마감
+	public String early_close( int study_idx ) {
+		String result = "fail";
+		
+		int res = studyDAO.apply_close( study_idx );
+		
+		if ( res != 0 ) {
+			result = "success";
+		}
+		
+		return result;
 	}
 	
-	// 캘린더 가져오기
-	public List<StudyScheduleVO> selectList_cal(int study_idx) {
-		List<StudyScheduleVO> list = studyDAO.selectList_cal(study_idx);
-		return list;
+	// 스터디 모집 연장
+	public String apply_extend( int study_idx ) {
+		String result = "fail";
+		
+		int res = studyDAO.apply_extend( study_idx );
+		
+		if ( res != 0 ) {
+			result = "success";
+		}
+		
+		return result;
+	}
+	
+	// 스터디 기간 연장
+	public String study_extend( int study_idx ) {
+		String result = "fail";
+		
+		int res = studyDAO.study_extend( study_idx );
+		
+		if ( res != 0 ) {
+			result = "success";
+		}
+		
+		return result;
+	}
+	
+	// 스터디 자동 마감
+	@Scheduled(cron = "0 0 0 * * *")
+	public void auto_recruit_close() {
+		
+		List<StudyVO> list = studyDAO.auto_apply_close();
+		
+		int res = 0;
+		
+		for(int i = 0 ; i < list.size() ; i ++ ) {
+			
+			int result = 0;
+			
+			if ( list.get(i).getMin_count() >= list.get(i).getApprove_count() ) {
+				result = studyDAO.apply_close(list.get(i).getIdx());
+			} else {
+				result = studyDAO.open_cancel(list.get(i).getIdx());
+			}
+			
+			if ( result != 0 ) {
+				res += 1;
+			}
+		}
+		
+		System.out.println(res + " 건의 스터디의 모집이 자동 마감되었습니다.");
+	}
+
+	// 스터디 자동 종료
+	@Scheduled(cron = "0 0 0 * * *")
+	public void auto_study_close() {
+		
+		List<StudyVO> list = studyDAO.auto_study_close();
+		int res = 0;
+		
+		for(int i = 0 ; i < list.size() ; i ++ ) {
+			int result = studyDAO.study_close(list.get(i).getIdx());
+			
+			if ( result != 0 ) {
+				res += 1;
+			}
+		}
+		
+		System.out.println(res + " 건의 스터디기 종료되었습니다.");
 	}
 }

@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+
 <%@ include file="../login_check.jsp" %>
 
 <!DOCTYPE html>
@@ -88,26 +90,26 @@
 					</span>
 					
 					<div>
-						<span>스터디 목적</span>
+						<span class = "addinfo2 tar">스터디 목적</span>
 						<span>${study.purpose}</span>
 					</div>
 					<div>
-						<span>모집 마감</span>
-						<span>
+						<span class = "addinfo2 tar">모집 마감</span>
+						<span >
 						<fmt:parseDate var="dateString" value="${study.deadline}" pattern="yyyy-MM-dd HH:mm:ss.SSS" /> 
 						<fmt:formatDate value="${dateString}" pattern="yyyy.MM.dd" />
 						</span>
 					</div>
 					<div>
-						<span>모집 인원(최소/최대)</span>
+						<span class = "section-discription" >모집 인원(최소/최대)</span>
 						<span>${study.min_count}명 / ${study.max_count}명</span>
 					</div>
 					<div>
-						<span>지원현황</span>
+						<span class = "addinfo2 tar">지원현황</span>
 						<span>${study.approve_count}명 / ${study.max_count}명</span>
 					</div>					
 					<div>
-						<span>모임 장소</span>
+						<span class = "addinfo2 tar">모임 장소</span>
 						<span>${study.place}</span>
 					</div>
 				</div>
@@ -120,11 +122,55 @@
 				<div class="recruit-detail-info mb30">
 					<h2>세부 정보</h2>
 					<p>
-						-- 준비분야<br>
-						${study.extra_info}<br><br>
-						-- 상세설명 <br>
-						${study.detail_info}<br>
+						<span class = "addinfo3 tar">모임장소</span>
+						<span> ${study.place}</span>
+						<br>
 					</p>
+					<p>	
+						<br>
+						<c:if test="${study.purpose=='공모전'}">
+						<span class = "addinfo3 tar">공모전 링크 </span>
+						<span><a href = "<c:if test="${ ! fn:contains(study.extra_info, 'http://') }">http://</c:if>${study.extra_info}">${study.extra_info}</a></span>	
+						</c:if>
+						<c:if test="${study.purpose=='취업준비'}">
+						<span class = "addinfo3 tar">준비 분야  </span>    
+						<span>${study.extra_info}</span>
+						</c:if>
+						<c:if test="${study.purpose=='기상습관'}">
+						<span class = "addinfo3 tar"> 스터디 목표 </span>
+						<span> ${study.extra_info}</span>
+						</c:if> 
+						<c:if test="${study.purpose=='공부'}">
+						<span class = "addinfo3 tar">스터디 과목 </span>
+						<span>${study.extra_info}</span> 
+						</c:if>
+						<c:if test="${study.purpose=='기타'}">
+						<span class ="addinfo3 tar">스터디 과목 </span>
+						<span> ${study.extra_info}</span>
+						</c:if>
+	
+					</p>
+					<p>	
+						<br>
+						<span class = "addinfo3 tar">오픈 카톡</span> 
+						<span><a href="<c:if test="${ ! fn:contains(study.open_kakao, 'http://') }">http://</c:if>${study.open_kakao}">${study.open_kakao}</a></span>
+					</p>
+					<p>	
+						<br>
+						<span class = "addinfo3 tar">활동 시작</span>
+						<span>	
+						<fmt:parseDate var="StringStart" value="${study.start_date}" pattern="yyyy-MM-dd HH:mm:ss.SSS" /> 
+						<fmt:formatDate value="${StringStart}" pattern="yyyy.MM.dd" />
+						</span> 
+					</p>
+					<p>	
+						<br>
+						<span class = "addinfo3 tar">활동 종료</span> 
+						<span>
+						<fmt:parseDate var="StringEnd" value="${study.end_date}" pattern="yyyy-MM-dd HH:mm:ss.SSS" /> 
+						<fmt:formatDate value="${StringEnd}" pattern="yyyy.MM.dd" />
+						</span>
+					</p>	
 				</div>
 				<div class="mb40 tac">
 				<c:if test=""></c:if>

@@ -105,6 +105,105 @@
 				location.reload();	
 			}	
 		}
+		
+		// 모집 마감 ( 조기 마감 ) 기능
+		function early_close( study_idx ) {
+			
+			var check = confirm("해당 스터디의 모집을 마감할까요? 추가로 인원을 받을 수 없으며 스터디 상태가 진행 중으로 바뀌게 됩니다.");
+			
+			if ( ! check ) {
+				return;
+			}
+			
+			var url = "early_close.do";
+			var param = "study_idx=" + study_idx;
+			
+			sendRequest(url, param, early_closed, "get");
+			
+		}
+		
+		// 모집 마감 resultFn
+		function early_closed() {
+			
+			if( xhr.readyState == 4 && xhr.status == 200 ){		
+				
+				var res = xhr.responseText;
+				
+				if ( res != "fail" ) {
+					alert("마감이 완료되었습니다.");
+				} else {
+					alert("모집 마감 중 문제가 발생했습니다.");
+				}
+				
+				location.reload();	
+			}	
+		}
+		
+		// 모집 기간 연장 기능
+		function apply_extend( study_idx ) {
+			
+			var check = confirm("해당 스터디의 모집 기간을 연장할까요? 한 번에 일주일 씩 연장됩니다.");
+			
+			if ( ! check ) {
+				return;
+			}
+			
+			var url = "apply_extend.do";
+			var param = "study_idx=" + study_idx;
+			
+			sendRequest(url, param, apply_extended, "get");
+			
+		}
+		
+		// 모집 기간 연장 resultFn
+		function apply_extended() {
+			
+			if( xhr.readyState == 4 && xhr.status == 200 ){		
+				
+				var res = xhr.responseText;
+				
+				if ( res != "fail" ) {
+					alert("연장이 완료되었습니다.");
+				} else {
+					alert("기간 연장 중 문제가 발생했습니다.");
+				}
+				
+				location.reload();	
+			}	
+		}
+		
+		// 스터디 기간 연장 기능
+		function study_extend( study_idx ) {
+			
+			var check = confirm("해당 스터디의 활동 기간을 연장할까요? 한 번에 일주일 씩 연장됩니다.");
+			
+			if ( ! check ) {
+				return;
+			}
+			
+			var url = "study_extend.do";
+			var param = "study_idx=" + study_idx;
+			
+			sendRequest(url, param, study_extended, "get");
+			
+		}
+		
+		// 스터디 기간 연장 resultFn
+		function study_extended() {
+			
+			if( xhr.readyState == 4 && xhr.status == 200 ){		
+				
+				var res = xhr.responseText;
+				
+				if ( res != "fail" ) {
+					alert("연장이 완료되었습니다.");
+				} else {
+					alert("기간 연장 중 문제가 발생했습니다.");
+				}
+				
+				location.reload();	
+			}	
+		}
 	</script>
 </head>
 
@@ -215,10 +314,15 @@
 															
 															<c:if test="${ study.study_status eq '개설대기'}">
 															<input type="button" class="my-btn yellow-black" value="스터디 룸" onclick="location.href='study_room_manage.do?study_idx=${study.study_idx}'">
+															<input type="button" class="my-btn yellow-black" value="모집 기간 연장" onclick="apply_extend(${study.study_idx});">
 															</c:if>
 															
-															<c:if test="${ study.study_status eq '개설대기' and study.approve_count >= study.min_count }">
-															<input type="button" class="my-btn yellow-black" value="모집 마감" onclick="">
+															<c:if test="${ study.study_status eq '개설대기' and study.approve_count >= study.min_count and study.apply_count eq 0}">
+															<input type="button" class="my-btn yellow-black" value="모집 마감" onclick="early_close(${study.study_idx});">
+															</c:if>
+															
+															<c:if test="${ study.study_status eq '진행중'}">
+															<input type="button" class="my-btn yellow-black" value="스터디 기간 연장" onclick="study_extend(${study.study_idx});">
 															</c:if>
 															
 															<c:if test="${ study.study_status eq '진행중' or study.study_status eq '폐쇄대기' or study.study_status eq '종료' or study.study_status eq '폐쇄' }">

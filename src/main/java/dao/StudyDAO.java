@@ -8,7 +8,6 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 
 import vo.StudyMemberVO;
-import vo.StudyScheduleVO;
 import vo.StudyVO;
 
 public class StudyDAO implements DAO {
@@ -191,18 +190,59 @@ public class StudyDAO implements DAO {
 		int res = sqlSession.delete("study.del_study_member", idx);
 		return res;
 	}
-
-	// 캘린더 일정 추가
-	public int insert_cal(HashMap<String, Object> params) {
-		int res = sqlSession.insert("study.insert_cal", params);
+	
+	// 스터디 모집 마감 
+	public int apply_close( int study_idx ) {
+		int res = sqlSession.update("study.apply_close", study_idx);
 		return res;
 	}
-
-	// 캘린더 일정 가져오기
-	public List<StudyScheduleVO> selectList_cal(int study_idx) {
-		List<StudyScheduleVO> list = sqlSession.selectList("study.selectList_cal", study_idx);
+	
+	// apply count - 1 하고 approve count + 1
+	public int in_member( int study_idx ) {
+		int res = sqlSession.delete("study.in_member", study_idx);
+		return res;
+	}
+	
+	//  approve count - 1
+	public int out_member( int study_idx ) {
+		int res = sqlSession.delete("study.out_member", study_idx);
+		return res;
+	}
+	
+	// 모집 자동 마감을 위해 스터디 목록 가져오기
+	public List<StudyVO> auto_apply_close() {
+		List<StudyVO> list = sqlSession.selectList("study.auto_apply_close");
 		return list;
 	}
 	
+	// 스터디 자동 마감을 위해 스터디 목록 가져오기
+	public List<StudyVO> auto_study_close() {
+		List<StudyVO> list = sqlSession.selectList("study.auto_study_close");
+		return list;
+	}
 	
+	// 스터디 종료
+	public int study_close( int study_idx ) {
+		int res = sqlSession.update("study.study_close", study_idx);
+		return res;
+	}
+	
+	// 스터디 개설 취소
+	public int open_cancel( int idx ) {
+		int res = sqlSession.update("study.open_cancel", idx);
+		return res;
+	}
+	
+	// 스터디 모집 마감일 연장
+	public int apply_extend( int idx ) {
+		int res = sqlSession.update("study.apply_extend", idx);
+		return res;
+	}
+	
+	// 스터디 모집 마감일 연장
+	public int study_extend( int idx ) {
+		int res = sqlSession.update("study.study_extend", idx);
+		return res;
+	}
 }
+
