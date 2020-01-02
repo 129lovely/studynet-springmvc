@@ -22,8 +22,8 @@
                         <!-- 페이지 제목 -->
                         <div class="room-header">
                             <div class="flex-box title">
-                                <h1 class="section-title">흠냐륑 여긴 스터디 제목 칸</h1>
-                                <a class="my-btn yellow-black">모집글 보기</a>
+                                <h1 class="section-title">${ study.title }</h1>
+                                <a class="my-btn yellow-black" href="study_list_detail.do?idx=${ study.idx }">모집글 보기</a>
                             </div>
                             <p class="line-bottom section-discription tal">
                              	   공지, 일정 확인 | 출석 체크 | 스터디 게시판 등의 기능을 이용하실 수 있습니다. 
@@ -34,11 +34,7 @@
                         <div class="study-notice contents-box">
                             <div class="line-bottom">
                                  <h1 class="sub-section-title tal"><i class="fas fa-bullhorn"></i> 필독 공지사항</h1>
-                                 <div class="section-discription tal">
-				                                            원래 공지사항 출력되는 부분 ~~  <br>
-				                                            일단은 보이게 !! <br>
-				                                            웅냥냐야냔냥ㄴ냥
-                                 </div>
+                                 <div class="section-discription tal" id="notice_text"> ${ study.notice } </div>
                             </div>
                         </div>
 
