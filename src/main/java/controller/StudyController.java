@@ -486,12 +486,21 @@ public class StudyController {
 	}
 	
 	// 스터디 모집 기간 연장
-		@RequestMapping("/study_extend.do")
-		@ResponseBody
-		public String study_extend( int study_idx ) {
-			String res = studyService.study_extend( study_idx );
-			return res; 
-		}
+	@RequestMapping("/study_extend.do")
+	@ResponseBody
+	public String study_extend( int study_idx ) {
+		String res = studyService.study_extend( study_idx );
+		return res; 
+	}
+	
+	// 스터디 탈퇴하기
+	@RequestMapping("/quit_study.do")
+	public String quit_study(int user_idx,  int study_idx ) {
+		
+		studyService.quit_study( user_idx, study_idx );
+		
+		return "redirect:study_myinfo.do";
+	}
 	
 	
 }

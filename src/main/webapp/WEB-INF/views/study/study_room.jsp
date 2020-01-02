@@ -130,14 +130,13 @@
                                             </p><br>
                                             
                                             <div class="tac">
-                                                <input type="password" placeholder="비밀번호를 입력해주세요.">
-                                                <input type="button" value="탈퇴하기" class="my-btn black-white">
+                                                <input type="password" placeholder="비밀번호를 입력해주세요." id="quit_pwd">
+                                                <input type="button" value="탈퇴하기" class="my-btn black-white" onClick="quit_study();">
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                         </div>
-
 
                     </div>
                 </div>
@@ -292,6 +291,32 @@
 			form.submit();
 		}
 
+		// 스터디 탈퇴 기능
+		function quit_study( ) {
+			
+			// 비밀번호 유효성 검사
+			var quit_pwd = document.getElementById("quit_pwd");
+			var password = "${user.password}";
+			
+			if (quit_pwd.value != password){
+				alert("비밀번호가 일치하지 않습니다.")
+				quit_pwd.focus();
+				return;
+				
+			} else {
+				var check = confirm("해당 스터디를 정말 탈퇴하시겠습니까?");
+				
+				if ( ! check ) {
+					return;
+				}
+				
+				alert("탈퇴가 완료되었습니다.");
+				
+				location.href="quit_study.do?user_idx=${ user.idx }&study_idx=${ study.idx }";				
+			}
+		
+		}
+		
 		</script>
 	</body>
 </html>

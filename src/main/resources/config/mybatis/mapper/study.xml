@@ -287,6 +287,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE idx = #{idx}
 	</update>
 	
+	<!-- study_idx, user_idx로 멤버 idx 가져오기 -->
+	<select id="get_mem_idx" parameterType="java.util.Map" resultType="studyMember">
+		SELECT *
+		FROM study_member
+		WHERE study_idx = #{study_idx} and user_idx = #{user_idx}
+	</select>
 </mapper>
 
 

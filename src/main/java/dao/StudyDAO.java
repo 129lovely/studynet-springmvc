@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
+import common.Common.Study;
 import vo.StudyMemberVO;
 import vo.StudyScheduleVO;
 import vo.StudyVO;
@@ -257,5 +258,17 @@ public class StudyDAO implements DAO {
 		int res = sqlSession.update("study.study_extend", idx);
 		return res;
 	}
+	
+	// study idx와 user idx로 mem idx 가져오기
+	public StudyMemberVO get_mem_idx( Map params ) {
+		
+		System.out.println("user: " + params.get("user_idx"));
+		System.out.println("study: " + params.get("study_idx"));
+		
+		StudyMemberVO mem = sqlSession.selectOne("study.get_mem_idx", params);
+
+		return mem;
+	}
+	
 }
 

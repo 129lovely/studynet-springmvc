@@ -371,4 +371,28 @@ public class StudyService {
 		
 		System.out.println(res + " 건의 스터디기 종료되었습니다.");
 	}
+	
+	// 스터디 탈퇴 기능
+	public int quit_study( int user_idx, int study_idx) {
+		
+		int res = 0 ;
+		Map params = new HashMap();
+		params.put("user_idx", user_idx);
+		params.put("study_idx", study_idx);
+		
+		// user_idx + user_idx로  study_member idx 가져오기
+		int mem_idx = studyDAO.get_mem_idx( params ).getIdx();
+		// member 정보 삭제하기
+		int res1 = studyDAO.del_study_member(mem_idx);
+		// 스터디의 approve 수 줄이기
+		int res2 = studyDAO.out_member((int) params.get("study_idx"));
+		// user의 스터디 수 줄이기
+		int res3 = userDAO.decrease_study_cnt((int) params.get("user_idx"));
+				
+		if ( res1 != 0 && res2 != 0 && res3 != 0 ) {
+			res = 1;
+		}
+		
+		return res;
+	}
 }
