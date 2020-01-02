@@ -426,4 +426,22 @@ public class StudyController {
 		String res = studyService.early_close( study_idx );
 		return res; 
 	}
+	
+	// 스터디 모집 기간 연장
+	@RequestMapping("/apply_extend.do")
+	@ResponseBody
+	public String apply_extend( int study_idx ) {
+		String res = studyService.apply_extend( study_idx );
+		return res; 
+	}
+	
+	// 스터디 모집 기간 연장
+		@RequestMapping("/study_extend.do")
+		@ResponseBody
+		public String study_extend( int study_idx ) {
+			String res = studyService.study_extend( study_idx );
+			return res; 
+		}
+	
+	
 }

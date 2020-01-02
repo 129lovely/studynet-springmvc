@@ -227,11 +227,22 @@ public class StudyDAO implements DAO {
 		return res;
 	}
 	
-	// 스터디 종료
+	// 스터디 개설 취소
 	public int open_cancel( int idx ) {
 		int res = sqlSession.update("study.open_cancel", idx);
 		return res;
 	}
 	
+	// 스터디 모집 마감일 연장
+	public int apply_extend( int idx ) {
+		int res = sqlSession.update("study.apply_extend", idx);
+		return res;
+	}
+	
+	// 스터디 모집 마감일 연장
+	public int study_extend( int idx ) {
+		int res = sqlSession.update("study.study_extend", idx);
+		return res;
+	}
 }
 

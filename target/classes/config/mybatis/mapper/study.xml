@@ -255,7 +255,21 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<!-- 스터디 개설 취소  -->
 	<update id="open_cancel" parameterType="int">
 		UPDATE study
-		SET study_status = '개설취소
+		SET study_status = '개설취소'
+		WHERE idx = #{idx}
+	</update>
+	
+	<!-- 스터디 모집 마감일 연장 -->
+	<update id="apply_extend" parameterType="int">
+		UPDATE study
+		SET deadline = deadline + INTERVAL 7 DAY
+		WHERE idx = #{idx}
+	</update>
+	
+	<!-- 스터디 기간 연장 -->
+	<update id="study_extend" parameterType="int">
+		UPDATE study
+		SET end_date = end_date + INTERVAL 7 DAY
 		WHERE idx = #{idx}
 	</update>
 	

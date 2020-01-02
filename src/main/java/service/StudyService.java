@@ -290,6 +290,32 @@ public class StudyService {
 		return result;
 	}
 	
+	// 스터디 모집 연장
+	public String apply_extend( int study_idx ) {
+		String result = "fail";
+		
+		int res = studyDAO.apply_extend( study_idx );
+		
+		if ( res != 0 ) {
+			result = "success";
+		}
+		
+		return result;
+	}
+	
+	// 스터디 기간 연장
+	public String study_extend( int study_idx ) {
+		String result = "fail";
+		
+		int res = studyDAO.study_extend( study_idx );
+		
+		if ( res != 0 ) {
+			result = "success";
+		}
+		
+		return result;
+	}
+	
 	// 스터디 자동 마감
 	@Scheduled(cron = "0 0 0 * * *")
 	public void auto_recruit_close() {
