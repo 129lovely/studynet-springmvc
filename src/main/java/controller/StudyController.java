@@ -267,7 +267,51 @@ public class StudyController {
 
 	// 스터디 룸 개별 페이지 
 	@RequestMapping("/study_room_detail.do")
-	public String study_room_detail () {
+	public String study_room_detail ( Model model, int study_idx, Integer page ) {
+		
+		// 스터디 정보 가져오기
+		StudyVO study = studyService.showStudyDetail(study_idx);
+		model.addAttribute("study", study);
+		
+		// 스터디 멤버 정보 가져오기
+		List<StudyMemberVO> member = studyService.member_list(study_idx);
+		model.addAttribute("member", member);
+				
+		// 캘린더 가져오기
+		List<StudyScheduleVO> cal = studyService.selectList_cal(study_idx);
+		model.addAttribute("cal", cal);
+		
+		// 스터디 게시판 정보 가져오기		
+		int nowPage = 1;
+		if( page != null ) {
+			nowPage = page;
+		}
+
+		int start = (nowPage -1) * Common.BoardPaging.BLOCKLIST + 1;
+
+		//start와 end를 map에 저장
+		HashMap<String, Object> map = PagingOption.getPagingOption(start, Common.BoardPaging.BLOCKLIST );
+		map.put("study_idx", study_idx);
+		
+		//게시글 전체목록 가져오기
+		List<BoardVO> list = null;
+		list = studyService.study_board_list(map);
+
+		//전체 게시물 수 구하기
+		int row_total = studyService.study_board_list_cnt(map);
+
+		//페이지 메뉴 생성하기
+		//ㄴ ◀1 2 3 4 5▶
+		String pageMenu = Paging.getPaging(
+				"study_room_manage.do", nowPage, row_total, Common.BoardPaging.BLOCKLIST, 
+				Common.BoardPaging.BLOCKPAGE, null, study_idx);
+
+		//request영역에 list바인딩
+		model.addAttribute("board", list);
+		model.addAttribute("pageMenu", pageMenu);
+		model.addAttribute("row_total", row_total);
+		
+				
 		return Common.Study.VIEW_PATH + "study_room.jsp";
 	}
 	
