@@ -16,6 +16,7 @@ import dao.StudyDAO;
 import dao.UserDAO;
 import vo.BoardVO;
 import vo.StudyMemberVO;
+import vo.StudyScheduleVO;
 import vo.StudyVO;
 
 public class StudyService {
@@ -281,6 +282,8 @@ public class StudyService {
 	public int insert_cal(HashMap<String, Object> params) {
 		int res = studyDAO.insert_cal(params);
 		return res;
+	}
+	
 	// 스터디 조기 마감
 	public String early_close( int study_idx ) {
 		String result = "fail";
@@ -298,6 +301,7 @@ public class StudyService {
 	public List<StudyScheduleVO> selectList_cal(int study_idx) {
 		List<StudyScheduleVO> list = studyDAO.selectList_cal(study_idx);
 		return list;
+	}
 	// 스터디 모집 연장
 	public String apply_extend( int study_idx ) {
 		String result = "fail";
