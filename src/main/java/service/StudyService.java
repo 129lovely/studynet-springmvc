@@ -129,7 +129,7 @@ public class StudyService {
 	}
 	
 	// 선택한 멤버 승인
-	public int mem_approve( String[] idx_arr ) {
+	public int mem_approve( String[] idx_arr, int study_idx ) {
 		
 		int result = 0;
 		
@@ -144,11 +144,13 @@ public class StudyService {
 			}
 		}
 		
+		studyDAO.in_member(study_idx);
+		
 		return result;
 	}
 	
 	// 선택한 멤버 거부
-	public int mem_reject( String[] idx_arr ) {
+	public int mem_reject( String[] idx_arr, int study_idx ) {
 		
 		int result = 0;
 		
@@ -163,11 +165,14 @@ public class StudyService {
 			}
 		}
 		
+		studyDAO.in_member(study_idx);
+		studyDAO.out_member(study_idx);
+		
 		return result;
 	}
 	
 	// 선택한 멤버 강퇴
-	public int mem_kick( String[] idx_arr ) {
+	public int mem_kick( String[] idx_arr , int study_idx ) {
 		
 		int result = 0;
 		
@@ -181,6 +186,8 @@ public class StudyService {
 				result += 1;
 			}
 		}
+		
+		studyDAO.out_member(study_idx);
 		
 		return result;
 	}
@@ -266,6 +273,19 @@ public class StudyService {
 		if ( res1 != 0 && res2 != 0 ) {
 			result = "success";
 		}
+		return result;
+	}
+	
+	// 스터디 조기 마감
+	public String early_close( int study_idx ) {
+		String result = "fail";
+		
+		int res = studyDAO.apply_close( study_idx );
+		
+		if ( res != 0 ) {
+			result = "success";
+		}
+		
 		return result;
 	}
 }

@@ -190,4 +190,22 @@ public class StudyDAO implements DAO {
 		int res = sqlSession.delete("study.del_study_member", idx);
 		return res;
 	}
+	
+	// 스터디 모집 마감 
+	public int apply_close( int study_idx ) {
+		int res = sqlSession.update("study.apply_close", study_idx);
+		return res;
+	}
+	
+	// apply count - 1 하고 approve count + 1
+	public int in_member( int study_idx ) {
+		int res = sqlSession.delete("study.in_member", study_idx);
+		return res;
+	}
+	
+	//  approve count - 1
+	public int out_member( int study_idx ) {
+		int res = sqlSession.delete("study.out_member", study_idx);
+		return res;
+	}
 }

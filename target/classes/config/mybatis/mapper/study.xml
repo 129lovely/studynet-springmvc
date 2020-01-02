@@ -163,6 +163,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET mem_status = '승인'
 		WHERE idx = #{idx}	
 	</update>
+	<update id="in_member" parameterType="int">
+		update study
+		set apply_count = apply_count - 1,
+		approve_count = approve_count + 1
+		where idx=#{study_idx}
+	</update>
 	
 	<!-- 선택 멤버 거부 -->
 	<update id="mem_reject" parameterType="int">
@@ -176,6 +182,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE study_member 
 		SET mem_status = '강제탈퇴'
 		WHERE idx = #{idx}
+	</update>
+	<update id="out_member" parameterType="int">
+		update study
+		set approve_count = approve_count - 1
+		where idx=#{study_idx}
 	</update>
 	
 	<!-- 스터디 관리자 추가 -->
@@ -215,6 +226,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE idx=#{idx}
 	</delete>
 
+	<!-- 스터디 마감 -->
+	<update id="apply_close" parameterType="int">
+		UPDATE study
+		SET study_status= '진행중'
+		WHERE idx=#{study_idx}
+	</update>
+	
 </mapper>
 
 

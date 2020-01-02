@@ -317,9 +317,9 @@ public class StudyController {
 	// 선택 인원 승인
 	@RequestMapping("/mem_approve.do")
 	@ResponseBody
-	public int mem_approve( String[] idx ) {
+	public int mem_approve( String[] idx, int study_idx ) {
 		
-		int res = studyService.mem_approve( idx );
+		int res = studyService.mem_approve( idx , study_idx );
 			
 		return res;
 	}
@@ -327,9 +327,9 @@ public class StudyController {
 	// 선택 인원 거부
 	@RequestMapping("/mem_reject.do")
 	@ResponseBody
-	public int mem_reject( String[] idx ) {
+	public int mem_reject( String[] idx, int study_idx ) {
 		
-		int res = studyService.mem_reject( idx );
+		int res = studyService.mem_reject( idx, study_idx );
 			
 		return res;
 	}
@@ -337,9 +337,9 @@ public class StudyController {
 	// 선택 인원 추방
 	@RequestMapping("/mem_kick.do")
 	@ResponseBody
-	public int mem_kick( String[] idx ) {
+	public int mem_kick( String[] idx, int study_idx ) {
 		
-		int res = studyService.mem_kick( idx );
+		int res = studyService.mem_kick( idx , study_idx );
 			
 		return res;
 	}
@@ -417,5 +417,13 @@ public class StudyController {
 		System.out.println(params.get("startDate"));
 		
 		return "redirect:study_room_manage.do?study_idx=" + params.get("study_idx") + "#calendar";
+	}
+	
+	// 스터디 조기 마감
+	@RequestMapping("/early_close.do")
+	@ResponseBody
+	public String early_close( int study_idx ) {
+		String res = studyService.early_close( study_idx );
+		return res; 
 	}
 }
