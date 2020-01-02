@@ -15,6 +15,7 @@ import dao.StudyDAO;
 import dao.UserDAO;
 import vo.BoardVO;
 import vo.StudyMemberVO;
+import vo.StudyScheduleVO;
 import vo.StudyVO;
 
 public class StudyService {
@@ -267,5 +268,17 @@ public class StudyService {
 			result = "success";
 		}
 		return result;
+	}
+	
+	// 캘린더 일정 추가
+	public int insert_cal(HashMap<String, Object> params) {
+		int res = studyDAO.insert_cal(params);
+		return res;
+	}
+	
+	// 캘린더 가져오기
+	public List<StudyScheduleVO> selectList_cal(int study_idx) {
+		List<StudyScheduleVO> list = studyDAO.selectList_cal(study_idx);
+		return list;
 	}
 }

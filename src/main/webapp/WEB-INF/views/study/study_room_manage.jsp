@@ -370,9 +370,9 @@
 						<!-- 제목 -->
 						<div class="modal-header flex-box" style="align-items: center">
 							<button type="button" class="close" data-dismiss="modal"></button>
-							<input type="text" class="modal-title tac" name="startDate" style="width: 100%;" disabled="disabled">
+							<input type="text" class="modal-title tac" name="startDate" style="width: 100%;" readonly="readonly">
 							<span style="font-size: 1.3rem;">&nbsp;~&nbsp;</span>
-							<input type="text" class="modal-title tac" name="endDate" style="width: 100%;" disabled="disabled">
+							<input type="text" class="modal-title tac" name="endDate" style="width: 100%;" readonly="readonly">
 						</div>
 						<!-- 내용 -->
 						<div class="modal-body">
@@ -397,9 +397,9 @@
 						<!-- 제목 -->
 						<div class="modal-header flex-box" style="align-items: center">
 							<button type="button" class="close" data-dismiss="modal"></button>
-							<input type="text" class="modal-title tac" name="startDate" style="width: 100%;" disabled="disabled">
+							<input type="text" class="modal-title tac" name="startDate" style="width: 100%;" readonly="readonly">
 							<span style="font-size: 1.3rem;">&nbsp;~&nbsp;</span>
-							<input type="text" class="modal-title tac" name="endDate" style="width: 100%;" disabled="disabled">
+							<input type="text" class="modal-title tac" name="endDate" style="width: 100%;" readonly="readonly">
 						</div>
 						<!-- 내용 -->
 						<div class="modal-body">
@@ -420,10 +420,12 @@
 		<script src="https://kit.fontawesome.com/95d80c99dc.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/httpRequest.js"></script>
 		
-        <script>
+        <script type="text/javascript">
         window.onload = function name() {
             calendar.render();
 		}
+        
+        
         // fullCalendar 셋팅
         var calendarEl = document.getElementById('calendar');
         var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -455,18 +457,24 @@
             	$("#myModal3").modal('show');
             },
        		events: [
-            {
-              title: 'Long Event',
-              start: '2020-01-02',
-              end: '2020-01-10',
-              backgroundColor: '#DFE1E4',
-              borderColor: '#DFE1E4'
-            },
+    			 <c:if test="${!empty cal}">
+	            	 <c:forEach var="vo" items="${cal}">
+	                 {
+	                	 title: "${vo.title}",
+	                	 start: "${vo.startDate}",
+	                	 end: "${vo.endDate}",
+	                	 backgroundColor: "#DFE1E4",
+	                	 borderColor: "#DFE1E4"
+	                 },   
+	            	 </c:forEach>                	
+       	  		 </c:if> 
+       				        
           ]
         });
         // 캘린더 일정 등록하기
         function cal_insert(form) {
         	var title = form.title.value.trim();
+        	
         	if( title == "" ){
         		alert("일정명을 입력해주세요");
         		form.title.focus();
@@ -474,7 +482,7 @@
         	}
         	
         	form.action = "cal_insert.do";
-        	form.method = "get";
+        	form.method = "post";
         	form.submit();
         } 
         

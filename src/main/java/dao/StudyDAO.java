@@ -8,6 +8,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 
 import vo.StudyMemberVO;
+import vo.StudyScheduleVO;
 import vo.StudyVO;
 
 public class StudyDAO implements DAO {
@@ -190,4 +191,18 @@ public class StudyDAO implements DAO {
 		int res = sqlSession.delete("study.del_study_member", idx);
 		return res;
 	}
+
+	// 캘린더 일정 추가
+	public int insert_cal(HashMap<String, Object> params) {
+		int res = sqlSession.insert("study.insert_cal", params);
+		return res;
+	}
+
+	// 캘린더 일정 가져오기
+	public List<StudyScheduleVO> selectList_cal(int study_idx) {
+		List<StudyScheduleVO> list = sqlSession.selectList("study.selectList_cal", study_idx);
+		return list;
+	}
+	
+	
 }

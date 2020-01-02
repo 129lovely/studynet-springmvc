@@ -4,6 +4,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="study">
 
+	<!-- 캘린더 일정 추가 -->
+	<insert id="insert_cal" parameterType="java.util.Map">
+		INSERT INTO study_schedule
+		(study_idx, user_idx, startDate, endDate, title)
+		VALUES
+		(#{study_idx}, #{user_idx}, #{startDate}, #{endDate}, #{title})
+	</insert>
+	<!-- 캘린더 가져오기 -->
+	<select id="selectList_cal" parameterType="int" resultType="vo.StudyScheduleVO">
+		SELECT *
+		FROM study_schedule
+		WHERE study_idx=#{study_idx}
+	</select>
+
 	<!-- 스터디 전체게시물 수 조회 -->
 	<select resultType="int" id="count">
 		select count(*) from study

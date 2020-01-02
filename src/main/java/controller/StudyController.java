@@ -28,6 +28,7 @@ import service.StudyService;
 import service.UserService;
 import vo.BoardVO;
 import vo.StudyMemberVO;
+import vo.StudyScheduleVO;
 import vo.StudyVO;
 import vo.UserVO;
 
@@ -281,6 +282,10 @@ public class StudyController {
 		List<StudyMemberVO> member = studyService.member_list(study_idx);
 		model.addAttribute("member", member);
 		
+		// 캘린더 가져오기
+		List<StudyScheduleVO> cal = studyService.selectList_cal(study_idx);
+		model.addAttribute("cal", cal);
+		
 		// 스터디 게시판 정보 가져오기		
 		int nowPage = 1;
 		if( page != null ) {
@@ -414,7 +419,8 @@ public class StudyController {
 	public String cal_insert(@RequestParam HashMap<String, Object> params, HttpServletRequest request) {
 		UserVO user = (UserVO) request.getSession().getAttribute("user");	
 		params.put("user_idx", user.getIdx());
-		System.out.println(params.get("startDate"));
+		
+		studyService.insert_cal(params);
 		
 		return "redirect:study_room_manage.do?study_idx=" + params.get("study_idx") + "#calendar";
 	}

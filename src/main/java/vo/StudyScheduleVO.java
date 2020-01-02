@@ -1,9 +1,15 @@
 package vo;
 
 public class StudyScheduleVO {
-	private String startDate, endDate;
+	private String startDate, endDate, title;
 	private int idx, study_idx, user_idx;
 	
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
 	public String getStartDate() {
 		return startDate;
 	}
