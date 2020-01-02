@@ -15,6 +15,7 @@
     	<script src="${ pageContext.request.contextPath }/resources/js/interaction.main.js"></script>
     	<script src="${ pageContext.request.contextPath }/resources/js/daygrid.main.js"></script>
     	<script src="${ pageContext.request.contextPath }/resources/js/fullcalendar.ko.js"></script>
+    	<script src="${ pageContext.request.contextPath }/resources/js/moment.js"></script>
 	</head>
 	
 	<body>
@@ -362,21 +363,51 @@
 		<!-- 캘린더 일정 등록 모달 -->
 		<div class="modal fade" id="myModal3" role="dialog">
 			<form>
+				<input type="hidden" value="${ study.idx }" name="study_idx"> <!-- study_idx 값 저장 -->
 				<div class="modal-dialog modal-sm">
 					<!-- Modal content-->
 					<div class="modal-content">
 						<!-- 제목 -->
-						<div class="modal-header">
+						<div class="modal-header flex-box" style="align-items: center">
 							<button type="button" class="close" data-dismiss="modal"></button>
-							<h4 class="modal-title tac" id="cal_date"></h4>
+							<input type="text" class="modal-title tac" name="startDate" style="width: 100%;" disabled="disabled">
+							<span style="font-size: 1.3rem;">&nbsp;~&nbsp;</span>
+							<input type="text" class="modal-title tac" name="endDate" style="width: 100%;" disabled="disabled">
 						</div>
 						<!-- 내용 -->
 						<div class="modal-body">
-							<p id="cal_content" class=""></p>
+							<input type="text" name="title" style="width: 100%;">
 						</div>
 						<div class="modal-footer">
+							<button type="button" class="btn btn-default" onclick="cal_insert(this.form);">등록</button>
+							<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		
+		<!-- 캘린더 일정 수정/삭제 모달 -->
+		<div class="modal fade" id="myModal4" role="dialog">
+			<form>
+				<input type="hidden" value="${ study.idx }" name="study_idx"> <!-- study_idx 값 저장 -->
+				<div class="modal-dialog modal-sm">
+					<!-- Modal content-->
+					<div class="modal-content">
+						<!-- 제목 -->
+						<div class="modal-header flex-box" style="align-items: center">
+							<button type="button" class="close" data-dismiss="modal"></button>
+							<input type="text" class="modal-title tac" name="startDate" style="width: 100%;" disabled="disabled">
+							<span style="font-size: 1.3rem;">&nbsp;~&nbsp;</span>
+							<input type="text" class="modal-title tac" name="endDate" style="width: 100%;" disabled="disabled">
+						</div>
+						<!-- 내용 -->
+						<div class="modal-body">
+							<input type="text" name="title" style="width: 100%;">
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" onclick="javascript:void(0);">수정</button>
 							<button type="button" class="btn btn-default" onclick="javascript:void(0);">삭제</button>
-							<button type="button" class="btn btn-default" onclick="javascript:void(0);">추가</button>
 							<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 						</div>
 					</div>
@@ -389,46 +420,66 @@
 		<script src="https://kit.fontawesome.com/95d80c99dc.js"></script>
 		<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/httpRequest.js"></script>
 		
-        <script>        
+        <script>
         window.onload = function name() {
-        	var calendarEl = document.getElementById('calendar');
-
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-            	locale: 'ko',
-                plugins: [ 'interaction', 'dayGrid' ],
-                contentHeight: 600,
-                eventClick: function(info) {
-                    alert('Event: ' + info.event.title);
-                },
-                selectable: true,
-                dateClick: function(info) {     
-                	$("#cal_date").text(info.dateStr);
-            		$("#myModal3").modal('show');
-                },
-                select: function(info) {
-                	$("#cal_date").text(info.startStr + " ~ " + info.endStr);
-                	$("#myModal3").modal('show');
-                },
-           		events: [
-                {
-                  title: 'All Day Event',
-                  start: '2019-11-01'
-                },
-                {
-                  title: 'two Day Event',
-                  start: '2019-11-01'
-                },
-                {
-                  title: 'Long Event',
-                  start: '2019-11-07',
-                  end: '2019-11-07'
-                },
-              ]
-            });
-
             calendar.render();
 		}
+        // fullCalendar 셋팅
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+        	locale: 'ko',
+            plugins: [ 'interaction', 'dayGrid' ],
+            contentHeight: 600,
+            eventClick: function(info) {
+              	var startStr = moment(info.event.start).format('YYYY-MM-DD');
+              	var endStr = moment(info.event.end).format('YYYY-MM-DD');
+              	if( endStr == 'Invalid date' ){
+              		endStr = startStr;	
+              	}
+              	$("input[name='startDate']").val(startStr);
+            	$("input[name='endDate']").val(endStr);
+            	$("#myModal4 input[name='title']").val(info.event.title);
+        		$("#myModal4").modal('show');
+            },
+            selectable: true,
+            dateClick: function(info) {
+            	$("input[name='startDate']").val(info.dateStr);
+            	$("input[name='endDate']").val(info.dateStr);
+            	$("#myModal3 input[name='title']").val("");
+        		$("#myModal3").modal('show');
+            },
+            select: function(info) {
+            	$("input[name='startDate']").val(info.startStr);
+            	$("input[name='endDate']").val(info.endStr);
+            	$("#myModal3 input[name='title']").val("");
+            	$("#myModal3").modal('show');
+            },
+       		events: [
+            {
+              title: 'Long Event',
+              start: '2020-01-02',
+              end: '2020-01-10',
+              backgroundColor: '#DFE1E4',
+              borderColor: '#DFE1E4'
+            },
+          ]
+        });
+        // 캘린더 일정 등록하기
+        function cal_insert(form) {
+        	var title = form.title.value.trim();
+        	if( title == "" ){
+        		alert("일정명을 입력해주세요");
+        		form.title.focus();
+        		return;
+        	}
+        	
+        	form.action = "cal_insert.do";
+        	form.method = "get";
+        	form.submit();
+        } 
         
+        
+
 		// 게시판 모달 띄우기
 		// 게시글보기
 		function board_show(title, name, created_at, content) {
@@ -450,15 +501,17 @@
 			$("#myModal2").modal('show');
 		}
 		function board_write(form) {
-			var title = form.title;
-			var content = form.content;
+			var title = form.title.value.trim();
+			var content = form.content.value.trim();
 			
 			if( title == "" ){
 				alert("제목을 입력해주세요");
+				form.title.focus();
 				return;
 			}
 			if( content == "" ){
 				alert("내용을 입력해주세요");
+				form.content.focus();
 				return;
 			}
 			

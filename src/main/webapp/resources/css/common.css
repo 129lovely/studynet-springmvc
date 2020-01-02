@@ -181,6 +181,10 @@ button.fc-today-button.fc-button.fc-button-primary:hover {
 	background: #eef3fa;
 }
 
+.my-study-room .study-board table th, .my-study-room table td.fc-event-container {
+	padding: 0;
+}
+
 /*
 //----------------------------------------------------------------------------------
 //

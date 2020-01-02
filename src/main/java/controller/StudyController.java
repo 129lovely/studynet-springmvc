@@ -408,4 +408,14 @@ public class StudyController {
 		
 		return res;
 	}
+	
+	// 캘린더 일정 등록
+	@RequestMapping("cal_insert.do")
+	public String cal_insert(@RequestParam HashMap<String, Object> params, HttpServletRequest request) {
+		UserVO user = (UserVO) request.getSession().getAttribute("user");	
+		params.put("user_idx", user.getIdx());
+		System.out.println(params.get("startDate"));
+		
+		return "redirect:study_room_manage.do?study_idx=" + params.get("study_idx") + "#calendar";
+	}
 }
