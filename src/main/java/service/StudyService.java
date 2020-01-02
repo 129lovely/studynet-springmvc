@@ -277,6 +277,10 @@ public class StudyService {
 		return result;
 	}
 	
+	// 캘린더 일정 추가
+	public int insert_cal(HashMap<String, Object> params) {
+		int res = studyDAO.insert_cal(params);
+		return res;
 	// 스터디 조기 마감
 	public String early_close( int study_idx ) {
 		String result = "fail";
@@ -290,6 +294,10 @@ public class StudyService {
 		return result;
 	}
 	
+	// 캘린더 가져오기
+	public List<StudyScheduleVO> selectList_cal(int study_idx) {
+		List<StudyScheduleVO> list = studyDAO.selectList_cal(study_idx);
+		return list;
 	// 스터디 모집 연장
 	public String apply_extend( int study_idx ) {
 		String result = "fail";
