@@ -208,4 +208,30 @@ public class StudyDAO implements DAO {
 		int res = sqlSession.delete("study.out_member", study_idx);
 		return res;
 	}
+	
+	// 모집 자동 마감을 위해 스터디 목록 가져오기
+	public List<StudyVO> auto_apply_close() {
+		List<StudyVO> list = sqlSession.selectList("study.auto_apply_close");
+		return list;
+	}
+	
+	// 스터디 자동 마감을 위해 스터디 목록 가져오기
+	public List<StudyVO> auto_study_close() {
+		List<StudyVO> list = sqlSession.selectList("study.auto_study_close");
+		return list;
+	}
+	
+	// 스터디 종료
+	public int study_close( int study_idx ) {
+		int res = sqlSession.update("study.study_close", study_idx);
+		return res;
+	}
+	
+	// 스터디 종료
+	public int open_cancel( int idx ) {
+		int res = sqlSession.update("study.open_cancel", idx);
+		return res;
+	}
+	
 }
+

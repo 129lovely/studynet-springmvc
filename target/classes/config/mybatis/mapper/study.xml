@@ -205,7 +205,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE m.user_idx = #{user_idx}
 	</select>
 	
-	<!-- 스터디 모집 취소 / 개설 취소 -->
+	<!-- 스터디 모집 취소  -->
 	<update id="recruit_cancel" parameterType="int">
 		UPDATE study
 		SET study_status = '개설취소',
@@ -231,6 +231,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE study
 		SET study_status= '진행중'
 		WHERE idx=#{study_idx}
+	</update>
+	
+	<!-- 스터디 종료 -->
+	<update id="study_close" parameterType="int">
+		UPDATE study
+		SET study_status= '종료'
+		WHERE idx=#{study_idx}
+	</update>
+	
+	<!-- 모집 자동 마감을 위한 모든 study 조회 -->
+	<select id="auto_apply_close" resultType="study">
+		SELECT * FROM study
+		WHERE date( deadline ) = date( now() )
+	</select>
+	
+	<!-- 모집 자동 마감을 위한 모든 study 조회 -->
+	<select id="auto_study_close" resultType="study">
+		SELECT * FROM study
+		WHERE date( end_date ) = date( now() )
+	</select>
+	
+	<!-- 스터디 개설 취소  -->
+	<update id="open_cancel" parameterType="int">
+		UPDATE study
+		SET study_status = '개설취소
+		WHERE idx = #{idx}
 	</update>
 	
 </mapper>

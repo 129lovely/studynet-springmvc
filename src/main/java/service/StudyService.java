@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.mail.MessagingException;
 
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Scheduled;
 
 import common.MailUtils;
 import dao.BoardDAO;
@@ -287,5 +288,49 @@ public class StudyService {
 		}
 		
 		return result;
+	}
+	
+	// 스터디 자동 마감
+	@Scheduled(cron = "0 0 0 * * *")
+	public void auto_recruit_close() {
+		
+		List<StudyVO> list = studyDAO.auto_apply_close();
+		
+		int res = 0;
+		
+		for(int i = 0 ; i < list.size() ; i ++ ) {
+			
+			int result = 0;
+			
+			if ( list.get(i).getMin_count() >= list.get(i).getApprove_count() ) {
+				result = studyDAO.apply_close(list.get(i).getIdx());
+			} else {
+				result = studyDAO.open_cancel(list.get(i).getIdx());
+			}
+			
+			if ( result != 0 ) {
+				res += 1;
+			}
+		}
+		
+		System.out.println(res + " 건의 스터디의 모집이 자동 마감되었습니다.");
+	}
+
+	// 스터디 자동 종료
+	@Scheduled(cron = "0 0 0 * * *")
+	public void auto_study_close() {
+		
+		List<StudyVO> list = studyDAO.auto_study_close();
+		int res = 0;
+		
+		for(int i = 0 ; i < list.size() ; i ++ ) {
+			int result = studyDAO.study_close(list.get(i).getIdx());
+			
+			if ( result != 0 ) {
+				res += 1;
+			}
+		}
+		
+		System.out.println(res + " 건의 스터디기 종료되었습니다.");
 	}
 }
