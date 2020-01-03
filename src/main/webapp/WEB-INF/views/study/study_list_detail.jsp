@@ -113,17 +113,21 @@
 						<span>${study.place}</span>
 					</div>
 				</div>
-				<div class="recruit-condition">
-					<h2>모집 조건</h2>
-					<p>
-						${study.apply_condition}
-					</p>
-				</div>
-				<div class="recruit-detail-info mb30">
+				<div class="recruit-detail-info">
 					<h2>세부 정보</h2>
 					<p>
-						<span class = "addinfo3 tar">모임장소</span>
-						<span> ${study.place}</span>
+						<c:if test="${study.is_online=='0'}">
+						<span class = "addinfo3 tar">온/오프 </span>    
+						<span>오프라인</span>
+						</c:if>
+						<c:if test="${study.is_online=='1'}">
+						<span class = "addinfo3 tar">온/오프 </span>    
+						<span>온라인</span>
+						</c:if>
+						<c:if test="${study.is_online=='2'}">
+						<span class = "addinfo3 tar">온/오프 </span>    
+						<span>복합</span>
+						</c:if>
 						<br>
 					</p>
 					<p>	
@@ -172,6 +176,18 @@
 						</span>
 					</p>	
 				</div>
+				<div class="recruit-condition">
+					<h2>모집 조건</h2>
+					<p>
+						${study.apply_condition}
+					</p>
+				</div>				
+				<div class="detail-description mb20">
+					<h2>상세 설명</h2>
+					<p>
+						${study.detail_info}
+					</p>
+				</div>			
 				<div class="mb40 tac">
 				<c:if test=""></c:if>
 					<input id="btn" class="my-btn yellow-black" type="button" value="신청하기" onclick="send_apply(${study.max_count}, ${study.approve_count}, ${study.idx });"> 
