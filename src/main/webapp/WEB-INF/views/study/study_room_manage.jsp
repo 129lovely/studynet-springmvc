@@ -77,6 +77,16 @@
     			return;
     		}
     		
+    		var check = confirm("정말 폐쇄 신청을 진행할까요? 반드시 스터디 공지에  폐쇄 사유를  작성해주시길 바랍니다.");
+    		if ( ! check ) {
+    			return;
+    		}
+    		
+    		if ( "${study.notice}" == "" ) {
+    			alert("공지사항 란이 비어있습니다.");
+    			return;
+    		}
+    		
     		// AJAX로 폐쇄 신청 
     		var url = "study_close_application.do";
 			var param = "idx=" + "${study.idx}" + "&user_idx=" + "${user.idx}";
@@ -677,6 +687,8 @@
 					"<div class='section-discription tal' id='notice_text'>"
 							+ text + "</div>");
 			$("#notice_input").remove();
+			
+			location.reload();
 		}
 
 		// 공동 관리자 추가

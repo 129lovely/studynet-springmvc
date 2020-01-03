@@ -307,6 +307,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET is_agree = 1
 		WHERE idx = #{idx}
 	</update>
+	
+	<!-- 스터디 자동 폐쇄를 위한 모든 study 조회 -->
+	<select id="auto_study_closure" resultType="study">
+		SELECT * FROM study
+		WHERE study_status = '폐쇄대기'
+	</select>
+	
+	<!-- 스터디 상태 퍠쇄로 변경 -->
+	<update id="study_closure" parameterType="int">
+		UPDATE study
+		SET study_status = '폐쇄'
+		WHERE idx = #{idx}
+	</update>
+	
 </mapper>
 
 

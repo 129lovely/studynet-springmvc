@@ -1,7 +1,7 @@
 package vo;
 
 public class StudyMemberVO {
-	private int idx, user_idx, study_idx, is_admin;
+	private int idx, user_idx, study_idx, is_admin, is_agree;
 	String introduce, mem_status, name, email, region, phone, job;
 	
 	public int getIdx() {
@@ -69,6 +69,12 @@ public class StudyMemberVO {
 	}
 	public void setJob(String job) {
 		this.job = job;
+	}
+	public int getIs_agree() {
+		return is_agree;
+	}
+	public void setIs_agree(int is_agree) {
+		this.is_agree = is_agree;
 	}
 	
 	

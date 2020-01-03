@@ -204,6 +204,43 @@
 				location.reload();	
 			}	
 		}
+		
+		// 스터디 폐쇄 동의 기능
+		function study_close_agree( idx ) {
+			
+			if ("${study.is_agree}" != '0' ) {
+				alert("이미 폐쇄에 동의하셨습니다.");
+				return;
+			}
+			
+			var check = confirm("정말 폐쇄에 동의하시겠습니까?");
+				
+			if( ! check ) {
+				return;
+			}
+	
+			var url = "study_close_agree.do";
+			var param = "idx=" + idx;
+			
+			sendRequest(url, param, study_close_agreed, "get" );
+		}	
+		
+		// 스터디 폐쇄 동의 resultFn
+		function study_close_agreed() {
+			
+			if( xhr.readyState == 4 && xhr.status == 200 ){		
+				
+				var res = xhr.responseText;
+				
+				if ( res != "fail" ) {
+					alert("동의가 완료되었습니다.");
+				} else {
+					alert("동의 중 문제가 발생했습니다.");
+				}
+				
+				location.reload();	
+			}	
+		}
 	</script>
 </head>
 
@@ -330,15 +367,16 @@
 															</c:if>
 															
 															<c:if test="${ study.study_status eq '폐쇄대기'}">
-															<input type="button" class="my-btn yellow-black" value="동의 현황" onclick="location.href='#open_agree'">														
+															<input type="button" class="my-btn yellow-black" value="동의 현황" onclick="location.href='#open_list'">														
 																<!-- 폐쇄 동의 인원 확인 -->
 																<div class="info_content agree_close list" id="open_list">
 																	<div>
+																		<!-- 동의 현황  -->
 																		<h1 class="section-title blue line-bottom">동의 현황 확인</h1>
-																		<table>
-																			<!-- 내용 가져와야 함 -->
-																		
-																		</table>
+																		<p class="section-discription">
+																			전체 인원의 80% 이상이 동의하면 폐쇄되며, 스터디 룸에서 삭제하실 수 있습니다. <br><br>
+																			${ study.agree_count } / ${ study.approve_count } 명 동의 ( ${ study.agree_count/study.approve_count * 100 }% ) 	
+																		</p>
 																		<a href="#open_agree" class="my-btn black-white">닫기</a>
 																	</div>
 																</div>
@@ -371,17 +409,7 @@
 																	<div>
 																		<h1 class="section-title blue line-bottom">스터디 폐쇄 진행 안내</h1>
 																		<!-- 폐쇄 사유 -->
-																		<h4 class="sub-section-title black">폐쇄 사유</h4>
-																		<p class="section-discription">
-																			어쩌구 저저구 폐쇄 사유입니당 <br>
-																			흑흑ㅎ그흑흑 죄송함니다
-																		</p><br>
-																		
-																		<!-- 동의 현황 -->
-																		<h4 class="sub-section-title black">동의 현황</h4>
-																		<p class="section-discription">
-																			3 / 15 명 동의 ( 20% ) 	
-																		</p>
+																		<h4 class="sub-section-title black">폐쇄 사유는 스터디 공지에서 확인해주세요.</h4>
 																		
 																		<!-- 폐쇄 안내 -->
 																		<p class="section-discription">
@@ -391,7 +419,7 @@
 																		</p>
 																		
 																		<!-- 버튼 -->
-																		<a href="javascript:void(0)" class="my-btn black-white">동의</a>
+																		<a href="javascript:void(0)" onClick="study_close_agree(${study.idx});" class="my-btn black-white">동의</a>
 																		<a href="#close_agree" class="my-btn black-white">취소</a>
 																	</div>
 																</div>	

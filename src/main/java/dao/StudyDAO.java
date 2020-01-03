@@ -277,5 +277,16 @@ public class StudyDAO implements DAO {
 		return res;
 	}
 	
+	// 폐쇄 대기중인 스터디 목록 가져오기
+	public List<StudyVO> auto_study_closure() {
+		List<StudyVO> list = sqlSession.selectList("study.auto_study_closure");
+		return list;
+	}
+	
+	// 스터디 폐쇄 상태로 변경
+	public int study_closure( int idx ) {
+		int res = sqlSession.update("study.study_closure", idx);
+		return res;
+	}
 }
 

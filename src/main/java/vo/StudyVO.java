@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class StudyVO {
 
-	private int idx, create_user_idx, min_count, max_count, apply_count, approve_count, is_online, is_admin, study_idx;
+	private int idx, create_user_idx, min_count, max_count, apply_count, approve_count, is_online, is_admin, study_idx, agree_count;
 	private String title, photo, open_kakao, purpose, place, extra_info, apply_condition, detail_info, study_status, notice;
 
 	private String create_name, mem_status;
@@ -255,6 +255,14 @@ public class StudyVO {
 
 	public void setDeleted_at(Date deleted_at) {
 		this.deleted_at = deleted_at;
+	}
+
+	public int getAgree_count() {
+		return agree_count;
+	}
+
+	public void setAgree_count(int agree_count) {
+		this.agree_count = agree_count;
 	}
 
 }

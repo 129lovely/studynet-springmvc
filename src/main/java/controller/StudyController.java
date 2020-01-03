@@ -510,4 +510,12 @@ public class StudyController {
 		return res;
 	}
 	
+	// 스터디 폐쇄 동의
+	@RequestMapping("/study_close_agree")
+	@ResponseBody
+	public String study_close_agree( int idx ) {
+		String res = studyService.study_close_agree( idx );
+		return res;
+	}
+	
 }

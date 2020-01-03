@@ -58,7 +58,9 @@ public class StudyService {
 		
 		res = studyDAO.add_admin_member(map);
 		res = userDAO.update_study_cnt(vo.getCreate_user_idx());
-		
+		res = studyDAO.in_member(vo.getIdx());
+		res = studyDAO.out_member(vo.getIdx());
+			
 		return res; 
 	}
 
@@ -235,6 +237,21 @@ public class StudyService {
 	// 마이페이지 - 내스터디룸 전체 리스트 가져오기
 	public List<StudyVO> study_myinfo(int user_idx) {
 		List<StudyVO> list = studyDAO.study_myinfo(user_idx);
+		// 각 스터디의 is_agree가 true인 멤버의 인원 수 구하기
+		for( int i = 0 ; i < list.size() ; i++ ) {
+			int agree_count = 0;
+			List<StudyMemberVO> member = studyDAO.member_list(list.get(i).getStudy_idx());
+
+			for (int j = 0 ; j < member.size() ; j++ ) {
+
+				if (member.get(j).getIs_agree() == 1) {
+					agree_count += 1;
+				}
+			}
+			
+			list.get(i).setAgree_count(agree_count);
+		}
+		
 		return list;
 	}
 	
@@ -342,6 +359,7 @@ public class StudyService {
 			
 			if ( list.get(i).getMin_count() >= list.get(i).getApprove_count() ) {
 				result = studyDAO.apply_close(list.get(i).getIdx());
+				
 			} else {
 				result = studyDAO.open_cancel(list.get(i).getIdx());
 			}
@@ -369,7 +387,7 @@ public class StudyService {
 			}
 		}
 		
-		System.out.println(res + " 건의 스터디기 종료되었습니다.");
+		System.out.println(res + " 건의 스터디가 종료되었습니다.");
 	}
 	
 	// 스터디 탈퇴 기능
@@ -418,5 +436,56 @@ public class StudyService {
 		}
 		
 		return result;
+	}
+	
+	
+	// 스터디 폐쇄 동의
+	public String study_close_agree( int idx ) {
+		String result = "fail";
+
+		// 신청자 폐쇄 동의 변경
+		int res2 = studyDAO.study_close_agree( idx ) ;
+		
+		if ( res2 != 0 ) {
+			result = "success";
+		}
+		
+		return result;
+	}
+	
+	// 스터디 폐쇄 처리
+	@Scheduled(cron = "0 0 * * * *")
+	public void auto_study_closure() {
+		
+		List<StudyVO> list = studyDAO.auto_study_closure();
+		int res = 0;
+		
+		for(int i = 0 ; i < list.size() ; i ++ ) {
+			// 전체 인원과 동의 인원 구하기
+			int app = list.get(i).getApprove_count();
+
+			int agree_count = 0;
+			
+			List<StudyMemberVO> member = studyDAO.member_list(list.get(i).getIdx());
+
+			for (int j = 0 ; j < member.size() ; j++ ) {
+
+				if (member.get(j).getIs_agree() == 1) {
+					agree_count += 1;
+				}
+			}
+					
+			// 80퍼센트 달성했는지 확인하고 처리
+			if ( agree_count / app * 100 >= 80 ) {
+				int result = studyDAO.study_closure(list.get(i).getIdx());
+				
+				if ( result != 0 ) {
+					res += 1;
+				}
+			}
+		
+		}
+		
+		System.out.println(res + " 건의 스터디가 폐쇄되었습니다.");
 	}
 }

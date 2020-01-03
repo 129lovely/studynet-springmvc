@@ -101,7 +101,7 @@
 								<!-- 온라인 -->
                          	<c:if test="${ vo.is_online == 1 }">
 		                        <div>		               
-		                           	<h3><a href="study_list_detail.do?idx=${ vo.idx }"><span>[온라인]${ vo.title }</span></a></h3>	                            	
+		                           	<h3><a href="study_list_detail.do?idx=${ vo.idx }"><span>[온라인] ${ vo.title }</span></a></h3>	                            	
 		                            <p><span class = "addinfo1 tar">모집 마감   </span> <span class = "addinfo_back tal">| <fmt:parseDate var="dateString" value="${vo.deadline}" pattern="yyyy-MM-dd HH:mm:ss.SSS" /> 
 						<fmt:formatDate value="${dateString}" pattern="yyyy.MM.dd" /></span></p>
 		                            <p><span class = "addinfo1 tar" >스터디목적   </span> <span class = "addinfo_back tal" >| ${ vo.purpose }</span></p>
@@ -113,7 +113,7 @@
 	              				<!-- 오프라인 -->
                          	<c:if test="${ vo.is_online == 0 }">
 	                         	<div>
-		                           	<h3><a href="study_list_detail.do?idx=${ vo.idx }"><span>[오프라인] &nbsp;${ vo.title }</span></a></h3>	                            	
+		                           	<h3><a href="study_list_detail.do?idx=${ vo.idx }"><span>[오프라인] ${ vo.title }</span></a></h3>	                            	
 		                            <p><span class = "addinfo1 tar">모집 마감  &nbsp;  </span><span class = "addinfo_back ">|  <fmt:parseDate var="dateString" value="${vo.deadline}" pattern="yyyy-MM-dd HH:mm:ss.SSS" /> 
 						<fmt:formatDate value="${dateString}" pattern="yyyy.MM.dd" /> </span></p>
 		                            <p><span class = "addinfo1 tar">스터디목적    &nbsp; </span><span class = "addinfo_back "> | ${ vo.purpose }</span></p>
@@ -125,7 +125,7 @@
 	              				<!-- 온/오프라인 -->
 	                        <c:if test="${ vo.is_online == 2 }">
 		                        <div>
-		                           	<h3><a href="study_list_detail.do?idx=${ vo.idx }"><span>[복합]  ${ vo.title }</span></a></h3>	                            	
+		                           	<h3><a href="study_list_detail.do?idx=${ vo.idx }"><span>[복합] ${ vo.title }</span></a></h3>	                            	
 		                            <p><span class = "addinfo1 tar">모집 마감  &nbsp;  </span><span class = "addinfo_back tal"> |  <fmt:parseDate var="dateString" value="${vo.deadline}" pattern="yyyy-MM-dd HH:mm:ss.SSS" /> 
 										<fmt:formatDate value="${dateString}" pattern="yyyy.MM.dd" /></span> </p>
 		                            <p><span class = "addinfo1 tar">스터디목적 &nbsp;  </span><span class = "addinfo_back tal">|  ${ vo.purpose }</span></p>
