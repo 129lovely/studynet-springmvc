@@ -293,6 +293,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM study_member
 		WHERE study_idx = #{study_idx} and user_idx = #{user_idx}
 	</select>
+	
+	<!-- 스터디 상태 폐쇄 대기로 변경 -->
+	<update id="study_close_application" parameterType="int">
+		UPDATE study
+		SET study_status = '폐쇄대기'
+		WHERE idx = #{idx}
+	</update>
+	
+	<!-- 스터디 폐쇄 동의 -->
+	<update id="study_close_agree" parameterType="int">
+		UPDATE study_member
+		SET is_agree = 1
+		WHERE idx = #{idx}
+	</update>
 </mapper>
 
 

@@ -502,5 +502,12 @@ public class StudyController {
 		return "redirect:study_myinfo.do";
 	}
 	
+	// 스터디 폐쇄 신청 
+	@RequestMapping("/study_close_application.do")
+	@ResponseBody
+	public String study_close_application( int idx, int user_idx ) {
+		String res = studyService.study_close_application( idx, user_idx );
+		return res;
+	}
 	
 }

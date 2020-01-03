@@ -262,8 +262,19 @@ public class StudyDAO implements DAO {
 	// study idx와 user idx로 mem idx 가져오기
 	public StudyMemberVO get_mem_idx( Map params ) {
 		StudyMemberVO mem = sqlSession.selectOne("study.get_mem_idx", params);
-
 		return mem;
+	}
+	
+	// 스터디 상태 폐쇄 대기로 변경
+	public int study_close_application( int idx ) {
+		int res = sqlSession.update("study.study_close_application", idx);
+		return res;
+	}
+
+	// 스터디 폐쇄 동의 상태로 변경
+	public int study_close_agree( int idx ) {
+		int res = sqlSession.update("study.study_close_agree", idx);
+		return res;
 	}
 	
 }

@@ -61,9 +61,45 @@
     	
     	// 스터디 폐쇄 신청 기능
     	function app_close() {
+    		var input_email = document.getElementById("email_study_close");
+    		var input_pwd = document.getElementById("pwd_study_close");
     		
+    		// 인풋 유효성 검사
+    		if ( input_email.value != "${ user.email }" ) {
+    			alert("이메일이 올바르지 않습니다.");
+    			input_email.focus();
+    			return;
+    		}
+    		
+    		if( input_pwd.value != "${ user.password }" ) {
+    			alert("비밀번호가 올바르지 않습니다.");
+    			input_pwd.focus();
+    			return;
+    		}
+    		
+    		// AJAX로 폐쇄 신청 
+    		var url = "study_close_application.do";
+			var param = "idx=" + "${study.idx}" + "&user_idx=" + "${user.idx}";
+
+			sendRequest(url, param, app_close_res, "get");
     	}
 		
+    	// 스터디 폐쇄 신청 resultFn
+    	function app_close_res() {
+    		if (xhr.readyState == 4 && xhr.status == 200) {
+    			
+    			var res = xhr.responseText;
+    			
+    			if ( res != "success") {
+    				alert("폐쇄 신청 중 문제가 발생했습니다. 다시 시도해주세요.");
+    				return;
+    			}
+    			
+    			alert("폐쇄 신청이 완료되었습니다. 전체 인원의 80% 이상이 동의하면 자동으로 폐쇄됩니다.");
+    			location.reload();
+    		}
+    	}
+    	
 		</script>
 
 	</head>
@@ -339,9 +375,9 @@
 
                                     <div class="flex-box input-box">
                                         <div>
-                                            <input type="text" placeholder="회원님의 이메일을 입력해주세요." id="email_close">
+                                            <input type="text" placeholder="회원님의 이메일을 입력해주세요." id="email_study_close">
                                             <br><br>
-                                            <input type="password" placeholder="비밀번호를 입력해주세요."  id="pwd_close">
+                                            <input type="password" placeholder="비밀번호를 입력해주세요."  id="pwd_study_close">
                                         </div>
                                         <input type="button" class="my-btn black-white" value="폐쇄 신청" onClick="app_close();">
                                     </div>

@@ -395,4 +395,28 @@ public class StudyService {
 		
 		return res;
 	}
+	
+	// 스터디 폐쇄 신청
+	public String study_close_application( int idx, int user_idx ) {
+		String result = "fail";
+		
+		// 스터디 폐쇄 대기로 변경
+		int res1 = studyDAO.study_close_application( idx );
+		
+		// member_idx 가져오기
+		Map params = new HashMap();
+		params.put("user_idx", user_idx);
+		params.put("study_idx", idx);
+
+		int mem_idx = studyDAO.get_mem_idx( params ).getIdx();
+		
+		// 신청자 폐쇄 동의 변경
+		int res2 = studyDAO.study_close_agree( mem_idx ) ;
+		
+		if ( res1 != 0 && res2 != 0 ) {
+			result = "success";
+		}
+		
+		return result;
+	}
 }
