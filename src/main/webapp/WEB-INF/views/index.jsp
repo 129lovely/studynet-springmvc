@@ -133,7 +133,7 @@
 				<ul class="swiper-wrapper">
 					<li class="swiper-slide"><a href="javascript:void(0);"><span class="icon icon-event01"></span></a></li>
 					<li class="swiper-slide"><a href="javascript:void(0);"><span class="icon icon-event02"></span></a></li>
-					<li class="swiper-slide"><a href="javascript:void(0);"><span class="icon icon-event01"></span></a></li>
+					<li class="swiper-slide"><a href="javascript:void(0);"><span class="icon icon-event03"></span></a></li>
 				</ul>
 				<!-- Add Pagination -->
 				<div class="swiper-pagination swiper-pagination2"></div>

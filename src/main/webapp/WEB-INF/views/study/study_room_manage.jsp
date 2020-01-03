@@ -16,6 +16,51 @@
     	<script src="${ pageContext.request.contextPath }/resources/js/daygrid.main.js"></script>
     	<script src="${ pageContext.request.contextPath }/resources/js/fullcalendar.ko.js"></script>
     	<script src="${ pageContext.request.contextPath }/resources/js/moment.js"></script>
+    	
+    	<script type="text/javascript">
+    	// 스터디 탈퇴 기능
+		function quit_study( ) {
+			// 공동 관리자 확인
+			var cnt = 0 ;
+			
+			<c:forEach var="mem" items="${member}">
+
+			if ("${mem.mem_status}" == "admin") {
+				cnt++;
+			}
+
+			</c:forEach>
+
+			if (cnt < 2) {
+				alert("관리자의 경우 다른 공동 관리자가 있어야 스터디를 탈퇴하실 수 있습니다.");
+				return;
+			} 	
+			
+			// 비밀번호 유효성 검사
+			var quit_pwd = document.getElementById("quit_pwd");
+			var password = "${user.password}";
+			
+			if (quit_pwd.value != password){
+				alert("비밀번호가 일치하지 않습니다.")
+				quit_pwd.focus();
+				return;
+				
+			} else {
+				var check = confirm("해당 스터디를 정말 탈퇴하시겠습니까?");
+				
+				if ( ! check ) {
+					return;
+				}
+				
+				alert("탈퇴가 완료되었습니다.");
+				
+				location.href="quit_study.do?user_idx=${ user.idx }&study_idx=${ study.idx }";				
+			}
+		
+		}
+		
+		</script>
+    	</script>
 	</head>
 	
 	<body>
@@ -265,8 +310,8 @@
                                             </p><br>
                                             
                                             <div class="tac">
-                                                <input type="password" placeholder="비밀번호를 입력해주세요.">
-                                                <input type="button" value="탈퇴하기" class="my-btn black-white">
+                                                <input type="password" placeholder="비밀번호를 입력해주세요." id="quit_pwd">
+                                                <input type="button" value="탈퇴하기" class="my-btn black-white" onClick="quit_study();">
                                             </div>
                                         </div>
                                     </div>
