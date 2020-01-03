@@ -261,10 +261,6 @@ public class StudyDAO implements DAO {
 	
 	// study idx와 user idx로 mem idx 가져오기
 	public StudyMemberVO get_mem_idx( Map params ) {
-		
-		System.out.println("user: " + params.get("user_idx"));
-		System.out.println("study: " + params.get("study_idx"));
-		
 		StudyMemberVO mem = sqlSession.selectOne("study.get_mem_idx", params);
 
 		return mem;

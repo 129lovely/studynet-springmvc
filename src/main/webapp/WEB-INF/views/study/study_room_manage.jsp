@@ -58,9 +58,14 @@
 			}
 		
 		}
+    	
+    	// 스터디 폐쇄 신청 기능
+    	function app_close() {
+    		
+    	}
 		
 		</script>
-    	</script>
+
 	</head>
 	
 	<body>
@@ -334,11 +339,11 @@
 
                                     <div class="flex-box input-box">
                                         <div>
-                                            <input type="text" placeholder="회원님의 이메일을 입력해주세요.">
+                                            <input type="text" placeholder="회원님의 이메일을 입력해주세요." id="email_close">
                                             <br><br>
-                                            <input type="password" placeholder="비밀번호를 입력해주세요.">
+                                            <input type="password" placeholder="비밀번호를 입력해주세요."  id="pwd_close">
                                         </div>
-                                        <input type="button" class="my-btn black-white" value="폐쇄 신청">
+                                        <input type="button" class="my-btn black-white" value="폐쇄 신청" onClick="app_close();">
                                     </div>
                                 </div>
                             </div>
