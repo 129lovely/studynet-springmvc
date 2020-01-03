@@ -158,6 +158,14 @@ public class BoardController {
 	public String community_list_detail(Model model, int idx , HttpServletRequest request) {
 		BoardVO board = (BoardVO) boardService.showCommunityListDetail(idx).get("board");
 		List<BoardCommentVO> comment = (ArrayList<BoardCommentVO>) boardService.showCommunityListDetail(idx).get("comment");
+		
+		
+		System.out.println("controller: " + board.getUser_idx() );
+		
+		
+		String name = boardService.select_user_name( board.getUser_idx() );
+
+		board.setName(name);
 
 		//조회수 증가
 		HttpSession session = request.getSession();

@@ -20,7 +20,7 @@
 				<div class="board-info bg-blue flex-box">
 					<div>
 						<span class="txt-only">작성자: </span>
-						<h3>${ board.user_idx }</h3>
+						<h3>${ board.name }</h3>
 					</div>
 					<div>
 						<span class="txt-only">작성일: </span> <span><fmt:formatDate

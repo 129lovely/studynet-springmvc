@@ -146,7 +146,7 @@ public class BoardDAO implements DAO {
 		int result=sqlSession.selectOne("board.select_community_list_name",idx);
 		return result;
 	}
-
+	
 	// 커뮤니티 리스트가져오기
 	public List<BoardVO> select_community_list() {
 		List<BoardVO> list = new ArrayList<BoardVO>();

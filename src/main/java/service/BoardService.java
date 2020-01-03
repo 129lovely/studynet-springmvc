@@ -11,6 +11,7 @@ import dao.StudyDAO;
 import dao.UserDAO;
 import vo.BoardCommentVO;
 import vo.BoardVO;
+import vo.UserVO;
 
 public class BoardService {
 	BoardDAO boardDAO;
@@ -173,6 +174,16 @@ public class BoardService {
 		
 		int res = boardDAO.update_comment(map);
 		return res;
+	}
+	
+	// 이름 가져오기
+	public String select_user_name( int idx ) {
+		UserVO vo = (UserVO) userDAO.selectOne(idx);
+		
+		System.out.println("service: " + idx );
+		
+		String name = vo.getName();
+		return name;
 	}
 
 }
