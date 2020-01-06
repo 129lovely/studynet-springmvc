@@ -138,7 +138,9 @@
 			} 
 			
 			if ( key == key_input.value ) {
+				alert(document.getElementById("phone").value)
 				document.getElementById("phone").value = phoneNum;
+				
 				alert("인증되었습니다.");
 				location.href="#close_key";
 				
@@ -300,7 +302,7 @@
 								
 								<tr>	
 									<th>전화번호</th>
-									<td><input type="text" id="tel-input" name="phone" value = "${user.phone}"></td>
+									<td><input type="text" id="phone" name="phone" value = "${user.phone}"></td>
 									<td>
 										<input class="my-btn black-white" onClick="location.href='#open_phone'" type="button" value="번호 변경">
 										<div class="info_content input" id="open_phone">

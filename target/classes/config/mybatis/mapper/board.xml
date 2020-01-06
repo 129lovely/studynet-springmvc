@@ -90,7 +90,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select resultType="board" id="list_condition"
 		parameterType="java.util.Map">
 		select *, user.name
-		from (SELECT rank() over(order by idx desc) AS no, b.* FROM (select * from board) AS b ) AS list
+		from (SELECT rank() over(order by is_notice desc ,idx desc) AS no, b.* FROM (select * from board where study_idx is null) AS b ) AS list
 		left outer join user
 		on user.idx = list.user_idx
 		where no between #{start} AND #{end}
@@ -98,24 +98,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- 전체게시물 수 조회 -->
 	<select resultType="int" id="count">
-		select count(*) from board
+		select count(*) from board where study_idx is null
 	</select>
 
 	<!-- 검색기능 -->
 	<select resultType="board" id="list_search"
 		parameterType="java.util.Map">
+		
 		select *, user.name
-		from (SELECT rank() over(order by idx desc) AS no, b.*
-				FROM (select * from board where title like CONCAT('%',#{search},'%')) AS b ) AS list
+		from (SELECT rank() over(order by  is_notice desc,idx desc ) AS no, b.*
+				FROM (select * from board where study_idx is null and title like CONCAT('%',#{search},'%')) AS b ) AS list
 		left outer join user
 		on user.idx = list.user_idx
 		where no between #{start} AND #{end}
+		
 	</select>
 	
 	<select resultType="int" id="search_count" parameterType="java.lang.String">
+	
 		select count(*)
 		from board
-		where title like CONCAT('%',#{search},'%')
+		where title like CONCAT('%',#{search},'%') and  study_idx is null
+
 	</select>
 	
 	<!-- 원글 삭제하기 -->

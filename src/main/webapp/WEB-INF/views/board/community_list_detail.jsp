@@ -226,7 +226,7 @@
 				var data = response;
 
 				if( data == "fail" ){
-					alert("작성자 본인만 삭제할 수 있습니다.");
+					alert("작성자 본인만 수정/삭제할 수 있습니다.");
 					cancelModifyComment(p_content);
 					return;
 				}

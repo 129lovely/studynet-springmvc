@@ -133,9 +133,10 @@ public class StudyService {
 	}
 	
 	// 선택한 멤버 승인
-	public int mem_approve( String[] idx_arr, int study_idx ) {
+	public int mem_approve( String[] idx_arr, String study_idx ) {
 		
 		int result = 0;
+		int study = Integer.parseInt(study_idx);
 		
 		for(int i = 0; i < idx_arr.length ; i++ ) {
 			int idx = Integer.parseInt(idx_arr[i]);
@@ -148,15 +149,16 @@ public class StudyService {
 			}
 		}
 		
-		studyDAO.in_member(study_idx);
+		studyDAO.in_member(study);
 		
 		return result;
 	}
 	
 	// 선택한 멤버 거부
-	public int mem_reject( String[] idx_arr, int study_idx ) {
+	public int mem_reject( String[] idx_arr, String study_idx ) {
 		
 		int result = 0;
+		int study = Integer.parseInt(study_idx);
 		
 		for(int i = 0; i < idx_arr.length ; i++ ) {
 			int idx = Integer.parseInt(idx_arr[i]);
@@ -169,16 +171,17 @@ public class StudyService {
 			}
 		}
 		
-		studyDAO.in_member(study_idx);
-		studyDAO.out_member(study_idx);
+		studyDAO.in_member(study);
+		studyDAO.out_member(study);
 		
 		return result;
 	}
 	
 	// 선택한 멤버 강퇴
-	public int mem_kick( String[] idx_arr , int study_idx ) {
+	public int mem_kick( String[] idx_arr , String study_idx ) {
 		
 		int result = 0;
+		int study = Integer.parseInt(study_idx);
 		
 		for(int i = 0; i < idx_arr.length ; i++ ) {
 			int idx = Integer.parseInt(idx_arr[i]);
@@ -191,17 +194,13 @@ public class StudyService {
 			}
 		}
 		
-		studyDAO.out_member(study_idx);
+		studyDAO.out_member(study);
 		
 		return result;
 	}
 		
 	// 공동 관리자 요청 메일 전송
 	public void add_study_admin_mail( int idx, int study_idx, String email ) throws Exception {
-
-		System.out.println("email: " + email);
-		System.out.println("idx: " + idx);
-		System.out.println("study_idx: " + study_idx);
 		
 		// 메일 발송
 		MailUtils mail = new MailUtils(mailSender);

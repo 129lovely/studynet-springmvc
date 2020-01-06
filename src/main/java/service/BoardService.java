@@ -128,8 +128,6 @@ public class BoardService {
 		List<BoardVO> list = boardDAO.search(map);
 		int cnt = boardDAO.search_cnt( (String) map.get("search") );
 
-		System.out.println(cnt);
-
 		Map res = new HashMap();
 		res.put("list", list);
 		res.put("cnt", cnt);
@@ -179,8 +177,6 @@ public class BoardService {
 	// 이름 가져오기
 	public String select_user_name( int idx ) {
 		UserVO vo = (UserVO) userDAO.selectOne(idx);
-		
-		System.out.println("service: " + idx );
 		
 		String name = vo.getName();
 		return name;

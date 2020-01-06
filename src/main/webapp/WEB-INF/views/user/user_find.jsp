@@ -206,7 +206,7 @@
 						</div>
 						<div>
 							<label>전화번호&nbsp; &nbsp;
-									<input type="text" name="phone" id="phone" placeholder="'-'는 자동으로 입력됩니다.">
+								<input type="text" name="phone" id="phone" placeholder="'-'는 자동으로 입력됩니다.">
 							</label>
 						</div>
 					</div>	

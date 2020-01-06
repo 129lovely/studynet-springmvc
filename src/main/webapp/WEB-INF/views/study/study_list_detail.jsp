@@ -106,7 +106,7 @@
 					</div>
 					<div>
 						<span class = "addinfo2 tar">지원현황</span>
-						<span>${study.approve_count}명 / ${study.max_count}명</span>
+						<span>${study.apply_count}명 / ${study.max_count}명</span>
 					</div>					
 					<div>
 						<span class = "addinfo2 tar">모임 장소</span>

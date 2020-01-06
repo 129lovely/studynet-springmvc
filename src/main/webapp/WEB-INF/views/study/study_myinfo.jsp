@@ -328,10 +328,10 @@
 															</td>
 														</tr>
 														<tr>
-															<th>모집 기간</th>
+															<th>모집 마감일</th>
 															<td>|
 																  <fmt:parseDate var="dateDeadline" value="${study.deadline}" pattern="yyyy-MM-dd HH:mm:ss.SSS" />
-																  <fmt:formatDate value="${study.created_at}" pattern="yyyy.MM.dd"/> - <fmt:formatDate value="${dateDeadline}" pattern="yyyy.MM.dd" />																
+																  <fmt:formatDate value="${dateDeadline}" pattern="yyyy.MM.dd"/>															
 															</td>
 														</tr>
 														<tr>

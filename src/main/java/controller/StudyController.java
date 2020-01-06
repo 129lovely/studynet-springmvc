@@ -366,7 +366,7 @@ public class StudyController {
 	// 선택 인원 승인
 	@RequestMapping("/mem_approve.do")
 	@ResponseBody
-	public int mem_approve( String[] idx, int study_idx ) {
+	public int mem_approve( String[] idx, String study_idx ) {
 		
 		int res = studyService.mem_approve( idx , study_idx );
 			
@@ -376,7 +376,7 @@ public class StudyController {
 	// 선택 인원 거부
 	@RequestMapping("/mem_reject.do")
 	@ResponseBody
-	public int mem_reject( String[] idx, int study_idx ) {
+	public int mem_reject( String[] idx, String study_idx ) {
 		
 		int res = studyService.mem_reject( idx, study_idx );
 			
@@ -386,7 +386,7 @@ public class StudyController {
 	// 선택 인원 추방
 	@RequestMapping("/mem_kick.do")
 	@ResponseBody
-	public int mem_kick( String[] idx, int study_idx ) {
+	public int mem_kick( String[] idx, String study_idx ) {
 		
 		int res = studyService.mem_kick( idx , study_idx );
 			

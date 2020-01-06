@@ -787,9 +787,11 @@
 					});
 
 			var url = "mem_approve.do";
+			
+			param += "&study_idx=";
+			param += "${ study.idx }";
 
-			sendRequest(url, param,
-					mem_approve_res, "get");
+			sendRequest(url, param, mem_approve_res, "get");
 
 		}
 
@@ -831,9 +833,12 @@
 					});
 
 			var url = "mem_reject.do";
-
-			sendRequest(url, param, mem_reject_res,
-					"get");
+			
+			param += "&study_idx=";
+			param += "${study.idx}";
+				
+			alert(param);
+			sendRequest(url, param, mem_reject_res, "get");
 
 		}
 
@@ -875,8 +880,10 @@
 
 			var url = "mem_kick.do";
 
-			sendRequest(url, param, mem_kick_res,
-					"get");
+			param += "&study_idx=";
+			param += "${ study.idx }";
+				
+			sendRequest(url, param, mem_kick_res, "get");
 		}
 
 		function mem_kick_res() {
