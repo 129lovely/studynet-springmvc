@@ -302,7 +302,7 @@
 								
 								<tr>	
 									<th>전화번호</th>
-									<td><input type="text" id="phone" name="phone" value = "${user.phone}"></td>
+									<td><input type="text" id="phone" name="phone" value = "${user.phone}" readonly></td>
 									<td>
 										<input class="my-btn black-white" onClick="location.href='#open_phone'" type="button" value="번호 변경">
 										<div class="info_content input" id="open_phone">

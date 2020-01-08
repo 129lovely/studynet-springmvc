@@ -23,8 +23,8 @@
 						<h3>${ board.name }</h3>
 					</div>
 					<div>
-						<span class="txt-only">작성일: </span> <span><fmt:formatDate
-								value="${board.created_at}" type="date" pattern="yyyy.MM.dd HH:mm" /></span>
+						<span class="txt-only">작성일: </span> 
+						<span><fmt:formatDate value="${board.created_at}" type="date" pattern="yyyy.MM.dd HH:mm" /></span>
 						<span>조회수: </span> <span>${ board.hit }</span> <span>추천수: </span>
 						<span id="rec_cnt">${ board.recommend }</span>
 					</div>
@@ -63,8 +63,10 @@
 										<h3>${ vo.name }</h3>
 										<span><fmt:formatDate value="${vo.created_at}" type="date" pattern="yyyy.MM.dd HH:mm" /></span>
 										<a href="javascript:void(0);" onclick="openReComment(this, ${ vo.idx }, 0, ${ board.idx });">대댓글 달기</a>
-										<a class="edit" href="javascript:void(0);" onClick="openModifyComment(this, ${ vo.idx }, ${ vo.user_idx });">수정</a>
-										<a href="javascript:c_delete(${ vo.idx }, ${ vo.user_idx });">삭제</a>
+										<c:if  test="${ vo.deleted_at == null }">
+											<a class="edit" href="javascript:void(0);" onClick="openModifyComment(this, ${ vo.idx }, ${ vo.user_idx });">수정</a>
+											<a href="javascript:c_delete(${ vo.idx }, ${ vo.user_idx });">삭제</a>
+										</c:if>
 									</div>
 
 									<div id="comment-standard">
@@ -81,11 +83,13 @@
 									<div class="comment-reply-content">
 										<div>
 											<h3>${ vo.name }</h3>
-											<span><fmt:formatDate value="${vo.created_at}"
-													type="date" pattern="yyyy.MM.dd HH:mm" /></span> <a
-												href="javascript:void(0);" onclick="openReComment(this, ${ vo.idx }, 1, ${ board.idx });">대댓글
-												달기</a> <a href="javascript:void(0)" onClick="openModifyComment(this, ${ vo.idx }, ${ vo.user_idx });">수정</a>
-											<a href="javascript:c_delete(${ vo.idx }, ${ vo.user_idx });">삭제</a>
+											<span><fmt:formatDate value="${vo.created_at}" type="date" pattern="yyyy.MM.dd HH:mm" /></span> 
+											<a href="javascript:void(0);" onclick="openReComment(this, ${ vo.idx }, 1, ${ board.idx });">대댓글 달기</a> 
+											<c:if  test="${ vo.deleted_at == null }">
+												<a href="javascript:void(0)" onClick="openModifyComment(this, ${ vo.idx }, ${ vo.user_idx });">수정</a>
+												<a href="javascript:c_delete(${ vo.idx }, ${ vo.user_idx });">삭제</a>
+											</c:if>
+											
 										</div>
 
 										<div id="comment-standard">
@@ -114,14 +118,15 @@
 	
 	<script type="text/javascript">
 	// 삭제된 게시글일 경우 열람 불가능
-	window.onload = function () {
-			// 만약 삭제된 게시글 ( 모집 취소 )일 경우 열람 불가능
-			if ( "${ board.deleted_at != null }" ) {
-				alert("삭제된 게시글입니다.");
-				location.href = "community_list.do";	
-			}
-	}
-	
+	$(document).ready(function(){ 
+		// 만약 삭제된 게시글 ( 모집 취소 )일 경우 열람 불가능
+		if ( ${  board.deleted_at != null } ) {
+			location.href = "community_list.do";	
+			alert("삭제된 게시글입니다.");
+			
+		}
+	});
+
 	//추천하기
 	function recommend() {
 		if( ${ empty sessionScope.user.idx } ){
