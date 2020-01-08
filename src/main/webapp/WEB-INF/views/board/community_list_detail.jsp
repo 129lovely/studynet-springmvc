@@ -109,8 +109,19 @@
 			</div>
 		</div>
 	</div>
+	
 	<jsp:include page="../footer.jsp"></jsp:include>
+	
 	<script type="text/javascript">
+	// 삭제된 게시글일 경우 열람 불가능
+	window.onload = function () {
+			// 만약 삭제된 게시글 ( 모집 취소 )일 경우 열람 불가능
+			if ( "${ board.deleted_at != null }" ) {
+				alert("삭제된 게시글입니다.");
+				location.href = "community_list.do";	
+			}
+	}
+	
 	//추천하기
 	function recommend() {
 		if( ${ empty sessionScope.user.idx } ){
