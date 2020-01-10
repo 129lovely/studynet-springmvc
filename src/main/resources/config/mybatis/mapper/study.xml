@@ -25,8 +25,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<!-- index.jsp에서 스터디목록들 나오게하기(스터디 페이지로 안넘어감) -->
 	<select id="index_study_list" resultType="study" >
-		select * from study
-		order by idx desc limit 8
+		select * from study where deadline>=current_date()
+		order by (deadline-current_date) asc limit 5
 	</select>
 	
 	<!-- 스터디 생성 -->

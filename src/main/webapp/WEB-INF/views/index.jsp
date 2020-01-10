@@ -43,21 +43,24 @@
     	</div>
 	</div>
 
-	<!-- 모집 중인 스터디 -->
+	<!-- 모집마감 중인 스터디 -->
 	<div class="show-study-box mb20">
 		<div class="inner-box contents-box">
 			<h2 class="section-title">인원 모집이 곧 끝나는 스터디</h2>
 			<div class="swiper-container swiper1">
 				<!-- swiperjs 영역 -->
 				<ul class="swiper-wrapper">
-					<li class="swiper-slide">
+				
+					<!-- 슬라이드 예시 -->
+					<!-- <li class="swiper-slide">
 						<span class="icon icon-pre01"></span>
 						<h3><a href="javascript:void(0);"><span>[온라인] 웹 페이지 만들기</span></a></h3>
 						<p class="flex-box">
 							<span>2019.12.08 모집 마감</span>
 							<span>카카오톡</span>
 						</p>
-					</li>
+					</li> -->
+					
 					<c:forEach var="vo" items="${list}">
 					<c:if test="${vo.is_online==1 }"><!-- 온라인일떄 -->
 					<li class="swiper-slide">
@@ -131,9 +134,9 @@
 			<div class="swiper-container swiper2">
 				<!-- swiperjs 영역 -->
 				<ul class="swiper-wrapper">
-					<li class="swiper-slide"><a href="javascript:void(0);"><span class="icon icon-event01"></span></a></li>
-					<li class="swiper-slide"><a href="javascript:void(0);"><span class="icon icon-event02"></span></a></li>
-					<li class="swiper-slide"><a href="javascript:void(0);"><span class="icon icon-event03"></span></a></li>
+					<li class="swiper-slide"><a href="community_list_detail.do?idx=1"><span class="icon icon-event01"></span></a></li>
+					<li class="swiper-slide"><a href="community_list_detail.do?idx=2"><span class="icon icon-event02"></span></a></li>
+					<li class="swiper-slide"><a href="community_list_detail.do?idx=3"><span class="icon icon-event03"></span></a></li>
 				</ul>
 				<!-- Add Pagination -->
 				<div class="swiper-pagination swiper-pagination2"></div>
