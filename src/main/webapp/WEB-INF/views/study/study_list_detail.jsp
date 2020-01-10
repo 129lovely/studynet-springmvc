@@ -203,7 +203,7 @@
 	
 		window.onload = function () {
 			// 만약 삭제된 게시글 ( 모집 취소 )일 경우 열람 불가능
-			if ( "${ study.deleted_at != null }" ) {
+			if ( ${ study.deleted_at != null } ) {
 				alert("삭제된 모집 게시글입니다.");
 				location.href = "study_list.do";	
 			}

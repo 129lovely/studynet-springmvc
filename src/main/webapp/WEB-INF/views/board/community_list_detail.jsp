@@ -123,7 +123,6 @@
 		if ( ${  board.deleted_at != null } ) {
 			location.href = "community_list.do";	
 			alert("삭제된 게시글입니다.");
-			
 		}
 	});
 
