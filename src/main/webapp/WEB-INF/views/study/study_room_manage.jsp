@@ -8,7 +8,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>스터디 룸 - 스터디 제목 출력 </title>
+		<title>스터디 룸 - ${study.title} } </title>
 		<link type="text/css" rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/fullcalendar.main.css">
 		<link type="text/css" rel="stylesheet" href="${ pageContext.request.contextPath }/resources/css/daygrid.main.css">
     	<script src="${ pageContext.request.contextPath }/resources/js/fullcalendar.main.js"></script>
@@ -772,8 +772,7 @@
 			var cnt = 0;
 
 			// 선택한 인원 파라미터로 설정
-			$("input[name=apply_member]:checked")
-					.each(function() {
+			$("input[name=apply_member]:checked").each(function() {
 						var test = $(this).val();
 
 						if (cnt != 0) {
@@ -786,6 +785,11 @@
 
 					});
 
+			if ( cnt + ${ study.approve_count } > ${ study.max_count}) {
+				alert("최대 모집 인원보다 많은 인원을 승인하실 수 없습니다.");
+				return;
+			}
+			
 			var url = "mem_approve.do";
 			
 			param += "&study_idx=";

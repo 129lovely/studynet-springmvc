@@ -56,16 +56,16 @@
 				, success: function(response){
 					var data = response;
 					
-					// 누락된 회원 정보가 있는 경우
+					// 이미 참여 중인 스터디일 경우
 					if( data == "fail" ){
 						alert("이미 가입 신청했거나 활동중인 스터디입니다.");
 						return;
 					}
 					
-					location.href= "study_apply_caution.do?study_idx=" + idx;
 				}
 			});
 
+			location.href= "study_apply_caution.do?study_idx=" + idx;
 		}
 	
 	</script>
@@ -106,7 +106,7 @@
 					</div>
 					<div>
 						<span class = "addinfo2 tar">지원현황</span>
-						<span>${study.apply_count}명 / ${study.max_count}명</span>
+						<span>${study.approve_count}명 / ${study.max_count}명</span>
 					</div>					
 					<div>
 						<span class = "addinfo2 tar">모임 장소</span>

@@ -146,11 +146,11 @@ public class StudyService {
 				result += 0;
 			} else {
 				result += 1;
+				
+				studyDAO.in_member(study);
 			}
 		}
-		
-		studyDAO.in_member(study);
-		
+
 		return result;
 	}
 	
@@ -168,11 +168,11 @@ public class StudyService {
 				result += 0;
 			} else {
 				result += 1;
+				
+				studyDAO.in_member(study);
+				studyDAO.out_member(study);
 			}
 		}
-		
-		studyDAO.in_member(study);
-		studyDAO.out_member(study);
 		
 		return result;
 	}
@@ -191,10 +191,9 @@ public class StudyService {
 				result += 0;
 			} else {
 				result += 1;
+				studyDAO.out_member(study);
 			}
 		}
-		
-		studyDAO.out_member(study);
 		
 		return result;
 	}

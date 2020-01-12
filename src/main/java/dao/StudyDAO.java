@@ -213,13 +213,13 @@ public class StudyDAO implements DAO {
 	
 	// apply count - 1 하고 approve count + 1
 	public int in_member( int study_idx ) {
-		int res = sqlSession.delete("study.in_member", study_idx);
+		int res = sqlSession.update("study.in_member", study_idx);
 		return res;
 	}
 	
 	//  approve count - 1
 	public int out_member( int study_idx ) {
-		int res = sqlSession.delete("study.out_member", study_idx);
+		int res = sqlSession.update("study.out_member", study_idx);
 		return res;
 	}
 	

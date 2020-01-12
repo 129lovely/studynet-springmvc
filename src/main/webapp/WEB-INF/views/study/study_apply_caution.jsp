@@ -28,6 +28,8 @@
 			return;
 		}
 		
+		alert("신청이 완료되었습니다.");
+		
 		form.action = "study_apply.do";
 		form.method = "post";
 		form.submit();
