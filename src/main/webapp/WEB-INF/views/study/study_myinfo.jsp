@@ -470,6 +470,19 @@
 		    bar.classList.remove("right");
 		    bar.classList.add("left");
 		}
+		
+		// 스터디룸 토글 메뉴
+		$(document).ready(function(){
+			  $('.accordion, room-btn-box').hide();
+			  // $("ul > li:first-child a").next().show();
+			  $(".ready-confirm a").click(function(){
+			    $(this).next().slideToggle(300);
+			    //$(this).next().slideDown(300);
+			    $(".ready-confirm a").not(this).next().slideUp(300);
+			    return false;
+			  });
+			  $("u.ready-confirm a").eq(0).trigger("click");
+			});
 	</script>
 
 </body>
